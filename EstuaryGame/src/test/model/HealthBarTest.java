@@ -15,6 +15,7 @@ public class HealthBarTest {
 	@Test
 	public void maxHealthtest() {
 		//Max health is 100
+		healthBar.sethealth(0);
 		healthBar.update(50);
 		healthBar.update(70);
 		healthBar.update(-5);
@@ -24,6 +25,7 @@ public class HealthBarTest {
 	@Test
 	public void minHealthTest(){
 		//Min health is 0
+		healthBar.sethealth(0);
 		healthBar.update(12);
 		healthBar.update(-20);
 		
@@ -31,6 +33,7 @@ public class HealthBarTest {
 	}
 	@Test
 	public void updatehealthBar() {
+		healthBar.sethealth(0);
 		healthBar.update(20);
 		healthBar.update(-15);
 		
