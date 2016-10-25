@@ -1,7 +1,22 @@
 package model;
 
-public class Coast {
+public class Coast extends Item {
 
-	//Push?? Pull??? wWho knWOws?
+	int size;
+	int minsize;
+	int maxsize;
+	double erosionRate;
+	
+	public void erode() {
+		
+	}
+	
+	public void rebuild() {
+		
+	}
+	
+	public void changeErosionRate(double amount) {
+		
+	}
 	
 }
