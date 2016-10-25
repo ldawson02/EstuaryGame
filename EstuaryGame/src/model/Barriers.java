@@ -2,7 +2,7 @@ package model;
 /**
  * Barrier interface. Each barrier has build, decay, and crumble methods.
  * 
- * @author: rachel muzzelo
+ * @author: Rachel Muzzelo
  * @version 1.0
  * @since 10/25/16
  */
