@@ -18,4 +18,10 @@ public class Gabions extends Barriers {
 	public void crumble(){
 		
 	}
+
+	@Override
+	public boolean checkPlayerCollision(int x, int y) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
