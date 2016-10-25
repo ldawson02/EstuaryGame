@@ -6,7 +6,7 @@ package model;
  * @version 1.0
  * @since 10/25/16
  */
-public abstract class Barriers extends Item{
+public abstract class Barriers extends Item implements Interactable{
 	int decayTime;
 	int health;
 	
