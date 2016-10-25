@@ -1,14 +1,22 @@
 package model;
-
-public interface Barriers {
+/**
+ * author: rachel muzzelo
+ * @since 10/25/16
+ * Barrier interface. Each barrier has build, decay, and crumble methods.
+ */
+public abstract class Barriers extends Item{
+	int decayTime;
+	int health;
+	
 	/**
-	 * author: rachel muzzelo
-	 * 10/25/16
-	 * Each barrier has build, decay, and crumble methods.
+	 * Constructor for Barrier
 	 */
-
-	void build();
-	void decay();
-	void crumble();
+	public Barriers(){
+		
+	};
+	
+	public abstract void build();
+	public abstract void decay();
+	public abstract void crumble();
 
 }
