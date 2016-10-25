@@ -26,7 +26,15 @@ public class Coast extends Item {
 	 * The rate at which it erodes
 	 */
 	private double erosionRate;
-
+	/**
+	 * The Debris items on the coast
+	 */
+	private AllDebris buildUp;
+	
+	public Coast() {
+		super();
+	}
+	
 	/**
 	 * Constructs a Coast with position (x, y)
 	 * @param x
@@ -36,6 +44,76 @@ public class Coast extends Item {
 		super(x, y);
 	}
 	
+	/**
+	 * @return the size
+	 */
+	public int getSize() {
+		return size;
+	}
+
+	/**
+	 * @param size the size to set
+	 */
+	public void setSize(int size) {
+		this.size = size;
+	}
+
+	/**
+	 * @return the minsize
+	 */
+	public int getMinsize() {
+		return minsize;
+	}
+
+	/**
+	 * @param minsize the minsize to set
+	 */
+	public void setMinsize(int minsize) {
+		this.minsize = minsize;
+	}
+
+	/**
+	 * @return the maxsize
+	 */
+	public int getMaxsize() {
+		return maxsize;
+	}
+
+	/**
+	 * @param maxsize the maxsize to set
+	 */
+	public void setMaxsize(int maxsize) {
+		this.maxsize = maxsize;
+	}
+
+	/**
+	 * @return the erosionRate
+	 */
+	public double getErosionRate() {
+		return erosionRate;
+	}
+
+	/**
+	 * @param erosionRate the erosionRate to set
+	 */
+	public void setErosionRate(double erosionRate) {
+		this.erosionRate = erosionRate;
+	}
+
+	/**
+	 * @return the buildUp
+	 */
+	public AllDebris getBuildUp() {
+		return buildUp;
+	}
+
+	/**
+	 * @param buildUp the buildUp to set
+	 */
+	public void setBuildUp(AllDebris buildUp) {
+		this.buildUp = buildUp;
+	}
+
 	/**
 	 * Decreases the size of the coast by one, if possible
 	 */
