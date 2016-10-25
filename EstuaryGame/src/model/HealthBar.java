@@ -5,5 +5,10 @@ public class HealthBar extends Item {
 	private int maxHealth;
 	private int health;
 	
-	public void update(){};
+	public void update(int points){};
+	
+	public int gethealth(){
+		return health;
+	}
+
 }
