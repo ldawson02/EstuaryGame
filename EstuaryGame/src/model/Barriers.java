@@ -11,8 +11,8 @@ public abstract class Barriers extends Item{
 	/**
 	 * Constructor for Barrier
 	 */
-	public Barriers(){
-		
+	public Barriers(int x, int y){
+		super(x,y);
 	};
 	
 	public abstract void build();
