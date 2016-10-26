@@ -20,9 +20,8 @@ public class Gabions extends Barriers {
 	}
 
 	@Override
-	public boolean checkPlayerCollision(int x, int y) {
+	public void PlayerCollision(Item item) {
 		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override
