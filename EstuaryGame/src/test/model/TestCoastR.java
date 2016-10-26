@@ -9,19 +9,24 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import model.AllDebris;
-import model.Coast;
-import model.CoastL;
+import model.CoastR;
 
-public class TestCoast {
+public class TestCoastR {
 
-	public CoastL coast;
+	public CoastR coast;
 	int maxsize = 5;
 	int minsize = 0;
 	double erosionrate = 1.0;
 	
+	//tentative: based on positions
+	//right coast  (all positions are X)
+	int minposition = 10;
+	int positiondif = 20;
+	int maxposition = minposition + positiondif*maxsize;
+	
 	@BeforeClass
 	public void setUpBeforeClass() throws Exception {
-		coast = new CoastL();
+		coast = new CoastR();
 	}
 
 	@AfterClass
@@ -93,5 +98,21 @@ public class TestCoast {
 		coast.setErosionRate(erosionrate);
 		coast.changeErosionRate(-0.5);
 		assertTrue(coast.getErosionRate() == erosionrate - 0.5);
+	}	
+	
+	@Test
+	public void updateCoordsTest() {
+		//Starts at maxsize -> so maxposition
+		assertEquals(coast.getPosX(), maxposition);
+		coast.erode();
+		//Erode once, move position
+		assertEquals(coast.getPosX(), maxposition - positiondif);
+		//Try building
+		while (coast.getSize() != 0) {
+			coast.erode();
+		}
+		assertEquals(coast.getPosX(), minposition);
+		coast.rebuild();
+		assertEquals(coast.getPosX(), maxposition);
 	}
 }
