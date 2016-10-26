@@ -2,8 +2,11 @@ package test.model;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
+import model.Gabions;
 import model.Storm;
 
 public class StormTest {
@@ -22,7 +25,19 @@ public class StormTest {
 	 */
 	@Test
 	public void destroyGabionsTest() {
-		fail("Not yet implemented");
+		ArrayList<Gabions> gabs = new ArrayList<Gabions>();
+		for (int i = 0; i <= 10; i++) {
+			gabs.add(new Gabions(1,1));
+		}
+		s.destroyGabions();
+		assertEquals(gabs.size(), 5);
+		//should not get below 0
+		ArrayList<Gabions> gab2 = new ArrayList<Gabions>();
+		for (int i = 0; i < 3; i++) {
+			gab2.add(new Gabions(1,1));
+		}
+		s.destroyGabions();
+		assertEquals(gab2.size(), 0);
 	}
 	
 	/*
