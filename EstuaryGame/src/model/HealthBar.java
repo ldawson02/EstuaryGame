@@ -9,7 +9,7 @@ package model;
 */
 
 public class HealthBar extends Item {
-	private int maxHealth;
+	private static int maxHealth = 100;
 	private int health;
 	
 	/**
@@ -18,10 +18,7 @@ public class HealthBar extends Item {
 	 * @param health
 	 */
 	public HealthBar(){
-	};
-	
-	public HealthBar(int x, int y){
-		super(x,y);
+		super();
 	};
 	
 	/**
@@ -29,14 +26,14 @@ public class HealthBar extends Item {
 	 * @param points
 	 */
 	public void update(int points) {
-		
+		this.health += points;
 	};
 	
-	public int gethealth(){
+	public int getHealth(){
 		return health;
 	}
 	
-	public void sethealth(int health){
+	public void setHealth(int health){
 		this.health = health;
 	}
 
