@@ -12,7 +12,7 @@ import eNums.eDebrisType;
 import model.AllDebris;
 import model.Debris;
 
-public class TestAllDebris {
+public class AllDebrisTest {
 
 	public AllDebris ad;
 	public Debris deb1;
