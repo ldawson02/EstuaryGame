@@ -10,18 +10,16 @@ public class Storm extends Item {
 	* @since 10/25/16
 	*/
 	
-	/**
-	 * Constructs a Storm 
-	 */
-	
 	private static int numDamage = 10;
 	private static int numTrash;
 	private int lifetime;
-	private int x = 0;
-	private int y = 0;
+	
+	/**
+	 * Constructs a Storm at 0,0
+	 */
 	
 	public Storm() {
-		super();
+		super(0, 0);  //change later
 	}
 	
 	public void setLifetime(int x) {
