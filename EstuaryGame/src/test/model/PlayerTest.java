@@ -109,6 +109,9 @@ public class PlayerTest {
 		int initY = debris.get(0).getPosY();
 		
 		p.throwDebris(debris.get(0));
+		
+		assertFalse(initX == debris.get(0).getPosX());
+		assertFalse(initY == debris.get(0).getPosY());
 	}
 
 }
