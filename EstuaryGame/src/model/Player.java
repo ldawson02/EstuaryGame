@@ -1,6 +1,6 @@
 package model;
 
-public class Player implements Movers {
+public class Player extends Item implements Movers {
 
 	public int speed;
 	public int direction;
@@ -15,5 +15,5 @@ public class Player implements Movers {
 	public void buildGabion(){};
 	public void buildWall(){};
 	public void pickUpDebris(){};
-	public void throwDebris(boolean t){};
+	public void throwDebris(Debris d){};
 }
