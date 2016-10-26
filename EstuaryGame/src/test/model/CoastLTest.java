@@ -9,24 +9,24 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import model.AllDebris;
-import model.CoastR;
+import model.CoastL;
 
-public class TestCoastR {
+public class CoastLTest {
 
-	public CoastR coast;
+	public CoastL coast;
 	int maxsize = 5;
 	int minsize = 0;
 	double erosionrate = 1.0;
 	
 	//tentative: based on positions
-	//right coast  (all positions are X)
+	//left coast builds from left to right (all positions are X)
 	int minposition = 10;
 	int positiondif = 20;
 	int maxposition = minposition + positiondif*maxsize;
 	
 	@BeforeClass
 	public void setUpBeforeClass() throws Exception {
-		coast = new CoastR();
+		coast = new CoastL();
 	}
 
 	@AfterClass
@@ -46,8 +46,11 @@ public class TestCoastR {
 	public void tearDown() throws Exception {
 	}
 
+	/**
+	 * 
+	 */
 	@Test
-	public void testErode() {
+	public void erodeTest() {
 		//Should start at max size
 		assertEquals(coast.getSize(), maxsize);
 		//Should decrease by 1
@@ -67,7 +70,7 @@ public class TestCoastR {
 	}
 	
 	@Test
-	public void testRebuild() {
+	public void rebuildTest() {
 		//Start at min size
 		coast.setSize(minsize);
 		assertEquals(coast.getSize(), minsize);
@@ -88,7 +91,7 @@ public class TestCoastR {
 	}
 	
 	@Test 
-	public void testChangeErosionRate() {
+	public void changeErosionRateTest() {
 		//Should not have changed yet
 		assertTrue(coast.getErosionRate() == erosionrate);
 		//Test a positive change
@@ -98,7 +101,7 @@ public class TestCoastR {
 		coast.setErosionRate(erosionrate);
 		coast.changeErosionRate(-0.5);
 		assertTrue(coast.getErosionRate() == erosionrate - 0.5);
-	}	
+	}
 	
 	@Test
 	public void updateCoordsTest() {

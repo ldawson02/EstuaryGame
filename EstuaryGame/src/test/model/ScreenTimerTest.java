@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import model.ScreenTimer;
 
-public class TestScreenTimer {
+public class ScreenTimerTest {
 
 	ScreenTimer timer;
 	
