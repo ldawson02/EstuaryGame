@@ -8,18 +8,21 @@ import org.junit.Test;
 
 import model.Coast;
 import model.Gabions;
+import model.HealthBar;
 
 public class GabionsTest {
 
 	public Gabions gabion1;
 	public Gabions gabion2;
+	public HealthBar healthbar;
 	
 	@BeforeClass
 	public void setUpBeforeClass() throws Exception {
 		gabion1 = new Gabions(10,20);
 		gabion2 = new Gabions(5,5);
 		gabion1.setHealth(0);
-		gabion2.setHealth(0);	
+		gabion2.setHealth(0);
+		healthbar.setHealth(100);
 	}
 
 	@AfterClass
@@ -43,12 +46,6 @@ public class GabionsTest {
 	
 	@Test
 	public void decayTest() {
-		gabion1.decay(20);
-		assertEquals(gabion1.getDecayTime(), 20);
-		assertEquals(gabion1.getHealth(), 50);
-		gabion1.decay(40);
-		assertEquals(gabion1.getDecayTime(), 40);
-		assertEquals(gabion1.getHealth(), 0);
 		gabion2.decay(10);
 		assertEquals(gabion2.getDecayTime(), 10);
 		assertEquals(gabion2.getHealth(), 75);
@@ -58,6 +55,22 @@ public class GabionsTest {
 	}
 	
 	@Test
+	public void healthBarTest(){
+		gabion1.decay(20);
+		assertEquals(gabion1.getDecayTime(), 20);
+		assertEquals(gabion1.getHealth(), 50);
+		gabion1.updateHealthBar();
+		assertEquals(healthbar.getHealth(), 95);
+		gabion1.decay(40);
+		assertEquals(gabion1.getDecayTime(), 40);
+		assertEquals(gabion1.getHealth(), 0);
+		gabion1.updateHealthBar();
+		assertEquals(healthbar.getHealth(), 90);
+		
+	}
+	
+	
+	@Test
 	public void crumbleTest() {
 		gabion1.crumble();
 		assertNull(gabion1);
@@ -65,6 +78,7 @@ public class GabionsTest {
 		assertNull(gabion2);
 		
 	}
+	
 
 
 }
