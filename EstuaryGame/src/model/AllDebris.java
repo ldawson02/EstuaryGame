@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
+import eNums.eDebrisType;
+
 /**
  * This is the AllDebris class in the Model. The AllDebris class
  * is contained by the Coast and keeps track of Debris that has come to
@@ -11,6 +13,7 @@ import java.util.ArrayList;
  * @version 1.0
  * @since 10/25/16
  */
+
 public class AllDebris {
 	
 	/**
@@ -52,14 +55,14 @@ public class AllDebris {
 	 * @return the item
 	 */
 	public Debris removeItem(Debris d) {
-		return new Debris(); //remove this
+		return new Debris(eDebrisType.RECYCLING); //TODO: remove this
 	}
 	
 	/**
 	 * @return the current count
 	 */
 	public int count() {
-		return count; //remove this
+		return count; //TODO: remove this
 	}
 	
 	/**

@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import eNums.eDebrisType;
 import model.AllDebris;
 import model.Debris;
 
@@ -22,9 +23,9 @@ public class TestAllDebris {
 	public void setUpBeforeClass() throws Exception {
 		ad = new AllDebris();
 		//TODO: these should probably not be empty constructors
-		deb1 = new Debris();
-		deb2 = new Debris();
-		deb3 = new Debris();
+		deb1 = new Debris(eDebrisType.RECYCLING);
+		deb2 = new Debris(eDebrisType.TRASH);
+		deb3 = new Debris(eDebrisType.RECYCLING);
 	}
 
 	@AfterClass
