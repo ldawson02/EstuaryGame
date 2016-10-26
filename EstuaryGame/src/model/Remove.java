@@ -1,6 +1,9 @@
 package model;
 
 public class Remove extends Powers {
+	
+	public Remove(){};
+	
 
 	@Override
 	public void floating() {

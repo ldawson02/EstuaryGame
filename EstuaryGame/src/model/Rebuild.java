@@ -2,6 +2,8 @@ package model;
 
 public class Rebuild extends Powers implements HealthChangers{
 
+	public Rebuild(){};
+	
 	@Override
 	public void floating() {
 		// TODO Auto-generated method stub

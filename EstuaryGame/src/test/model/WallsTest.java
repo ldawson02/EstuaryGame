@@ -58,9 +58,11 @@ public class WallsTest {
 		wall1.decay(10);
 		assertEquals(wall1.getDecayTime(), 10);
 		assertEquals(wall1.getHealth(), 60);
-		
+		wall1.updateHealthBar();
+		assertEquals(healthBar.gethealth(), 96);
+		wall2.updateHealthBar();
+		assertEquals(healthBar.gethealth(), 86);
 	}
-	
 	
 	
 	@Test
