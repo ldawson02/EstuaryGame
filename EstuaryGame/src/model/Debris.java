@@ -45,4 +45,16 @@ public class Debris extends Item implements Floater {
 	public void wrongBinAction(){
 		
 	}
+
+	@Override
+	public void floating() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void catching() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -1,35 +1,29 @@
 package model;
 
-public class Wall extends Barriers {
+public class Rebuild extends Powers implements HealthChangers{
 
-
-	public Wall(int x, int y) {
-		super(x, y);
+	@Override
+	public void floating() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
-	public void build() {
+	public void catching() {
 		// TODO Auto-generated method stub
-		this.setDecayTime(0);
-
+		
 	}
 
 	@Override
-	public void decay(int time) {
+	public void appear() {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
-	public void crumble() {
+	public void disappear() {
 		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public boolean checkPlayerCollision(int x, int y) {
-		// TODO Auto-generated method stub
-		return false;
+		
 	}
 
 	@Override
