@@ -24,6 +24,12 @@ public class Gabions extends Barriers {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public void updateHealthBar() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }

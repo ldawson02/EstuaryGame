@@ -7,12 +7,14 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import model.Gabions;
+import model.HealthBar;
 import model.Wall;
 
 public class WallsTest {
 	
 	public Wall wall1;
 	public Wall wall2;
+	public HealthBar healthBar;
 
 	@BeforeClass
 	public void setUpBeforeClass() throws Exception {
@@ -20,6 +22,7 @@ public class WallsTest {
 		wall2 = new Wall(5,5);
 		wall1.setHealth(0);
 		wall2.setHealth(0);
+		healthBar.sethealth(100);
 	}
 	@AfterClass
 	public void tearDownAfterClass() throws Exception {
@@ -42,9 +45,6 @@ public class WallsTest {
 	
 	@Test
 	public void decayTest() {
-		wall1.decay(10);
-		assertEquals(wall1.getDecayTime(), 10);
-		assertEquals(wall1.getHealth(), 60);
 		wall2.decay(8);
 		assertEquals(wall2.getDecayTime(), 8);
 		assertEquals(wall2.getHealth(), 68);
@@ -52,6 +52,16 @@ public class WallsTest {
 		assertEquals(wall2.getDecayTime(), 25);
 		assertEquals(wall2.getHealth(), 0);
 	}
+	
+	@Test
+	public void healthBarTest() {
+		wall1.decay(10);
+		assertEquals(wall1.getDecayTime(), 10);
+		assertEquals(wall1.getHealth(), 60);
+		
+	}
+	
+	
 	
 	@Test
 	public void crumbleTest() {
