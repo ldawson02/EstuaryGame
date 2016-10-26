@@ -8,9 +8,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import eNums.eScreenTimerState;
 import model.ScreenTimer;
 
-public class TestScreenTimer {
+public class ScreenTimerTest {
 
 	ScreenTimer timer;
 	
@@ -25,7 +26,7 @@ public class TestScreenTimer {
 
 	@Before
 	public void setUp() throws Exception {
-		timer.setState("off");
+		timer.setState(eScreenTimerState.OFF);
 	}
 
 	@After
@@ -34,23 +35,23 @@ public class TestScreenTimer {
 
 	@Test
 	public void testFreeze() {
-		assertEquals(timer.getState(), "off");
+		assertEquals(timer.getState(), eScreenTimerState.OFF);
 		timer.freeze();
-		assertEquals(timer.getState(), "frozen");
+		assertEquals(timer.getState(), eScreenTimerState.FROZEN);
 	}
 	
 	@Test
 	public void testContinue() {
-		assertEquals(timer.getState(), "off");
+		assertEquals(timer.getState(), eScreenTimerState.OFF);
 		timer.Continue();
-		assertEquals(timer.getState(), "on");
+		assertEquals(timer.getState(), eScreenTimerState.ON);
 	}
 	
 	@Test
 	public void testEndGame() {
-		timer.setState("on");
-		assertEquals(timer.getState(), "on");
+		timer.setState(eScreenTimerState.ON);
+		assertEquals(timer.getState(), eScreenTimerState.ON);
 		timer.endGame();
-		assertEquals(timer.getState(), "off");
+		assertEquals(timer.getState(), eScreenTimerState.OFF);
 	}
 }

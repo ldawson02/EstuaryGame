@@ -8,14 +8,29 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import eNums.eDebrisState;
+import eNums.eDebrisType;
+import model.CoastL;
+import model.CoastR;
+import model.Debris;
+
 public class DebrisTest {
 
+	Debris trash;
+	Debris recyc;
+	CoastL coastL;
+	CoastR coastR;
+	
 	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
+	public void setUpBeforeClass() throws Exception {
+		trash = new Debris(eDebrisType.TRASH);
+		recyc = new Debris(eDebrisType.RECYCLING);
+		coastL = new CoastL();
+		coastR = new CoastR();
 	}
 
 	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
+	public void tearDownAfterClass() throws Exception {
 	}
 
 	@Before
@@ -27,8 +42,15 @@ public class DebrisTest {
 	}
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testRest() {
+		assertEquals(trash.getState(), eDebrisState.MOVING);
+		trash.rest();
+		assertEquals(trash.getState(), eDebrisState.RESTING);
+	}
+	
+	@Test
+	public void testThrow() {
+		
 	}
 
 }
