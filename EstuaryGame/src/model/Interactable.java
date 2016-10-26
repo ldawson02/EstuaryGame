@@ -2,6 +2,6 @@ package model;
 
 public interface Interactable {
 
-	public boolean checkPlayerCollision(int x, int y);
+	public void PlayerCollision(Item item);
 	
 }

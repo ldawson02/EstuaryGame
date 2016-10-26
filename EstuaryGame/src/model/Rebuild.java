@@ -34,4 +34,10 @@ public class Rebuild extends Powers implements HealthChangers{
 		
 	}
 
+	@Override
+	public void PlayerCollision(Item item) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
