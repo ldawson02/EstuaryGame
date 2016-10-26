@@ -7,7 +7,6 @@ package model;
  * @since 10/25/16
  */
 public abstract class Barriers extends Item implements Interactable{
-	//rate at which barrier decays
 	private int decayTime;
 	//overall state of the barrier
 	private int health;
