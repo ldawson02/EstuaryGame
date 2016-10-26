@@ -1,6 +1,6 @@
 package model;
 
-public class HorseshoeCrab {
+public class HorseshoeCrab extends Friend{
 
 	/**
 	 * author:megan chen
@@ -23,5 +23,17 @@ public class HorseshoeCrab {
 		this.yloc = y;
 		//this.destination = destination;
 		//this.current = current;
+	}
+
+	@Override
+	public void appear() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void disappear() {
+		// TODO Auto-generated method stub
+		
 	}
 }
