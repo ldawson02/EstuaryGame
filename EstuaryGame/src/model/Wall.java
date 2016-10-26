@@ -10,11 +10,12 @@ public class Wall extends Barriers {
 	@Override
 	public void build() {
 		// TODO Auto-generated method stub
+		this.setDecayTime(0);
 
 	}
 
 	@Override
-	public void decay() {
+	public void decay(int time) {
 		// TODO Auto-generated method stub
 
 	}

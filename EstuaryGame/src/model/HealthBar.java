@@ -17,9 +17,11 @@ public class HealthBar extends Item {
 	 * @param max
 	 * @param health
 	 */
+	public HealthBar(){
+	};
 	
-	public HealthBar(int max, int current){
-		super(max, current);
+	public HealthBar(int x, int y){
+		super(x,y);
 	};
 	
 	/**
@@ -32,6 +34,10 @@ public class HealthBar extends Item {
 	
 	public int gethealth(){
 		return health;
+	}
+	
+	public void sethealth(int health){
+		this.health = health;
 	}
 
 }
