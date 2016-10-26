@@ -1,5 +1,6 @@
+package model;
 
-public class horseshoeCrab {
+public class HorseshoeCrab {
 
 	/**
 	 * author:megan chen
@@ -14,13 +15,13 @@ public class horseshoeCrab {
 	 */
 	public int xloc;
 	public int yloc;
-	public Location current;
-	public Location destination;
+	//public Location current;
+	//public Location destination;
 	
-	public horseshoeCrab(int x, int y, Location destination, Location current) {
+	public HorseshoeCrab(int x, int y /*Location destination, Location current*/) {
 		this.xloc = x;
 		this.yloc = y;
-		this.destination = destination;
-		this.current = current;
+		//this.destination = destination;
+		//this.current = current;
 	}
 }
