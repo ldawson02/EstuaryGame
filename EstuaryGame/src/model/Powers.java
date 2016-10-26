@@ -8,7 +8,7 @@ package model;
  * @since 10/26/16
  */
 
-public abstract class Powers implements Floater {
+public abstract class Powers extends Item implements Floater {
 	public abstract void appear();
 	public abstract void disappear();
 }
