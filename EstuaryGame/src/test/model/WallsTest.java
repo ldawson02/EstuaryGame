@@ -22,7 +22,7 @@ public class WallsTest {
 		wall2 = new Wall(5,5);
 		wall1.setHealth(0);
 		wall2.setHealth(0);
-		healthBar.sethealth(100);
+		healthBar.setHealth(100);
 	}
 	@AfterClass
 	public void tearDownAfterClass() throws Exception {
