@@ -11,7 +11,6 @@ public class HealthBarTest {
 
 		HealthBar healthBar = new HealthBar();
 	
-	
 	@Test
 	public void maxHealthtest() {
 		//Max health is 100
