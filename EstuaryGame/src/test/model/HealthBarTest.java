@@ -15,29 +15,29 @@ public class HealthBarTest {
 	@Test
 	public void maxHealthtest() {
 		//Max health is 100
-		healthBar.sethealth(0);
+		healthBar.setHealth(0);
 		healthBar.update(50);
 		healthBar.update(70);
 		healthBar.update(-5);
 		
-		assertEquals(healthBar.gethealth(), 100);
+		assertEquals(healthBar.getHealth(), 100);
 	}
 	@Test
 	public void minHealthTest(){
 		//Min health is 0
-		healthBar.sethealth(0);
+		healthBar.setHealth(0);
 		healthBar.update(12);
 		healthBar.update(-20);
 		
-		assertEquals(healthBar.gethealth(), 0);
+		assertEquals(healthBar.getHealth(), 0);
 	}
 	@Test
 	public void updatehealthBar() {
-		healthBar.sethealth(0);
+		healthBar.setHealth(0);
 		healthBar.update(20);
 		healthBar.update(-15);
 		
-		assertEquals(healthBar.gethealth(),5);
+		assertEquals(healthBar.getHealth(),5);
 	}
 
 }
