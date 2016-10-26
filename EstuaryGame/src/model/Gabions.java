@@ -8,10 +8,10 @@ public class Gabions extends Barriers {
 	
 	@Override
 	public void build(){
-		
+		this.setDecayTime(0);	
 	}
 	@Override
-	public void decay(){
+	public void decay(int time){
 		
 	}
 	@Override
@@ -24,4 +24,6 @@ public class Gabions extends Barriers {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	
 }
