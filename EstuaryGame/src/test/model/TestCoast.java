@@ -10,17 +10,18 @@ import org.junit.Test;
 
 import model.AllDebris;
 import model.Coast;
+import model.CoastL;
 
 public class TestCoast {
 
-	public Coast coast;
+	public CoastL coast;
 	int maxsize = 5;
 	int minsize = 0;
 	double erosionrate = 1.0;
 	
 	@BeforeClass
 	public void setUpBeforeClass() throws Exception {
-		coast = new Coast();
+		coast = new CoastL();
 	}
 
 	@AfterClass

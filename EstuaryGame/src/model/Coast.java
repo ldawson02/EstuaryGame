@@ -8,7 +8,7 @@ package model;
 * @since 10/25/16
 */
 
-public class Coast extends Item {
+public abstract class Coast extends Item {
 
 	/**
 	 * The current size of the coast
@@ -136,4 +136,5 @@ public class Coast extends Item {
 		
 	}
 	
+	public abstract void updateCoords();
 }
