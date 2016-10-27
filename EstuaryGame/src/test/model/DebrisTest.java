@@ -1,5 +1,7 @@
 package test.model;
 
+
+
 import static org.junit.Assert.*;
 
 import org.junit.After;
@@ -10,12 +12,15 @@ import org.junit.Test;
 
 import eNums.eDebrisState;
 import eNums.eDebrisType;
+import eNums.eThrowDirection;
 import model.CoastL;
 import model.CoastR;
 import model.Debris;
 
 public class DebrisTest {
 
+	//TODO: Technically, the coasts and the debris need to be connected
+	//through the GameController
 	Debris trash;
 	Debris recyc;
 	CoastL coastL;
@@ -35,6 +40,8 @@ public class DebrisTest {
 
 	@Before
 	public void setUp() throws Exception {
+		trash.setState(eDebrisState.MOVING);
+		recyc.setState(eDebrisState.MOVING);
 	}
 
 	@After
@@ -49,8 +56,68 @@ public class DebrisTest {
 	}
 	
 	@Test
-	public void testThrow() {
-		
+	public void testThrowTrashCorrect() {
+		//Empty coasts
+		assertEquals(coastL.getBuildUp().count(), 0);
+		assertEquals(coastR.getBuildUp().count(), 0);
+		//Throw it correctly
+		trash.setState(eDebrisState.LIFTED);
+		trash.throwDebris(eThrowDirection.LEFT);
+		assertEquals(eThrowDirection.LEFT.getDirection(), eDebrisType.TRASH.getType());
+		//Should not build up the coasts
+		assertEquals(coastL.getBuildUp().count(), 0);
+		assertEquals(coastR.getBuildUp().count(), 0);
+	}
+	
+	@Test
+	public void testThrowTrashIncorrect() {
+		//Empty coasts
+		assertEquals(coastL.getBuildUp().count(), 0);
+		assertEquals(coastR.getBuildUp().count(), 0);
+		//Throw it correctly
+		trash.setState(eDebrisState.LIFTED);
+		trash.throwDebris(eThrowDirection.RIGHT);
+		assertEquals(eThrowDirection.RIGHT.getDirection(), eDebrisType.RECYCLING.getType());
+		//Should build up the right coast
+		assertEquals(coastR.getBuildUp().count(), 1);
+		assertEquals(coastL.getBuildUp().count(), 0);
+	}
+	
+	@Test
+	public void testThrowRecyclingCorrect() {
+		//Empty coasts
+		assertEquals(coastL.getBuildUp().count(), 0);
+		assertEquals(coastR.getBuildUp().count(), 0);
+		//Throw it correctly
+		recyc.setState(eDebrisState.LIFTED);
+		recyc.throwDebris(eThrowDirection.RIGHT);
+		assertEquals(eThrowDirection.RIGHT.getDirection(), eDebrisType.RECYCLING.getType());
+		//Should not build up the coasts
+		assertEquals(coastL.getBuildUp().count(), 0);
+		assertEquals(coastR.getBuildUp().count(), 0);
+	}
+	
+	@Test
+	public void testThrowRecyclingIncorrect() {
+		//Empty coasts
+		assertEquals(coastL.getBuildUp().count(), 0);
+		assertEquals(coastR.getBuildUp().count(), 0);
+		//Throw it correctly
+		recyc.setState(eDebrisState.LIFTED);
+		recyc.throwDebris(eThrowDirection.LEFT);
+		assertEquals(eThrowDirection.LEFT.getDirection(), eDebrisType.TRASH.getType());
+		//Should build up the left coast
+		assertEquals(coastL.getBuildUp().count(), 1);
+		assertEquals(coastR.getBuildUp().count(), 0);
+	}
+	
+	@Test
+	public void testCorrectBin() {
+		assertTrue(trash.correctBin(eThrowDirection.LEFT));
+		assertTrue(recyc.correctBin(eThrowDirection.RIGHT));
+		assertFalse(trash.correctBin(eThrowDirection.RIGHT));
+		assertFalse(recyc.correctBin(eThrowDirection.LEFT));
 	}
 
 }
+

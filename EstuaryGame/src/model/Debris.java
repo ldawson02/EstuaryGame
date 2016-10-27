@@ -2,6 +2,7 @@ package model;
 
 import eNums.eDebrisState;
 import eNums.eDebrisType;
+import eNums.eThrowDirection;
 
 /**
  * 
@@ -75,15 +76,11 @@ public class Debris extends Item implements Floater {
 		
 	}
 	
-	public void throwRecycling(){
+	public void throwDebris(eThrowDirection dir) {
 		
 	}
 	
-	public void throwTrash(){
-		
-	}
-	
-	public boolean correctBin(){
+	public boolean correctBin(eThrowDirection dir){
 		return false;
 	}
 	
