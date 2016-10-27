@@ -1,3 +1,4 @@
+
 package model;
 
 public class HorseshoeCrab extends Friend{
@@ -6,7 +7,7 @@ public class HorseshoeCrab extends Friend{
 	 * author:megan chen
 	 * The horseshoe should have a xloc, yloc, current location and destination. 
 	 * @since 10/25/16 
-   * @version 1.0
+     * @version 1.0
 	 * @param int x
 	 * @param int y
 	 * @param Location destination
@@ -24,6 +25,21 @@ public class HorseshoeCrab extends Friend{
 		//this.destination = destination;
 		//this.current = current;
 	}
+	public int getXloc() {
+		return xloc;
+	}
+
+	public void setXloc(int xloc) {
+		this.xloc = xloc;
+	}
+
+	public int getYloc() {
+		return yloc;
+	}
+
+	public void setYloc(int yloc) {
+		this.yloc = yloc;
+	}
 
 	@Override
 	public void appear() {
@@ -36,4 +52,6 @@ public class HorseshoeCrab extends Friend{
 		// TODO Auto-generated method stub
 		
 	}
+
+
 }
