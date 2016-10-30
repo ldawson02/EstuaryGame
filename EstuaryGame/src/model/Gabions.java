@@ -1,5 +1,7 @@
 package model;
 
+import controller.ActiveItems;
+
 public class Gabions extends Barriers {
 	
 	public Gabions(int x, int y){
@@ -8,14 +10,18 @@ public class Gabions extends Barriers {
 	
 	@Override
 	public void build(){
-		this.setDecayTime(0);	
+		this.setDecayTime(0);
+		this.setHealth(100);
+		ActiveItems.barriers.add(this);
 	}
 	@Override
 	public void decay(int time){
-		
+		int gabionHealth = (int) (this.getHealth() - 2.5*time);
+		this.setHealth(gabionHealth);
 	}
 	@Override
 	public void crumble(){
+		ActiveItems.barriers.remove(this);
 		
 	}
 
@@ -27,7 +33,8 @@ public class Gabions extends Barriers {
 	@Override
 	public void updateHealthBar() {
 		// TODO Auto-generated method stub
-		
+		int adjustedHealth = -(100-this.getHealth())/10;
+		ActiveItems.hBar.update(adjustedHealth);	
 	}
 	
 	

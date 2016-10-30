@@ -13,7 +13,7 @@ public class RemoveTest {
 
 	@BeforeClass
 	public void setUpBeforeClass() throws Exception {
-		removepower = new Remove();
+		removepower = new Remove(4,5);
 		
 	}
 
