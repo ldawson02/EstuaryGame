@@ -14,18 +14,22 @@ public abstract class Coast extends Item {
 	 * The current size of the coast
 	 */
 	private int size;
+	
 	/**
 	 * The minimum size of the coast
 	 */
 	private int minsize;
+	
 	/**
 	 * The maximum size of the coast
 	 */
 	private int maxsize;
+	
 	/**
 	 * The rate at which it erodes
 	 */
 	private double erosionRate;
+	
 	/**
 	 * The Debris items on the coast
 	 */
