@@ -14,7 +14,7 @@ public class RebuildTest {
 
 	@BeforeClass
 	public void setUpBeforeClass() throws Exception {
-		rebuildpower = new Rebuild();
+		rebuildpower = new Rebuild(0,4);
 	}
 
 	@Test
