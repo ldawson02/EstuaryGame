@@ -1,8 +1,12 @@
 package model;
 
-public class Remove extends Powers {
+import controller.ActiveItems;
+
+public class Remove extends Powers implements HealthChangers {
 	
-	public Remove(){};
+	public Remove(int x, int y){
+		super(x,y);
+	};
 	
 
 	@Override
@@ -14,24 +18,35 @@ public class Remove extends Powers {
 	@Override
 	public void catching() {
 		// TODO Auto-generated method stub
+		for (Debris d : ActiveItems.debris){
+			ActiveItems.debris.remove(d);	
+		}
 		
 	}
 
 	@Override
 	public void appear() {
 		// TODO Auto-generated method stub
+		ActiveItems.powerups.add(this);
 		
 	}
 
 	@Override
 	public void disappear() {
 		// TODO Auto-generated method stub
-		
+		ActiveItems.powerups.remove(this);
 	}
 
 
 	@Override
 	public void PlayerCollision(Item item) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void updateHealthBar() {
 		// TODO Auto-generated method stub
 		
 	}

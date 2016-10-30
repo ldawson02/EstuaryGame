@@ -9,6 +9,9 @@ package model;
  */
 
 public abstract class Powers extends Item implements Interactable, Floater {
+	public Powers(int x, int y){
+		super(x,y);
+	};
 	public abstract void appear();
 	public abstract void disappear();
 }

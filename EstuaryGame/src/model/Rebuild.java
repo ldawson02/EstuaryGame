@@ -1,8 +1,12 @@
 package model;
 
+import controller.ActiveItems;
+
 public class Rebuild extends Powers implements HealthChangers{
 
-	public Rebuild(){};
+	public Rebuild(int x, int y){
+		super(x,y);
+	};
 	
 	@Override
 	public void floating() {
@@ -13,19 +17,23 @@ public class Rebuild extends Powers implements HealthChangers{
 	@Override
 	public void catching() {
 		// TODO Auto-generated method stub
+		for (Coast c : ActiveItems.coasts){
+			c.rebuild();	
+		}
 		
 	}
 
 	@Override
 	public void appear() {
 		// TODO Auto-generated method stub
+		ActiveItems.powerups.add(this);
 		
 	}
 
 	@Override
 	public void disappear() {
 		// TODO Auto-generated method stub
-		
+		ActiveItems.powerups.remove(this);
 	}
 
 	@Override
