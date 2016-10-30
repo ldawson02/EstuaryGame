@@ -35,7 +35,7 @@ public class RemoveTest {
 	}
 	@Test
 	public void catchingTest() {
-		
+		//did the right action get performed when the item was caught
 	}
 	
 	@Test

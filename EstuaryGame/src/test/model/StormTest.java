@@ -31,6 +31,7 @@ public class StormTest {
 		}
 		s.destroyGabions();
 		assertEquals(gabs.size(), 5);
+		
 		//should not get below 0
 		ArrayList<Gabions> gab2 = new ArrayList<Gabions>();
 		for (int i = 0; i < 3; i++) {
