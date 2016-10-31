@@ -1,4 +1,7 @@
 package model;
+
+import eNums.eBarrierType;
+
 /**
  * Barrier interface. Each barrier has build, decay, and crumble methods.
  * 
@@ -10,6 +13,7 @@ public abstract class Barriers extends Item implements Interactable, HealthChang
 	private int decayTime;
 	//overall state of the barrier
 	private int health;
+	private eBarrierType type;
 	
 	/**
 	 * Constructor for Barrier
@@ -36,6 +40,14 @@ public abstract class Barriers extends Item implements Interactable, HealthChang
 
 	public void setHealth(int health) {
 		this.health = health;
+	}
+
+	public eBarrierType getType() {
+		return type;
+	}
+
+	public void setType(eBarrierType type) {
+		this.type = type;
 	}
 	
 	
