@@ -6,6 +6,14 @@ public class BarrierSpace extends Item {
 
 	private Barriers barrier;
 	
+	public void setBarrier(Barriers b){
+		barrier = b;
+	}
+	
+	public Barriers getBarrier(){
+		return barrier;
+	}
+	
 	private BarrierSpace(int x, int y) {
 		super(x, y);
 		setWidth(40);

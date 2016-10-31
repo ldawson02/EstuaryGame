@@ -14,7 +14,7 @@ public class Wall extends Barriers {
 		// TODO Auto-generated method stub
 		this.setDecayTime(0);
 		this.setHealth(100);
-		ActiveItems.barriers.add(this);
+		//ActiveItems.barriers.add(this);
 		
 
 	}
@@ -30,7 +30,7 @@ public class Wall extends Barriers {
 	@Override
 	public void crumble() {
 		// TODO Auto-generated method stub
-		ActiveItems.barriers.remove(this);
+		//ActiveItems.barriers.remove(this);
 
 	}
 

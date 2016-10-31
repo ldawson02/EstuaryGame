@@ -28,14 +28,14 @@ public class Rebuild extends Powers implements HealthChangers{
 	@Override
 	public void appear() {
 		// TODO Auto-generated method stub
-		ActiveItems.powerups.add(this);
+		//ActiveItems.powerups.add(this);
 		
 	}
 
 	@Override
 	public void disappear() {
 		// TODO Auto-generated method stub
-		ActiveItems.powerups.remove(this);
+		//ActiveItems.powerups.remove(this);
 	}
 
 	@Override

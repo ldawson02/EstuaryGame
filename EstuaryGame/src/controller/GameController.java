@@ -17,13 +17,14 @@ import javax.swing.KeyStroke;
 
 import controller.*;
 import eNums.eDebrisType;
+import eNums.eScreenTimerState;
 
 public class GameController {
 
 	//the big shebang
 	private EstuaryGame mainGame;
 	Player mainPlayer;
-	private ActiveItems items;
+	private ActiveItems items = new ActiveItems();
 	Action leftAct;
 	Action rightAct;
 	Action upAct;
@@ -83,20 +84,30 @@ public class GameController {
 		mainGame.bindKeyWith("x.right", KeyStroke.getKeyStroke("RIGHT"), rightAct);
 		mainGame.bindKeyWith("x.up", KeyStroke.getKeyStroke("UP"), upAct);
 		mainGame.bindKeyWith("x.down", KeyStroke.getKeyStroke("DOWN"), downAct);
+		
 		//maybe also have an action for building gabion, like pressing g
 		mainGame.bindKeyWith("gabionBuild", KeyStroke.getKeyStroke("g"), new gabionAct());
 		mainGame.bindKeyWith("wallBuild", KeyStroke.getKeyStroke("h"), new wallAct());
 		
+		
+		
 		//Create the initial walls
-		for(int i = 0; i<4; i++){
-			items.addBarrier(new Wall());//TODO: meh
-		}
+		//TODO: this is gross I'll make it look better later
+		//Random r = new Random();
+		int xPos = items.getCoastL().getBarrierSpaces().get(3).getPosX();
+		int yPos = items.getCoastL().getBarrierSpaces().get(3).getPosY();
+		items.addBarrier(new Wall(xPos,yPos));
+		xPos = items.getCoastL().getBarrierSpaces().get(1).getPosX();
+		yPos = items.getCoastL().getBarrierSpaces().get(1).getPosY();
+		items.addBarrier(new Wall(xPos,yPos));
+		xPos = items.getCoastR().getBarrierSpaces().get(2).getPosX();
+		yPos = items.getCoastR().getBarrierSpaces().get(2).getPosY();
+		items.addBarrier(new Wall(xPos,yPos));
+		xPos = items.getCoastR().getBarrierSpaces().get(4).getPosX();
+		yPos = items.getCoastR().getBarrierSpaces().get(4).getPosY();
+		items.addBarrier(new Wall(xPos,yPos));
 		
-		//create the coasts
-		
-		
-		
-		mainGame.imageLoad();
+		//mainGame.imageLoad();
 		initTitleScreen();
 		startGame();
 	}
@@ -110,7 +121,7 @@ public class GameController {
 		//	->create timer for debris
 		//Turn on the screen timer!
 		items.addScreenTimer(new ScreenTimer());
-		items.getScreenTimer.start();
+		items.getScreenTimer().start();
 		
 		debrisMover = new spawnDebris();
 		powerMover = new spawnPowers();
@@ -209,7 +220,7 @@ public class GameController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			mainGame.paint(mainGame.getGraphics());
-			if(items.getScreenTimer.getState()==eScreenTimerState.ON){
+			if(items.getScreenTimer().getState()==eScreenTimerState.ON){
 				timeElapsed+=paintDelay;
 			}
 		}

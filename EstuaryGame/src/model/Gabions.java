@@ -12,7 +12,7 @@ public class Gabions extends Barriers {
 	public void build(){
 		this.setDecayTime(0);
 		this.setHealth(100);
-		ActiveItems.barriers.add(this);
+		//ActiveItems.barriers.add(this);
 	}
 	@Override
 	public void decay(int time){
@@ -21,7 +21,7 @@ public class Gabions extends Barriers {
 	}
 	@Override
 	public void crumble(){
-		ActiveItems.barriers.remove(this);
+		//ActiveItems.barriers.remove(this);
 		
 	}
 
@@ -34,7 +34,7 @@ public class Gabions extends Barriers {
 	public void updateHealthBar() {
 		// TODO Auto-generated method stub
 		int adjustedHealth = -(100-this.getHealth())/10;
-		ActiveItems.hBar.update(adjustedHealth);	
+		//ActiveItems.hBar.update(adjustedHealth);	
 	}
 	
 	
