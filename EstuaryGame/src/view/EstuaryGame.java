@@ -64,10 +64,8 @@ public class EstuaryGame extends JComponent {
 
     public EstuaryGame() {
     	//Initialize a new GameController and connect them
-    	gc = new GameController();
-    	gc.setMainGame(this);
-    	gc.setup();
- 
+    	gc = new GameController(this);
+    	
     }
 
     public void bindKeyWith(String name, KeyStroke keyStroke, Action action) {
@@ -133,9 +131,26 @@ public class EstuaryGame extends JComponent {
     
     private void paintHealthBar(Graphics g) {
     	HealthBar hb = gc.getItems().getHealthBar();
-    	int currHealth = hb.getHealth();
-    	int maxHealth = hb.getMaxHealth();
-    	//TODO: paint the health bar based on health / max health
+    	double currHealth = hb.getHealth();
+    	double maxHealth = hb.getMaxHealth();
+    	double barY = hb.getPosY();
+    	double barX = hb.getPosX();
+    	double barWidth = hb.getWidth();
+    	double barHeight = hb.getHeight();
+    	
+    	//Concept: painting two rectangles: One that is the outline
+    	//of the health bar, one that is the current health
+    	//Backing
+    	g.setColor(Color.WHITE);
+    	g.fillRect((int) barY,(int) barX,(int) barWidth,(int) barHeight);
+    	//Health
+    	double currHealthHeight = (currHealth / maxHealth)*barHeight;
+    	double currHealthY = (barHeight - currHealthHeight) + barY;
+        g.setColor(Color.RED);
+    	g.fillRect((int) barX,(int) currHealthY,(int) barWidth,(int) currHealthHeight);
+    	//Outline
+    	g.setColor(Color.BLACK);
+    	g.drawRect((int)barX, (int)barY,(int) barWidth,(int) barHeight);
     }
     
     private void paintPlayer(Graphics g) {

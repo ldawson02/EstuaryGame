@@ -11,6 +11,8 @@ package model;
 public class HealthBar extends Item {
 	private final int maxHealth = 100;
 	private final int minHealth = 0;
+	private final int height = 100;
+	private final int width = 30;
 	private int health;
 	
 	/**
@@ -56,6 +58,20 @@ public class HealthBar extends Item {
 	 */
 	public int getMinHealth() {
 		return minHealth;
+	}
+
+	/**
+	 * @return the height
+	 */
+	public int getHeight() {
+		return height;
+	}
+
+	/**
+	 * @return the width
+	 */
+	public int getWidth() {
+		return width;
 	}
 
 }

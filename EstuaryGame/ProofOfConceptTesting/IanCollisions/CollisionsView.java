@@ -98,7 +98,28 @@ public class CollisionsView extends JComponent {
         g.setColor(Color.BLACK);
         g.fillRect((int) player.getX(), (int) player.getY(), (int) player.getWidth(), (int) player.getHeight());
         
+        double currHealth = 45;
+    	double maxHealth = 100;
+    	double barY = 100;
+    	int barX = 100;
+    	int barWidth = 30;
+    	double barHeight = 100;
+    	
+    	//Concept: painting two rectangles: One that is the outline
+    	//of the health bar, one that is the current health
+    	g.setColor(Color.WHITE);
+    	g.fillRect((int)barX,(int) barY, barWidth,(int) barHeight);
+    	
+    	double currHealthHeight = (currHealth / maxHealth)*barHeight;
+    	double currHealthY = (barHeight - currHealthHeight) + barY;
+    	System.out.println(currHealthHeight + "" + currHealthY);
+        g.setColor(Color.RED);
+    	g.fillRect(barX+1,(int) currHealthY, barWidth-1,(int) currHealthHeight);
+    	
         g.drawString(Integer.toString(timeElapsed), 40, 40);
+
+    	g.setColor(Color.BLACK);
+    	g.drawRect(barX, (int)barY, barWidth-1, (int)barHeight);
         
         paintDebris(g);
     }
