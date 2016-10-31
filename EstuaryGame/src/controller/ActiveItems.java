@@ -7,14 +7,24 @@ public class ActiveItems {
 	//class that holds all our actual active items in an instance of the game
 	Player mainPlayer;
 
-	public HealthBar hBar;
-	public ScreenTimer screentimer;
-	public ArrayList<Barriers> barriers;
-	public ArrayList<Debris> debris;
-	public ArrayList<Coast> coasts;
-	public ArrayList<Powers> powerups;
-	public ArrayList<Bin> bins;
+	private HealthBar hBar;
+	private ScreenTimer screentimer;
+	private ArrayList<Barriers> barriers;
+	private ArrayList<Debris> debris;
+	private CoastL coastL;
+	private CoastR coastR;
+	private ArrayList<Powers> powerups;
+	private ArrayList<Bin> bins;
 	
+	public ActiveItems() {
+		//At the very least, initialize the lists and add the coasts
+		barriers = new ArrayList<Barriers>();
+		debris = new ArrayList<Debris>();
+		coastL = new CoastL();
+		coastR = new CoastR();
+		powerups = new ArrayList<Powers>();
+		bins = new ArrayList<Bin>();
+	}
 	
 	/**
 	 * Allows access to the main Player for the Model and View
@@ -44,6 +54,20 @@ public class ActiveItems {
 		return debris;
 	}
 	
+	/**
+	 * @return the coastL
+	 */
+	public CoastL getCoastL() {
+		return coastL;
+	}
+
+	/**
+	 * @return the coastR
+	 */
+	public CoastR getCoastR() {
+		return coastR;
+	}
+
 	public boolean removeDebris(Debris d){
 		return debris.remove(d);
 	}
@@ -55,10 +79,7 @@ public class ActiveItems {
 	public HealthBar getHealthBar(){
 		return hBar;
 	}
-	
-	public ArrayList<Coast> getAllCoasts(){
-		return coasts;
-	}
+
 	
 	public ArrayList<Powers> getAllPowers(){
 		return powerups;
