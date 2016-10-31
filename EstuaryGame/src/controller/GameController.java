@@ -14,7 +14,6 @@ import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.KeyStroke;
 
-import MovingRectangle.AngleAction;
 import controller.*;
 import eNums.eDebrisType;
 
@@ -28,6 +27,11 @@ public class GameController {
 	Action rightAct;
 	Action upAct;
 	Action downAct;
+	
+	public GameController(EstuaryGame mainGame){
+		setMainGame(mainGame);
+		setup();
+	}
 	
 	public EstuaryGame getMainGame() {
 		return mainGame;
@@ -90,15 +94,6 @@ public class GameController {
 		
 	}
 	
-	/*THIS SHOULD BE IN VIEW I THINK
-	 * 
-	public void bindKeyWith(String name, KeyStroke keyStroke, Action action){
-		InputMap im = getInputMap(WHEN_IN_FOCUSED_WINDOW);
-		ActionMap am = getActionMap();
-		im.put(keyStroke, name);
-		am.put(name, action);
-	}
-	*/	
 	
 	//Increase difficulty based on health and timer
 	public void checkDifficulty(){

@@ -64,9 +64,7 @@ public class EstuaryGame extends JComponent {
 
     public EstuaryGame() {
     	//Initialize a new GameController and connect them
-    	gc = new GameController();
-    	gc.setMainGame(this);
-    	gc.setup();
+    	gc = new GameController(this);
  
     }
 
