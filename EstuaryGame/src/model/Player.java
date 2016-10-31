@@ -5,6 +5,10 @@ public class Player extends Item implements Movers {
 	public int speed;
 	public int direction;
 	
+	public Player(){
+		this.setHeight(40);
+		this.setWidth(40);
+	}
 	@Override
 	public void move() {
 		// TODO Auto-generated method stub

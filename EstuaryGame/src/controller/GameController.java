@@ -64,6 +64,7 @@ public class GameController {
 	public void setup(){
 		//Create the player
 		mainPlayer = new Player();
+		mainPlayer.updatePos(380, 280); //These are hard coded
 		
 		//bind the keys
 		leftAct = new HAction(-1 * mainPlayer.speed);
@@ -75,6 +76,8 @@ public class GameController {
 		mainGame.bindKeyWith("x.up", KeyStroke.getKeyStroke("UP"), upAct);
 		mainGame.bindKeyWith("x.down", KeyStroke.getKeyStroke("DOWN"), downAct);
 		//maybe also have an action for building gabion, like pressing g
+		mainGame.bindKeyWith("gabionBuild", KeyStroke.getKeyStroke("g"), new gabionAct());
+		mainGame.bindKeyWith("wallBuild", KeyStroke.getKeyStroke("h"), new wallAct());
 		
 		//Create the initial walls
 		for(int i = 0; i<4; i++){
@@ -104,6 +107,8 @@ public class GameController {
 		
 		debrisFloating = new Timer(floatDelay, debrisMover);
 		debrisFloating.start();
+		
+		powersFloating = new Timer(floatDelay, powerMover);
 	}
 	
 	public void gameOver(){
@@ -183,11 +188,10 @@ public class GameController {
 	public class spawnPowers implements ActionListener{
 		public int timePassed = 0;
 		public int spawnTimePowers;
-		public int aveTime;
+		public int aveTime = 10000;
 		final public int rTime = 500;
 
 		public spawnPowers(){
-			items.addPower(newPower());
 			resetTimer();
 		}
 
@@ -313,4 +317,20 @@ public class GameController {
 		
 	}
 	
+	public class wallAct extends AbstractAction{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			items.addBarrier(new Wall(mainPlayer.getPosX(), mainPlayer.getPosY()));
+		}
+		
+	}
+	public class gabionAct extends AbstractAction{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			items.addBarrier(new Gabions(mainPlayer.getPosX(), mainPlayer.getPosY()));
+		}
+		
+	}
 }
