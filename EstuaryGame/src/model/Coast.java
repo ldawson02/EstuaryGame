@@ -35,7 +35,6 @@ public abstract class Coast extends Item {
 	/**
 	 * The Debris items on the coast
 	 */
-	private AllDebris buildUp;
 	
 	private ArrayList<BarrierSpace> barrierSpaces;
 	
@@ -111,17 +110,7 @@ public abstract class Coast extends Item {
 	/**
 	 * @return the buildUp
 	 */
-	public AllDebris getBuildUp() {
-		return buildUp;
-	}
-
-	/**
-	 * @param buildUp the buildUp to set
-	 */
-	public void setBuildUp(AllDebris buildUp) {
-		this.buildUp = buildUp;
-	}
-
+	
 	/**
 	 * @return the barrierSpaces
 	 */

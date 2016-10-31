@@ -165,7 +165,7 @@ public class GameController {
 		//The time after which debris should spawn again (changes every time respawned)
 		public int spawnTimeDebris;
 		//The average length of time based on difficulty
-		public int aveTime = 8000;
+		public int aveTime = 3000;
 		//The limit to the random distributions range in milliseconds (AKA +- rTime/2)
 		final public int rTime = 500;
 		
@@ -178,9 +178,17 @@ public class GameController {
 		public Debris newDebris(){
 			Random r = new Random();
 			//generate initial position;
-			int xPos = MovementController.getStart(r.nextInt(500)+150);
+			int randomx = r.nextInt(500)+150;
+			System.out.println("random x" + randomx);
+			int xPos = MovementController.getStart(randomx);
 			
-			Debris d = new Debris(eDebrisType.values()[r.nextInt()%2]);
+			int dtype = r.nextInt() % 2;
+			Debris d;
+			if (dtype == 0) {
+				d = new Debris(eDebrisType.TRASH);
+			} else {
+				d = new Debris(eDebrisType.RECYCLING);
+			}
 			d.updatePos(xPos, 0);
 			return d;
 		}

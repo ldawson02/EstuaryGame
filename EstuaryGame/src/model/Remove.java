@@ -19,11 +19,12 @@ public class Remove extends Powers implements HealthChangers {
 
 	@Override
 	public void catching() {
+		/*
 		// TODO Auto-generated method stub
 		for (Debris d : ActiveItems.debris){
 			ActiveItems.debris.remove(d);	
 		}
-		
+		*/
 	}
 
 	@Override

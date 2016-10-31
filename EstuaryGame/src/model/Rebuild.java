@@ -18,10 +18,11 @@ public class Rebuild extends Powers implements HealthChangers{
 
 	@Override
 	public void catching() {
+		/*
 		// TODO Auto-generated method stub
 		for (Coast c : ActiveItems.coasts){
 			c.rebuild();	
-		}
+		}*/
 		
 	}
 
