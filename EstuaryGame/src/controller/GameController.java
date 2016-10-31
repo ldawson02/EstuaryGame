@@ -4,6 +4,7 @@ import model.*;
 import view.*;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 
 import javax.swing.AbstractAction;
@@ -55,7 +56,8 @@ public class GameController {
 	}
 	
 	public void startGame(){
-		
+		//set up automatic movements!
+		//	->create timer for debris
 	}
 	
 	public void gameOver(){
@@ -63,7 +65,7 @@ public class GameController {
 	}
 	
 	public void initTitleScreen(){
-		
+		//this actually should probably be in the VIEW
 	}
 	
 	public void imageLoad(){
@@ -71,6 +73,7 @@ public class GameController {
 	}
 	
 	/*THIS SHOULD BE IN VIEW I THINK
+	 * 
 	public void bindKeyWith(String name, KeyStroke keyStroke, Action action){
 		InputMap im = getInputMap(WHEN_IN_FOCUSED_WINDOW);
 		ActionMap am = getActionMap();
@@ -78,6 +81,41 @@ public class GameController {
 		am.put(name, action);
 	}
 	*/	
+	
+	//Increase difficulty based on health and timer
+	public void checkDifficulty(){
+		//TODO: let's have 5 different difficulty levels where the speed of erosion and debris spawn changes
+	}
+	
+	//At (slightly) random intervals spawn debris
+	public class spawnDebris implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			//if the timer goes off then add another piece of debris at the top
+			if(the thing){
+				do the thing
+			}
+			for(Debris d : items.getAllDebris()){
+				//make each item float
+				d.floating();
+			}
+			
+		}
+		
+	}
+	
+	//At (slightly) random intervals erode stuff
+	public class erosion implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			
+		}
+		
+	}
+	
 	public class HAction extends AbstractAction{
 		
 		//the amount the player moves when you press the key
