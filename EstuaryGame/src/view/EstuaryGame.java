@@ -23,6 +23,7 @@ import eNums.eBarrierType;
 import eNums.eDebrisType;
 import model.Barriers;
 import model.Debris;
+import model.HealthBar;
 
 public class EstuaryGame extends JComponent {
 
@@ -86,13 +87,15 @@ public class EstuaryGame extends JComponent {
         
         //Paint barriers
         paintBarriers(g);
+        
         //Paint debris
-        //TODO
+        paintDebris(g);
+        
         //Paint player
         paintPlayer(g);
         
         //Paint health bar
-        //TODO
+        paintHealthBar(g);
         
         
         g.drawString(Integer.toString(timeElapsed), 40, 40);
@@ -126,6 +129,13 @@ public class EstuaryGame extends JComponent {
     			//TODO: paint like recycling
     		}
     	}
+    }
+    
+    private void paintHealthBar(Graphics g) {
+    	HealthBar hb = gc.getItems().getHealthBar();
+    	int currHealth = hb.getHealth();
+    	int maxHealth = hb.getMaxHealth();
+    	//TODO: paint the health bar based on health / max health
     }
     
     private void paintPlayer(Graphics g) {
