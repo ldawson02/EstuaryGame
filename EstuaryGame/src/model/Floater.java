@@ -7,8 +7,32 @@ package model;
  * @version 1.0
  * @since 10/26/16
  */
-public interface Floater {
-	public int getVertex();
-	public void floating();
-	public void catching();
+public abstract class Floater extends Item {
+	private int speed;
+	private int vertex;
+	public Floater(){
+		super();
+	}
+	public Floater(int x, int y){
+		super(x,y);
+	};
+	public abstract void floating();
+	public abstract void catching();
+	
+	/**
+	 * @return the speed
+	 */
+	public int getSpeed() {
+		return speed;
+	}
+
+	/**
+	 * @param speed the speed to set
+	 */
+	public void setSpeed(int speed) {
+		this.speed = speed;
+	}
+	public int getVertex() {
+		return vertex;
+	}
 }

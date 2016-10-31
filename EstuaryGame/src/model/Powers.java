@@ -8,7 +8,7 @@ package model;
  * @since 10/26/16
  */
 
-public abstract class Powers extends Item implements Interactable, Floater {
+public abstract class Powers extends Floater implements Interactable {
 	public Powers(int x, int y){
 		super(x,y);
 	};
