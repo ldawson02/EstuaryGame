@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class BarrierSpace extends Item {
 
+	private Barriers barrier;
+	
 	private BarrierSpace(int x, int y) {
 		super(x, y);
 		setWidth(40);
