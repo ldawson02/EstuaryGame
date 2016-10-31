@@ -8,7 +8,7 @@ public class MovementController {
 			xstart = 150+(-2/225)*(150)^2+shift;	
 		}
 		else if(shift > 400){
-			xstart = (2/225)*(150)^2+shift;
+			xstart = (2/4225)*(150)^2+shift;
 		}
 		return xstart;	
 	}
@@ -25,9 +25,18 @@ public class MovementController {
 				floater.updatePos(newx, newy);
 			}
 		}
-		else if(floater.getPosY()>=300){
+		
+		else if(floater.getPosY()>=300 && (floater.getPosX()>10 || floater.getPosX()<790)){
+			
+			if(floater.getVertex() <= 400){
+				floater.updatePos(floater.getPosX()-floater.getSpeed(), floater.getPosY());
+			}
+			else if(floater.getVertex() > 400){
+				floater.updatePos(floater.getPosX()+floater.getSpeed(), floater.getPosY());
+			}
 			
 		}
+		
 		
 		
 	}
