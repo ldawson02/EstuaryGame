@@ -35,6 +35,10 @@ public class GameController {
 	Timer coastRErosion;
 	Timer coastLErosion;
 	
+	final private int paintDelay = 30;
+	Timer theBigTimer;
+	private int timeElapsed = 0;
+	
 	spawnDebris debrisMover;
 	spawnPowers powerMover;
 	erosion RcoastMover;
@@ -62,6 +66,10 @@ public class GameController {
 	}
 
 	public void setup(){
+		//Start the paint timer
+		theBigTimer = new Timer(paintDelay, new mainTimer());
+		theBigTimer.start();
+		
 		//Create the player
 		mainPlayer = new Player();
 		mainPlayer.updatePos(380, 280); //These are hard coded
@@ -81,7 +89,7 @@ public class GameController {
 		
 		//Create the initial walls
 		for(int i = 0; i<4; i++){
-			items.addBarrier(new Wall());//TODO meh
+			items.addBarrier(new Wall());//TODO: meh
 		}
 		
 		//create the coasts
@@ -100,15 +108,25 @@ public class GameController {
 	public void startGame(){
 		//set up automatic movements!
 		//	->create timer for debris
+		//Turn on the screen timer!
+		items.addScreenTimer(new ScreenTimer());
+		items.getScreenTimer.start();
+		
 		debrisMover = new spawnDebris();
 		powerMover = new spawnPowers();
-		RcoastMover = new erosion(items.getAllCoasts().get(0));
-		LcoastMover = new erosion(items.getAllCoasts().get(1));
+		RcoastMover = new erosion(items.getCoastR());
+		LcoastMover = new erosion(items.getCoastL());
 		
 		debrisFloating = new Timer(floatDelay, debrisMover);
 		debrisFloating.start();
 		
 		powersFloating = new Timer(floatDelay, powerMover);
+		powersFloating.start();
+		
+		coastRErosion = new Timer(erodeDelay, RcoastMover);
+		coastLErosion = new Timer(erodeDelay, LcoastMover);
+		coastRErosion.start();
+		coastLErosion.start();
 	}
 	
 	public void gameOver(){
@@ -184,6 +202,23 @@ public class GameController {
 		
 	}
 	
+	//The point of this class is to create a timer that calls paints 
+	public class mainTimer implements ActionListener{
+
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			mainGame.paint(mainGame.getGraphics());
+			if(items.getScreenTimer.getState()==eScreenTimerState.ON){
+				timeElapsed+=paintDelay;
+			}
+		}
+		
+		
+		public int getTimeElapsed(){
+			return timeElapsed;
+		}
+	}
 	//At (slightly) random intervals spawn powers, only should be initialized once!!
 	public class spawnPowers implements ActionListener{
 		public int timePassed = 0;
@@ -333,4 +368,5 @@ public class GameController {
 		}
 		
 	}
+
 }
