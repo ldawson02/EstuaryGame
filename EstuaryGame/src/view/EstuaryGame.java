@@ -3,9 +3,11 @@ package view;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.QuadCurve2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -96,9 +98,18 @@ public class EstuaryGame extends JComponent {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g); 
         
+        //Handle collisions, probably
         
         //Paint background
         paintBackground(g);
+        
+        g.setColor(Color.BLACK);
+        Graphics2D g2d = (Graphics2D) g.create();
+        QuadCurve2D quadLeft = new QuadCurve2D.Double(0, 0, 300, 150, 0, 300);
+        QuadCurve2D quadRight = new QuadCurve2D.Double(800, 0, 500, 150, 800, 300);
+        g2d.draw(quadLeft);
+        g2d.draw(quadRight);
+        
         /**
         //Paint barriers
         paintBarriers(g);
@@ -183,15 +194,7 @@ public class EstuaryGame extends JComponent {
     	g.fillRect((int) player.getX(), (int) player.getY(), (int) player.getWidth(), (int) player.getHeight());
     }
 
-    private class DebrisWrapper {
-    	
-    	Ellipse2D.Double hitBox;
-    	Debris debrisItem;
-    	
-    	DebrisWrapper(Debris item, Ellipse2D.Double shape) {
-    		debrisItem = item;
-    		hitBox = shape;
-    	}
+    private void updateWrappers() {
     	
     }
     
