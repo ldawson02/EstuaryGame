@@ -9,7 +9,8 @@ package model;
 */
 
 public class HealthBar extends Item {
-	private static int maxHealth = 100;
+	private final int maxHealth = 100;
+	private final int minHealth = 0;
 	private int health;
 	
 	/**
@@ -27,6 +28,12 @@ public class HealthBar extends Item {
 	 */
 	public void update(int points) {
 		this.health += points;
+		if (health > maxHealth) {
+			health = 100;
+		}
+		else if (health < minHealth) {
+			health = 0;
+		}
 	};
 	
 	public int getHealth(){
@@ -35,6 +42,20 @@ public class HealthBar extends Item {
 	
 	public void setHealth(int health){
 		this.health = health;
+	}
+
+	/**
+	 * @return the maxHealth
+	 */
+	public int getMaxHealth() {
+		return maxHealth;
+	}
+
+	/**
+	 * @return the minHealth
+	 */
+	public int getMinHealth() {
+		return minHealth;
 	}
 
 }
