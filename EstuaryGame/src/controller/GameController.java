@@ -107,6 +107,7 @@ public class GameController {
 		yPos = items.getCoastR().getBarrierSpaces().get(4).getPosY();
 		items.addBarrier(new Wall(xPos,yPos));
 		
+		
 		//mainGame.imageLoad();
 		initTitleScreen();
 		startGame();
