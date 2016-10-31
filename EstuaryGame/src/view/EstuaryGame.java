@@ -125,10 +125,14 @@ public class EstuaryGame extends JComponent {
     	ArrayList<Barriers> barriers = gc.getItems().getAllBarriers();
     	for (Barriers b : barriers) {
     		if (b.getType() == eBarrierType.Gabion) {
-    			//TODO: paint like a gabion
+    			//For now, calling a gabion a green rectangle
+    			g.setColor(Color.GREEN);
+    			g.fillRect(b.getPosX(), b.getPosY(), b.getWidth(), b.getHeight());
     		}
     		else if (b.getType() == eBarrierType.Wall) {
-    			//TODO: paint like a wall
+    			//Calling a wall a dark gray wall
+    			g.setColor(Color.DARK_GRAY);
+    			g.fillRect(b.getPosX(), b.getPosY(), b.getWidth(), b.getHeight());
     		}
     	}
     }
@@ -138,9 +142,15 @@ public class EstuaryGame extends JComponent {
     	for (Debris d : debris) {
     		if (d.getType() == eDebrisType.TRASH) {
     			//TODO: paint like trash
+    			//Calling trash a yellow circle
+    			g.setColor(Color.YELLOW);
+    			g.fillOval(d.getPosX(), d.getPosY(), d.getWidth(), d.getHeight());
     		}
     		if (d.getType() == eDebrisType.RECYCLING) {
     			//TODO: paint like recycling
+    			//Calling recycling a blue circle
+    			g.setColor(Color.BLUE);
+    			g.fillOval(d.getPosX(), d.getPosY(), d.getWidth(), d.getHeight());
     		}
     	}
     }
