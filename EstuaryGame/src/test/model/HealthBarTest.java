@@ -17,8 +17,8 @@ public class HealthBarTest {
 		//Max health is 100
 		healthBar.setHealth(0);
 		healthBar.update(50);
-		healthBar.update(70);
 		healthBar.update(-5);
+		healthBar.update(70);
 		
 		assertEquals(healthBar.getHealth(), 100);
 	}
