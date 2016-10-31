@@ -6,6 +6,7 @@ import view.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
+import java.util.Random;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -15,6 +16,7 @@ import javax.swing.KeyStroke;
 
 import MovingRectangle.AngleAction;
 import controller.*;
+import eNums.eDebrisType;
 
 public class GameController {
 
@@ -103,31 +105,75 @@ public class GameController {
 		//TODO: let's have 5 different difficulty levels where the speed of erosion and debris spawn changes
 	}
 	
-	//At (slightly) random intervals spawn debris
+	//At (slightly) random intervals spawn debris, only should be initialized once!!
 	public class spawnDebris implements ActionListener{
-
+		public int timePassed = 0;
+		//The time after which debris should spawn again (changes every time respawned)
+		public int spawnTimeDebris;
+		//The average length of time based on difficulty
+		public int aveTime;
+		//The limit to the random distributions range in milliseconds (AKA +- rTime/2)
+		final public int rTime = 500;
+		
+		public spawnDebris(){
+			
+		}
+		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			//if the timer goes off then add another piece of debris at the top
-			if(the thing){
-				do the thing
+			if(timePassed >= spawnTimeDebris){
+				Random r = new Random();
+				Debris d = new Debris(eDebrisType.values()[r.nextInt()%2]);
+				items.addDebris(d);
+				
+				spawnTimeDebris = r.nextInt(rTime) + aveTime - rTime/2;
+				timePassed = 0;
 			}
 			for(Debris d : items.getAllDebris()){
 				//make each item float
 				d.floating();
 			}
-			
+			timePassed++;
+		}
+		
+		public void updateAveTime(int newTime){
+			aveTime = newTime;
 		}
 		
 	}
 	
 	//At (slightly) random intervals erode stuff
+	//there should be one for each coast line, probably also gabions, independent erosion patterns
 	public class erosion implements ActionListener{
-
+		public int timePassed;
+		public int erosionTime;
+		public int aveTime;
+		final public int rTime = 500;
+		
+		public erosion(Coast c){
+			Random r = new Random();
+			//assumes erosion rate in Coast is in milliseconds
+			aveTime = (int) c.getErosionRate();
+			erosionTime = r.nextInt(rTime) + aveTime - rTime/2;
+		}
+		
+		public erosion(Barriers b){
+			Random r = new Random();
+			//assumes decay rate in Barriers is in milliseconds
+			aveTime = b.getDecayTime();
+			erosionTime = r.nextInt(rTime) + aveTime - rTime/2;
+		}
+		
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			if(timePassed >= erosionTime){
+				//erode some stuff
+				
+				timePassed = 0;
+			}
 			
-			
+			timePassed++;
 		}
 		
 	}

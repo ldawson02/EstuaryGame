@@ -12,4 +12,5 @@ public enum eDebrisType {
 	public int getType() {
 		return type;
 	}
+	
 }
