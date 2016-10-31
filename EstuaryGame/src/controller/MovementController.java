@@ -8,7 +8,7 @@ public class MovementController {
 			xstart = 150+(-2/225)*(150)^2+shift;	
 		}
 		else if(shift > 400){
-			xstart = (2/4225)*(150)^2+shift;
+			xstart = (4/225)*(150)^2+shift;
 		}
 		return xstart;	
 	}
