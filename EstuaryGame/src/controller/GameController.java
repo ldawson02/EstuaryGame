@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 import java.util.Random;
+import javax.swing.Timer;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -27,6 +28,17 @@ public class GameController {
 	Action rightAct;
 	Action upAct;
 	Action downAct;
+	final private int floatDelay = 1; //TODO
+	Timer debrisFloating;
+	Timer powersFloating;
+	final private int erodeDelay = 1;//TODO
+	Timer coastRErosion;
+	Timer coastLErosion;
+	
+	spawnDebris debrisMover;
+	spawnPowers powerMover;
+	erosion RcoastMover;
+	erosion LcoastMover;
 	
 	public GameController(EstuaryGame mainGame){
 		setMainGame(mainGame);
@@ -65,8 +77,12 @@ public class GameController {
 		//maybe also have an action for building gabion, like pressing g
 		
 		//Create the initial walls
+		for(int i = 0; i<4; i++){
+			items.addBarrier(new Wall());//TODO meh
+		}
 		
 		//create the coasts
+		
 		
 		
 		mainGame.imageLoad();
@@ -81,6 +97,13 @@ public class GameController {
 	public void startGame(){
 		//set up automatic movements!
 		//	->create timer for debris
+		debrisMover = new spawnDebris();
+		powerMover = new spawnPowers();
+		RcoastMover = new erosion(items.getAllCoasts().get(0));
+		LcoastMover = new erosion(items.getAllCoasts().get(1));
+		
+		debrisFloating = new Timer(floatDelay, debrisMover);
+		debrisFloating.start();
 	}
 	
 	public void gameOver(){
@@ -107,30 +130,47 @@ public class GameController {
 		//The time after which debris should spawn again (changes every time respawned)
 		public int spawnTimeDebris;
 		//The average length of time based on difficulty
-		public int aveTime;
+		public int aveTime = 8000;
 		//The limit to the random distributions range in milliseconds (AKA +- rTime/2)
 		final public int rTime = 500;
 		
 		public spawnDebris(){
+			items.addDebris(newDebris());
+			resetTimer();
+		}
+		
+		//returns a new randomly generated piece of Debris
+		public Debris newDebris(){
+			Random r = new Random();
+			//generate initial position;
+			int xPos = MovementController.getStart(r.nextInt(500)+150);
 			
+			Debris d = new Debris(eDebrisType.values()[r.nextInt()%2]);
+			d.updatePos(xPos, 0);
+			return d;
+		}
+		
+		//resets the spawnTimeDebris to a new randomly generated number (within range)
+		public void resetTimer(){
+			Random r = new Random();
+			spawnTimeDebris = r.nextInt(rTime) + aveTime - rTime/2;
+			timePassed = 0;
 		}
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			//if the timer goes off then add another piece of debris at the top
 			if(timePassed >= spawnTimeDebris){
-				Random r = new Random();
-				Debris d = new Debris(eDebrisType.values()[r.nextInt()%2]);
-				items.addDebris(d);
-				
-				spawnTimeDebris = r.nextInt(rTime) + aveTime - rTime/2;
-				timePassed = 0;
+				items.addDebris(newDebris());
+				resetTimer();
 			}
 			for(Debris d : items.getAllDebris()){
 				//make each item float
-				d.floating();
+				//d.floating();
+				MovementController.move(d);
 			}
-			timePassed++;
+			
+			timePassed+=floatDelay;
 		}
 		
 		public void updateAveTime(int newTime){
@@ -139,47 +179,64 @@ public class GameController {
 		
 	}
 	
-	//At (slightly) random intervals spawn debris, only should be initialized once!!
-		public class spawnPowers implements ActionListener{
-			public int timePassed = 0;
-			public int spawnTimePowers;
-			public int aveTime;
-			final public int rTime = 500;
-			
-			public spawnPowers(){
-				
-			}
-			
-			//Unimplemented methods
-			public void quickSpawn(){}
-			public void quickSpawnRebuild(){}
-			public void quickSpawnRemove(){}
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//if the timer goes off then add another power at the top
-				if(timePassed >= spawnTimePowers){
-					Random r = new Random();
-					//generate initial position;
-					
-					Debris d = new Debris(eDebrisType.values()[r.nextInt()%2]);
-					items.addDebris(d);
-					
-					spawnTimePowers = r.nextInt(rTime) + aveTime - rTime/2;
-					timePassed = 0;
-				}
-				for(Powers p : items.getAllPowers()){
-					//make each item float
-					p.floating();
-				}
-				timePassed++;
-			}
-			
-			public void updateAveTime(int newTime){
-				aveTime = newTime;
-			}
-			
+	//At (slightly) random intervals spawn powers, only should be initialized once!!
+	public class spawnPowers implements ActionListener{
+		public int timePassed = 0;
+		public int spawnTimePowers;
+		public int aveTime;
+		final public int rTime = 500;
+
+		public spawnPowers(){
+			items.addPower(newPower());
+			resetTimer();
 		}
+
+		public Powers newPower(){
+			Random r = new Random();
+			//generate initial position;
+			int xPos = MovementController.getStart(r.nextInt(500)+150);
+
+			Powers p;
+			if(r.nextBoolean()){
+				p = new Rebuild(xPos, 0);
+			}
+			else{
+				p = new Remove(xPos, 0);
+			}
+			return p;
+		}
+		
+		public void resetTimer(){
+			Random r = new Random();
+			spawnTimePowers = r.nextInt(rTime) + aveTime - rTime/2;
+			timePassed = 0;
+		}
+		
+		//Unimplemented methods
+		public void quickSpawn(){}
+		public void quickSpawnRebuild(){}
+		public void quickSpawnRemove(){}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			//if the timer goes off then add another power at the top
+			if(timePassed >= spawnTimePowers){
+				items.addPower(newPower());
+				resetTimer();
+			}
+			for(Powers p : items.getAllPowers()){
+				//make each item float
+				//p.floating();
+				MovementController.move(p);
+			}
+			timePassed+=floatDelay;
+		}
+
+		public void updateAveTime(int newTime){
+			aveTime = newTime;
+		}
+
+	}
 	
 	//At (slightly) random intervals erode stuff
 	//there should be one for each coast line, probably also gabions, independent erosion patterns
@@ -211,7 +268,7 @@ public class GameController {
 				timePassed = 0;
 			}
 			
-			timePassed++;
+			timePassed+=erodeDelay;
 		}
 		
 	}
