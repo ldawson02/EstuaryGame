@@ -8,7 +8,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import model.AllDebris;
 import model.CoastR;
 
 public class CoastRTest {
@@ -38,7 +37,6 @@ public class CoastRTest {
 		coast.setMaxsize(maxsize);
 		coast.setMinsize(minsize);
 		coast.setSize(maxsize);
-		coast.setBuildUp(new AllDebris());
 		coast.setErosionRate(erosionrate);
 	}
 

@@ -151,6 +151,8 @@ public class EstuaryGame extends JComponent {
         QuadCurve2D quadRight = new QuadCurve2D.Double(800, 0, 500, 150, 800, 300);
         g2d.draw(quadLeft);
         g2d.draw(quadRight);
+        
+        g.drawOval(150, 0, 40, 40);
     }
     
     private void paintBarriers(Graphics g) {
@@ -171,13 +173,16 @@ public class EstuaryGame extends JComponent {
     
     private void paintDebris(Graphics g) {
     	//System.out.println("In paintDebris()");
+    	g.fillOval(45, 500, 40, 40);
     	ArrayList<Debris> debris = gc.getItems().getAllDebris();
     	for (Debris d : debris) {
     		//System.out.println(d.getType());
-    		//System.out.println("x" + d.getPosX() + "y" + d.getPosY());
+    		System.out.println("x" + d.getPosX() + "y" + d.getPosY());
     		if (d.getType() == eDebrisType.TRASH) {
     			//TODO: paint like trash
     			//Calling trash a yellow circle
+    			System.out.println("Painting trash at (" + d.getPosX() + ", " + d.getPosY() + "with size" + d.getWidth() + "x" + d.getHeight());
+    			
     			g.setColor(Color.YELLOW);
     			g.fillOval(d.getPosX(), d.getPosY(), d.getWidth(), d.getHeight());
     		}
