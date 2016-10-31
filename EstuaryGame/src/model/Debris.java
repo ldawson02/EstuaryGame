@@ -12,21 +12,24 @@ import eNums.eThrowDirection;
  * @since 10/25/16
  */
 
-public class Debris extends Item implements Floater {
+public class Debris extends Floater{
 
 	private eDebrisType type;
 	private eDebrisState state;
-	private int speed;
-	private int vertex;
+	
 	
 	/**
 	 * Private no-arg constructor to prevent creating a debris item without
 	 * a type (trash vs recycling)
 	 */
 	private Debris() {
+		super();
 	}
-	
+	public Debris(int x, int y){
+		super(x,y);
+	};
 	public Debris(eDebrisType etype) {
+		super();
 		this.type = etype;
 		this.state = eDebrisState.MOVING; // Moving by default on creation
 	}
@@ -59,19 +62,7 @@ public class Debris extends Item implements Floater {
 		this.state = state;
 	}
 
-	/**
-	 * @return the speed
-	 */
-	public int getSpeed() {
-		return speed;
-	}
 
-	/**
-	 * @param speed the speed to set
-	 */
-	public void setSpeed(int speed) {
-		this.speed = speed;
-	}
 
 	public void rest() {
 		
@@ -101,8 +92,5 @@ public class Debris extends Item implements Floater {
 		
 	}
 
-	@Override
-	public int getVertex() {
-		return vertex;
-	}
+	
 }
