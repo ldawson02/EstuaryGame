@@ -67,7 +67,6 @@ public class GameController {
 		//Create the initial walls
 		
 		
-		
 		imageLoad();
 		initTitleScreen();
 		startGame();
