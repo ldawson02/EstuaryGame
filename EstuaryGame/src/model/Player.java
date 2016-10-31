@@ -10,8 +10,7 @@ public class Player extends Item implements Movers {
 		// TODO Auto-generated method stub
 
 	}
-	
-	
+		
 	public void buildGabion(){};
 	public void buildWall(){};
 	public void pickUpDebris(){};
