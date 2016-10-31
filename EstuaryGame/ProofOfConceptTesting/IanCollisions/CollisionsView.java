@@ -37,7 +37,7 @@ public class CollisionsView extends JComponent {
     
     public ArrayList<DebrisView> debris;
     Rectangle player;
-    
+    double currHealth = 45;
     Timer ticker;
     int ticktime = 30;
     
@@ -98,7 +98,6 @@ public class CollisionsView extends JComponent {
         g.setColor(Color.BLACK);
         g.fillRect((int) player.getX(), (int) player.getY(), (int) player.getWidth(), (int) player.getHeight());
         
-        double currHealth = 45;
     	double maxHealth = 100;
     	double barY = 100;
     	int barX = 100;
@@ -122,6 +121,29 @@ public class CollisionsView extends JComponent {
     	g.drawRect(barX, (int)barY, barWidth-1, (int)barHeight);
         
         paintDebris(g);
+        
+        //Fuck witta timer
+        double maxTime = 20000; //ms
+        double fractionPassed = timeElapsed / maxTime;
+        double size = 50;
+        double maxX = 375;
+        double maxY = 10;
+        double timerX = 401 - (fractionPassed * size)/2;
+        if (timerX < maxX)
+        	timerX = maxX;
+        double timerY = 36 - (fractionPassed * size)/2;
+        if (timerY < maxY)
+        	timerY = maxY;
+        double timerSize = fractionPassed * size;
+        if (timerSize > size)
+        	timerSize = size;
+        g.setColor(Color.RED);
+        g.fillOval((int) timerX,(int) timerY,(int) timerSize,(int) timerSize);
+        //outline
+        g.setColor(Color.BLACK);
+        g.drawOval(375, 10, 50, 50);
+        g.fillOval(398, 33, 5, 5);
+        
     }
 
     private void paintDebris(Graphics g) {

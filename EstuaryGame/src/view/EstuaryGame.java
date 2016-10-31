@@ -108,6 +108,7 @@ public class EstuaryGame extends JComponent {
         //Paint background
         paintBackground(g);
        
+        //These paint the barrier spaces as they are currently
         g.drawRect(20, 450, 40, 40);
         g.drawRect(70, 450, 40, 40);
         g.drawRect(120, 450, 40, 40);
@@ -119,6 +120,8 @@ public class EstuaryGame extends JComponent {
         g.drawRect(640, 450, 40, 40);
         g.drawRect(590, 450, 40, 40);
         g.drawRect(540, 450, 40, 40);
+        
+        //Paint ScreenTimer
         
         /**
         //Paint barriers
