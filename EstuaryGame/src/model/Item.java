@@ -12,6 +12,8 @@ public abstract class Item {
 
 	private int posX;
 	private int posY;
+	private int width;
+	private int height;
 	private int objectID;
 	
 	/**
@@ -48,6 +50,34 @@ public abstract class Item {
 		return posY;
 	};
 	
+	/**
+	 * @return the width
+	 */
+	public int getWidth() {
+		return width;
+	}
+
+	/**
+	 * @param width the width to set
+	 */
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	/**
+	 * @return the height
+	 */
+	public int getHeight() {
+		return height;
+	}
+
+	/**
+	 * @param height the height to set
+	 */
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
 	/**
 	 * Allows for position to be updated
 	 * 
