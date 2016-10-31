@@ -66,8 +66,10 @@ public class GameController {
 		
 		//Create the initial walls
 		
+		//create the coasts
 		
-		imageLoad();
+		
+		mainGame.imageLoad();
 		initTitleScreen();
 		startGame();
 	}
