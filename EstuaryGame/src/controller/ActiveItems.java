@@ -7,11 +7,14 @@ public class ActiveItems {
 	//class that holds all our actual active items in an instance of the game
 	Player mainPlayer;
 
-	public static ArrayList<Barriers> barriers;
-	public static ArrayList<Debris> debris;
-	public static HealthBar hBar;
-	public static ArrayList<Coast> coasts;
-	public static ArrayList<Powers> powerups;
+	public HealthBar hBar;
+	public ScreenTimer screentimer;
+	public ArrayList<Barriers> barriers;
+	public ArrayList<Debris> debris;
+	public ArrayList<Coast> coasts;
+	public ArrayList<Powers> powerups;
+	public ArrayList<Bin> bins;
+	
 	
 	/**
 	 * Allows access to the main Player for the Model and View
