@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 /**
 * The Coast class is the Model class for the coast item that is in the game.
 * 
@@ -34,6 +36,8 @@ public abstract class Coast extends Item {
 	 * The Debris items on the coast
 	 */
 	private AllDebris buildUp;
+	
+	private ArrayList<BarrierSpace> barrierSpaces;
 	
 	public Coast() {
 		super();
@@ -116,6 +120,20 @@ public abstract class Coast extends Item {
 	 */
 	public void setBuildUp(AllDebris buildUp) {
 		this.buildUp = buildUp;
+	}
+
+	/**
+	 * @return the barrierSpaces
+	 */
+	public ArrayList<BarrierSpace> getBarrierSpaces() {
+		return barrierSpaces;
+	}
+
+	/**
+	 * @param barrierSpaces the barrierSpaces to set
+	 */
+	public void setBarrierSpaces(ArrayList<BarrierSpace> barrierSpaces) {
+		this.barrierSpaces = barrierSpaces;
 	}
 
 	/**
