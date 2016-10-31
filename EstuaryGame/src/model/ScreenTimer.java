@@ -53,10 +53,9 @@ public class ScreenTimer extends Item {
 		this.state = state;
 	}
 
-	public void tickPerformed(ActionEvent e){
-		
+	public void start(){
+		this.state = eScreenTimerState.ON;
 	}
-	
 	public void freeze(){
 		
 	}
