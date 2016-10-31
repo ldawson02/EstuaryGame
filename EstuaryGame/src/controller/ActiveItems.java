@@ -8,7 +8,22 @@ public class ActiveItems {
 	Player mainPlayer;
 
 	private HealthBar hBar;
-	private ScreenTimer screentimer;
+	
+	private ScreenTimer screenTimer;
+	/**
+	 * @return the screenTimer
+	 */
+	public ScreenTimer getScreenTimer() {
+		return screenTimer;
+	}
+
+	/**
+	 * @param screenTimer the screenTimer to set
+	 */
+	public void addScreenTimer(ScreenTimer screenTimer) {
+		this.screenTimer = screenTimer;
+	}
+
 	private ArrayList<Barriers> barriers;
 	private ArrayList<Debris> debris;
 	private CoastL coastL;
