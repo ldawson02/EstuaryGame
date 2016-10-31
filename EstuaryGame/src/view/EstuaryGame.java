@@ -98,17 +98,12 @@ public class EstuaryGame extends JComponent {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g); 
         
+        //Handle collisions, probably
         
         //Paint background
         paintBackground(g);
         
         g.setColor(Color.BLACK);
-        //g.drawOval(650, 0, 300, 300);
-        g.drawLine(650, 0, 650, 300);
-        //g.drawOval(-150, 0, 300, 300);
-        g.drawLine(150, 0, 150, 300);
-        
-
         Graphics2D g2d = (Graphics2D) g.create();
         QuadCurve2D quadLeft = new QuadCurve2D.Double(0, 0, 300, 150, 0, 300);
         QuadCurve2D quadRight = new QuadCurve2D.Double(800, 0, 500, 150, 800, 300);
@@ -199,16 +194,6 @@ public class EstuaryGame extends JComponent {
     	g.fillRect((int) player.getX(), (int) player.getY(), (int) player.getWidth(), (int) player.getHeight());
     }
 
-    private class DebrisWrapper {
-    	
-    	Ellipse2D.Double hitBox;
-    	Debris debrisItem;
-    	
-    	DebrisWrapper(Debris item, Ellipse2D.Double shape) {
-    		debrisItem = item;
-    		hitBox = shape;
-    	}
-    	
-    }
+
     
 }
