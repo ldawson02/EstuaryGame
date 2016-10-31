@@ -24,6 +24,7 @@ import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import controller.ActiveItems;
 import controller.GameController;
 import eNums.eBarrierType;
 import eNums.eDebrisType;
@@ -45,6 +46,7 @@ public class EstuaryGame extends JComponent {
     int timeElapsed = 0;
     
     Rectangle player;
+    activeViewItems actives;
     
     //For future collision handling:
     ArrayList<DebrisWrapper> debrisColliders;
@@ -73,6 +75,7 @@ public class EstuaryGame extends JComponent {
     public EstuaryGame() {
     	//Initialize a new GameController and connect them
     	//gc = new GameController(this);
+    	actives = new activeViewItems();
     	
     	initImages();
     }
@@ -90,7 +93,7 @@ public class EstuaryGame extends JComponent {
     		bg = ImageIO.read(new File("resources/background/babybackground.png"));
     	}
     	catch (IOException e) {
-    		//yikes
+    		System.out.println("Background failed to load.");
     	}
     }
     
@@ -195,6 +198,14 @@ public class EstuaryGame extends JComponent {
     }
 
     private void updateWrappers() {
+    	//TODO: Making this really inefficient to start
+    	//Can be better about it with an integrated controller
+    	actives.clearDebris();
+    	ActiveItems activeItems = gc.getItems();
+    	for (Debris d: activeItems.getAllDebris()) {
+    		actives.addDebris(d);
+    	}
+    	
     	
     }
     
