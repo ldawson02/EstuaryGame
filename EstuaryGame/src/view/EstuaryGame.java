@@ -3,9 +3,11 @@ package view;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.QuadCurve2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -99,6 +101,20 @@ public class EstuaryGame extends JComponent {
         
         //Paint background
         paintBackground(g);
+        
+        g.setColor(Color.BLACK);
+        //g.drawOval(650, 0, 300, 300);
+        g.drawLine(650, 0, 650, 300);
+        //g.drawOval(-150, 0, 300, 300);
+        g.drawLine(150, 0, 150, 300);
+        
+
+        Graphics2D g2d = (Graphics2D) g.create();
+        QuadCurve2D quadLeft = new QuadCurve2D.Double(0, 0, 300, 150, 0, 300);
+        QuadCurve2D quadRight = new QuadCurve2D.Double(800, 0, 500, 150, 800, 300);
+        g2d.draw(quadLeft);
+        g2d.draw(quadRight);
+        
         /**
         //Paint barriers
         paintBarriers(g);
