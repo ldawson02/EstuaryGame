@@ -36,7 +36,7 @@ public class activeViewItems {
 	 */
 	public void setPlayer(Player p) {
 		this.player = new PlayerWrapper(p, new Rectangle());
-		this.player.getHitBox().setBounds(p.getPosX(), p.getPosY(), p.getWidth(), p.getHeight());
+		//this.player.getHitBox().setBounds(p.getPosX(), p.getPosY(), p.getWidth(), p.getHeight());
 	}
 	
 	public void addDebris(Debris d) {

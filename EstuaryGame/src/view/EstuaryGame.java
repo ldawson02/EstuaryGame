@@ -75,10 +75,10 @@ public class EstuaryGame extends JComponent {
 
     public EstuaryGame() {
     	//Initialize a new GameController and connect them
-    	//gc = new GameController(this);
+    	gc = new GameController(this);
     	//View items matter
-    	//actives = new activeViewItems();
-    	//actives.setPlayer(gc.getItems().getPlayer());
+    	actives = new activeViewItems();
+    	actives.setPlayer(gc.getItems().getPlayer());
     	initImages();
     }
 
@@ -104,6 +104,7 @@ public class EstuaryGame extends JComponent {
         super.paintComponent(g); 
         
         //Handle collisions, probably
+        System.out.println(gc.getItems().getAllDebris().size());
         
         //Paint background
         paintBackground(g);
@@ -123,13 +124,13 @@ public class EstuaryGame extends JComponent {
         
         //Paint ScreenTimer
         
-        /**
+       
         //Paint barriers
         paintBarriers(g);
         
         //Paint debris
         paintDebris(g);
-        
+        /**
         //Paint player
         paintPlayer(g);
         
