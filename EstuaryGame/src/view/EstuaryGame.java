@@ -41,8 +41,8 @@ public class EstuaryGame extends JComponent {
     
     BufferedImage bg;
     
-    int x = 350;
-    int y = 250;
+    int screenX = 800;
+    int screenY = 600;
     
     int timeElapsed = 0;
     
@@ -77,8 +77,8 @@ public class EstuaryGame extends JComponent {
     	//Initialize a new GameController and connect them
     	//gc = new GameController(this);
     	//View items matter
-    	actives = new activeViewItems();
-    	actives.setPlayer(gc.getItems().getPlayer());
+    	//actives = new activeViewItems();
+    	//actives.setPlayer(gc.getItems().getPlayer());
     	initImages();
     }
 
@@ -108,6 +108,17 @@ public class EstuaryGame extends JComponent {
         //Paint background
         paintBackground(g);
        
+        g.drawRect(20, 450, 40, 40);
+        g.drawRect(70, 450, 40, 40);
+        g.drawRect(120, 450, 40, 40);
+        g.drawRect(170, 450, 40, 40);
+        g.drawRect(220, 450, 40, 40);
+        
+        g.drawRect(740, 450, 40, 40);
+        g.drawRect(690, 450, 40, 40);
+        g.drawRect(640, 450, 40, 40);
+        g.drawRect(590, 450, 40, 40);
+        g.drawRect(540, 450, 40, 40);
         
         /**
         //Paint barriers

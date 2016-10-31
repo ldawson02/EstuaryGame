@@ -20,6 +20,8 @@ public abstract class Barriers extends Item implements Interactable, HealthChang
 	 */
 	public Barriers(int x, int y){
 		super(x,y);
+		setWidth(40);
+		setHeight(40);
 	};
 	
 	public abstract void build();
