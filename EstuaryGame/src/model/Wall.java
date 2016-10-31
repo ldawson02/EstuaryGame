@@ -1,12 +1,14 @@
 package model;
 
 import controller.ActiveItems;
+import eNums.eBarrierType;
 
 public class Wall extends Barriers {
 
 
 	public Wall(int x, int y) {
 		super(x, y);
+		this.setType(eBarrierType.Wall);
 	}
 
 	@Override
@@ -43,7 +45,7 @@ public class Wall extends Barriers {
 	public void updateHealthBar() {
 		// TODO Auto-generated method stub
 		int adjustedHealth = -(100-this.getHealth())/10;
-		ActiveItems.hBar.update(adjustedHealth);
+		//ActiveItems.hBar.update(adjustedHealth);
 		
 	}
 

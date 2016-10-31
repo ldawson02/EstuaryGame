@@ -104,7 +104,7 @@ public class EstuaryGame extends JComponent {
         super.paintComponent(g); 
         
         //Handle collisions, probably
-        System.out.println(gc.getItems().getAllDebris().size());
+        //System.out.println(gc.getItems().getAllDebris().size());
         
         //Paint background
         paintBackground(g);
@@ -170,8 +170,11 @@ public class EstuaryGame extends JComponent {
     }
     
     private void paintDebris(Graphics g) {
+    	//System.out.println("In paintDebris()");
     	ArrayList<Debris> debris = gc.getItems().getAllDebris();
     	for (Debris d : debris) {
+    		//System.out.println(d.getType());
+    		//System.out.println("x" + d.getPosX() + "y" + d.getPosY());
     		if (d.getType() == eDebrisType.TRASH) {
     			//TODO: paint like trash
     			//Calling trash a yellow circle
