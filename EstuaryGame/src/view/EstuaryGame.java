@@ -194,6 +194,8 @@ public class EstuaryGame extends JComponent {
     	g.fillRect((int) player.getX(), (int) player.getY(), (int) player.getWidth(), (int) player.getHeight());
     }
 
-
+    private void updateWrappers() {
+    	
+    }
     
 }

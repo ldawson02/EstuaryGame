@@ -14,4 +14,9 @@ public class DebrisWrapper {
 		hitBox = shape;
 	}
 	
+	public void updateCoords() {
+		hitBox.x = debrisItem.getPosX();
+		hitBox.y = debrisItem.getPosY();
+	}
+	
 }
