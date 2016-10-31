@@ -6,8 +6,12 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Ellipse2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.Action;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
@@ -30,6 +34,8 @@ public class EstuaryGame extends JComponent {
     private static final long serialVersionUID = 1L;
 
     private GameController gc;
+    
+    BufferedImage bg;
     
     int x = 350;
     int y = 250;
@@ -55,7 +61,7 @@ public class EstuaryGame extends JComponent {
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setSize(800, 600);
                 frame.setFocusable(true);
-                frame.getContentPane().setBackground(Color.WHITE);
+                frame.getContentPane().setBackground(Color.LIGHT_GRAY);
                 frame.getContentPane().add(new EstuaryGame());
                 frame.setVisible(true);
             }
@@ -64,8 +70,9 @@ public class EstuaryGame extends JComponent {
 
     public EstuaryGame() {
     	//Initialize a new GameController and connect them
-    	gc = new GameController(this);
+    	//gc = new GameController(this);
     	
+    	initImages();
     }
 
     public void bindKeyWith(String name, KeyStroke keyStroke, Action action) {
@@ -76,13 +83,23 @@ public class EstuaryGame extends JComponent {
         am.put(name, action);
     }
 
+    private void initImages() {
+    	try {
+    		bg = ImageIO.read(new File("resources/background/babybackground.png"));
+    	}
+    	catch (IOException e) {
+    		//yikes
+    	}
+    }
+    
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g); 
         
+        
         //Paint background
         paintBackground(g);
-        
+        /**
         //Paint barriers
         paintBarriers(g);
         
@@ -95,14 +112,13 @@ public class EstuaryGame extends JComponent {
         //Paint health bar
         paintHealthBar(g);
         
-        
         g.drawString(Integer.toString(timeElapsed), 40, 40);
-        
- 
+        */
     }
     
     private void paintBackground(Graphics g) {
     	//TODO: get a background
+    	g.drawImage(bg, 0, 0, this);
     }
     
     private void paintBarriers(Graphics g) {

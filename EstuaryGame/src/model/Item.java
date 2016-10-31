@@ -12,6 +12,8 @@ public abstract class Item {
 
 	private int posX;
 	private int posY;
+	private int width;
+	private int height;
 	private int objectID;
 	
 	/**
