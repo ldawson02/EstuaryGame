@@ -19,14 +19,30 @@ import controller.*;
 public class GameController {
 
 	//the big shebang
-	EstuaryGame mainGame;
+	private EstuaryGame mainGame;
 	Player mainPlayer;
-	ActiveItems items;
+	private ActiveItems items;
 	Action leftAct;
 	Action rightAct;
 	Action upAct;
 	Action downAct;
 	
+	public EstuaryGame getMainGame() {
+		return mainGame;
+	}
+
+	public void setMainGame(EstuaryGame mainGame) {
+		this.mainGame = mainGame;
+	}
+
+	public ActiveItems getItems() {
+		return items;
+	}
+
+	public void setItems(ActiveItems items) {
+		this.items = items;
+	}
+
 	public void setup(){
 		//Create the player
 		mainPlayer = new Player();
@@ -36,10 +52,10 @@ public class GameController {
 		rightAct = new HAction(1 * mainPlayer.speed);
 		upAct = new VAction(1 * mainPlayer.speed);
 		downAct = new VAction(1 * mainPlayer.speed);
-		view.bindKeyWith("x.left", KeyStroke.getKeyStroke("LEFT"), leftAct);
-		view.bindKeyWith("x.right", KeyStroke.getKeyStroke("RIGHT"), rightAct);
-		view.bindKeyWith("x.up", KeyStroke.getKeyStroke("UP"), upAct);
-		view.bindKeyWith("x.down", KeyStroke.getKeyStroke("DOWN"), downAct);
+		mainGame.bindKeyWith("x.left", KeyStroke.getKeyStroke("LEFT"), leftAct);
+		mainGame.bindKeyWith("x.right", KeyStroke.getKeyStroke("RIGHT"), rightAct);
+		mainGame.bindKeyWith("x.up", KeyStroke.getKeyStroke("UP"), upAct);
+		mainGame.bindKeyWith("x.down", KeyStroke.getKeyStroke("DOWN"), downAct);
 		//maybe also have an action for building gabion, like pressing g
 		
 		//Create the initial walls
