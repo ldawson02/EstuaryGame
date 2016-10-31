@@ -21,7 +21,7 @@ public class MovementController {
 				floater.updatePos(newx, newy);
 			}
 			else if(floater.getVertex() > 400){
-				newx = (2/225)*(newy-150)^2+floater.getVertex();
+				newx = (4/225)*(newy-150)^2+floater.getVertex();
 				floater.updatePos(newx, newy);
 			}
 		}
