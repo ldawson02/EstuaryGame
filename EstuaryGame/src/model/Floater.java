@@ -8,10 +8,12 @@ package model;
  * @since 10/26/16
  */
 public abstract class Floater extends Item {
-	private int speed;
+	private int speed = 5;
 	private int vertex;
 	public Floater(){
 		super();
+		setWidth(40);
+		setHeight(40);
 	}
 	public Floater(int x, int y){
 		super(x,y);
@@ -34,5 +36,11 @@ public abstract class Floater extends Item {
 	}
 	public int getVertex() {
 		return vertex;
+	}
+	/**
+	 * @param vertex the vertex to set
+	 */
+	public void setVertex(int vertex) {
+		this.vertex = vertex;
 	}
 }

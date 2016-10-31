@@ -55,6 +55,7 @@ public class DebrisTest {
 		assertEquals(trash.getState(), eDebrisState.RESTING);
 	}
 	
+	/**
 	@Test
 	public void testThrowTrashCorrect() {
 		//Empty coasts
@@ -118,6 +119,6 @@ public class DebrisTest {
 		assertFalse(trash.correctBin(eThrowDirection.RIGHT));
 		assertFalse(recyc.correctBin(eThrowDirection.LEFT));
 	}
-
+	*/
 }
 

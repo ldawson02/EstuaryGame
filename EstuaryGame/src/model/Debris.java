@@ -27,6 +27,7 @@ public class Debris extends Floater{
 	}
 	public Debris(int x, int y){
 		super(x,y);
+		
 	};
 	public Debris(eDebrisType etype) {
 		super();

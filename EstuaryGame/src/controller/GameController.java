@@ -29,7 +29,7 @@ public class GameController {
 	Action rightAct;
 	Action upAct;
 	Action downAct;
-	final private int floatDelay = 1; //TODO
+	final private int floatDelay = 100; //TODO
 	Timer debrisFloating;
 	Timer powersFloating;
 	final private int erodeDelay = 1;//TODO
@@ -179,7 +179,6 @@ public class GameController {
 			Random r = new Random();
 			//generate initial position;
 			int randomx = r.nextInt(500)+150;
-			System.out.println("random x" + randomx);
 			int xPos = MovementController.getStart(randomx);
 			
 			int dtype = r.nextInt() % 2;
@@ -189,6 +188,8 @@ public class GameController {
 			} else {
 				d = new Debris(eDebrisType.RECYCLING);
 			}
+			//TODO d.setVertex(xPos);
+			System.out.println(xPos);
 			d.updatePos(xPos, 0);
 			return d;
 		}
