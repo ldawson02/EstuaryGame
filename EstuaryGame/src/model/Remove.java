@@ -4,6 +4,8 @@ import controller.ActiveItems;
 
 public class Remove extends Powers implements HealthChangers {
 	
+	private int vertex;
+	
 	public Remove(int x, int y){
 		super(x,y);
 	};
@@ -49,6 +51,12 @@ public class Remove extends Powers implements HealthChangers {
 	public void updateHealthBar() {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+	@Override
+	public int getVertex() {
+		return vertex;
 	}
 
 }

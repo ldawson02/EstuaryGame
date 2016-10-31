@@ -17,6 +17,7 @@ public class Debris extends Item implements Floater {
 	private eDebrisType type;
 	private eDebrisState state;
 	private int speed;
+	private int vertex;
 	
 	/**
 	 * Private no-arg constructor to prevent creating a debris item without
@@ -98,5 +99,10 @@ public class Debris extends Item implements Floater {
 	public void catching() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public int getVertex() {
+		return vertex;
 	}
 }
