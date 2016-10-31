@@ -59,4 +59,12 @@ public abstract class Item {
 		this.posY = y;
 	};
 	
+	public void updatePosX(int x){
+		this.posX = x;
+	}
+	
+	public void updatePosY(int y){
+		this.posY = y;
+	}
+	
 }
