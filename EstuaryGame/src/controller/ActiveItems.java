@@ -57,4 +57,12 @@ public class ActiveItems {
 		return coasts;
 	}
 	
+	public ArrayList<Powers> getAllPowers(){
+		return powerups;
+	}
+	
+	public void addPower(Powers p){
+		powerups.add(p);
+	}
+	
 }

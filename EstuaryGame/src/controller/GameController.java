@@ -139,6 +139,48 @@ public class GameController {
 		
 	}
 	
+	//At (slightly) random intervals spawn debris, only should be initialized once!!
+		public class spawnPowers implements ActionListener{
+			public int timePassed = 0;
+			public int spawnTimePowers;
+			public int aveTime;
+			final public int rTime = 500;
+			
+			public spawnPowers(){
+				
+			}
+			
+			//Unimplemented methods
+			public void quickSpawn(){}
+			public void quickSpawnRebuild(){}
+			public void quickSpawnRemove(){}
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//if the timer goes off then add another power at the top
+				if(timePassed >= spawnTimePowers){
+					Random r = new Random();
+					//generate initial position;
+					
+					Debris d = new Debris(eDebrisType.values()[r.nextInt()%2]);
+					items.addDebris(d);
+					
+					spawnTimePowers = r.nextInt(rTime) + aveTime - rTime/2;
+					timePassed = 0;
+				}
+				for(Powers p : items.getAllPowers()){
+					//make each item float
+					p.floating();
+				}
+				timePassed++;
+			}
+			
+			public void updateAveTime(int newTime){
+				aveTime = newTime;
+			}
+			
+		}
+	
 	//At (slightly) random intervals erode stuff
 	//there should be one for each coast line, probably also gabions, independent erosion patterns
 	public class erosion implements ActionListener{

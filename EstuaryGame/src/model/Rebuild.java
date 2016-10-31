@@ -4,6 +4,8 @@ import controller.ActiveItems;
 
 public class Rebuild extends Powers implements HealthChangers{
 
+	private int vertex;
+	
 	public Rebuild(int x, int y){
 		super(x,y);
 	};
@@ -46,6 +48,11 @@ public class Rebuild extends Powers implements HealthChangers{
 	public void PlayerCollision(Item item) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public int getVertex() {
+		return vertex;
 	}
 
 }
