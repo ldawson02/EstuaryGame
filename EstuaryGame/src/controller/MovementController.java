@@ -19,13 +19,13 @@ public class MovementController {
 			double newx;
 			
 			if(floater.getVertex() <= 400){
-				newx = 150+(-2/225)*Math.pow(newy-150, 2.0)+ (int)floater.getVertex();
+				newx = 150+(-0.008889)*(int)Math.pow(newy-125, 2.0)+ (int)floater.getVertex();
 				//System.out.println("newx " + newx + "newy " + newy);
 				floater.updatePos((int)newx, (int)newy);
 				//System.out.println("we moved left");
 			}
 			else if(floater.getVertex() > 400){
-				newx = (4/225)*Math.pow(newy-150, 2.0)+floater.getVertex();
+				newx = (0.00889)*Math.pow(newy-125, 2.0)+floater.getVertex();
 				floater.updatePos((int) newx, (int) newy);
 				//System.out.println("we moved right");
 			}
