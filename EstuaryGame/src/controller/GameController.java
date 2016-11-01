@@ -69,6 +69,14 @@ public class GameController {
 		this.items = items;
 	}
 
+	/**
+	 * @return the theBigTimer
+	 */
+	public int getTheBigTimer() {
+		//TODO
+		return timeElapsed;
+	}
+
 	public void setup(){
 		//Start the paint timer
 		theBigTimer = new Timer(paintDelay, new mainTimer());
