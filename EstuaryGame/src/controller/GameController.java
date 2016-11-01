@@ -73,6 +73,7 @@ public class GameController {
 		
 		//Create the player
 		mainPlayer = new Player();
+		items.setMainPlayer(mainPlayer);
 		mainPlayer.updatePos(380, 280); //These are hard coded
 		
 		//bind the keys
@@ -88,8 +89,6 @@ public class GameController {
 		//maybe also have an action for building gabion, like pressing g
 		mainGame.bindKeyWith("gabionBuild", KeyStroke.getKeyStroke("g"), new gabionAct());
 		mainGame.bindKeyWith("wallBuild", KeyStroke.getKeyStroke("h"), new wallAct());
-		
-		
 		
 		//Create the initial walls
 		//TODO: this is gross I'll make it look better later
@@ -191,6 +190,7 @@ public class GameController {
 			//TODO d.setVertex(xPos);
 			System.out.println(xPos);
 			d.updatePos(xPos, 0);
+			d.setVertex(xPos);
 			return d;
 		}
 		
@@ -229,7 +229,7 @@ public class GameController {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			mainGame.paint(mainGame.getGraphics());
+			mainGame.repaint();
 			if(items.getScreenTimer().getState()==eScreenTimerState.ON){
 				timeElapsed+=paintDelay;
 			}

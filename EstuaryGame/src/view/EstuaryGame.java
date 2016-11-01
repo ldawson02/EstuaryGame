@@ -32,6 +32,7 @@ import eNums.eDebrisType;
 import model.Barriers;
 import model.Debris;
 import model.HealthBar;
+import model.Player;
 
 public class EstuaryGame extends JComponent {
 
@@ -69,17 +70,20 @@ public class EstuaryGame extends JComponent {
                 frame.getContentPane().setBackground(Color.LIGHT_GRAY);
                 frame.getContentPane().add(new EstuaryGame());
                 frame.setVisible(true);
+                
             }
         });
     }
 
     public EstuaryGame() {
     	//Initialize a new GameController and connect them
+    	this.setDoubleBuffered(true);
     	gc = new GameController(this);
     	//View items matter
     	actives = new activeViewItems();
     	actives.setPlayer(gc.getItems().getPlayer());
     	initImages();
+    	
     }
 
     public void bindKeyWith(String name, KeyStroke keyStroke, Action action) {
@@ -130,10 +134,10 @@ public class EstuaryGame extends JComponent {
         
         //Paint debris
         paintDebris(g);
-        /**
+       
         //Paint player
         paintPlayer(g);
-        
+        /**
         //Paint health bar
         paintHealthBar(g);
         
@@ -151,8 +155,6 @@ public class EstuaryGame extends JComponent {
         QuadCurve2D quadRight = new QuadCurve2D.Double(800, 0, 500, 150, 800, 300);
         g2d.draw(quadLeft);
         g2d.draw(quadRight);
-        
-        g.drawOval(150, 0, 40, 40);
     }
     
     private void paintBarriers(Graphics g) {
@@ -173,7 +175,6 @@ public class EstuaryGame extends JComponent {
     
     private void paintDebris(Graphics g) {
     	//System.out.println("In paintDebris()");
-    	g.fillOval(45, 500, 40, 40);
     	ArrayList<Debris> debris = gc.getItems().getAllDebris();
     	for (Debris d : debris) {
     		//System.out.println(d.getType());
@@ -224,7 +225,13 @@ public class EstuaryGame extends JComponent {
     }
     
     private void paintPlayer(Graphics g) {
-    	g.fillRect((int) player.getX(), (int) player.getY(), (int) player.getWidth(), (int) player.getHeight());
+    	Player p = gc.getItems().getMainPlayer();
+    	System.out.println(gc.getItems().getMainPlayer());
+    	if (p == null) {
+    		return;
+    	}
+    	g.setColor(Color.RED);
+    	g.fillRect((int) p.getPosX(), (int) p.getPosY(), (int) p.getWidth(), (int) p.getHeight());
     }
 
     private void updateWrappers() {

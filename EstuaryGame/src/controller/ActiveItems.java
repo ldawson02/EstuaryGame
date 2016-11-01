@@ -7,6 +7,20 @@ public class ActiveItems {
 	//class that holds all our actual active items in an instance of the game
 	Player mainPlayer;
 
+	/**
+	 * @return the mainPlayer
+	 */
+	public Player getMainPlayer() {
+		return mainPlayer;
+	}
+
+	/**
+	 * @param mainPlayer the mainPlayer to set
+	 */
+	public void setMainPlayer(Player mainPlayer) {
+		this.mainPlayer = mainPlayer;
+	}
+
 	private HealthBar hBar;
 	
 	private ScreenTimer screenTimer;
