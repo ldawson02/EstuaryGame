@@ -33,7 +33,7 @@ public class MovementController {
 			
 		}
 		
-		else if(floater.getPosY()>=300 && (floater.getPosX()>10 && floater.getPosX()<790)){
+		else if(floater.getPosY()>=300 && (floater.getPosX()>10 && floater.getPosX()<750)){
 			
 			if(floater.getVertex() <= 400){
 				floater.updatePos(floater.getPosX()-floater.getSpeed(), floater.getPosY());
