@@ -19,6 +19,7 @@ import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.Timer;
 import javax.swing.UIManager;
@@ -27,9 +28,10 @@ import javax.swing.UnsupportedLookAndFeelException;
 import controller.ActiveItems;
 import controller.GameController;
 import eNums.eBarrierType;
-import eNums.eDebrisState;
+import eNums.eFloaterState;
 import eNums.eDebrisType;
 import model.Barriers;
+import model.Bin;
 import model.Debris;
 import model.HealthBar;
 import model.Player;
@@ -39,7 +41,7 @@ public class EstuaryGame extends JComponent {
     private static final long serialVersionUID = 1L;
 
     private GameController gc;
-    
+    private JFrame mainFrame;
     BufferedImage bg;
     
     int screenX = 800;
@@ -68,14 +70,15 @@ public class EstuaryGame extends JComponent {
                 frame.setSize(800, 600);
                 frame.setFocusable(true);
                 frame.getContentPane().setBackground(Color.LIGHT_GRAY);
-                frame.getContentPane().add(new EstuaryGame());
+                frame.getContentPane().add(new EstuaryGame(frame));
                 frame.setVisible(true);
                 
             }
         });
     }
 
-    public EstuaryGame() {
+    public EstuaryGame(JFrame f) {
+    	mainFrame = f;
     	//Initialize a new GameController and connect them
     	this.setDoubleBuffered(true);
     	gc = new GameController(this);
@@ -108,7 +111,6 @@ public class EstuaryGame extends JComponent {
         super.paintComponent(g); 
         
         //Handle collisions, probably
-        //System.out.println(gc.getItems().getAllDebris().size());
         
         //Paint background
         paintBackground(g);
@@ -135,6 +137,8 @@ public class EstuaryGame extends JComponent {
         //Paint debris
         paintDebris(g);
        
+        paintBins(g);
+        
         //Paint player
         paintPlayer(g);
         /**
@@ -155,6 +159,9 @@ public class EstuaryGame extends JComponent {
         QuadCurve2D quadRight = new QuadCurve2D.Double(800, 0, 500, 150, 800, 300);
         g2d.draw(quadLeft);
         g2d.draw(quadRight);
+        
+        Ellipse2D bounds = new Ellipse2D.Double(50, 150, 700, 300);
+        g2d.draw(bounds);
     }
     
     private void paintBarriers(Graphics g) {
@@ -174,15 +181,12 @@ public class EstuaryGame extends JComponent {
     }
     
     private void paintDebris(Graphics g) {
-    	//System.out.println("In paintDebris()");
     	ArrayList<Debris> debris = gc.getItems().getAllDebris();
     	for (Debris d : debris) {
-    		//System.out.println(d.getType());
-    		System.out.println("x" + d.getPosX() + "y" + d.getPosY());
+
     		if (d.getType() == eDebrisType.TRASH) {
     			//TODO: paint like trash
     			//Calling trash a yellow circle
-    			System.out.println("Painting trash at (" + d.getPosX() + ", " + d.getPosY() + "with size" + d.getWidth() + "x" + d.getHeight());
     			
     			g.setColor(Color.YELLOW);
     			g.fillOval(d.getPosX(), d.getPosY(), d.getWidth(), d.getHeight());
@@ -193,11 +197,23 @@ public class EstuaryGame extends JComponent {
     			g.setColor(Color.BLUE);
     			g.fillOval(d.getPosX(), d.getPosY(), d.getWidth(), d.getHeight());
     		}
-    		if (d.getState() == eDebrisState.LIFTED) {
+    		
+    		/*
+    		if (d.getState() == eFloaterState.LIFTED) {
     			g.fillOval(actives.getPlayer().getPlayer().getPosX(), actives.getPlayer().getPlayer().getPosY() - d.getHeight(), 
     					d.getWidth(), d.getHeight());
     		}
+    		*/
     	}
+    }
+    
+    private void paintBins(Graphics g){
+    	Bin trash = gc.getItems().getTrashBin();
+    	Bin recycle = gc.getItems().getRecycleBin();
+    	g.setColor(Color.BLACK);
+    	g.fillOval(trash.getPosX(), trash.getPosY(), trash.getWidth(), trash.getHeight());
+    	g.setColor(Color.BLUE);
+    	g.fillOval(recycle.getPosX(), recycle.getPosY(), recycle.getWidth(), recycle.getHeight());
     }
     
     private void paintHealthBar(Graphics g) {
@@ -226,7 +242,7 @@ public class EstuaryGame extends JComponent {
     
     private void paintPlayer(Graphics g) {
     	Player p = gc.getItems().getMainPlayer();
-    	System.out.println(gc.getItems().getMainPlayer());
+    	//System.out.println(gc.getItems().getMainPlayer());
     	if (p == null) {
     		return;
     	}
@@ -234,6 +250,17 @@ public class EstuaryGame extends JComponent {
     	g.fillRect((int) p.getPosX(), (int) p.getPosY(), (int) p.getWidth(), (int) p.getHeight());
     }
 
+    public void throwChoice(Debris d){
+    	Object[] options = {"Trash", "Recycling"};
+    	int n = JOptionPane.showOptionDialog(mainFrame, "Where does this belong?", "Estuary Game",
+    		    JOptionPane.YES_NO_CANCEL_OPTION,
+    		    JOptionPane.QUESTION_MESSAGE,
+    		    null,
+    		    options,
+    		    options[0]);
+    	
+    	d.throwDebris(n == d.getType().getType());
+    }
     private void updateWrappers() {
     	//TODO: Making this really inefficient to start
     	//Can be better about it with an integrated controller
@@ -254,7 +281,8 @@ public class EstuaryGame extends JComponent {
     	for (DebrisWrapper dw : actives.getDebrisWrappers()) {
     		if (dw.getHitBox().intersects(playerRect)) {
     			//TODO: the player is touching the debris
-    			dw.getDebrisItem().setState(eDebrisState.LIFTED);
+    			System.out.println("touched the debris!");
+    			dw.getDebrisItem().setState(eFloaterState.LIFTED);
     		}
     	}
     }

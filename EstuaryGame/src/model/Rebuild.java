@@ -1,6 +1,7 @@
 package model;
 
 import controller.ActiveItems;
+import eNums.eFloaterState;
 
 public class Rebuild extends Powers implements HealthChangers{
 
@@ -18,6 +19,7 @@ public class Rebuild extends Powers implements HealthChangers{
 
 	@Override
 	public void catching() {
+		setState(eFloaterState.LIFTED);
 		/*
 		// TODO Auto-generated method stub
 		for (Coast c : ActiveItems.coasts){

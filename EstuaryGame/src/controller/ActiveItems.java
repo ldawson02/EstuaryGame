@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 
+import eNums.eDebrisType;
 import model.*;
 public class ActiveItems {
 	//class that holds all our actual active items in an instance of the game
@@ -43,7 +44,8 @@ public class ActiveItems {
 	private CoastL coastL;
 	private CoastR coastR;
 	private ArrayList<Powers> powerups;
-	private ArrayList<Bin> bins;
+	private Bin TrashBin;
+	private Bin RecycleBin;
 	
 	public ActiveItems() {
 		//At the very least, initialize the lists and add the coasts
@@ -52,7 +54,8 @@ public class ActiveItems {
 		coastL = new CoastL();
 		coastR = new CoastR();
 		powerups = new ArrayList<Powers>();
-		bins = new ArrayList<Bin>();
+		TrashBin = new Bin(eDebrisType.TRASH);
+		RecycleBin = new Bin(eDebrisType.RECYCLING);
 	}
 	
 	/**
@@ -116,6 +119,14 @@ public class ActiveItems {
 	
 	public void addPower(Powers p){
 		powerups.add(p);
+	}
+	
+	public Bin getTrashBin(){
+		return TrashBin;
+	}
+	
+	public Bin getRecycleBin(){
+		return RecycleBin;
 	}
 	
 }

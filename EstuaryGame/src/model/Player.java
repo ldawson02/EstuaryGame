@@ -2,7 +2,7 @@ package model;
 
 public class Player extends Item implements Movers {
 
-	public int speed;
+	public int speed = 10;
 	public int direction;
 	
 	public Player(){

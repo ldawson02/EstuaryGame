@@ -1,7 +1,7 @@
 package eNums;
 
 public enum eThrowDirection {
-	LEFT(0), RIGHT(0);
+	LEFT(-1), RIGHT(1);
 	
 	private int direction;
 	
@@ -11,5 +11,14 @@ public enum eThrowDirection {
 	
 	public int getDirection() {
 		return direction;
+	}
+	
+	public eThrowDirection opposite(){
+		if(this.direction==-1){
+			return RIGHT;
+		}
+		else{
+			return LEFT;
+		}
 	}
 }

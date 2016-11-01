@@ -10,6 +10,8 @@ public class Bin extends Item{
 	
 	public Bin(eDebrisType t){
 		this.trashType = t;
+		this.setHeight(50);
+		this.setWidth(50);
 	}
 	
 	public eDebrisType getDebrisType(){

@@ -1,6 +1,7 @@
 package model;
 
 import controller.ActiveItems;
+import eNums.eFloaterState;
 
 public class Remove extends Powers implements HealthChangers {
 	
@@ -19,6 +20,7 @@ public class Remove extends Powers implements HealthChangers {
 
 	@Override
 	public void catching() {
+		setState(eFloaterState.LIFTED);
 		/*
 		// TODO Auto-generated method stub
 		for (Debris d : ActiveItems.debris){

@@ -1,5 +1,7 @@
 package model;
 
+import eNums.eFloaterState;
+
 /**
  * 
  * 
@@ -10,6 +12,8 @@ package model;
 public abstract class Floater extends Item {
 	private int speed = 5;
 	private int vertex;
+	private eFloaterState state = eFloaterState.MOVING;
+	
 	public Floater(){
 		super();
 		setWidth(40);
@@ -27,7 +31,21 @@ public abstract class Floater extends Item {
 	public int getSpeed() {
 		return speed;
 	}
-
+	
+	public eFloaterState getState(){
+		return state;
+	}
+	
+	public void setState(eFloaterState e){
+		//TODO: make sure you cant set illegal instances
+		/*
+		if (this instanceof Powers && e.getState()>2){
+			throw IllegalStateException;
+		}
+		*/
+		this.state = e;
+	}
+	
 	/**
 	 * @param speed the speed to set
 	 */
