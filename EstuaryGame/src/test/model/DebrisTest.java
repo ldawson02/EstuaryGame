@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import eNums.eDebrisState;
+import eNums.eFloaterState;
 import eNums.eDebrisType;
 import eNums.eThrowDirection;
 import model.CoastL;
@@ -40,8 +40,8 @@ public class DebrisTest {
 
 	@Before
 	public void setUp() throws Exception {
-		trash.setState(eDebrisState.MOVING);
-		recyc.setState(eDebrisState.MOVING);
+		trash.setState(eFloaterState.MOVING);
+		recyc.setState(eFloaterState.MOVING);
 	}
 
 	@After
@@ -50,9 +50,9 @@ public class DebrisTest {
 
 	@Test
 	public void testRest() {
-		assertEquals(trash.getState(), eDebrisState.MOVING);
+		assertEquals(trash.getState(), eFloaterState.MOVING);
 		trash.rest();
-		assertEquals(trash.getState(), eDebrisState.RESTING);
+		assertEquals(trash.getState(), eFloaterState.RESTING);
 	}
 	
 	/**
