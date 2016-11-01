@@ -1,6 +1,6 @@
 package model;
 
-import eNums.eDebrisState;
+import eNums.eFloaterState;
 import eNums.eDebrisType;
 import eNums.eThrowDirection;
 
@@ -15,8 +15,9 @@ import eNums.eThrowDirection;
 public class Debris extends Floater{
 
 	private eDebrisType type;
-	private eDebrisState state;
-	
+	private eFloaterState state;
+	private boolean correctBin;
+	private eThrowDirection throwDir;
 	
 	/**
 	 * Private no-arg constructor to prevent creating a debris item without
@@ -32,7 +33,7 @@ public class Debris extends Floater{
 	public Debris(eDebrisType etype) {
 		super();
 		this.type = etype;
-		this.state = eDebrisState.MOVING; // Moving by default on creation
+		this.state = eFloaterState.MOVING; // Moving by default on creation
 	}
 	
 	/**
@@ -52,14 +53,14 @@ public class Debris extends Floater{
 	/**
 	 * @return the state
 	 */
-	public eDebrisState getState() {
+	public eFloaterState getState() {
 		return state;
 	}
 
 	/**
 	 * @param state the state to set
 	 */
-	public void setState(eDebrisState state) {
+	public void setState(eFloaterState state) {
 		this.state = state;
 	}
 
@@ -69,14 +70,29 @@ public class Debris extends Floater{
 		
 	}
 	
-	public void throwDebris(eThrowDirection dir) {
+	public void setThrowDirection(eThrowDirection e){
+		throwDir = e;
+	}
+	
+	public eThrowDirection getThrowDirection(){
+		return throwDir;
+	}
+	public void throwDebris(boolean cBin) {
+		correctBin = cBin;
+		if(getType() == eDebrisType.TRASH){
+			setThrowDirection(eThrowDirection.LEFT);
+		}else{
+			setThrowDirection(eThrowDirection.RIGHT);
+		}
 		
+		if(!correctBin){
+			setThrowDirection(this.getThrowDirection().opposite());
+		}
+		
+		this.setState(eFloaterState.THROWING);
 	}
 	
-	public boolean correctBin(eThrowDirection dir){
-		return false;
-	}
-	
+
 	public void wrongBinAction(){
 		
 	}
@@ -89,8 +105,7 @@ public class Debris extends Floater{
 
 	@Override
 	public void catching() {
-		// TODO Auto-generated method stub
-		
+		this.setState(eFloaterState.LIFTED);
 	}
 
 	

@@ -17,6 +17,7 @@ import javax.swing.KeyStroke;
 
 import controller.*;
 import eNums.eDebrisType;
+import eNums.eFloaterState;
 import eNums.eScreenTimerState;
 
 public class GameController {
@@ -44,6 +45,8 @@ public class GameController {
 	spawnPowers powerMover;
 	erosion RcoastMover;
 	erosion LcoastMover;
+	
+	Collisions collision = new Collisions();
 	
 	public GameController(EstuaryGame mainGame){
 		setMainGame(mainGame);
@@ -76,10 +79,13 @@ public class GameController {
 		items.setMainPlayer(mainPlayer);
 		mainPlayer.updatePos(380, 280); //These are hard coded
 		
+		//Connect the Collision controller w the Player
+		collision.setPlayer(mainPlayer);
+		
 		//bind the keys
 		leftAct = new HAction(-1 * mainPlayer.speed);
 		rightAct = new HAction(1 * mainPlayer.speed);
-		upAct = new VAction(1 * mainPlayer.speed);
+		upAct = new VAction(-1 * mainPlayer.speed);
 		downAct = new VAction(1 * mainPlayer.speed);
 		mainGame.bindKeyWith("x.left", KeyStroke.getKeyStroke("LEFT"), leftAct);
 		mainGame.bindKeyWith("x.right", KeyStroke.getKeyStroke("RIGHT"), rightAct);
@@ -106,6 +112,9 @@ public class GameController {
 		yPos = items.getCoastR().getBarrierSpaces().get(4).getPosY();
 		items.addBarrier(new Wall(xPos,yPos));
 		
+		//Create the bins
+		items.getTrashBin().updatePos(50, 150);
+		items.getRecycleBin().updatePos(700, 150);
 		
 		//mainGame.imageLoad();
 		initTitleScreen();
@@ -152,6 +161,9 @@ public class GameController {
 		
 	}
 	
+	public void checkCollisions(){
+		
+	}
 	
 	//Increase difficulty based on health and timer
 	public void checkDifficulty(){
@@ -178,6 +190,7 @@ public class GameController {
 			Random r = new Random();
 			//generate initial position;
 			int randomx = r.nextInt(500)+150;
+			System.out.println(randomx);
 			int xPos = MovementController.getStart(randomx);
 			
 			int dtype = r.nextInt() % 2;
@@ -188,7 +201,6 @@ public class GameController {
 				d = new Debris(eDebrisType.RECYCLING);
 			}
 			//TODO d.setVertex(xPos);
-			System.out.println(xPos);
 			d.updatePos(xPos, 0);
 			d.setVertex(xPos);
 			return d;
@@ -210,8 +222,18 @@ public class GameController {
 			}
 			for(Debris d : items.getAllDebris()){
 				//make each item float
-				//d.floating();
-				MovementController.move(d);
+				if(d.getState()==eFloaterState.MOVING){
+					MovementController.move(d);
+					if(collision.checkCollision(d)){
+						d.catching();
+						//motion sequence, something for choosing where to throw
+						mainGame.throwChoice(d);
+						d.updatePos(mainPlayer.getPosX()+mainPlayer.getWidth()/2 - d.getWidth()/2, mainPlayer.getPosY()-d.getHeight());
+					}
+				}
+				else if(d.getState()==eFloaterState.THROWING){
+					MovementController.Throw(d);
+				}
 			}
 			
 			timePassed+=floatDelay;
@@ -286,8 +308,11 @@ public class GameController {
 			}
 			for(Powers p : items.getAllPowers()){
 				//make each item float
-				//p.floating();
 				MovementController.move(p);
+				if(collision.checkCollision(p)){
+					p.setState(eFloaterState.LIFTED);
+					p.catching();
+				}
 			}
 			timePassed+=floatDelay;
 		}

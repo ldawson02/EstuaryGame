@@ -1,11 +1,11 @@
 package eNums;
 
-public enum eDebrisState {
+public enum eFloaterState {
 	MOVING(0), RESTING(1), LIFTED(2), THROWING(3);
 	
 	private int state;
 	
-	eDebrisState(int estate) {
+	eFloaterState(int estate) {
 		state = estate;
 	}
 	
