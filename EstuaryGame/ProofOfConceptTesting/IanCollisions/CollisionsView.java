@@ -123,26 +123,7 @@ public class CollisionsView extends JComponent {
         paintDebris(g);
         
         //Fuck witta timer
-        double maxTime = 20000; //ms
-        double fractionPassed = timeElapsed / maxTime;
-        double size = 50;
-        double maxX = 375;
-        double maxY = 10;
-        double timerX = 401 - (fractionPassed * size)/2;
-        if (timerX < maxX)
-        	timerX = maxX;
-        double timerY = 36 - (fractionPassed * size)/2;
-        if (timerY < maxY)
-        	timerY = maxY;
-        double timerSize = fractionPassed * size;
-        if (timerSize > size)
-        	timerSize = size;
-        g.setColor(Color.RED);
-        g.fillOval((int) timerX,(int) timerY,(int) timerSize,(int) timerSize);
-        //outline
-        g.setColor(Color.BLACK);
-        g.drawOval(375, 10, 50, 50);
-        g.fillOval(398, 33, 5, 5);
+        
         
     }
 
