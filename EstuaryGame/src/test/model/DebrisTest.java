@@ -1,7 +1,5 @@
 package test.model;
 
-
-
 import static org.junit.Assert.*;
 
 import org.junit.After;
@@ -62,14 +60,15 @@ public class DebrisTest {
 		assertEquals(coastL.getBuildUp().count(), 0);
 		assertEquals(coastR.getBuildUp().count(), 0);
 		//Throw it correctly
-		trash.setState(eDebrisState.LIFTED);
-		trash.throwDebris(eThrowDirection.LEFT);
+		trash.setState(eFloaterState.LIFTED);
+		trash.setCorrectBin(eDebrisType.TRASH);
+		trash.throwDebris(trash.getCorrectBin());
 		assertEquals(eThrowDirection.LEFT.getDirection(), eDebrisType.TRASH.getType());
 		//Should not build up the coasts
 		assertEquals(coastL.getBuildUp().count(), 0);
 		assertEquals(coastR.getBuildUp().count(), 0);
 	}
-	
+	/**
 	@Test
 	public void testThrowTrashIncorrect() {
 		//Empty coasts
