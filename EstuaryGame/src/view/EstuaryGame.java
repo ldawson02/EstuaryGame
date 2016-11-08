@@ -89,6 +89,10 @@ public class EstuaryGame extends JComponent {
     	
     }
 
+	public void initTitleScreen(){
+		//this actually should probably be in the VIEW
+	}
+	
     public void bindKeyWith(String name, KeyStroke keyStroke, Action action) {
         InputMap im = getInputMap(WHEN_IN_FOCUSED_WINDOW);
         ActionMap am = getActionMap();
@@ -141,6 +145,7 @@ public class EstuaryGame extends JComponent {
         
         //Paint player
         paintPlayer(g);
+        
         /**
         //Paint health bar
         paintHealthBar(g);

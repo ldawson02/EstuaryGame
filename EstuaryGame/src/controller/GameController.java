@@ -125,7 +125,7 @@ public class GameController {
 		items.getRecycleBin().updatePos(700, 150);
 		
 		//mainGame.imageLoad();
-		initTitleScreen();
+		mainGame.initTitleScreen();
 		startGame();
 	}
 	
@@ -161,9 +161,6 @@ public class GameController {
 		
 	}
 	
-	public void initTitleScreen(){
-		//this actually should probably be in the VIEW
-	}
 	
 	public void imageLoad(){
 		
