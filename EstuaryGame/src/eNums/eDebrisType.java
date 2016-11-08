@@ -1,7 +1,7 @@
 package eNums;
 
 public enum eDebrisType {
-	TRASH(0), RECYCLING(1);
+	TRASH(-1), RECYCLING(1);
 	
 	private int type;
 	

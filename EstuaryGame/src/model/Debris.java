@@ -64,6 +64,16 @@ public class Debris extends Floater{
 		this.state = state;
 	}
 
+	public boolean getCorrectBin() {
+		return this.correctBin;
+	}
+	
+	public void setCorrectBin(eDebrisType correctBin) {
+		if (getType() == correctBin) 
+			this.correctBin = true;
+		else 
+			this.correctBin = false;
+	}
 
 
 	public void rest() {
@@ -77,6 +87,12 @@ public class Debris extends Floater{
 	public eThrowDirection getThrowDirection(){
 		return throwDir;
 	}
+	
+	/**
+	 * Throws debris that is trash to the left and recyclable debris to the right
+	 * @return
+	 */
+	
 	public void throwDebris(boolean cBin) {
 		correctBin = cBin;
 		if(getType() == eDebrisType.TRASH){

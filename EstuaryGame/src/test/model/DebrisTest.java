@@ -1,7 +1,5 @@
 package test.model;
 
-
-
 import static org.junit.Assert.*;
 
 import org.junit.After;
@@ -10,7 +8,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import eNums.eDebrisState;
+import eNums.eFloaterState;
 import eNums.eDebrisType;
 import eNums.eThrowDirection;
 import model.CoastL;
@@ -40,8 +38,8 @@ public class DebrisTest {
 
 	@Before
 	public void setUp() throws Exception {
-		trash.setState(eDebrisState.MOVING);
-		recyc.setState(eDebrisState.MOVING);
+		trash.setState(eFloaterState.MOVING);
+		recyc.setState(eFloaterState.MOVING);
 	}
 
 	@After
@@ -50,9 +48,9 @@ public class DebrisTest {
 
 	@Test
 	public void testRest() {
-		assertEquals(trash.getState(), eDebrisState.MOVING);
+		assertEquals(trash.getState(), eFloaterState.MOVING);
 		trash.rest();
-		assertEquals(trash.getState(), eDebrisState.RESTING);
+		assertEquals(trash.getState(), eFloaterState.RESTING);
 	}
 	
 	/**
@@ -62,14 +60,15 @@ public class DebrisTest {
 		assertEquals(coastL.getBuildUp().count(), 0);
 		assertEquals(coastR.getBuildUp().count(), 0);
 		//Throw it correctly
-		trash.setState(eDebrisState.LIFTED);
-		trash.throwDebris(eThrowDirection.LEFT);
+		trash.setState(eFloaterState.LIFTED);
+		trash.setCorrectBin(eDebrisType.TRASH);
+		trash.throwDebris(trash.getCorrectBin());
 		assertEquals(eThrowDirection.LEFT.getDirection(), eDebrisType.TRASH.getType());
 		//Should not build up the coasts
 		assertEquals(coastL.getBuildUp().count(), 0);
 		assertEquals(coastR.getBuildUp().count(), 0);
 	}
-	
+	/**
 	@Test
 	public void testThrowTrashIncorrect() {
 		//Empty coasts

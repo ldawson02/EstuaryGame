@@ -124,6 +124,13 @@ public abstract class Coast extends Item {
 	public void setBarrierSpaces(ArrayList<BarrierSpace> barrierSpaces) {
 		this.barrierSpaces = barrierSpaces;
 	}
+	
+	/*
+	 * for CoastL and CoastR, get all the debris items
+	public ArrayList<Debris> getBuildUp() {
+		return ArrayList<Debris>();
+	}
+	*/
 
 	/**
 	 * Decreases the size of the coast by one, if possible
