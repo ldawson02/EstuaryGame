@@ -8,6 +8,7 @@ import model.Floater;
 public class MovementController {
 	static int windowHeight = 600;
 	static int windowWidth = 800;
+	static int sizeofDebrisCoast = 50; 
 	public static int getStart(int shift){
 		int xstart = 0;
 		if(shift <= windowWidth/2){
@@ -24,7 +25,7 @@ public class MovementController {
 			return;
 		}
 		
-		if(floater.getPosY()<250){
+		if(floater.getPosY()< (windowHeight*0.40)){
 			double newy = floater.getPosY() + floater.getSpeed();
 			
 			double newx;
@@ -41,13 +42,13 @@ public class MovementController {
 			
 		}
 		
-		else if(floater.getPosY()>=250){
-			if((floater.getPosX()>50 && floater.getPosX()<700)){
+		else if(floater.getPosY()>=(windowHeight*0.40)){
+			if((floater.getPosX()>(sizeofDebrisCoast) && floater.getPosX()<(windowWidth-(sizeofDebrisCoast+floater.getWidth()))) && floater.getPosY()< 375){
 				if(floater.getVertex() <= windowWidth/2){
-					floater.updatePos(floater.getPosX()-floater.getSpeed(), floater.getPosY()+2);
+					floater.updatePos(floater.getPosX()-floater.getSpeed(), floater.getPosY()+floater.getSpeed());
 				}
 				else if(floater.getVertex() > windowWidth/2){
-					floater.updatePos(floater.getPosX()+floater.getSpeed(), floater.getPosY()+2);
+					floater.updatePos(floater.getPosX()+floater.getSpeed(), floater.getPosY()+floater.getSpeed());
 				}
 			}
 			else{
@@ -77,17 +78,17 @@ public class MovementController {
 	
 	public static void wrongBinMove(Floater f){
 		double deltaX;
-		if(f.getPosX() < 400){
-			deltaX = 50 - f.getPosX();
+		if(f.getPosX() < windowWidth/2){
+			deltaX = sizeofDebrisCoast - f.getPosX();
 		}
 		else{
-			deltaX = 700 - f.getPosX();
+			deltaX = (windowWidth-sizeofDebrisCoast) - f.getPosX();
 		}
-		double deltaY = 300 - f.getPosY();
+		double deltaY = windowHeight/2 - f.getPosY();
 		double direction = Math.atan2(deltaY, deltaX);
 		double speed = 3.0;
 		
-		while(f.getPosY() != 300){
+		while(f.getPosY() != windowHeight/2){
 			f.updatePos((int)(f.getPosX()+(speed*Math.cos(direction))), (int)(f.getPosY()+(speed*Math.sin(direction))));	
 		}
 	}
