@@ -89,12 +89,24 @@ public class EstuaryGame extends JComponent {
     	
     }
 
+	public void initTitleScreen(){
+		//this actually should probably be in the VIEW
+	}
+	
     public void bindKeyWith(String name, KeyStroke keyStroke, Action action) {
         InputMap im = getInputMap(WHEN_IN_FOCUSED_WINDOW);
         ActionMap am = getActionMap();
 
         im.put(keyStroke, name);
         am.put(name, action);
+    }
+    
+    public void unbindKeyWith(String name, KeyStroke keyStroke) {
+        InputMap im = getInputMap(WHEN_IN_FOCUSED_WINDOW);
+        ActionMap am = getActionMap();
+
+        im.remove(keyStroke);
+        am.remove(name);
     }
 
     private void initImages() {
@@ -141,6 +153,7 @@ public class EstuaryGame extends JComponent {
         
         //Paint player
         paintPlayer(g);
+        
         /**
         //Paint health bar
         paintHealthBar(g);
@@ -234,9 +247,9 @@ public class EstuaryGame extends JComponent {
     private void paintBins(Graphics g){
     	Bin trash = gc.getItems().getTrashBin();
     	Bin recycle = gc.getItems().getRecycleBin();
-    	g.setColor(Color.BLACK);
-    	g.fillOval(trash.getPosX(), trash.getPosY(), trash.getWidth(), trash.getHeight());
     	g.setColor(Color.BLUE);
+    	g.fillOval(trash.getPosX(), trash.getPosY(), trash.getWidth(), trash.getHeight());
+    	g.setColor(Color.YELLOW);
     	g.fillOval(recycle.getPosX(), recycle.getPosY(), recycle.getWidth(), recycle.getHeight());
     }
     
@@ -284,6 +297,7 @@ public class EstuaryGame extends JComponent {
     		    options[0]);
     	
     	d.throwDebris(n == d.getType().getType());
+    	d.setController(gc);
     }
     private void updateWrappers() {
     	//TODO: Making this really inefficient to start

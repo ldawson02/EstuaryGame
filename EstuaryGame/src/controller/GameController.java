@@ -19,6 +19,7 @@ import controller.*;
 import eNums.eDebrisType;
 import eNums.eFloaterState;
 import eNums.eScreenTimerState;
+import eNums.eThrowDirection;
 
 public class GameController {
 
@@ -30,12 +31,18 @@ public class GameController {
 	Action rightAct;
 	Action upAct;
 	Action downAct;
+	Action caughtLeftAct;
+	Action caughtRightAct;
+	Action throwAct;
+	//Makes sure you can only catch one Floater at a time
+	private boolean choosingThrow = false;
 	final private int floatDelay = 100; //TODO
 	Timer debrisFloating;
 	Timer powersFloating;
 	final private int erodeDelay = 1;//TODO
 	Timer coastRErosion;
 	Timer coastLErosion;
+	private GameController thisGame = this;
 	
 	final private int paintDelay = 30;
 	Timer theBigTimer;
@@ -77,6 +84,12 @@ public class GameController {
 		return timeElapsed;
 	}
 
+	public void normalKeyBind(){
+		mainGame.bindKeyWith("x.left", KeyStroke.getKeyStroke("LEFT"), leftAct);
+		mainGame.bindKeyWith("x.right", KeyStroke.getKeyStroke("RIGHT"), rightAct);
+		mainGame.bindKeyWith("x.up", KeyStroke.getKeyStroke("UP"), upAct);
+		mainGame.bindKeyWith("x.down", KeyStroke.getKeyStroke("DOWN"), downAct);
+	}
 	public void setup(){
 		//Start the paint timer
 		theBigTimer = new Timer(paintDelay, new mainTimer());
@@ -95,10 +108,7 @@ public class GameController {
 		rightAct = new HAction(1 * mainPlayer.speed);
 		upAct = new VAction(-1 * mainPlayer.speed);
 		downAct = new VAction(1 * mainPlayer.speed);
-		mainGame.bindKeyWith("x.left", KeyStroke.getKeyStroke("LEFT"), leftAct);
-		mainGame.bindKeyWith("x.right", KeyStroke.getKeyStroke("RIGHT"), rightAct);
-		mainGame.bindKeyWith("x.up", KeyStroke.getKeyStroke("UP"), upAct);
-		mainGame.bindKeyWith("x.down", KeyStroke.getKeyStroke("DOWN"), downAct);
+		normalKeyBind();
 		
 		//maybe also have an action for building gabion, like pressing g
 		mainGame.bindKeyWith("gabionBuild", KeyStroke.getKeyStroke("g"), new gabionAct());
@@ -125,7 +135,7 @@ public class GameController {
 		items.getRecycleBin().updatePos(700, 150);
 		
 		//mainGame.imageLoad();
-		initTitleScreen();
+		mainGame.initTitleScreen();
 		startGame();
 	}
 	
@@ -161,12 +171,32 @@ public class GameController {
 		
 	}
 	
-	public void initTitleScreen(){
-		//this actually should probably be in the VIEW
-	}
 	
 	public void imageLoad(){
 		
+	}
+	
+	public void caughtSetup(Debris d){
+		this.choosingThrow = true;
+		Action caughtLeftAct = new ThrowChoice(eThrowDirection.LEFT,d);
+		Action caughtRightAct = new ThrowChoice(eThrowDirection.RIGHT,d);
+		Action throwAct = new ThrowChosen(d);
+		
+		//Change the function of the keys
+		mainGame.bindKeyWith("x.leftArrow", KeyStroke.getKeyStroke("LEFT"), caughtLeftAct);
+		mainGame.bindKeyWith("x.rightArrow", KeyStroke.getKeyStroke("RIGHT"), caughtRightAct);
+		mainGame.bindKeyWith("throwDebris", KeyStroke.getKeyStroke("ENTER"), throwAct);
+		
+		//Don't let the player move!
+		mainGame.unbindKeyWith("x.up", KeyStroke.getKeyStroke("UP"));
+		mainGame.unbindKeyWith("x.down", KeyStroke.getKeyStroke("DOWN"));
+	}
+	
+	public void thrownSetup(){
+		//Return the keys to their original state, allow Player to move
+		normalKeyBind();
+		mainGame.unbindKeyWith("throwDebris", KeyStroke.getKeyStroke("ENTER"));
+		this.choosingThrow = false;
 	}
 	
 	public void checkCollisions(){
@@ -178,7 +208,16 @@ public class GameController {
 		//TODO: let's have 5 different difficulty levels where the speed of erosion and debris spawn changes
 	}
 	
-	//At (slightly) random intervals spawn debris, only should be initialized once!!
+	/**
+	 * @author Lia Dawson
+	 * @version 1.0
+	 * @since 10/25/16
+	 * 
+	 *        The spawnDebris class handles the movement and spawning of Debris
+	 *        in EstuaryGame. It should only be initialized once per game, and
+	 *        will be called continuously throughout the entire lifecycle of the
+	 *        game
+	 */
 	public class spawnDebris implements ActionListener{
 		public int timePassed = 0;
 		//The time after which debris should spawn again (changes every time respawned)
@@ -187,6 +226,7 @@ public class GameController {
 		public int aveTime = 3000;
 		//The limit to the random distributions range in milliseconds (AKA +- rTime/2)
 		final public int rTime = 500;
+	
 		
 		public spawnDebris(){
 			items.addDebris(newDebris());
@@ -208,7 +248,7 @@ public class GameController {
 			} else {
 				d = new Debris(eDebrisType.RECYCLING);
 			}
-			//TODO d.setVertex(xPos);
+			d.setController(thisGame);
 			d.updatePos(xPos, 0);
 			d.setVertex(xPos);
 			return d;
@@ -228,20 +268,26 @@ public class GameController {
 				items.addDebris(newDebris());
 				resetTimer();
 			}
+			//might want to put this for loop in its own class in the Controller
 			for(Debris d : items.getAllDebris()){
 				//make each item float
 				if(d.getState()==eFloaterState.MOVING){
 					MovementController.move(d);
-					if(collision.checkCollision(d)){
+					if(!thisGame.choosingThrow && collision.checkCollision(d)){
 						d.catching();
-						//motion sequence, something for choosing where to throw
-						mainGame.throwChoice(d);
+						//sequence of events for a caught Debris initiated
+						thisGame.caughtSetup(d);
+						//Move the trash to above the Player's head
 						d.updatePos(mainPlayer.getPosX()+mainPlayer.getWidth()/2 - d.getWidth()/2, mainPlayer.getPosY()-d.getHeight());
 					}
 				}
 				else if(d.getState()==eFloaterState.THROWING){
-					MovementController.Throw(d);
+					//This should be a sequence like move()
+					//Function could return true or false to indicate it it's hit the Bin yet, then initiate next sequence
+					MovementController.Throw(d, d.getBin());
+
 				}
+				
 			}
 			
 			timePassed+=floatDelay;
@@ -406,6 +452,37 @@ public class GameController {
 		
 	}
 	
+	//When the player catches Debris, left and right keys bind with this action
+	public class ThrowChoice extends AbstractAction{
+		private eThrowDirection dir;
+		private Debris caughtDebris;
+		
+		public ThrowChoice(eThrowDirection dir, Debris d){
+			this.dir = dir;
+			this.caughtDebris = d;
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			caughtDebris.setThrowDirection(dir);
+		}
+		
+	}
+	
+	//Action to be bound with the enter key when a piece of Debris is caught. Pressing enter releases the Debris
+	public class ThrowChosen extends AbstractAction{
+
+		private Debris caughtDebris;
+		public ThrowChosen(Debris d){
+			this.caughtDebris = d;
+		}
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			caughtDebris.setState(eFloaterState.THROWING);
+			thisGame.thrownSetup();
+		}
+		
+	}
 	public class wallAct extends AbstractAction{
 
 		@Override

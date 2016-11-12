@@ -13,6 +13,17 @@ public enum eThrowDirection {
 		return direction;
 	}
 	
+	public static eThrowDirection getDir(int dir){
+
+		if(dir==-1){
+			return LEFT;
+		}
+		else {
+			return RIGHT;
+		}
+
+	}
+	
 	public eThrowDirection opposite(){
 		if(this.direction==-1){
 			return RIGHT;
