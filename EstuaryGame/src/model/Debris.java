@@ -1,6 +1,7 @@
 package model;
 
 import eNums.eFloaterState;
+import controller.GameController;
 import eNums.eDebrisType;
 import eNums.eThrowDirection;
 
@@ -18,6 +19,7 @@ public class Debris extends Floater{
 	private eFloaterState state;
 	private boolean correctBin;
 	private eThrowDirection throwDir;
+	private GameController gc;
 	
 	/**
 	 * Private no-arg constructor to prevent creating a debris item without
@@ -34,6 +36,11 @@ public class Debris extends Floater{
 		super();
 		this.type = etype;
 		this.state = eFloaterState.MOVING; // Moving by default on creation
+	}
+	
+	//This is only connected when the Debris has been caught
+	public void setController(GameController game){
+		this.gc = game;
 	}
 	
 	/**
@@ -75,9 +82,19 @@ public class Debris extends Floater{
 			this.correctBin = false;
 	}
 
-
+	public Bin getBin(){
+		//if they throw the correct direction for trash or the wrong direction for recycling, they're throwing toward TRASH bin
+		if((correctBin&&this.getType()==eDebrisType.TRASH)||(!correctBin&&this.getType()==eDebrisType.RECYCLING)){
+			return gc.getItems().getTrashBin();
+		}
+		//else throwing towards RECYCLING
+		else{
+			return gc.getItems().getRecycleBin();
+		}
+	}
+	
 	public void rest() {
-		
+		this.setState(eFloaterState.RESTING);
 	}
 	
 	public void setThrowDirection(eThrowDirection e){

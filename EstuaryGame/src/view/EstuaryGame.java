@@ -100,6 +100,14 @@ public class EstuaryGame extends JComponent {
         im.put(keyStroke, name);
         am.put(name, action);
     }
+    
+    public void unbindKeyWith(String name, KeyStroke keyStroke) {
+        InputMap im = getInputMap(WHEN_IN_FOCUSED_WINDOW);
+        ActionMap am = getActionMap();
+
+        im.remove(keyStroke);
+        am.remove(name);
+    }
 
     private void initImages() {
     	try {
@@ -239,9 +247,9 @@ public class EstuaryGame extends JComponent {
     private void paintBins(Graphics g){
     	Bin trash = gc.getItems().getTrashBin();
     	Bin recycle = gc.getItems().getRecycleBin();
-    	g.setColor(Color.BLACK);
-    	g.fillOval(trash.getPosX(), trash.getPosY(), trash.getWidth(), trash.getHeight());
     	g.setColor(Color.BLUE);
+    	g.fillOval(trash.getPosX(), trash.getPosY(), trash.getWidth(), trash.getHeight());
+    	g.setColor(Color.YELLOW);
     	g.fillOval(recycle.getPosX(), recycle.getPosY(), recycle.getWidth(), recycle.getHeight());
     }
     
@@ -289,6 +297,7 @@ public class EstuaryGame extends JComponent {
     		    options[0]);
     	
     	d.throwDebris(n == d.getType().getType());
+    	d.setController(gc);
     }
     private void updateWrappers() {
     	//TODO: Making this really inefficient to start
