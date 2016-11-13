@@ -66,12 +66,16 @@ public class MovementController {
 
 	
 	public static void Throw(Floater f, Bin b){
+			System.out.println("bin" + b.getPosX());
 			double deltaX = b.getPosX() - f.getPosX();
 			double deltaY = b.getPosY() - f.getPosY();
 			double distance = Math.sqrt(deltaX*deltaX+deltaY*deltaY);
 			double speed = 0.25;
 			if(distance>1){
 				f.updatePos((int)(f.getPosX()+deltaX*speed),(int)(f.getPosY()+deltaY*speed));
+			}
+			else{
+				f.setState(eFloaterState.HITBIN);
 			}
 			
 		

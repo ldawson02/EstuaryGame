@@ -33,6 +33,7 @@ import eNums.eDebrisType;
 import model.Barriers;
 import model.Bin;
 import model.Debris;
+import model.Floater;
 import model.HealthBar;
 import model.Player;
 
@@ -221,6 +222,10 @@ public class EstuaryGame extends JComponent {
     	ArrayList<Debris> debris = gc.getItems().getAllDebris();
     	for (Debris d : debris) {
 
+    		if (d.getState() == eFloaterState.LIFTED) {
+    			paintArrow(g, d);
+    		}
+    		
     		if (d.getType() == eDebrisType.TRASH) {
     			//TODO: paint like trash
     			//Calling trash a yellow circle
@@ -235,13 +240,24 @@ public class EstuaryGame extends JComponent {
     			g.fillOval(d.getPosX(), d.getPosY(), d.getWidth(), d.getHeight());
     		}
     		
-    		/*
-    		if (d.getState() == eFloaterState.LIFTED) {
-    			g.fillOval(actives.getPlayer().getPlayer().getPosX(), actives.getPlayer().getPlayer().getPosY() - d.getHeight(), 
-    					d.getWidth(), d.getHeight());
-    		}
-    		*/
+    		
+    		
+    		
     	}
+    }
+    
+    private void paintArrow(Graphics g, Debris d){
+    	g.setColor(Color.BLACK);
+    	int x1 = d.getPosX()+d.getWidth()/2;
+    	int y1 = d.getPosY()+d.getHeight()/2;
+    	int finalx = d.getBin().getPosX()+d.getBin().getWidth()/2;
+    	int finaly = d.getBin().getPosY()+d.getBin().getHeight()/2;
+    	double angle = Math.atan2(finaly-y1, x1-finalx);
+    	int r = 70;
+    	int deltax = (int) (r*Math.cos(angle));
+    	int deltay = (int) (r*Math.sin(angle));
+    	
+    	g.drawLine(x1, y1, x1+deltax, y1+deltay);
     }
     
     private void paintBins(Graphics g){

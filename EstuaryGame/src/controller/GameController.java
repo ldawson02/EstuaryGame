@@ -274,6 +274,7 @@ public class GameController {
 				if(d.getState()==eFloaterState.MOVING){
 					MovementController.move(d);
 					if(!thisGame.choosingThrow && collision.checkCollision(d)){
+						//sets the Debris state to Lifted
 						d.catching();
 						//sequence of events for a caught Debris initiated
 						thisGame.caughtSetup(d);
