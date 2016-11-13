@@ -86,11 +86,10 @@ public class MovementController {
 			deltaX = (windowWidth-sizeofDebrisCoast) - f.getPosX();
 		}
 		double deltaY = windowHeight/2 - f.getPosY();
-		double direction = Math.atan2(deltaY, deltaX);
-		double speed = 3.0;
-		
-		while(f.getPosY() != windowHeight/2){
-			f.updatePos((int)(f.getPosX()+(speed*Math.cos(direction))), (int)(f.getPosY()+(speed*Math.sin(direction))));	
+		double distance = Math.sqrt(deltaX*deltaX+deltaY*deltaY);
+		double speed = 0.25;
+		if(distance>1){
+			f.updatePos((int)(f.getPosX()+deltaX*speed),(int)(f.getPosY()+deltaY*speed));
 		}
 	}
 }
