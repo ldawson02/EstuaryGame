@@ -18,7 +18,7 @@ public class Debris extends Floater{
 	private eDebrisType type;
 	private eFloaterState state;
 	private boolean correctBin;
-	private eThrowDirection throwDir;
+	private eThrowDirection throwDir = eThrowDirection.LEFT;
 	private GameController gc;
 	
 	/**
