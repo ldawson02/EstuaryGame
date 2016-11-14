@@ -144,6 +144,9 @@ public class EstuaryGame extends JComponent {
         //Paint ScreenTimer
         paintScreenTimer(g);
        
+        //Paint healthBar
+        paintHealthBar(g);
+        
         //Paint barriers
         paintBarriers(g);
         
@@ -155,12 +158,12 @@ public class EstuaryGame extends JComponent {
         //Paint player
         paintPlayer(g);
         
-        /**
         //Paint health bar
         paintHealthBar(g);
         
+        timeElapsed = gc.getTheBigTimer();
         g.drawString(Integer.toString(timeElapsed), 40, 40);
-        */
+        
     }
     
     private void paintBackground(Graphics g) {
@@ -271,6 +274,11 @@ public class EstuaryGame extends JComponent {
     
     private void paintHealthBar(Graphics g) {
     	HealthBar hb = gc.getItems().getHealthBar();
+    	if (hb == null) {
+    		System.out.println("null healthbar");
+    	}
+    	
+    	
     	double currHealth = hb.getHealth();
     	double maxHealth = hb.getMaxHealth();
     	double barY = hb.getPosY();
@@ -282,8 +290,10 @@ public class EstuaryGame extends JComponent {
     	//of the health bar, one that is the current health
     	//Backing
     	g.setColor(Color.WHITE);
-    	g.fillRect((int) barY,(int) barX,(int) barWidth,(int) barHeight);
+    	g.fillRect((int) barX,(int) barY,(int) barWidth,(int) barHeight);
     	//Health
+    	
+    	/*
     	double currHealthHeight = (currHealth / maxHealth)*barHeight;
     	double currHealthY = (barHeight - currHealthHeight) + barY;
         g.setColor(Color.RED);
@@ -291,6 +301,7 @@ public class EstuaryGame extends JComponent {
     	//Outline
     	g.setColor(Color.BLACK);
     	g.drawRect((int)barX, (int)barY,(int) barWidth,(int) barHeight);
+    	*/
     }
     
     private void paintPlayer(Graphics g) {

@@ -130,6 +130,9 @@ public class GameController {
 		yPos = items.getCoastR().getBarrierSpaces().get(4).getPosY();
 		items.addBarrier(new Wall(xPos,yPos));
 		
+		//Add health bar!!
+		items.addHealthBar(new HealthBar());
+		
 		//Create the bins
 		items.getTrashBin().updatePos(50, 150);
 		items.getRecycleBin().updatePos(700, 150);
