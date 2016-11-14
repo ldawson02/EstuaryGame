@@ -11,8 +11,8 @@ package model;
 public class HealthBar extends Item {
 	private final int maxHealth = 100;
 	private final int minHealth = 0;
-	private final int height = 100;
-	private final int width = 30;
+	private final int height = 25;
+	private final int width = 160;
 	private int health;
 	
 	/**
@@ -21,7 +21,7 @@ public class HealthBar extends Item {
 	 * @param health
 	 */
 	public HealthBar(){
-		super(670, 250);
+		super(320, 515);
 		health = 80;
 	};
 	
@@ -32,7 +32,7 @@ public class HealthBar extends Item {
 	public void update(int points) {
 		this.health += points;
 		if (health > maxHealth) {
-			health = 100;
+			health = 70;
 		}
 		else if (health < minHealth) {
 			health = 0;

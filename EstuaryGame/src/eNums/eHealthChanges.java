@@ -7,10 +7,12 @@ package eNums;
  * @author Ian
  */
 public enum eHealthChanges {
-	DebrisOnCoast(-10),
-	DebrisThrown(5),
-	WallFallen(-10),
-	WallBuilt(15);
+	DebrisHitCoast(-5),
+	RestingDebrisGradual(-1),
+	CorrectBin(5),
+	IncorrectBin(-5),
+	WallFallen(-8),
+	WallBuilt(12);
 	
 	private int delta;
 	

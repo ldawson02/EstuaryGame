@@ -18,6 +18,7 @@ import javax.swing.KeyStroke;
 import controller.*;
 import eNums.eDebrisType;
 import eNums.eFloaterState;
+import eNums.eHealthChanges;
 import eNums.eScreenTimerState;
 import eNums.eThrowDirection;
 
@@ -27,6 +28,7 @@ public class GameController {
 	private EstuaryGame mainGame;
 	Player mainPlayer;
 	private ActiveItems items = new ActiveItems();
+	private ImageLibrary library;
 	Action leftAct;
 	Action rightAct;
 	Action upAct;
@@ -176,7 +178,8 @@ public class GameController {
 	
 	
 	public void imageLoad(){
-		
+		//TODO: that method currently returns a completely empty instance
+		library = ImageLibrary.loadLibrary();
 	}
 	
 	public void caughtSetup(Debris d){
@@ -284,12 +287,31 @@ public class GameController {
 						//Move the trash to above the Player's head
 						d.updatePos(mainPlayer.getPosX()+mainPlayer.getWidth()/2 - d.getWidth()/2, mainPlayer.getPosY()-d.getHeight());
 					}
+					
+					//If the debris hit the coast this round, decrement health
+					if (d.getState() == eFloaterState.RESTING) {
+						System.out.println("Debris hit coast");
+						items.getHealthBar().update(eHealthChanges.DebrisHitCoast.getDelta());
+					}
 				}
 				else if(d.getState()==eFloaterState.THROWING){
 					//This should be a sequence like move()
 					//Function could return true or false to indicate it it's hit the Bin yet, then initiate next sequence
 					MovementController.Throw(d, d.getBin());
 
+					//Update the healthbar if it hit on this round
+					if (d.getState() == eFloaterState.HITBIN) {
+						System.out.print("\nBin hit this round and");
+						if (d.getCorrectBin()) {
+							System.out.print(" bin was correct.\n");
+							items.getHealthBar().update(eHealthChanges.CorrectBin.getDelta());
+						}
+						else {
+							System.out.print(" bin was incorrect.\n");
+							items.getHealthBar().update(eHealthChanges.IncorrectBin.getDelta());
+						}
+					}
+					//If the debris hit the wrong bin it should go back to the coast
 				}
 				
 			}
