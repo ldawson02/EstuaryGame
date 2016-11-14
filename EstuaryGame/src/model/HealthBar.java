@@ -21,7 +21,7 @@ public class HealthBar extends Item {
 	 * @param health
 	 */
 	public HealthBar(){
-		super();
+		super(670, 250);
 		health = 80;
 	};
 	
