@@ -14,16 +14,18 @@ import java.util.Collections;
  * continuous SeqIDs from 0 to (numSeqs - 1).
  * 
  * @author Ian
- *
  */
-public class ItemSequences {
 
+public class ItemSequences implements Comparable<ItemSequences> {
+
+	public int ItemID;
 	private ArrayList<ImageSequence> anims;
 	private int numSeqs = 0;
 	private int curSeq = 0;
 	
-	public ItemSequences() {
+	public ItemSequences(int itemID) {
 		anims = new ArrayList<ImageSequence>();
+		ItemID = itemID;
 	}
 	
 	/**
@@ -44,6 +46,19 @@ public class ItemSequences {
 			curSeq = SeqID;
 		}
 		return (anims.get(curSeq).draw());
+	}
+
+	@Override
+	public int compareTo(ItemSequences it2) {
+		if (ItemID < it2.ItemID) {
+			return -1;
+		}
+		else if (ItemID == it2.ItemID) {
+			return 0;
+		}
+		else {
+			return 1;
+		}
 	}
 	
 }
