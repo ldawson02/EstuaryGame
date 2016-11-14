@@ -253,11 +253,11 @@ public class EstuaryGame extends JComponent {
     	int finalx = d.getBin().getPosX()+d.getBin().getWidth()/2;
     	int finaly = d.getBin().getPosY()+d.getBin().getHeight()/2;
     	double angle = Math.atan2(finaly-y1, x1-finalx);
-    	int r = 70;
+    	int r = 90;
     	int deltax = (int) (r*Math.cos(angle));
     	int deltay = (int) (r*Math.sin(angle));
     	
-    	g.drawLine(x1, y1, x1+deltax, y1+deltay);
+    	g.drawLine(x1, y1, x1-deltax, y1+deltay);
     }
     
     private void paintBins(Graphics g){

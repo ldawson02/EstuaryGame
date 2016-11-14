@@ -1,6 +1,10 @@
 package model;
 
 import eNums.eFloaterState;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
 import controller.GameController;
 import eNums.eDebrisType;
 import eNums.eThrowDirection;
@@ -83,13 +87,23 @@ public class Debris extends Floater{
 	}
 
 	public Bin getBin(){
-		//if they throw the correct direction for trash or the wrong direction for recycling, they're throwing toward TRASH bin
-		if((correctBin&&this.getType()==eDebrisType.TRASH)||(!correctBin&&this.getType()==eDebrisType.RECYCLING)){
-			return gc.getItems().getTrashBin();
+		ArrayList<Bin> LR = new ArrayList<Bin>();
+		//Put recycle in first, then trash
+		LR.add(gc.getItems().getRecycleBin());
+		LR.add(gc.getItems().getTrashBin());
+		
+		if(LR.get(0).getPosX() > LR.get(1).getPosX()){
+			Collections.reverse(LR);
 		}
-		//else throwing towards RECYCLING
+
+		
+		//if they throw Left return Left-most bin
+		if(throwDir==eThrowDirection.LEFT){
+			return LR.get(0);
+		}
+		//else return right bin
 		else{
-			return gc.getItems().getRecycleBin();
+			return LR.get(1);
 		}
 	}
 	

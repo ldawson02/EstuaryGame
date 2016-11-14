@@ -465,6 +465,7 @@ public class GameController {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			System.out.println("Change throw dir" + dir.name());
 			caughtDebris.setThrowDirection(dir);
 		}
 		
