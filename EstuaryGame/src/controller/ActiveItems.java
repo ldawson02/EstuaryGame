@@ -112,6 +112,9 @@ public class ActiveItems {
 		return hBar;
 	}
 
+	public void addHealthBar(HealthBar hb) {
+		this.hBar = hb;
+	}
 	
 	public ArrayList<Powers> getAllPowers(){
 		return powerups;

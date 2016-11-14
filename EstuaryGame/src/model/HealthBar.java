@@ -22,6 +22,7 @@ public class HealthBar extends Item {
 	 */
 	public HealthBar(){
 		super();
+		health = 80;
 	};
 	
 	/**
