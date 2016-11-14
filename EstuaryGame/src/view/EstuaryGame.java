@@ -241,11 +241,7 @@ public class EstuaryGame extends JComponent {
     			//Calling recycling a blue circle
     			g.setColor(Color.BLUE);
     			g.fillOval(d.getPosX(), d.getPosY(), d.getWidth(), d.getHeight());
-    		}
-    		
-    		
-    		
-    		
+    		}	
     	}
     }
     
@@ -278,7 +274,6 @@ public class EstuaryGame extends JComponent {
     		System.out.println("null healthbar");
     	}
     	
-    	
     	double currHealth = hb.getHealth();
     	double maxHealth = hb.getMaxHealth();
     	double barY = hb.getPosY();
@@ -286,22 +281,18 @@ public class EstuaryGame extends JComponent {
     	double barWidth = hb.getWidth();
     	double barHeight = hb.getHeight();
     	
-    	//Concept: painting two rectangles: One that is the outline
-    	//of the health bar, one that is the current health
     	//Backing
-    	g.setColor(Color.WHITE);
+        g.setColor(new Color(255, 255, 255, 150));
     	g.fillRect((int) barX,(int) barY,(int) barWidth,(int) barHeight);
-    	//Health
     	
-    	/*
-    	double currHealthHeight = (currHealth / maxHealth)*barHeight;
-    	double currHealthY = (barHeight - currHealthHeight) + barY;
-        g.setColor(Color.RED);
-    	g.fillRect((int) barX,(int) currHealthY,(int) barWidth,(int) currHealthHeight);
+    	//Health
+    	double currHealthWidth = (currHealth / maxHealth)*barWidth;
+    	//double currHealthY = (barHeight - currHealthHeight) + barY;
+        g.setColor(new Color(255, 90, 90, 200));
+    	g.fillRect((int) barX,(int) barY,(int) currHealthWidth,(int) barHeight);
     	//Outline
     	g.setColor(Color.BLACK);
     	g.drawRect((int)barX, (int)barY,(int) barWidth,(int) barHeight);
-    	*/
     }
     
     private void paintPlayer(Graphics g) {

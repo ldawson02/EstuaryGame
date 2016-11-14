@@ -76,7 +76,19 @@ public class Debris extends Floater{
 	}
 
 	public boolean getCorrectBin() {
-		return this.correctBin;
+		/**
+		 * I don't understand how whether it was the correct bin was working before
+		 * so I'm rewriting it here
+		 */
+		
+		if (this.throwDir.getDirection() == this.type.getType()) {
+			return true;
+		}
+		else {
+			return false;
+		}
+		
+		//return this.correctBin;
 	}
 	
 	public void setCorrectBin(eDebrisType correctBin) {
