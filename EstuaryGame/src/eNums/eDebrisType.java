@@ -1,13 +1,12 @@
 package eNums;
 
-public enum eBarrierType {
-
-	Empty(-1), Gabion(0), Wall(1);
+public enum eDebrisType {
+	TRASH(-1), RECYCLING(1);
 	
 	private int type;
 	
-	eBarrierType(int val) {
-		this.type = val;
+	eDebrisType(int etype) {
+		type = etype;
 	}
 	
 	public int getType() {
