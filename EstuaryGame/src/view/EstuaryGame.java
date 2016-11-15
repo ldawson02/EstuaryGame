@@ -28,6 +28,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import controller.ActiveItems;
 import controller.GameController;
+import controller.GameController.MouseController;
 import eNums.eBarrierType;
 import eNums.eFloaterState;
 import eNums.eDebrisType;
@@ -47,7 +48,7 @@ public class EstuaryGame extends JComponent {
 
     private static final long serialVersionUID = 1L;
 
-    private GameController gc;
+    private static GameController gc;
     private JFrame mainFrame;
     BufferedImage bg;
     
@@ -80,7 +81,7 @@ public class EstuaryGame extends JComponent {
                 frame.setSize(800, 600);
                 frame.setFocusable(true);
 		    
-		MouseController mouse = MouseController();
+		MouseController mouse = gc.new MouseController();
 		frame.addMouseListener(mouse);
 		    
 		Container contentPane = frame.getContentPane();
@@ -251,7 +252,7 @@ public class EstuaryGame extends JComponent {
     			g.setColor(Color.DARK_GRAY);
     			g.fillRect(b.getPosX(), b.getPosY(), b.getWidth(), b.getHeight());
     		}
-		else if (b.getType() == eBarrierType.Empty) {
+		else if (b.getType() == eBarrierType.EMPTY) {
 			g.setColor(Color.BLACK);
 			g.drawRect(b.getPosX(), b.getPosY(), bWidth, bHeight);
 		}
