@@ -3,9 +3,12 @@ package controller;
 import model.*;
 import view.*;
 
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.Timer;
 
@@ -13,12 +16,22 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
+import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseEvent;
+
 import controller.*;
+import eNums.eBarrierType;
 import eNums.eDebrisType;
 import eNums.eFloaterState;
 import eNums.eScreenTimerState;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 
 public class GameController {
 
@@ -45,7 +58,13 @@ public class GameController {
 	spawnPowers powerMover;
 	erosion RcoastMover;
 	erosion LcoastMover;
-	
+
+	private static int bWidth = 40;
+	private static int bHeight = 20;
+	public static Rectangle wallSpawn = new Rectangle(Barriers.getLeftEdge(), 390, bWidth, bHeight);
+	public static Rectangle gabionsSpawn = new Rectangle(Barriers.getRightEdge(), 390, bWidth, bHeight);
+	public static Rectangle temp;
+		
 	Collisions collision = new Collisions();
 	
 	public GameController(EstuaryGame mainGame){
@@ -104,21 +123,50 @@ public class GameController {
 		mainGame.bindKeyWith("gabionBuild", KeyStroke.getKeyStroke("g"), new gabionAct());
 		mainGame.bindKeyWith("wallBuild", KeyStroke.getKeyStroke("h"), new wallAct());
 		
+		JFrame f = new JFrame();
+		MouseController mouse = new MouseController();
+		f.addMouseListener(mouse);
+		f.pack();
+		f.setVisible(true);
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		
+		ArrayList<Barriers> left = Barriers.setUpLeftCoast();
+		for (Barriers b : left) {
+			items.addBarrier(b);
+		}
+		ArrayList<Barriers> right = Barriers.setUpRightCoast();
+		for (Barriers b : right) {
+			items.addBarrier(b);
+		}
+		
 		//Create the initial walls
+		/*
+		for (int i = 0; i < 5; i++) {
+			items.addBarrier(new Barriers(20+50*i));
+		}
+		for (int i = 0; i < 5; i++) {
+			items.addBarrier(new Barriers(540+50*i));
+		}*/
+	
+		items.getAllBarriers().get(1).setType(eBarrierType.Wall);
+		items.getAllBarriers().get(7).setType(eBarrierType.Gabion);
+		
+		/*
 		//TODO: this is gross I'll make it look better later
 		//Random r = new Random();
 		int xPos = items.getCoastL().getBarrierSpaces().get(3).getPosX();
 		int yPos = items.getCoastL().getBarrierSpaces().get(3).getPosY();
-		items.addBarrier(new Wall(xPos,yPos));
+		items.addBarrier(new Wall(xPos));
 		xPos = items.getCoastL().getBarrierSpaces().get(1).getPosX();
 		yPos = items.getCoastL().getBarrierSpaces().get(1).getPosY();
-		items.addBarrier(new Wall(xPos,yPos));
+		items.addBarrier(new Wall(xPos));
 		xPos = items.getCoastR().getBarrierSpaces().get(2).getPosX();
 		yPos = items.getCoastR().getBarrierSpaces().get(2).getPosY();
-		items.addBarrier(new Wall(xPos,yPos));
+		items.addBarrier(new Wall(xPos));
 		xPos = items.getCoastR().getBarrierSpaces().get(4).getPosX();
 		yPos = items.getCoastR().getBarrierSpaces().get(4).getPosY();
-		items.addBarrier(new Wall(xPos,yPos));
+		items.addBarrier(new Wall(xPos));*/
 		
 		//Create the bins
 		items.getTrashBin().updatePos(50, 150);
@@ -139,7 +187,7 @@ public class GameController {
 		//Turn on the screen timer!
 		items.addScreenTimer(new ScreenTimer());
 		items.getScreenTimer().start();
-		
+			
 		debrisMover = new spawnDebris();
 		powerMover = new spawnPowers();
 		RcoastMover = new erosion(items.getCoastR());
@@ -198,7 +246,7 @@ public class GameController {
 			Random r = new Random();
 			//generate initial position;
 			int randomx = r.nextInt(500)+150;
-			System.out.println(randomx);
+			//System.out.println(randomx); !
 			int xPos = MovementController.getStart(randomx);
 			
 			int dtype = r.nextInt() % 2;
@@ -418,9 +466,108 @@ public class GameController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			items.addBarrier(new Gabions(mainPlayer.getPosX(), mainPlayer.getPosY()));
+			items.addBarrier(new Gabions(mainPlayer.getPosX(), mainPlayer.getPosX()));
 		}
 		
 	}
+	
+	public Barriers collision(Rectangle r) {
+		/*
+		if ( ((x2 <= (x1+w1)) && (x2 >= x1)) //checking x left edge collisions
+				|| (((x2+w2) <= (x1+w1)) && ((x2+w2) >= x1)) //checking x right edge collisions
+				|| ((y2 <= (y1+h1)) && (y2 >= y1)) //checking y top edge collisions
+				|| (((y2+h2) <= (y1+h1)) && ((y2+h2) >= y1)) ) //checking y bottom edge collisions*/
+		for (Barriers b : this.items.getAllBarriers()) {
+			Rectangle barrier = new Rectangle(b.getPosX(), b.getPosY(), b.getWidth(), b.getHeight());
+			if (barrier.intersects(r))
+				return b;
+		}
+		return null;
+	}
+	
+	public void setBarrierType(Barriers barr, eBarrierType t) {
+		for (Barriers b : this.items.getAllBarriers()) {
+			if (barr.getPosX() == b.getPosX()) //"match"
+				b.setType(t);
+		}
+	}
+
+	public class MouseController extends JPanel implements MouseListener, MouseMotionListener {
+
+		boolean dragging = false;
+		Rectangle temp; //the thing being dragged
+		private eBarrierType type; 
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			System.out.println(type + " clicked");
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			/*
+			Point p = new Point(e.getX(), e.getY());
+			if (wallSpawn.contains(p)) {
+				type = eBarrierType.Wall;
+			} else if (gabionsSpawn.contains(p)) {
+				type = eBarrierType.Gabion;
+			}
+			temp = new Rectangle(e.getX(), e.getY(), bWidth, bHeight); 
+			//the temp rectangle made here for dragging
+
+			dragging = true;
+			repaint();*/
+			System.out.println(e.getClickCount());
+			System.out.println(type + " pressed");
+
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			if (dragging == false)
+				return;
+			dragging = false;
+			Barriers b = collision(temp);
+			if (b != null) {  //there was a collision, the temp rectangle selected a barrier space 
+								//(do we want it so a new barrier can only be made if the space is empty?)
+				if (type == eBarrierType.Wall) {
+					setBarrierType(b, eBarrierType.Wall); //set barrier at the coords type to wall 
+				}
+				else if (type == eBarrierType.Gabion) {
+					setBarrierType(b, eBarrierType.Gabion);
+				}
+			}
+			temp = null; //we no longer need this temp rectangle
+			repaint();
+			// TODO Auto-generated method stub
+
+		}
+		
+		@Override
+		public void mouseEntered(MouseEvent e) {
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+		}
+
+		@Override
+		public void mouseDragged(MouseEvent e) {
+			if (dragging == false)
+				return;
+			//update coords of temp rectangle-barrier
+			//idea: use barriers for spawns and temp, convert to Rectangle when needed to compare intersections etc.
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void mouseMoved(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+	}
+
 
 }

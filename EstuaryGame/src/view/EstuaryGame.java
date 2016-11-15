@@ -76,10 +76,15 @@ public class EstuaryGame extends JComponent {
                 frame.setSize(800, 600);
                 frame.setFocusable(true);
                 
+        		MouseController mouse = new MouseController();
+        		frame.addMouseListener(mouse);
+                
                 Container contentPane = frame.getContentPane();
                 contentPane.setBackground(Color.LIGHT_GRAY);
                 contentPane.add(new EstuaryGame(frame));
                 frame.setVisible(true);
+                
+        		
                 
             }
         });
@@ -96,6 +101,12 @@ public class EstuaryGame extends JComponent {
     	initImages();
     	
     }
+    
+	public void initTitleScreen(){
+		
+		//this actually should probably be in the VIEW
+	
+	}
 
     public void bindKeyWith(String name, KeyStroke keyStroke, Action action) {
         InputMap im = getInputMap(WHEN_IN_FOCUSED_WINDOW);
@@ -103,6 +114,14 @@ public class EstuaryGame extends JComponent {
 
         im.put(keyStroke, name);
         am.put(name, action);
+    }
+    
+    public void unbindKeyWith(String name, KeyStroke keyStroke) {
+        InputMap im = getInputMap(WHEN_IN_FOCUSED_WINDOW);
+        ActionMap am = getActionMap();
+
+        im.remove(keyStroke);
+        am.remove(name);
     }
 
     private void initImages() {
@@ -154,6 +173,9 @@ public class EstuaryGame extends JComponent {
         
         //Paint ScreenTimer
         paintScreenTimer(g);
+        
+        //Paint healthBar
+        paintHealthBar(g);
        
         //Paint barriers
         paintBarriers(g);
@@ -165,12 +187,14 @@ public class EstuaryGame extends JComponent {
         
         //Paint player
         paintPlayer(g);
-        /**
+        
         //Paint health bar
         paintHealthBar(g);
+        //in here twice?
         
+        timeElapsed = gc.getTheBigTimer();
         g.drawString(Integer.toString(timeElapsed), 40, 40);
-        */
+        
     }
     
     private void paintBackground(Graphics g) {
@@ -235,6 +259,10 @@ public class EstuaryGame extends JComponent {
     private void paintDebris(Graphics g) {
     	ArrayList<Debris> debris = gc.getItems().getAllDebris();
     	for (Debris d : debris) {
+    		
+    		if (d.getState() == eFloaterState.LIFTED) {
+    			paintArrow(g, d);
+    		}
 
     		if (d.getType() == eDebrisType.TRASH) {
     			//TODO: paint like trash
@@ -249,27 +277,24 @@ public class EstuaryGame extends JComponent {
     			g.setColor(Color.BLUE);
     			g.fillOval(d.getPosX(), d.getPosY(), d.getWidth(), d.getHeight());
     		}
-    		
-    		/*
-    		if (d.getState() == eFloaterState.LIFTED) {
-    			g.fillOval(actives.getPlayer().getPlayer().getPosX(), actives.getPlayer().getPlayer().getPosY() - d.getHeight(), 
-    					d.getWidth(), d.getHeight());
-    		}
-    		*/
     	}
     }
     
     private void paintBins(Graphics g){
     	Bin trash = gc.getItems().getTrashBin();
     	Bin recycle = gc.getItems().getRecycleBin();
-    	g.setColor(Color.BLACK);
-    	g.fillOval(trash.getPosX(), trash.getPosY(), trash.getWidth(), trash.getHeight());
     	g.setColor(Color.BLUE);
+    	g.fillOval(trash.getPosX(), trash.getPosY(), trash.getWidth(), trash.getHeight());
+    	g.setColor(Color.YELLOW);
     	g.fillOval(recycle.getPosX(), recycle.getPosY(), recycle.getWidth(), recycle.getHeight());
     }
     
     private void paintHealthBar(Graphics g) {
     	HealthBar hb = gc.getItems().getHealthBar();
+    	if (hb == null) {
+    		System.out.println("null healthbar");
+    	}
+    	
     	double currHealth = hb.getHealth();
     	double maxHealth = hb.getMaxHealth();
     	double barY = hb.getPosY();
@@ -277,16 +302,14 @@ public class EstuaryGame extends JComponent {
     	double barWidth = hb.getWidth();
     	double barHeight = hb.getHeight();
     	
-    	//Concept: painting two rectangles: One that is the outline
-    	//of the health bar, one that is the current health
     	//Backing
-    	g.setColor(Color.WHITE);
-    	g.fillRect((int) barY,(int) barX,(int) barWidth,(int) barHeight);
+    	g.setColor(new Color(255, 255, 255, 150));
+       	g.fillRect((int) barX,(int) barY,(int) barWidth,(int) barHeight);
     	//Health
     	double currHealthHeight = (currHealth / maxHealth)*barHeight;
-    	double currHealthY = (barHeight - currHealthHeight) + barY;
-        g.setColor(Color.RED);
-    	g.fillRect((int) barX,(int) currHealthY,(int) barWidth,(int) currHealthHeight);
+    	//double currHealthY = (barHeight - currHealthHeight) + barY;
+        g.setColor(new Color(255, 90, 90, 200));
+    	g.fillRect((int) barX,(int) barY,(int) currHealthWidth,(int) barHeight);   
     	//Outline
     	g.setColor(Color.BLACK);
     	g.drawRect((int)barX, (int)barY,(int) barWidth,(int) barHeight);
@@ -312,6 +335,7 @@ public class EstuaryGame extends JComponent {
     		    options[0]);
     	
     	d.throwDebris(n == d.getType().getType());
+    	d.setController(gc);
     }
     private void updateWrappers() {
     	//TODO: Making this really inefficient to start
