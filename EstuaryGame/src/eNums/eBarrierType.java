@@ -2,7 +2,7 @@ package eNums;
 
 public enum eBarrierType {
 
-	Gabion(0), Wall(1);
+	Gabion(0), Wall(1), EMPTY(-1);
 	
 	private int type;
 	
