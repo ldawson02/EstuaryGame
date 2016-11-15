@@ -31,6 +31,9 @@ import controller.GameController;
 import eNums.eBarrierType;
 import eNums.eFloaterState;
 import eNums.eDebrisType;
+<<<<<<< HEAD
+import model.*;
+=======
 import model.Barriers;
 import model.Bin;
 import model.Debris;
@@ -38,6 +41,7 @@ import model.Gabions;
 import model.Floater;
 import model.HealthBar;
 import model.Player;
+>>>>>>> branch 'master' of https://github.com/ldawson02/EstuaryGame.git
 
 public class EstuaryGame extends JComponent {
 
@@ -178,6 +182,10 @@ public class EstuaryGame extends JComponent {
         //Paint debris
         paintDebris(g);
        
+        //Paint Powers
+        paintPowers(g);
+        
+        //Paint Bins
         paintBins(g);
         
         //Paint player
@@ -273,7 +281,29 @@ public class EstuaryGame extends JComponent {
     		}	
     	}
     }
-    
+    private void paintPowers(Graphics g) {
+    	ArrayList<Powers> powers = gc.getItems().getAllPowers();
+    	for (Powers d : powers) {
+
+    		if (d.getState() == eFloaterState.LIFTED) {
+    			//paintArrow(g, d);
+    		}
+    		
+    		if (d instanceof Rebuild) {
+    			//TODO: paint like trash
+    			//Calling trash a yellow circle
+    			
+    			g.setColor(Color.CYAN);
+    			g.fillOval(d.getPosX(), d.getPosY(), d.getWidth(), d.getHeight());
+    		}
+    		else if (d instanceof Remove) {
+    			//TODO: paint like recycling
+    			//Calling recycling a blue circle
+    			g.setColor(Color.MAGENTA);
+    			g.fillOval(d.getPosX(), d.getPosY(), d.getWidth(), d.getHeight());
+    		}	
+    	}
+    }
     private void paintArrow(Graphics g, Debris d){
     	g.setColor(Color.BLACK);
     	int x1 = d.getPosX()+d.getWidth()/2;
@@ -323,6 +353,8 @@ public class EstuaryGame extends JComponent {
     	g.setColor(Color.BLACK);
     	g.drawRect((int)barX, (int)barY,(int) barWidth,(int) barHeight);
     }
+    
+
     
     private void paintPlayer(Graphics g) {
     	Player p = gc.getItems().getMainPlayer();
