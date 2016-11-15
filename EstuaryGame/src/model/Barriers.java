@@ -36,7 +36,7 @@ public class Barriers extends Item implements Interactable, HealthChangers{
 		super(x,y);
 		setWidth(40);
 		setHeight(20);
-		type = eBarrierType.Empty;
+		type = eBarrierType.EMPTY;
 	};
 	
 	public void build() {
