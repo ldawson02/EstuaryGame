@@ -11,15 +11,19 @@ public class Collisions {
 	}
 	
 	public boolean checkCollision(Item i){
-		int playerL = mainPlayer.getPosX();
-		int playerR = playerL + mainPlayer.getWidth();
-		int playerT = mainPlayer.getPosY();
-		int playerB = playerT + mainPlayer.getHeight();
+		return checkCollision(mainPlayer, i);
+	}
+	
+	public boolean checkCollision(Item i1, Item i2){
+		int i1L = i1.getPosX();
+		int i1R = i1L + i1.getWidth();
+		int i1T = i1.getPosY();
+		int i1B = i1T + i1.getHeight();
 		
-		int itemX = i.getPosX() + i.getWidth()/2;
-		int itemY = i.getPosY() + i.getHeight()/2;
+		int i2X = i2.getPosX() + i2.getWidth()/2;
+		int i2Y = i2.getPosY() + i2.getHeight()/2;
 		
-		if((itemX>playerL && itemX<playerR) && (itemY>playerT && itemY<playerB)){
+		if((i2X>i1L && i2X<i1R) && (i2Y>i1T && i2Y<i1B)){
 			//then its a collision!!
 			return true;
 		}
