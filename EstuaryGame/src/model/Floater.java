@@ -21,6 +21,8 @@ public abstract class Floater extends Item {
 	}
 	public Floater(int x, int y){
 		super(x,y);
+		setWidth(40);
+		setHeight(40);
 	};
 	public abstract void floating();
 	public abstract void catching();

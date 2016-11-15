@@ -299,7 +299,7 @@ public class GameController {
 			} else {
 				d = new Debris(eDebrisType.RECYCLING);
 			}
-			d.setController(thisGame);
+			d.setController(thisGame); //Bin stuff
 			d.updatePos(xPos, 0);
 			d.setVertex(xPos);
 			return d;
@@ -392,8 +392,8 @@ public class GameController {
 	public class spawnPowers implements ActionListener{
 		public int timePassed = 0;
 		public int spawnTimePowers;
-		public int aveTime = 1000;
-		final public int rTime = 50;
+		public int aveTime = 10000;
+		final public int rTime = 500;
 
 		public spawnPowers(){
 			resetTimer();
@@ -402,16 +402,23 @@ public class GameController {
 		public Powers newPower(){
 			Random r = new Random();
 			//generate initial position;
-			int xPos = MovementController.getStart(r.nextInt(500)+150);
-
+			int randomx = r.nextInt(500)+150;
+			System.out.println("power:" + randomx);
+			int xPos = MovementController.getStart(randomx);
+			
+			int ptype = r.nextInt() % 2;
 			Powers p;
-			if(r.nextBoolean()){
+			if(ptype==0){
+				System.out.println("rebuild");
 				p = new Rebuild(xPos, 0);
 			}
 			else{
+				System.out.println("remove");
 				p = new Remove(xPos, 0);
 			}
+			p.setVertex(xPos);
 			return p;
+
 		}
 		
 		public void resetTimer(){
@@ -429,11 +436,13 @@ public class GameController {
 		public void actionPerformed(ActionEvent e) {
 			//if the timer goes off then add another power at the top
 			if(timePassed >= spawnTimePowers){
+				System.out.println("new power spawn !!!!!!!!!!!!!!!");
 				items.addPower(newPower());
 				resetTimer();
 			}
 			for(Powers p : items.getAllPowers()){
 				//make each item float
+				System.out.println("Power x pos: " + p.getPosX());
 				MovementController.move(p);
 				if(collision.checkCollision(p)){
 					p.setState(eFloaterState.LIFTED);
