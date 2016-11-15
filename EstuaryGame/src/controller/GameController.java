@@ -391,8 +391,8 @@ public class GameController {
 	public class spawnPowers implements ActionListener{
 		public int timePassed = 0;
 		public int spawnTimePowers;
-		public int aveTime = 10000;
-		final public int rTime = 500;
+		public int aveTime = 1000;
+		final public int rTime = 50;
 
 		public spawnPowers(){
 			resetTimer();
