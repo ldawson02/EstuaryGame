@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -30,7 +31,17 @@ import controller.GameController;
 import eNums.eBarrierType;
 import eNums.eFloaterState;
 import eNums.eDebrisType;
+<<<<<<< HEAD
 import model.*;
+=======
+import model.Barriers;
+import model.Bin;
+import model.Debris;
+import model.Gabions;
+import model.Floater;
+import model.HealthBar;
+import model.Player;
+>>>>>>> branch 'master' of https://github.com/ldawson02/EstuaryGame.git
 
 public class EstuaryGame extends JComponent {
 
@@ -44,6 +55,9 @@ public class EstuaryGame extends JComponent {
     int screenY = 600;
     
     int timeElapsed = 0;
+	
+    private int bWidth = 40;
+    private int bHeight = 20;
     
     Rectangle player;
     activeViewItems actives;
@@ -65,8 +79,13 @@ public class EstuaryGame extends JComponent {
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setSize(800, 600);
                 frame.setFocusable(true);
-                frame.getContentPane().setBackground(Color.LIGHT_GRAY);
-                frame.getContentPane().add(new EstuaryGame(frame));
+		    
+		MouseController mouse = MouseController();
+		frame.addMouseListener(mouse);
+		    
+		Container contentPane = frame.getContentPane();
+                contentPane.setBackground(Color.LIGHT_GRAY);
+                contentPane.add(new EstuaryGame(frame));
                 frame.setVisible(true);
                 
             }
@@ -123,6 +142,7 @@ public class EstuaryGame extends JComponent {
         //Paint background
         paintBackground(g);
        
+	/*
         //These paint the barrier spaces as they are currently
         g.drawRect(20, 450, 40, 40);
         g.drawRect(70, 450, 40, 40);
@@ -134,7 +154,21 @@ public class EstuaryGame extends JComponent {
         g.drawRect(690, 450, 40, 40);
         g.drawRect(640, 450, 40, 40);
         g.drawRect(590, 450, 40, 40);
-        g.drawRect(540, 450, 40, 40);
+        g.drawRect(540, 450, 40, 40);*/
+	    
+	/*
+     	g.setColor(Color.GREEN);
+ 		g.fillRect(Barriers.getRightEdge(), 390, bWidth, bHeight); //the gabion spawn
+     	g.setColor(Color.DARK_GRAY);
+ 		g.fillRect(Barriers.getLeftEdge(), 390, bWidth, bHeight); //the wall spawn
+         
+         */
+     	g.setColor(Color.GREEN);
+ 		g.fillRect(GameController.gabionsSpawn.x, GameController.gabionsSpawn.y, 
+ 				GameController.gabionsSpawn.width, GameController.gabionsSpawn.height); //the gabion spawn
+    	g.setColor(Color.DARK_GRAY);
+ 		g.fillRect(GameController.wallSpawn.x, GameController.wallSpawn.y, 
+ 				GameController.wallSpawn.width, GameController.wallSpawn.height); //the wall spawn
         
         //Paint ScreenTimer
         paintScreenTimer(g);
@@ -217,6 +251,10 @@ public class EstuaryGame extends JComponent {
     			g.setColor(Color.DARK_GRAY);
     			g.fillRect(b.getPosX(), b.getPosY(), b.getWidth(), b.getHeight());
     		}
+		else if (b.getType() == eBarrierType.Empty) {
+			g.setColor(Color.BLACK);
+			g.drawRect(b.getPosX(), b.getPosY(), bWidth, bHeight);
+		}
     	}
     }
     

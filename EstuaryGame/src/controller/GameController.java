@@ -353,6 +353,7 @@ public class GameController {
 						}
 						else {
 							System.out.print(" bin was incorrect.\n");
+							MovementController.wrongBinMove(d);
 							items.getHealthBar().update(eHealthChanges.IncorrectBin.getDelta());
 						}
 					}
