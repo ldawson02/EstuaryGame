@@ -6,7 +6,7 @@ import eNums.eBarrierType;
 public class Gabions extends Barriers {
 	
 	public Gabions(int x, int y){
-		super(x,y);
+		super(x, y);
 		this.setType(eBarrierType.Gabion);
 	}
 	

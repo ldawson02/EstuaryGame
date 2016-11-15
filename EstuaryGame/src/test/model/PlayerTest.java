@@ -23,14 +23,14 @@ public class PlayerTest {
 	@BeforeClass
 	public void setUpBeforeClass() throws Exception {
 		p = new Player();
-		gabions.add(new Gabions(0,0));
-		gabions.add(new Gabions(0,5));
-		gabions.add(new Gabions(10,10));
-		gabions.add(new Gabions(30,10));
-		
+		gabions.add(new Gabions(0, 0));
+		gabions.add(new Gabions(0, 5));
+		gabions.add(new Gabions(10, 10));
+		gabions.add(new Gabions(30, 15));
+		/*
 		walls.add(new Wall(0,0));
 		walls.add(new Wall(9,13));
-		
+		*/
 		debris.add(new Debris(eDebrisType.RECYCLING));
 		debris.add(new Debris(eDebrisType.TRASH));
 		debris.add(new Debris(eDebrisType.TRASH));

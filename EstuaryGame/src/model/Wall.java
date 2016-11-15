@@ -5,7 +5,6 @@ import eNums.eBarrierType;
 
 public class Wall extends Barriers {
 
-
 	public Wall(int x, int y) {
 		super(x, y);
 		this.setType(eBarrierType.Wall);

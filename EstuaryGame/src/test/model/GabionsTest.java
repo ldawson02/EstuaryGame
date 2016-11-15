@@ -18,8 +18,8 @@ public class GabionsTest {
 	
 	@BeforeClass
 	public void setUpBeforeClass() throws Exception {
-		gabion1 = new Gabions(10,20);
-		gabion2 = new Gabions(5,5);
+		gabion1 = new Gabions(10, 0);
+		gabion2 = new Gabions(5, 5);
 		gabion1.setHealth(0);
 		gabion2.setHealth(0);
 		healthbar.setHealth(100);

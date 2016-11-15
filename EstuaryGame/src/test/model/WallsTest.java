@@ -18,11 +18,13 @@ public class WallsTest {
 
 	@BeforeClass
 	public void setUpBeforeClass() throws Exception {
+		/*
 		wall1 = new Wall(10,20);
 		wall2 = new Wall(5,5);
 		wall1.setHealth(0);
 		wall2.setHealth(0);
 		healthBar.setHealth(100);
+		*/
 	}
 	@AfterClass
 	public void tearDownAfterClass() throws Exception {
