@@ -32,9 +32,9 @@ import controller.GameController.MouseController;
 import eNums.eBarrierType;
 import eNums.eFloaterState;
 import eNums.eDebrisType;
-<<<<<<< HEAD
+
 import model.*;
-=======
+
 import model.Barriers;
 import model.Bin;
 import model.Debris;
@@ -42,7 +42,6 @@ import model.Gabions;
 import model.Floater;
 import model.HealthBar;
 import model.Player;
->>>>>>> branch 'master' of https://github.com/ldawson02/EstuaryGame.git
 
 public class EstuaryGame extends JComponent {
 
@@ -81,14 +80,16 @@ public class EstuaryGame extends JComponent {
                 frame.setSize(800, 600);
                 frame.setFocusable(true);
 		    
-		MouseController mouse = gc.new MouseController();
-		frame.addMouseListener(mouse);
+               
+		
 		    
 		Container contentPane = frame.getContentPane();
                 contentPane.setBackground(Color.LIGHT_GRAY);
                 contentPane.add(new EstuaryGame(frame));
                 frame.setVisible(true);
                 
+                MouseController mouse = gc.new MouseController();
+        		frame.addMouseListener(mouse);
             }
         });
     }
