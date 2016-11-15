@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.Random;
+
 import eNums.eDebrisType;
 import eNums.eFloaterState;
 import model.Bin;
@@ -90,11 +92,16 @@ public class MovementController {
 		else{
 			deltaX = (windowWidth-sizeofDebrisCoast) - f.getPosX();
 		}
-		double deltaY = windowHeight/2 - f.getPosY();
+		Random rand = new Random();
+		int randNum = rand.nextInt(100)+650;
+		double deltaY = randNum - f.getPosY();
 		double distance = Math.sqrt(deltaX*deltaX+deltaY*deltaY);
 		double speed = 0.25;
-		if(distance>1){
+		if(distance>10){
 			f.updatePos((int)(f.getPosX()+deltaX*speed),(int)(f.getPosY()+deltaY*speed));
+		}
+		else{
+			f.setState(eFloaterState.RESTING);
 		}
 	}
 }
