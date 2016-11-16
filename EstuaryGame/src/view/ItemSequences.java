@@ -14,10 +14,13 @@ import java.util.Collections;
  * continuous SeqIDs from 0 to (numSeqs - 1).
  * 
  * @author Ian
+ * @version 1.1
+ * @since 11/16/16
  */
 
-public class ItemSequences implements Comparable<ItemSequences> {
+public class ItemSequences {
 
+	/* The old implementation
 	public int ItemID;
 	private ArrayList<ImageSequence> anims;
 	private int numSeqs = 0;
@@ -31,7 +34,7 @@ public class ItemSequences implements Comparable<ItemSequences> {
 	/**
 	 * Method to add image sequences to the list, because it's difficult to add
 	 * them all at once, due to differences in frame count. Easiest this way.
-	 */
+	 
 	public void addSequence(int SeqID, String filepath, int frames, int imageWidth, int imageHeight) {
 		ImageSequence newSeq = new ImageSequence(SeqID, filepath, frames, imageWidth, imageHeight);
 		anims.add(newSeq);
@@ -60,5 +63,5 @@ public class ItemSequences implements Comparable<ItemSequences> {
 			return 1;
 		}
 	}
-	
+	*/
 }

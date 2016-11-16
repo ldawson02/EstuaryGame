@@ -7,19 +7,28 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+import eNums.eAnimation;
+
 /**
  * Acts as a holder for an animation.
  * Automatically iterates through the frames with consecutive calls of draw().
  * 
  * @author Ian
+ * @version 1.1
+ * @since 11/16/2016
  *
  */
-public class ImageSequence implements Comparable<ImageSequence> {
+public class ImageSequence {
 
+	private eAnimation animID;
+	
+	
+	/* The old implementation
 	public int SeqID;
 	private ArrayList<BufferedImage> seq;
 	private int curFrame;
 	private int numFrames;
+	
 	
 	private ImageSequence() {
 		//Hidden no-arg
@@ -77,4 +86,5 @@ public class ImageSequence implements Comparable<ImageSequence> {
 			return 1;
 		}
 	}
+	*/
 }
