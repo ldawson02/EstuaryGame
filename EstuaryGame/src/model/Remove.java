@@ -61,5 +61,10 @@ public class Remove extends Powers implements HealthChangers {
 	public int getVertex() {
 		return vertex;
 	}
+	
+	@Override
+	public void setVertex(int vertex) {
+		this.vertex = vertex;
+	}
 
 }

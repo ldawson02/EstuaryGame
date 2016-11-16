@@ -410,13 +410,14 @@ public class GameController {
 			Powers p;
 			if(ptype==0){
 				System.out.println("rebuild");
-				p = new Rebuild(xPos, 0);
+				p = new Rebuild(xPos,0);
 			}
 			else{
 				System.out.println("remove");
-				p = new Remove(xPos, 0);
+				p = new Remove(xPos,0);
 			}
 			p.setVertex(xPos);
+			
 			return p;
 
 		}
@@ -442,8 +443,10 @@ public class GameController {
 			}
 			for(Powers p : items.getAllPowers()){
 				//make each item float
-				System.out.println("Power x pos: " + p.getPosX());
-				MovementController.move(p);
+				if(p.getState()==eFloaterState.MOVING){
+					MovementController.move(p);
+				}
+				//MovementController.move(p);
 				if(collision.checkCollision(p)){
 					p.setState(eFloaterState.LIFTED);
 					p.catching();

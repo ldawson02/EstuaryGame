@@ -6,6 +6,8 @@ import eNums.eDebrisType;
 import eNums.eFloaterState;
 import model.Bin;
 import model.Floater;
+import model.Rebuild;
+import model.Remove;
 
 public class MovementController {
 	static int windowHeight = 600;
@@ -35,6 +37,7 @@ public class MovementController {
 			if(floater.getVertex() <= windowWidth/2){
 				newx = 50+(-0.00889)*(int)Math.pow(newy-125, 2.0)+ (int)floater.getVertex();
 				floater.updatePos((int)newx, (int)newy);
+				
 			}
 			else if(floater.getVertex() > windowWidth/2){
 				newx = -50+(0.008889)*Math.pow(newy-125, 2.0)+(int)floater.getVertex();

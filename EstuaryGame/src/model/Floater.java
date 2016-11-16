@@ -18,11 +18,13 @@ public abstract class Floater extends Item {
 		super();
 		setWidth(40);
 		setHeight(40);
+		this.state = eFloaterState.MOVING;
 	}
 	public Floater(int x, int y){
 		super(x,y);
 		setWidth(40);
 		setHeight(40);
+		this.state = eFloaterState.MOVING;
 	};
 	public abstract void floating();
 	public abstract void catching();
