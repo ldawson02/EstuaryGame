@@ -359,8 +359,9 @@ public class GameController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			mainGame.repaint();
-			if(items.getScreenTimer().getState()==eScreenTimerState.ON){
+			if(items.getScreenTimer().getState() == eScreenTimerState.ON){
 				timeElapsed+=paintDelay;
+				items.getScreenTimer().setElapsedTime(timeElapsed);
 			}
 		}
 		
