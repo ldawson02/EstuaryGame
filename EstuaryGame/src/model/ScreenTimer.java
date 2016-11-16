@@ -17,12 +17,16 @@ import eNums.eScreenTimerState;
 
 public class ScreenTimer extends Item {
 
-	public int timeRemaining;
-	public eScreenTimerState state;
-
+	final int MAX_TIME = 10000; //ms
+	
+	private int maxTime;
+	private int timeRemaining;
+	private int elapsedTime;
+	private eScreenTimerState state;
 	
 	public ScreenTimer() {
 		state = eScreenTimerState.OFF;
+		maxTime = MAX_TIME;
 	}
 	
 	/**
@@ -37,6 +41,35 @@ public class ScreenTimer extends Item {
 	 */
 	public void setTimeRemaining(int timeRemaining) {
 		this.timeRemaining = timeRemaining;
+	}
+
+	/**
+	 * @return the maxTime
+	 */
+	public int getMaxTime() {
+		return maxTime;
+	}
+
+	/**
+	 * @param maxTime the maxTime to set
+	 */
+	public void setMaxTime(int maxTime) {
+		this.maxTime = maxTime;
+	}
+
+	/**
+	 * @return the elapsedTime
+	 */
+	public int getElapsedTime() {
+		return elapsedTime;
+	}
+
+	/**
+	 * @param elapsedTime the elapsedTime to set
+	 */
+	public void setElapsedTime(int elapsedTime) {
+		this.elapsedTime = elapsedTime;
+		updateRemaining();
 	}
 
 	/**
@@ -56,16 +89,25 @@ public class ScreenTimer extends Item {
 	public void start(){
 		this.state = eScreenTimerState.ON;
 	}
+	
+	public void updateRemaining() {
+		timeRemaining = maxTime - elapsedTime;
+		if (timeRemaining <= 0) {
+			endGame();
+			System.out.println("Game over!");
+		}
+	}
+	
 	public void freeze(){
-		
+		setState(eScreenTimerState.FROZEN);
 	}
 	
 	public void Continue(){
-		
+		setState(eScreenTimerState.ON);
 	}
 	
 	public void endGame(){
-		
+		setState(eScreenTimerState.OFF);
 	}
 	
 }

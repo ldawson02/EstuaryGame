@@ -18,7 +18,7 @@ public class Collisions {
 		return checkCollision(mainPlayer, i);
 	}
 	
-	public static boolean checkCollision(Item i1, Item i2){
+	public static boolean checkCollision(Item i1, Item i2){		
 		int i1L = i1.getPosX();
 		int i1R = i1L + i1.getWidth();
 		int i1T = i1.getPosY();
@@ -39,7 +39,7 @@ public class Collisions {
 	public static boolean emptyBarrierCollision(Barriers barr) {
 		//checks if barr collided with any of the barriers and if it is empty
 		for (Barriers b : GameController.getItems().getAllBarriers()) {
-			if ((Collisions.checkCollision(b, barr) && (b.getType() != eBarrierType.EMPTY))) {
+			if ((checkCollision(b, barr) && (b.getType() != eBarrierType.EMPTY))) {
 				return true;
 			}
 		}

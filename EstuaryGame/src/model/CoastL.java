@@ -4,7 +4,7 @@ public class CoastL extends Coast {
 
 	public CoastL() {
 		super();
-		setBarrierSpaces(BarrierSpace.setUpLeftCoast());
+		setBarrierSpaces(Barriers.setUpLeftCoast());
 	}
 	
 	@Override
