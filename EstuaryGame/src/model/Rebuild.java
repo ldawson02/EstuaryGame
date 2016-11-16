@@ -6,6 +6,7 @@ import eNums.eFloaterState;
 public class Rebuild extends Powers implements HealthChangers{
 
 	private int vertex;
+	private eFloaterState state;
 	
 	public Rebuild(int x, int y){
 		super(x,y);
@@ -56,6 +57,10 @@ public class Rebuild extends Powers implements HealthChangers{
 	@Override
 	public int getVertex() {
 		return vertex;
+	}
+	@Override
+	public void setVertex(int vertex) {
+		this.vertex = vertex;
 	}
 
 }
