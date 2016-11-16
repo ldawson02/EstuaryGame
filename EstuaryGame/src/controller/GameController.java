@@ -339,6 +339,7 @@ public class GameController {
 				items.addDebris(newDebris());
 				resetTimer();
 			}
+			ArrayList<Debris> toDelete = new ArrayList<Debris>();
 			//might want to put this for loop in its own class in the Controller
 			for(Debris d : items.getAllDebris()){
 				//make each item float
@@ -370,7 +371,7 @@ public class GameController {
 						if (d.getCorrectBin()) {
 							System.out.print(" bin was correct.\n");
 							d.setState(eFloaterState.RESTING);
-							items.removeDebris(d);
+							toDelete.add(d);
 							items.getHealthBar().update(eHealthChanges.CorrectBin.getDelta());
 						}
 						else {
@@ -384,7 +385,10 @@ public class GameController {
 				}
 				
 			}
-			
+			//Now delete any debris that hit
+			for(Debris del : toDelete){
+				items.removeDebris(del);
+			}
 			timePassed+=floatDelay;
 		}
 		
@@ -394,7 +398,7 @@ public class GameController {
 		
 	}
 	
-	//The point of this class is to create a timer that calls paints 
+	//The point of this class is to create a timer that calls paint
 	public class mainTimer implements ActionListener{
 
 		
@@ -411,6 +415,7 @@ public class GameController {
 			return timeElapsed;
 		}
 	}
+	
 	//At (slightly) random intervals spawn powers, only should be initialized once!!
 	public class spawnPowers implements ActionListener{
 		public int timePassed = 0;
@@ -445,6 +450,7 @@ public class GameController {
 
 		}
 		
+		
 		public void resetTimer(){
 			Random r = new Random();
 			spawnTimePowers = r.nextInt(rTime) + aveTime - rTime/2;
@@ -452,7 +458,9 @@ public class GameController {
 		}
 		
 		//Unimplemented methods
-		public void quickSpawn(){}
+		public void quickSpawn(){
+			items.addPower(newPower());
+		}
 		public void quickSpawnRebuild(){}
 		public void quickSpawnRemove(){}
 
@@ -628,6 +636,7 @@ public class GameController {
 		
 	}
 	
+	//Not used
 	public class wallAct extends AbstractAction{
 
 		@Override
@@ -718,12 +727,10 @@ public class GameController {
 		}
 		
 		@Override
-		public void mouseEntered(MouseEvent e) {
-		}
+		public void mouseEntered(MouseEvent e) {}
 
 		@Override
-		public void mouseExited(MouseEvent e) {
-		}
+		public void mouseExited(MouseEvent e) {}
 
 		@Override
 		public void mouseDragged(MouseEvent e) {
