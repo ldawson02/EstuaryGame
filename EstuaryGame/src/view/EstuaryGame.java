@@ -143,8 +143,6 @@ public class EstuaryGame extends JComponent {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g); 
         
-        //Handle collisions, probably
-        
         //Paint background
         paintBackground(g);
         
@@ -168,6 +166,7 @@ public class EstuaryGame extends JComponent {
         
         //Paint player
         paintPlayer(g);
+        //System.out.println(gc.getItems().getPlayer().getState());
         
         //Paint health bar
         paintHealthBar(g);
