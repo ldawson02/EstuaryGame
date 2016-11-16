@@ -1,8 +1,10 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import eNums.eDebrisType;
+import eNums.eFloaterState;
 import model.*;
 public class ActiveItems {
 	//class that holds all our actual active items in an instance of the game
@@ -102,6 +104,15 @@ public class ActiveItems {
 
 	public boolean removeDebris(Debris d){
 		return debris.remove(d);
+	}
+	public void removeAllRestingDebris(){
+		Iterator debrisitr = debris.iterator();
+		while(debrisitr.hasNext()){
+			Debris d = (Debris)debrisitr.next();
+			if(d.getState() == eFloaterState.RESTING){
+				debrisitr.remove();
+			}
+		}
 	}
 	
 	public void addDebris(Debris d){
