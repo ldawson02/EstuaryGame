@@ -36,7 +36,7 @@ public abstract class Coast extends Item {
 	 * The Debris items on the coast
 	 */
 	
-	private ArrayList<BarrierSpace> barrierSpaces;
+	private ArrayList<Barriers> barriers;
 	
 	public Coast() {
 		super();
@@ -114,15 +114,15 @@ public abstract class Coast extends Item {
 	/**
 	 * @return the barrierSpaces
 	 */
-	public ArrayList<BarrierSpace> getBarrierSpaces() {
-		return barrierSpaces;
+	public ArrayList<Barriers> getBarriers() {
+		return barriers;
 	}
 
 	/**
 	 * @param barrierSpaces the barrierSpaces to set
 	 */
-	public void setBarrierSpaces(ArrayList<BarrierSpace> barrierSpaces) {
-		this.barrierSpaces = barrierSpaces;
+	public void setBarrierSpaces(ArrayList<Barriers> barriers) {
+		this.barriers = barriers;
 	}
 	
 	/*

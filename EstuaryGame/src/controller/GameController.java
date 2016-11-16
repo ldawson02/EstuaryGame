@@ -64,12 +64,6 @@ public class GameController {
 	erosion RcoastMover;
 	erosion LcoastMover;
 	
-	private static int bWidth = 40;
-	private static int bHeight = 20;
-	public static Wall wallSpawn = new Wall(Barriers.getLeftEdge(), 390);
-	public static Gabions gabionsSpawn = new Gabions(Barriers.getRightEdge(), 390);
-	public static Barriers dragged = null;
-	
 	Collisions collision = new Collisions();
 	
 	public GameController(EstuaryGame mainGame){
@@ -91,22 +85,6 @@ public class GameController {
 
 	public void setItems(ActiveItems items) {
 		this.items = items;
-	}
-
-	public static Barriers getWallSpawn() {
-		return wallSpawn;
-	}
-	
-	public static Barriers getGabionsSpawn() {
-		return gabionsSpawn;
-	}
-	
-	public static Barriers getDragged() {
-		return dragged;
-	}
-	
-	public static void setDragged(Barriers b) {
-		dragged = b;
 	}
 	
 	/**
@@ -147,15 +125,6 @@ public class GameController {
 		mainGame.bindKeyWith("gabionBuild", KeyStroke.getKeyStroke("g"), new gabionAct());
 		mainGame.bindKeyWith("wallBuild", KeyStroke.getKeyStroke("h"), new wallAct());
 		
-		/*
-		JFrame f = new JFrame();
-		MouseController mouse = new MouseController();
-		f.addMouseListener(mouse);
-		f.pack();
-		f.setVisible(true);
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		*/
-		
 		ArrayList<Barriers> left = Barriers.setUpLeftCoast();
 		for (Barriers b : left) {
 			items.addBarrier(b);
@@ -164,36 +133,9 @@ public class GameController {
 		for (Barriers b : right) {
 			items.addBarrier(b);
 		}
-		
-		//Create the initial walls
-		/*
-		for (int i = 0; i < 5; i++) {
-			items.addBarrier(new Barriers(20+50*i));
-		}
-		for (int i = 0; i < 5; i++) {
-			items.addBarrier(new Barriers(540+50*i));
-		}*/
 	
 		items.getAllBarriers().get(1).setType(eBarrierType.Wall);
 		items.getAllBarriers().get(7).setType(eBarrierType.Gabion);
-		
-		
-		/*
-		//Create the initial walls
-		//TODO: this is gross I'll make it look better later
-		//Random r = new Random();
-		int xPos = items.getCoastL().getBarrierSpaces().get(3).getPosX();
-		int yPos = items.getCoastL().getBarrierSpaces().get(3).getPosY();
-		items.addBarrier(new Wall(xPos,yPos));
-		xPos = items.getCoastL().getBarrierSpaces().get(1).getPosX();
-		yPos = items.getCoastL().getBarrierSpaces().get(1).getPosY();
-		items.addBarrier(new Wall(xPos,yPos));
-		xPos = items.getCoastR().getBarrierSpaces().get(2).getPosX();
-		yPos = items.getCoastR().getBarrierSpaces().get(2).getPosY();
-		items.addBarrier(new Wall(xPos,yPos));
-		xPos = items.getCoastR().getBarrierSpaces().get(4).getPosX();
-		yPos = items.getCoastR().getBarrierSpaces().get(4).getPosY();
-		items.addBarrier(new Wall(xPos,yPos));*/
 		
 		//Add health bar!!
 		items.addHealthBar(new HealthBar());
