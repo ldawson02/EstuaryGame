@@ -46,6 +46,7 @@ public class GameController {
 	Action throwAct;
 	//Makes sure you can only catch one Floater at a time
 	private boolean choosingThrow = false;
+	private boolean initiatingPowerUp = false;
 	final private int floatDelay = 100; //TODO
 	Timer debrisFloating;
 	Timer powersFloating;
@@ -245,6 +246,7 @@ public class GameController {
 	}
 	
 	public void caughtSetup(Powers p){
+		this.initiatingPowerUp = true;
 		Action powerAction = new PowerInitiate(p);
 		mainGame.bindKeyWith("initiatePowerUp", KeyStroke.getKeyStroke("ENTER"), powerAction);
 		mainGame.unbindKeyWith("x.up", KeyStroke.getKeyStroke("UP"));
@@ -264,6 +266,7 @@ public class GameController {
 	public void initiatedPowerSetup(){
 		normalKeyBind();
 		mainGame.unbindKeyWith("throwDebris", KeyStroke.getKeyStroke("ENTER"));
+		this.initiatingPowerUp = false;
 		
 	}
 	
@@ -341,7 +344,7 @@ public class GameController {
 				//make each item float
 				if(d.getState()==eFloaterState.MOVING){
 					MovementController.move(d);
-					if(!thisGame.choosingThrow && collision.checkCollision(d)){
+					if(!thisGame.choosingThrow && collision.checkCollision(d) && !thisGame.initiatingPowerUp){
 						//sets the Debris state to Lifted
 						d.catching();
 						//sequence of events for a caught Debris initiated
@@ -463,7 +466,7 @@ public class GameController {
 				if(p.getState()==eFloaterState.MOVING){
 					MovementController.move(p);
 			
-					if(collision.checkCollision(p)){
+					if(collision.checkCollision(p) && !thisGame.choosingThrow && !thisGame.initiatingPowerUp){
 						p.catching();
 						thisGame.caughtSetup(p);
 						p.updatePos(mainPlayer.getPosX()+mainPlayer.getWidth()/2 - p.getWidth()/2, mainPlayer.getPosY()-p.getHeight());
