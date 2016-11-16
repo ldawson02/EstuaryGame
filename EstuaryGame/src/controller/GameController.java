@@ -27,6 +27,7 @@ import eNums.eBarrierType;
 import eNums.eDebrisType;
 import eNums.eFloaterState;
 import eNums.eHealthChanges;
+import eNums.ePlayerState;
 import eNums.eScreenTimerState;
 import eNums.eThrowDirection;
 
@@ -189,6 +190,7 @@ public class GameController {
 	
 	public void caughtSetup(Debris d){
 		this.choosingThrow = true;
+		items.mainPlayer.setState(ePlayerState.Lifting);
 		Action caughtLeftAct = new ThrowChoice(eThrowDirection.LEFT,d);
 		Action caughtRightAct = new ThrowChoice(eThrowDirection.RIGHT,d);
 		Action throwAct = new ThrowChosen(d);
@@ -569,6 +571,7 @@ public class GameController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			caughtDebris.setState(eFloaterState.THROWING);
+			items.getPlayer().setState(ePlayerState.Idle);
 			thisGame.thrownSetup();
 		}
 		
