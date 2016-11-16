@@ -369,6 +369,7 @@ public class GameController {
 						System.out.print("\nBin hit this round and");
 						if (d.getCorrectBin()) {
 							System.out.print(" bin was correct.\n");
+							d.setState(eFloaterState.RESTING);
 							items.removeDebris(d);
 							items.getHealthBar().update(eHealthChanges.CorrectBin.getDelta());
 						}
@@ -478,6 +479,7 @@ public class GameController {
 				else if(p.getState()==eFloaterState.INITIATED){
 					if(p instanceof Rebuild){	
 						//TODO:Rebuilding of coast
+						items.getHealthBar().update(eHealthChanges.CoastRebuilt.getDelta());
 					}
 					else{
 						//Removes all Debris from coast

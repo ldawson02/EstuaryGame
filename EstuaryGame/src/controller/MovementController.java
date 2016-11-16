@@ -99,7 +99,7 @@ public class MovementController {
 		int randNum = rand.nextInt(100)+650;
 		double deltaY = randNum - f.getPosY();
 		double distance = Math.sqrt(deltaX*deltaX+deltaY*deltaY);
-		double speed = 0.25;
+		double speed = 0.35;
 		if(distance>10){
 			f.updatePos((int)(f.getPosX()+deltaX*speed),(int)(f.getPosY()+deltaY*speed));
 		}
