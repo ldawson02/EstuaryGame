@@ -11,6 +11,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 import javax.swing.Timer;
 
@@ -445,11 +446,22 @@ public class GameController {
 				//make each item float
 				if(p.getState()==eFloaterState.MOVING){
 					MovementController.move(p);
+			
+					if(collision.checkCollision(p)){
+						p.setState(eFloaterState.LIFTED);
+						p.catching();
+					}
+					
 				}
-				//MovementController.move(p);
-				if(collision.checkCollision(p)){
-					p.setState(eFloaterState.LIFTED);
-					p.catching();
+				
+			}
+			//Removes power up if hits coast
+			Iterator poweritr = items.getAllPowers().iterator();
+			while(poweritr.hasNext()){
+				Powers p = (Powers)poweritr.next();
+				if (p.getState() == eFloaterState.RESTING) {
+					System.out.println("Power hit coast");
+					poweritr.remove();
 				}
 			}
 			timePassed+=floatDelay;
