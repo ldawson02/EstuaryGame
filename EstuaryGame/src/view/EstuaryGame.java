@@ -51,6 +51,7 @@ public class EstuaryGame extends JComponent {
     private static MouseController mc;
     private JFrame mainFrame;
     BufferedImage bg;
+    BufferedImage clockback;
     
     int screenX = 800;
     int screenY = 600;
@@ -131,6 +132,7 @@ public class EstuaryGame extends JComponent {
     private void initImages() {
     	try {
     		bg = ImageIO.read(new File("resources/background/babybackground.png"));
+    		clockback = ImageIO.read(new File("resources/clockback/clockback.png"));
     	}
     	catch (IOException e) {
     		System.out.println("Background failed to load.");
@@ -191,27 +193,31 @@ public class EstuaryGame extends JComponent {
     }
     
     private void paintScreenTimer(Graphics g) {
-    	double maxTime = 20000; //ms
-    	double timeElapsed = gc.getTheBigTimer();
+    	//Getting all the variables
+    	ScreenTimer sc = gc.getItems().getScreenTimer();
+    	double maxTime = sc.getMaxTime(); //ms
+    	double timeElapsed = sc.getElapsedTime();
         double fractionPassed = timeElapsed / maxTime;
-        double size = 50;
-        double maxX = 375;
-        double maxY = 10;
-        double timerX = 401 - (fractionPassed * size)/2;
+        double size = sc.getSize();
+        double maxX = sc.getDoublePosX();
+        double maxY = sc.getDoublePosY();
+        
+        //Painting the timer as a small circle growing into the frame
+        double timerX = (maxX + (size*0.5) + 1) - (fractionPassed * size)/2;
         if (timerX < maxX)
         	timerX = maxX;
-        double timerY = 36 - (fractionPassed * size)/2;
+        double timerY = (maxY + (size*0.5) + 1) - (fractionPassed * size)/2;
         if (timerY < maxY)
         	timerY = maxY;
         double timerSize = fractionPassed * size;
         if (timerSize > size)
         	timerSize = size;
-        g.setColor(Color.RED);
+        g.drawImage(clockback, (int)maxX,(int) maxY, this);
+        g.setColor(new Color(255, 90, 90, 150));
         g.fillOval((int) timerX,(int) timerY,(int) timerSize,(int) timerSize);
         //outline
         g.setColor(Color.BLACK);
-        g.drawOval(375, 10, 50, 50);
-        g.fillOval(398, 33, 5, 5);
+        g.drawOval((int)maxX,(int)maxY,(int) size,(int) size);
     }
     
     private void paintBarriers(Graphics g) {
