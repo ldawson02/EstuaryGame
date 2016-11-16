@@ -47,7 +47,8 @@ public class EstuaryGame extends JComponent {
 
     private static final long serialVersionUID = 1L;
 
-    private static GameController gc;
+    private GameController gc;
+    private static MouseController mc;
     private JFrame mainFrame;
     BufferedImage bg;
     
@@ -88,9 +89,9 @@ public class EstuaryGame extends JComponent {
                 contentPane.add(new EstuaryGame(frame));
                 frame.setVisible(true);
                 
-                MouseController mouse = new MouseController();
-        		frame.addMouseListener(mouse);
-        		frame.addMouseMotionListener(mouse);
+                mc = new MouseController();
+        		frame.addMouseListener(mc);
+        		frame.addMouseMotionListener(mc);
             }
         });
     }
@@ -144,36 +145,6 @@ public class EstuaryGame extends JComponent {
         
         //Paint background
         paintBackground(g);
-       
-	/*
-        //These paint the barrier spaces as they are currently
-        g.drawRect(20, 450, 40, 40);
-        g.drawRect(70, 450, 40, 40);
-        g.drawRect(120, 450, 40, 40);
-        g.drawRect(170, 450, 40, 40);
-        g.drawRect(220, 450, 40, 40);
-        
-        g.drawRect(740, 450, 40, 40);
-        g.drawRect(690, 450, 40, 40);
-        g.drawRect(640, 450, 40, 40);
-        g.drawRect(590, 450, 40, 40);
-        g.drawRect(540, 450, 40, 40);*/
-	    
-	/*
-     	g.setColor(Color.GREEN);
- 		g.fillRect(Barriers.getRightEdge(), 390, bWidth, bHeight); //the gabion spawn
-     	g.setColor(Color.DARK_GRAY);
- 		g.fillRect(Barriers.getLeftEdge(), 390, bWidth, bHeight); //the wall spawn
-         
-         */
-        
-        /*
-     	g.setColor(Color.GREEN);
- 		g.fillRect(GameController.gabionsSpawn.x, GameController.gabionsSpawn.y, 
- 				GameController.gabionsSpawn.width, GameController.gabionsSpawn.height); //the gabion spawn
-    	g.setColor(Color.DARK_GRAY);
- 		g.fillRect(GameController.wallSpawn.x, GameController.wallSpawn.y, 
- 				GameController.wallSpawn.width, GameController.wallSpawn.height); //the wall spawn*/
         
         //Paint ScreenTimer
         paintScreenTimer(g);
@@ -248,12 +219,12 @@ public class EstuaryGame extends JComponent {
     	for (Barriers b : barriers) {
     		paintOneBarrier(g, b);
     	}
-    	paintOneBarrier(g, GameController.getWallSpawn());
-    	paintOneBarrier(g, GameController.getGabionsSpawn());
+    	paintOneBarrier(g, mc.getWallSpawn());
+    	paintOneBarrier(g, mc.getGabionsSpawn());
     	
-    	Barriers tempDragged = GameController.getDragged();
+    	Barriers tempDragged = mc.getDragged();
     	if (tempDragged != null) {
-    		paintOneBarrier(g, GameController.getDragged());
+    		paintOneBarrier(g, mc.getDragged());
     	}
     }
     
@@ -261,12 +232,12 @@ public class EstuaryGame extends JComponent {
     	if (b.getType() == eBarrierType.Gabion) {
     		//For now, calling a gabion a green rectangle
     		g.setColor(Color.GREEN);
-    		g.fillRect(b.getPosX(), b.getPosY(), b.getWidth(), b.getHeight());
+    		g.fillRect(b.getPosX(), b.getPosY(), bWidth, bHeight);
     	}
     	else if (b.getType() == eBarrierType.Wall) {
     		//Calling a wall a dark gray wall
     		g.setColor(Color.DARK_GRAY);
-    		g.fillRect(b.getPosX(), b.getPosY(), b.getWidth(), b.getHeight());
+    		g.fillRect(b.getPosX(), b.getPosY(), bWidth, bHeight);
     	}
     	else if (b.getType() == eBarrierType.EMPTY) {
     		g.setColor(Color.BLACK);
