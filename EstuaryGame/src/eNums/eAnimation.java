@@ -19,4 +19,8 @@ public enum eAnimation {
 	eAnimation(String folder) {
 		this.folderName = folder;
 	}
+	
+	public String getPath() {
+		return folderName;
+	}
 }

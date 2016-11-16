@@ -30,6 +30,8 @@ public class ImageLibrary {
 	public static ImageLibrary loadLibrary() {
 		ImageLibrary lib = new ImageLibrary();
 		
+		//TODO: load it in
+		
 		return lib;
 	}
 	/* The old implementation

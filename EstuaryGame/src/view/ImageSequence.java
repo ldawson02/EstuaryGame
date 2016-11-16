@@ -3,7 +3,12 @@ package view;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.stream.Stream;
 
 import javax.imageio.ImageIO;
 
@@ -21,7 +26,68 @@ import eNums.eAnimation;
 public class ImageSequence {
 
 	private eAnimation animID;
+	private ArrayList<BufferedImage> seq;
+	private int curFrame;
+	private int numFrames;
+	private int frameDelay = 0;
 	
+	private ImageSequence() {};
+	
+	public ImageSequence(eAnimation ID) {
+		this.animID = ID;
+		seq = new ArrayList<BufferedImage>();
+		curFrame = 0;
+		loadSequence(ID.getPath());
+	}
+	
+	private void loadSequence(String filepath) {
+		//TODO: load in the images using paths <3
+		String srcpath = "resources\\";
+		String fullpath = srcpath + filepath;
+		System.out.println("Loading: " + fullpath);
+		
+		try {
+			Stream<Path> paths = Files.list(Paths.get(srcpath));
+			Iterator<Path> itpath = paths.iterator();
+			
+			while (itpath.hasNext()) {
+				Path next = itpath.next();
+				//Make sure the path is an image, not another folder
+				if (Files.isDirectory(next)) {
+					throw new ResourceException(next);
+				}
+				
+				seq.add(createImage(next.toString()));
+			}
+			
+			//As long as nothing's been thrown yet:
+			this.numFrames = (int) paths.count();
+			
+			paths.close();
+		}
+		catch (IOException e) {
+			System.out.println("Error loading " + fullpath);
+			e.printStackTrace();
+		}
+		catch (ResourceException e) {
+			System.out.println("Resource error: " + e.errorPath.toString());
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	private BufferedImage createImage(String filename){
+		BufferedImage bufferedImage;
+		try {
+			bufferedImage = ImageIO.read(new File(filename));
+			return bufferedImage;
+		} catch (IOException e) {
+			System.out.println("Couldn't create image from " + filename);
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	/* The old implementation
 	public int SeqID;
