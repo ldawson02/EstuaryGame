@@ -470,12 +470,27 @@ public class GameController {
 					}
 					
 				}
+				else if(p.getState()==eFloaterState.INITIATED){
+					if(p instanceof Rebuild){	
+						//Rebuilding of coast
+					}
+					else{
+						//Removes all Debris from coast
+						items.removeAllRestingDebris();
+						items.getHealthBar().update(eHealthChanges.CoastDebrisRemoved.getDelta());
+						
+					}
+				}
 				
 			}
 			//Removes power up if hits coast
 			Iterator poweritr = items.getAllPowers().iterator();
 			while(poweritr.hasNext()){
 				Powers p = (Powers)poweritr.next();
+				if(p.getState() == eFloaterState.INITIATED){
+					System.out.println("Power initiated");
+					poweritr.remove();
+				}
 				if (p.getState() == eFloaterState.RESTING) {
 					System.out.println("Power hit coast");
 					poweritr.remove();
@@ -605,12 +620,7 @@ public class GameController {
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if(caughtPower instanceof Rebuild){	
-			}
-			else{
-				
-			}
-			items.removePower(caughtPower);
+			caughtPower.setState(eFloaterState.INITIATED);
 			thisGame.initiatedPowerSetup();
 		}
 		
