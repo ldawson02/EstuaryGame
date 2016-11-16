@@ -191,16 +191,20 @@ public class EstuaryGame extends JComponent {
     }
     
     private void paintScreenTimer(Graphics g) {
-    	double maxTime = 20000; //ms
-    	double timeElapsed = gc.getTheBigTimer();
+    	//Getting all the variables
+    	ScreenTimer sc = gc.getItems().getScreenTimer();
+    	double maxTime = sc.getMaxTime(); //ms
+    	double timeElapsed = sc.getElapsedTime();
         double fractionPassed = timeElapsed / maxTime;
-        double size = 50;
-        double maxX = 375;
-        double maxY = 10;
-        double timerX = 401 - (fractionPassed * size)/2;
+        double size = sc.getSize();
+        double maxX = sc.getDoublePosX();
+        double maxY = sc.getDoublePosY();
+        
+        //Painting the timer as a small circle growing into the frame
+        double timerX = (maxX + (size*0.5) + 1) - (fractionPassed * size)/2;
         if (timerX < maxX)
         	timerX = maxX;
-        double timerY = 36 - (fractionPassed * size)/2;
+        double timerY = (maxY + (size*0.5) + 1) - (fractionPassed * size)/2;
         if (timerY < maxY)
         	timerY = maxY;
         double timerSize = fractionPassed * size;

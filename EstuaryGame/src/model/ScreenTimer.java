@@ -22,7 +22,11 @@ public class ScreenTimer extends Item {
 	private int maxTime;
 	private int timeRemaining;
 	private int elapsedTime;
-	private eScreenTimerState state;
+    private double size = 50;
+    private double doublePosX = 375;
+    private double doublePosY = 10;
+	
+    private eScreenTimerState state;
 	
 	public ScreenTimer() {
 		state = eScreenTimerState.OFF;
@@ -70,6 +74,41 @@ public class ScreenTimer extends Item {
 	public void setElapsedTime(int elapsedTime) {
 		this.elapsedTime = elapsedTime;
 		updateRemaining();
+	}
+
+	/**
+	 * @return the size
+	 */
+	public double getSize() {
+		return size;
+	}
+
+	/**
+	 * @return the doublePosX
+	 */
+	public double getDoublePosX() {
+		return doublePosX;
+	}
+
+	/**
+	 * @param doublePosX the doublePosX to set
+	 */
+	public void setDoublePosX(double doublePosX) {
+		this.doublePosX = doublePosX;
+	}
+
+	/**
+	 * @return the doublePosY
+	 */
+	public double getDoublePosY() {
+		return doublePosY;
+	}
+
+	/**
+	 * @param doublePosY the doublePosY to set
+	 */
+	public void setDoublePosY(double doublePosY) {
+		this.doublePosY = doublePosY;
 	}
 
 	/**
