@@ -51,6 +51,7 @@ public class EstuaryGame extends JComponent {
     private static MouseController mc;
     private JFrame mainFrame;
     BufferedImage bg;
+    BufferedImage clockback;
     
     int screenX = 800;
     int screenY = 600;
@@ -131,6 +132,7 @@ public class EstuaryGame extends JComponent {
     private void initImages() {
     	try {
     		bg = ImageIO.read(new File("resources/background/babybackground.png"));
+    		clockback = ImageIO.read(new File("resources/clockback/clockback.png"));
     	}
     	catch (IOException e) {
     		System.out.println("Background failed to load.");
@@ -210,12 +212,12 @@ public class EstuaryGame extends JComponent {
         double timerSize = fractionPassed * size;
         if (timerSize > size)
         	timerSize = size;
-        g.setColor(Color.RED);
+        g.drawImage(clockback, (int)maxX,(int) maxY, this);
+        g.setColor(new Color(255, 90, 90, 150));
         g.fillOval((int) timerX,(int) timerY,(int) timerSize,(int) timerSize);
         //outline
         g.setColor(Color.BLACK);
-        g.drawOval(375, 10, 50, 50);
-        g.fillOval(398, 33, 5, 5);
+        g.drawOval((int)maxX,(int)maxY,(int) size,(int) size);
     }
     
     private void paintBarriers(Graphics g) {
