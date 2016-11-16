@@ -20,7 +20,7 @@ public class Rebuild extends Powers implements HealthChangers{
 
 	@Override
 	public void catching() {
-		setState(eFloaterState.LIFTED);
+		this.setState(eFloaterState.LIFTED);
 		/*
 		// TODO Auto-generated method stub
 		for (Coast c : ActiveItems.coasts){

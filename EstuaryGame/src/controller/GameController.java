@@ -244,11 +244,27 @@ public class GameController {
 		mainGame.unbindKeyWith("x.down", KeyStroke.getKeyStroke("DOWN"));
 	}
 	
+	public void caughtSetup(Powers p){
+		Action powerAction = new PowerInitiate(p);
+		mainGame.bindKeyWith("initiatePowerUp", KeyStroke.getKeyStroke("ENTER"), powerAction);
+		mainGame.unbindKeyWith("x.up", KeyStroke.getKeyStroke("UP"));
+		mainGame.unbindKeyWith("x.down", KeyStroke.getKeyStroke("DOWN"));
+		mainGame.unbindKeyWith("x.left", KeyStroke.getKeyStroke("LEFT"));
+		mainGame.unbindKeyWith("x.right", KeyStroke.getKeyStroke("RIGHT"));
+		
+		
+	}
+	
 	public void thrownSetup(){
 		//Return the keys to their original state, allow Player to move
 		normalKeyBind();
 		mainGame.unbindKeyWith("throwDebris", KeyStroke.getKeyStroke("ENTER"));
 		this.choosingThrow = false;
+	}
+	public void initiatedPowerSetup(){
+		normalKeyBind();
+		mainGame.unbindKeyWith("throwDebris", KeyStroke.getKeyStroke("ENTER"));
+		
 	}
 	
 	public void checkCollisions(){
@@ -448,8 +464,9 @@ public class GameController {
 					MovementController.move(p);
 			
 					if(collision.checkCollision(p)){
-						p.setState(eFloaterState.LIFTED);
 						p.catching();
+						thisGame.caughtSetup(p);
+						p.updatePos(mainPlayer.getPosX()+mainPlayer.getWidth()/2 - p.getWidth()/2, mainPlayer.getPosY()-p.getHeight());
 					}
 					
 				}
@@ -580,6 +597,25 @@ public class GameController {
 		}
 		
 	}
+	public class PowerInitiate extends AbstractAction{
+
+		private Powers caughtPower;
+		public PowerInitiate(Powers p){
+			this.caughtPower = p;
+		}
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(caughtPower instanceof Rebuild){	
+			}
+			else{
+				
+			}
+			items.removePower(caughtPower);
+			thisGame.initiatedPowerSetup();
+		}
+		
+	}
+	
 	public class wallAct extends AbstractAction{
 
 		@Override
