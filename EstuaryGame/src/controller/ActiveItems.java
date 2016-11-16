@@ -123,6 +123,9 @@ public class ActiveItems {
 	public void addPower(Powers p){
 		powerups.add(p);
 	}
+	public void removePower(Powers p){
+		powerups.remove(p);
+	}
 	
 	public Bin getTrashBin(){
 		return TrashBin;

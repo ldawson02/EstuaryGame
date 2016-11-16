@@ -20,7 +20,7 @@ public class Remove extends Powers implements HealthChangers {
 
 	@Override
 	public void catching() {
-		setState(eFloaterState.LIFTED);
+		this.setState(eFloaterState.LIFTED);
 		/*
 		// TODO Auto-generated method stub
 		for (Debris d : ActiveItems.debris){
