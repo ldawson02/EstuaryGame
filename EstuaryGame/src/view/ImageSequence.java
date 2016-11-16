@@ -45,9 +45,10 @@ public class ImageSequence {
 		String srcpath = "resources\\";
 		String fullpath = srcpath + filepath;
 		System.out.println("Loading: " + fullpath);
+		numFrames = 0;
 		
 		try {
-			Stream<Path> paths = Files.list(Paths.get(srcpath));
+			Stream<Path> paths = Files.list(Paths.get(fullpath));
 			Iterator<Path> itpath = paths.iterator();
 			
 			while (itpath.hasNext()) {
@@ -58,10 +59,8 @@ public class ImageSequence {
 				}
 				
 				seq.add(createImage(next.toString()));
+				numFrames++;
 			}
-			
-			//As long as nothing's been thrown yet:
-			this.numFrames = (int) paths.count();
 			
 			paths.close();
 		}
@@ -87,6 +86,71 @@ public class ImageSequence {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public BufferedImage draw() {
+		BufferedImage toReturn = seq.get(curFrame / (1 + frameDelay));
+		curFrame += 1;
+		if (curFrame == numFrames*(1 + frameDelay)) {
+			curFrame = 0;
+		}
+		return toReturn;
+	}
+	
+	/**
+	 * Resets current frame to 0
+	 */
+	public void reset() {
+		curFrame = 0;
+	}
+	
+	/**
+	 * @return the curFrame
+	 */
+	public int getCurFrame() {
+		return curFrame;
+	}
+
+	/**
+	 * @param curFrame the curFrame to set
+	 */
+	public void setCurFrame(int curFrame) {
+		this.curFrame = curFrame;
+	}
+
+	/**
+	 * @return the frameDelay
+	 */
+	public int getFrameDelay() {
+		return frameDelay;
+	}
+
+	/**
+	 * @param frameDelay the frameDelay to set
+	 */
+	public void setFrameDelay(int frameDelay) {
+		this.frameDelay = frameDelay;
+	}
+
+	/**
+	 * @return the animID
+	 */
+	public eAnimation getAnimID() {
+		return animID;
+	}
+
+	/**
+	 * @return the seq
+	 */
+	public ArrayList<BufferedImage> getSeq() {
+		return seq;
+	}
+
+	/**
+	 * @return the numFrames
+	 */
+	public int getNumFrames() {
+		return numFrames;
 	}
 	
 	/* The old implementation
