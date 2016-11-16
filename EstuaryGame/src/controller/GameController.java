@@ -369,11 +369,13 @@ public class GameController {
 						System.out.print("\nBin hit this round and");
 						if (d.getCorrectBin()) {
 							System.out.print(" bin was correct.\n");
+							items.removeDebris(d);
 							items.getHealthBar().update(eHealthChanges.CorrectBin.getDelta());
 						}
 						else {
 							System.out.print(" bin was incorrect.\n");
 							MovementController.wrongBinMove(d);
+							d.setState(eFloaterState.RESTING);
 							items.getHealthBar().update(eHealthChanges.IncorrectBin.getDelta());
 						}
 					}
@@ -475,7 +477,7 @@ public class GameController {
 				}
 				else if(p.getState()==eFloaterState.INITIATED){
 					if(p instanceof Rebuild){	
-						//Rebuilding of coast
+						//TODO:Rebuilding of coast
 					}
 					else{
 						//Removes all Debris from coast
@@ -486,16 +488,11 @@ public class GameController {
 				}
 				
 			}
-			//Removes power up if hits coast
+			//Removes power up if hits coast or powerup was initiated
 			Iterator poweritr = items.getAllPowers().iterator();
 			while(poweritr.hasNext()){
 				Powers p = (Powers)poweritr.next();
-				if(p.getState() == eFloaterState.INITIATED){
-					System.out.println("Power initiated");
-					poweritr.remove();
-				}
-				if (p.getState() == eFloaterState.RESTING) {
-					System.out.println("Power hit coast");
+				if(p.getState() == eFloaterState.INITIATED || p.getState() == eFloaterState.RESTING){
 					poweritr.remove();
 				}
 			}
