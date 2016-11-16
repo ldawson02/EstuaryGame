@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
+import controller.GameController;
 import eNums.eBarrierType;
 
 /**
@@ -100,6 +101,14 @@ public class Barriers extends Item implements Interactable, HealthChangers{
 		}
 		
 		return spaces;
+	}
+	
+	public static void setBarrierType(Barriers barr, eBarrierType t) {
+		//goes through list of barriers and changes the one with the matching coords to type t
+		for (Barriers b : GameController.getItems().getAllBarriers()) {
+			if (barr.getPosX() == b.getPosX()) //"match"
+				b.setType(t);
+		}
 	}
 	
 	

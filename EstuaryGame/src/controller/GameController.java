@@ -35,7 +35,7 @@ public class GameController {
 	//the big shebang
 	private EstuaryGame mainGame;
 	Player mainPlayer;
-	private ActiveItems items = new ActiveItems();
+	private static ActiveItems items = new ActiveItems();
 	private ImageLibrary library;
 	Action leftAct;
 	Action rightAct;
@@ -66,9 +66,9 @@ public class GameController {
 	
 	private static int bWidth = 40;
 	private static int bHeight = 20;
-	public static Rectangle wallSpawn = new Rectangle(Barriers.getLeftEdge(), 390, bWidth, bHeight);
-	public static Rectangle gabionsSpawn = new Rectangle(Barriers.getRightEdge(), 390, bWidth, bHeight);
-	public static Rectangle temp;
+	public static Wall wallSpawn = new Wall(Barriers.getLeftEdge(), 390);
+	public static Gabions gabionsSpawn = new Gabions(Barriers.getRightEdge(), 390);
+	public static Barriers dragged = null;
 	
 	Collisions collision = new Collisions();
 	
@@ -85,7 +85,7 @@ public class GameController {
 		this.mainGame = mainGame;
 	}
 
-	public ActiveItems getItems() {
+	public static ActiveItems getItems() {
 		return items;
 	}
 
@@ -93,6 +93,22 @@ public class GameController {
 		this.items = items;
 	}
 
+	public static Barriers getWallSpawn() {
+		return wallSpawn;
+	}
+	
+	public static Barriers getGabionsSpawn() {
+		return gabionsSpawn;
+	}
+	
+	public static Barriers getDragged() {
+		return dragged;
+	}
+	
+	public static void setDragged(Barriers b) {
+		dragged = b;
+	}
+	
 	/**
 	 * @return the theBigTimer
 	 */
@@ -749,5 +765,6 @@ public class GameController {
 		}
 
 	}
+
 
 }

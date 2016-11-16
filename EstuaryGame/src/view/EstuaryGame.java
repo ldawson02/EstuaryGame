@@ -28,7 +28,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import controller.ActiveItems;
 import controller.GameController;
-import controller.GameController.MouseController;
+import controller.MouseController;
 import eNums.eBarrierType;
 import eNums.eFloaterState;
 import eNums.eDebrisType;
@@ -83,13 +83,14 @@ public class EstuaryGame extends JComponent {
                
 		
 		    
-		Container contentPane = frame.getContentPane();
+                Container contentPane = frame.getContentPane();
                 contentPane.setBackground(Color.LIGHT_GRAY);
                 contentPane.add(new EstuaryGame(frame));
                 frame.setVisible(true);
                 
-                MouseController mouse = gc.new MouseController();
+                MouseController mouse = new MouseController();
         		frame.addMouseListener(mouse);
+        		frame.addMouseMotionListener(mouse);
             }
         });
     }
@@ -165,12 +166,14 @@ public class EstuaryGame extends JComponent {
  		g.fillRect(Barriers.getLeftEdge(), 390, bWidth, bHeight); //the wall spawn
          
          */
+        
+        /*
      	g.setColor(Color.GREEN);
  		g.fillRect(GameController.gabionsSpawn.x, GameController.gabionsSpawn.y, 
  				GameController.gabionsSpawn.width, GameController.gabionsSpawn.height); //the gabion spawn
     	g.setColor(Color.DARK_GRAY);
  		g.fillRect(GameController.wallSpawn.x, GameController.wallSpawn.y, 
- 				GameController.wallSpawn.width, GameController.wallSpawn.height); //the wall spawn
+ 				GameController.wallSpawn.width, GameController.wallSpawn.height); //the wall spawn*/
         
         //Paint ScreenTimer
         paintScreenTimer(g);
@@ -243,20 +246,31 @@ public class EstuaryGame extends JComponent {
     private void paintBarriers(Graphics g) {
     	ArrayList<Barriers> barriers = gc.getItems().getAllBarriers();
     	for (Barriers b : barriers) {
-    		if (b.getType() == eBarrierType.Gabion) {
-    			//For now, calling a gabion a green rectangle
-    			g.setColor(Color.GREEN);
-    			g.fillRect(b.getPosX(), b.getPosY(), b.getWidth(), b.getHeight());
-    		}
-    		else if (b.getType() == eBarrierType.Wall) {
-    			//Calling a wall a dark gray wall
-    			g.setColor(Color.DARK_GRAY);
-    			g.fillRect(b.getPosX(), b.getPosY(), b.getWidth(), b.getHeight());
-    		}
-		else if (b.getType() == eBarrierType.EMPTY) {
-			g.setColor(Color.BLACK);
-			g.drawRect(b.getPosX(), b.getPosY(), bWidth, bHeight);
-		}
+    		paintOneBarrier(g, b);
+    	}
+    	paintOneBarrier(g, GameController.getWallSpawn());
+    	paintOneBarrier(g, GameController.getGabionsSpawn());
+    	
+    	Barriers tempDragged = GameController.getDragged();
+    	if (tempDragged != null) {
+    		paintOneBarrier(g, GameController.getDragged());
+    	}
+    }
+    
+    private void paintOneBarrier(Graphics g, Barriers b) {
+    	if (b.getType() == eBarrierType.Gabion) {
+    		//For now, calling a gabion a green rectangle
+    		g.setColor(Color.GREEN);
+    		g.fillRect(b.getPosX(), b.getPosY(), b.getWidth(), b.getHeight());
+    	}
+    	else if (b.getType() == eBarrierType.Wall) {
+    		//Calling a wall a dark gray wall
+    		g.setColor(Color.DARK_GRAY);
+    		g.fillRect(b.getPosX(), b.getPosY(), b.getWidth(), b.getHeight());
+    	}
+    	else if (b.getType() == eBarrierType.EMPTY) {
+    		g.setColor(Color.BLACK);
+    		g.drawRect(b.getPosX(), b.getPosY(), bWidth, bHeight);
     	}
     }
     
