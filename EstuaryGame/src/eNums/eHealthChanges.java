@@ -13,7 +13,8 @@ public enum eHealthChanges {
 	IncorrectBin(-5),
 	WallFallen(-8),
 	WallBuilt(12),
-	CoastDebrisRemoved(10);
+	CoastDebrisRemoved(15),
+	CoastRebuilt(15);
 	
 	
 	private int delta;
