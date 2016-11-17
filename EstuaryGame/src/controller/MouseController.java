@@ -13,13 +13,14 @@ import model.Gabions;
 import model.Wall;
 
 	public class MouseController extends JPanel implements MouseListener, MouseMotionListener {
+		
+		private GameController gc;
 
 		boolean dragging = false;
 		private Wall wallSpawn = new Wall(Barriers.getLeftEdge(), 390);
 		private Gabions gabionsSpawn = new Gabions(Barriers.getRightEdge(), 390);
 		private Barriers dragged = null;
-		
-
+				
 		public Barriers getWallSpawn() {
 			return wallSpawn;
 		}
@@ -32,6 +33,10 @@ import model.Wall;
 			return dragged;
 		}
 		
+		public void setGC(GameController g) {
+			this.gc = g;
+		}
+		
 		@Override
 		public void mousePressed(MouseEvent e) {
 			Point mouseCoords = new Point(e.getX(), e.getY());
@@ -41,13 +46,13 @@ import model.Wall;
 				if (Collisions.pointInside(wallSpawn, mouseCoords)) {
 					dragged = new Barriers(e.getX(), e.getY()); //set it to the same coords as mouse click
 					dragged.setType(eBarrierType.Wall);  //set type to wall
-					System.out.println("inside wallspawn: " + dragged.getPosX() + " "+ dragged.getPosY());
+					//System.out.println("inside wallspawn: " + dragged.getPosX() + " "+ dragged.getPosY());
 
 				}
 				else if (Collisions.pointInside(gabionsSpawn, mouseCoords)) {
 					dragged = new Barriers(e.getX(), e.getY()); //set it to the same coords as mouse click
 					dragged.setType(eBarrierType.Gabion);  //set type to gabion
-					System.out.println("inside gabionspawn: " + dragged.getPosX() + " "+ dragged.getPosY());
+					//System.out.println("inside gabionspawn: " + dragged.getPosX() + " "+ dragged.getPosY());
 
 				}
 				dragging = true; //mouse is being dragged now
@@ -59,22 +64,45 @@ import model.Wall;
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
+			
+			
 			if (dragging == false)
 				return;
 			dragging = false;
-			if ((dragged != null) && (Collisions.emptyBarrierCollision(dragged))) {  //dragged temp to any of the barrier spaces that was empty
+			if ((dragged != null) && (gc.emptyBarrierCollision(dragged))) {  //dragged temp to any of the barrier spaces that was empty
 				System.out.println("collided");
 				if (dragged.getType() == eBarrierType.Wall) {
-					Barriers.setBarrierType(dragged, eBarrierType.Wall); 
+					gc.setBarrierType(dragged, eBarrierType.Wall); 
 					//set barrier with same coords as temp to Wall
 				}
 				else if (dragged.getType() == eBarrierType.Gabion) {
-					Barriers.setBarrierType(dragged, eBarrierType.Gabion);
+					gc.setBarrierType(dragged, eBarrierType.Gabion);
 				}
 			}
 			dragged = null; //done dragging, don't need dragging shape
 			repaint();
 			// TODO Auto-generated method stub
+			
+			
+			/*
+			Point mouseCoords = new Point(e.getX(), e.getY());
+			
+			if (dragging == false)
+				return;
+			dragging = false;
+			
+			if (dragged != null) {
+				System.out.println(mouseCoords);
+				if ((dragged.getType() == eBarrierType.Wall) && (Collisions.pointInside(wallSpawn, mouseCoords))) {
+					gc.setBarrierType(dragged, eBarrierType.Wall);
+				}
+				else if ((dragged.getType() == eBarrierType.Gabion) && (Collisions.pointInside(gabionsSpawn, mouseCoords))) {
+					gc.setBarrierType(dragged, eBarrierType.Gabion);
+				}
+			}
+			dragged = null; //done dragging, don't need dragging shape
+			repaint();
+			// TODO Auto-generated method stub*/
 
 		}
 		
