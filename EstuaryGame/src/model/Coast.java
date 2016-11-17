@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import javax.swing.Timer;
 
+import eNums.eBarrierType;
+import eNums.eCoastState;
+
 /**
 * The Coast class is the Model class for the coast item that is in the game.
 * 
@@ -33,7 +36,7 @@ public class Coast extends Item implements HealthChangers{
 	/**
 	 * The rate at which it erodes
 	 */
-	private double erosionRate;
+	private double erosionRate = 8000;
 	
 	private Barriers barrier;
 	private Timer erosionTimer;
@@ -41,6 +44,7 @@ public class Coast extends Item implements HealthChangers{
 	 * The Debris items on the coast
 	 */
 	private ArrayList<Barriers> barriers;
+	private eCoastState state = eCoastState.NO_HIT;
 	
 
 	public Coast() {
@@ -58,6 +62,13 @@ public class Coast extends Item implements HealthChangers{
 		super(x, y);
 		this.setHeight(height);
 		this.setWidth(width);
+	}
+	
+	public Coast(int x, int y, Barriers b){
+		super(x, y);
+		this.setHeight(height);
+		this.setWidth(width);
+		this.setBarrier(b);
 	}
 	
 	public Barriers getBarrier(){
@@ -152,7 +163,7 @@ public class Coast extends Item implements HealthChangers{
 	 * Decreases the size of the coast by one, if possible
 	 */
 	public void erode() {
-		
+		this.setState(this.getState().getNextState());
 	}
 	
 	/**
@@ -170,13 +181,22 @@ public class Coast extends Item implements HealthChangers{
 		
 	}
 	
+	public boolean isProtected(){
+		if(barrier.getType() != eBarrierType.EMPTY){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
 	//public abstract void updateCoords();
 	
 	public static ArrayList<Coast> setUpLeftCoast(ArrayList<Barriers> barriers) {
 		ArrayList<Coast> spaces = new ArrayList<Coast>();
 		
 		for (Barriers b : barriers) {
-			Coast c  =new Coast(b.getPosX(), Barriers.getBarrierY()-50);
+			Coast c  =new Coast(b.getPosX(), Barriers.getBarrierY()-30);
 			c.setBarrier(b);
 			spaces.add(c);
 		}
@@ -188,7 +208,7 @@ public class Coast extends Item implements HealthChangers{
 		ArrayList<Coast> spaces = new ArrayList<Coast>();
 		
 		for (Barriers b : barriers) {
-			Coast c = new Coast(b.getPosX(), Barriers.getBarrierY()-50);
+			Coast c = new Coast(b.getPosX(), Barriers.getBarrierY()-30);
 			c.setBarrier(b);
 			spaces.add(c);
 		}
@@ -200,5 +220,21 @@ public class Coast extends Item implements HealthChangers{
 	public void updateHealthBar() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public eCoastState getState() {
+		return state;
+	}
+
+	public void setState(eCoastState state) {
+		this.state = state;
+	}
+
+	public Timer getErosionTimer() {
+		return erosionTimer;
+	}
+
+	public void setErosionTimer(Timer erosionTimer) {
+		this.erosionTimer = erosionTimer;
 	}
 }

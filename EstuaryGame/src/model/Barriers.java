@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
+import javax.swing.Timer;
+
 import controller.GameController;
 import eNums.eBarrierType;
 
@@ -13,10 +15,13 @@ import eNums.eBarrierType;
  * @since 10/25/16
  */
 public class Barriers extends Item implements Interactable, HealthChangers{
-	private int decayTime;
+	private boolean protector = false;
+	private int decayTime = 7000;
 	//overall state of the barrier
 	private int health;
 	private eBarrierType type;
+	private Timer erosionTimer;
+	
 	private static int barrierY = 500;
 	
 	private static int leftEdge = 20;
@@ -48,6 +53,9 @@ public class Barriers extends Item implements Interactable, HealthChangers{
 	public void decay(int time) {
 	}
 	public void crumble() {
+	}
+	public void erode(){
+		this.setType(eBarrierType.EMPTY);
 	}
 
 	public int getDecayTime() {
@@ -112,6 +120,22 @@ public class Barriers extends Item implements Interactable, HealthChangers{
 			if (barr.getPosX() == b.getPosX()) //"match"
 				b.setType(t);
 		}
+	}
+
+	public boolean isProtector() {
+		return protector;
+	}
+
+	public void setProtector(boolean protector) {
+		this.protector = protector;
+	}
+
+	public Timer geterosionTimer() {
+		return erosionTimer;
+	}
+
+	public void setbTimer(Timer bTimer) {
+		this.erosionTimer = bTimer;
 	}
 	
 	

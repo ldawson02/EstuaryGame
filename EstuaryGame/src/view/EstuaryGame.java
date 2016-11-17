@@ -161,6 +161,8 @@ public class EstuaryGame extends JComponent {
         //Paint background
         paintBackground(g);
         
+        paintCoast(g);
+        
         //Paint barriers
         paintBarriers(g);
         
@@ -182,6 +184,8 @@ public class EstuaryGame extends JComponent {
         //Paint ScreenTimer
         paintScreenTimer(g);
         
+        
+        
         timeElapsed = gc.getTheBigTimer();
         g.drawString(Integer.toString(timeElapsed), 40, 40);
         
@@ -190,7 +194,7 @@ public class EstuaryGame extends JComponent {
     private void paintBackground(Graphics g) {
     	//TODO: get a background
     	g.drawImage(bg, 0, 0, this);
-    	
+    	/*
         g.setColor(Color.BLACK);
         Graphics2D g2d = (Graphics2D) g.create();
         QuadCurve2D quadLeft = new QuadCurve2D.Double(0, 0, 300, 150, 0, 300);
@@ -199,7 +203,7 @@ public class EstuaryGame extends JComponent {
         g2d.draw(quadRight);
         
         Ellipse2D bounds = new Ellipse2D.Double(50, 150, 700, 300);
-        g2d.draw(bounds);
+        g2d.draw(bounds);*/
     }
     
     private void paintScreenTimer(Graphics g) {
@@ -233,7 +237,32 @@ public class EstuaryGame extends JComponent {
         	g.drawImage(gameOver, 220, 200, this);
         }
     }
-    
+    private void paintCoast(Graphics g){
+    	for(Coast c : gc.getItems().getCoast()){
+    		Color color;
+    		switch (c.getState()){
+    		case NO_HIT:
+    			color = new Color(242,204,155);
+    			break;
+    		case ONE_HIT:
+    			color = new Color(232,194,144);
+    			break;
+    		case TWO_HIT:
+    			color = new Color(222,182,131);
+    			break;
+    		case THREE_HIT:
+    			color = new Color(209,168,115);
+    			break;
+    		case ERODED:
+    			color = new Color(209,168,115,0);
+    			break;
+    		default: 
+    			color = new Color(0,0,0,0);	
+    		}
+    		g.setColor(color);
+    		g.fillRect(c.getPosX(), c.getPosY(), c.getWidth(), c.getHeight());
+    	}
+    }
     private void paintBarriers(Graphics g) {
     	ArrayList<Barriers> barriers = gc.getItems().getAllBarriers();
     	for (Barriers b : barriers) {
@@ -375,6 +404,10 @@ public class EstuaryGame extends JComponent {
     	//Outline
     	g.setColor(Color.BLACK);
     	g.drawRect((int)barX, (int)barY,(int) barWidth,(int) barHeight);
+    	
+        if (currHealth <= 0) {
+        	g.drawImage(gameOver, 220, 200, this);
+        }
     }
     
 

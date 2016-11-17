@@ -51,10 +51,12 @@ public class GameController {
 	final private int floatDelay = 100; //TODO
 	Timer debrisFloating;
 	Timer powersFloating;
-	final private int erodeDelay = 1;//TODO
+	final private int erodeDelay = 100;//TODO
+	
 	Timer coastRErosion;
 	Timer coastLErosion;
 	private GameController thisGame = this;
+	private ArrayList<Timer> allTimers = new ArrayList<Timer>();
 	
 	final private int paintDelay = 30;
 	Timer theBigTimer;
@@ -106,6 +108,7 @@ public class GameController {
 		//Start the paint timer
 		theBigTimer = new Timer(paintDelay, new mainTimer());
 		theBigTimer.start();
+		allTimers.add(theBigTimer);
 		
 		//Create the player
 		mainPlayer = new Player();
@@ -122,14 +125,12 @@ public class GameController {
 		downAct = new VAction(1 * mainPlayer.speed);
 		normalKeyBind();
 		
-		//maybe also have an action for building gabion, like pressing g
-		mainGame.bindKeyWith("gabionBuild", KeyStroke.getKeyStroke("g"), new gabionAct());
-		mainGame.bindKeyWith("wallBuild", KeyStroke.getKeyStroke("h"), new wallAct());
 		
 		ArrayList<Barriers> left = Barriers.setUpLeftCoast();
 		ArrayList<Coast> leftCoast = Coast.setUpLeftCoast(left);
 		for (Barriers b : left) {
 			items.addBarrier(b);
+			b.setProtector(true);
 		}
 		for(Coast c : leftCoast){
 			items.addCoast(c);
@@ -138,12 +139,15 @@ public class GameController {
 		ArrayList<Coast> rightCoast = Coast.setUpRightCoast(right);
 		for (Barriers b : right) {
 			items.addBarrier(b);
+			b.setProtector(true);
 		}
 		for(Coast c : rightCoast){
 			items.addCoast(c);
 		}
 	
 		items.getAllBarriers().get(1).setType(eBarrierType.Wall);
+		items.getAllBarriers().get(3).setType(eBarrierType.Wall);
+		items.getAllBarriers().get(6).setType(eBarrierType.Wall);
 		items.getAllBarriers().get(7).setType(eBarrierType.Gabion);
 		
 		//Add health bar!!
@@ -176,10 +180,25 @@ public class GameController {
 		
 		debrisFloating = new Timer(floatDelay, debrisMover);
 		debrisFloating.start();
+		allTimers.add(debrisFloating);
 		
 		powersFloating = new Timer(floatDelay, powerMover);
 		powersFloating.start();
+		allTimers.add(powersFloating);
 		
+		barrierErosion bErode;
+		for(Barriers b: items.getAllBarriers()){
+			bErode = new barrierErosion(b);
+			b.setbTimer(new Timer(this.erodeDelay, bErode));
+			b.geterosionTimer().start();
+		}
+		
+		coastErosion cErode;
+		for(Coast c : items.getCoast()){
+			cErode = new coastErosion(c);
+			c.setErosionTimer(new Timer(this.erodeDelay, cErode));
+			c.getErosionTimer().start();
+		}
 		coastRErosion = new Timer(erodeDelay, RcoastMover);
 		coastLErosion = new Timer(erodeDelay, LcoastMover);
 		coastRErosion.start();
@@ -187,10 +206,14 @@ public class GameController {
 	}
 	
 	public void gameOver(){
-		
+		stopTimers();
 	}
 	
-	
+	public void stopTimers(){
+		for(Timer t : allTimers){
+			t.stop();
+		}
+	}
 	public void imageLoad(){
 		//TODO: that method currently returns a completely empty instance
 		library = ImageLibrary.loadLibrary();
@@ -376,6 +399,12 @@ public class GameController {
 			if(items.getScreenTimer().getState() == eScreenTimerState.ON){
 				timeElapsed+=paintDelay;
 				items.getScreenTimer().setElapsedTime(timeElapsed);
+				if(items.getScreenTimer().getState()==eScreenTimerState.OFF){
+					gameOver();
+				}
+				if(items.getHealthBar().getHealth() <= 0){
+					gameOver();
+				}
 			}
 		}
 		
@@ -519,6 +548,69 @@ public class GameController {
 		
 	}
 	
+	public class coastErosion implements ActionListener{
+		private Coast coast;
+		public int timePassed;
+		public int erosionTime;
+		public int aveTime;
+		final public int rTime = 5000;
+		
+		public coastErosion(Coast c){
+			coast = c;
+			Random r = new Random();
+			//assumes erosion rate in Coast is in milliseconds
+			aveTime = (int) c.getErosionRate();
+			erosionTime = r.nextInt(rTime) + aveTime - rTime/2;
+			timePassed =0;
+		}
+		
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(coast.isProtected()){
+				System.out.println("The coast is protected at: " + coast.getPosX());
+				return;
+			}
+			else{
+				if(timePassed >= erosionTime){
+					coast.erode();
+					timePassed = 0;
+				}
+				else{
+					timePassed+=erodeDelay;
+				}
+			}
+		}
+		
+	}
+	
+	public class barrierErosion implements ActionListener{
+		private Barriers barrier;
+		public int timePassed;
+		public int erosionTime;
+		public int aveTime;
+		final public int rTime = 1000;
+		
+		public barrierErosion(Barriers b){
+			barrier = b;
+			Random r = new Random();
+			//assumes decay rate in Barriers is in milliseconds
+			aveTime = b.getDecayTime();
+			erosionTime = r.nextInt(rTime) + aveTime - rTime/2;
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(timePassed >= erosionTime){
+				barrier.erode();
+				timePassed = 0;
+			}
+			
+			timePassed+=erodeDelay;
+		}
+		
+	}
+	
 	public class HAction extends AbstractAction{
 		
 		//the amount the player moves when you press the key
@@ -606,24 +698,6 @@ public class GameController {
 		
 	}
 	
-	//Not used
-	public class wallAct extends AbstractAction{
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			items.addBarrier(new Wall(mainPlayer.getPosX(), mainPlayer.getPosY()));
-		}
-		
-	}
-	public class gabionAct extends AbstractAction{
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			items.addBarrier(new Gabions(mainPlayer.getPosX(), mainPlayer.getPosY()));
-		}
-		
-	}
-	
 	public Barriers collision(Rectangle r) {
 		/*
 		if ( ((x2 <= (x1+w1)) && (x2 >= x1)) //checking x left edge collisions
@@ -635,13 +709,18 @@ public class GameController {
 			if (barrier.intersects(r))
 				return b;
 		}
+
 		return null;
 	}
 	
 	public void setBarrierType(Barriers barr, eBarrierType t) {
 		//goes through list of barriers and changes the one with the matching coords to type t
 		for (Barriers b : this.items.getAllBarriers()) {
-			if (barr.getPosX() == b.getPosX()) { //"match"
+			if((barr.getPosX()>=b.getPosX() && barr.getPosX()<=b.getPosX()+b.getWidth()) && (barr.getPosY()>=b.getPosY() && barr.getPosY()<=b.getPosY()+b.getHeight())){
+				System.out.println("inside space");
+				b.setType(t);
+			}
+			if (barr.getPosX() == b.getPosX()) { //"match" 
 				System.out.println("set barrier type");
 				b.setType(t);
 			}

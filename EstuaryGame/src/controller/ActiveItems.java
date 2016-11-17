@@ -154,7 +154,5 @@ public class ActiveItems {
 	public Bin getRecycleBin(){
 		return RecycleBin;
 	}
-	
-
-	
+		
 }
