@@ -38,6 +38,8 @@ public class ImageLibrary {
 			lib.getLibrary().put(eAnim, new ImageSequence(eAnim));
 		}
 		
+		System.out.println("All loaded.");
+		
 		return lib;
 	}
 	

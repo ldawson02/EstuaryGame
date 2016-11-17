@@ -16,6 +16,10 @@ public enum eAnimation {
 	playerLift("player_lift"),
 	trashBin("trashbin"),
 	recycleBin("recyclingbin"),
+	recyclingFloat("recyclingFloat"),
+	recyclingCoast("recyclingCoast"),
+	recyclingLifted("recyclinglift"),
+	gameOver("gameOver"),
 	error("error");
 	
 	private String folderName;
