@@ -87,12 +87,13 @@ public class EstuaryGame extends JComponent {
 		    
                 Container contentPane = frame.getContentPane();
                 contentPane.setBackground(Color.LIGHT_GRAY);
-                contentPane.add(new EstuaryGame(frame));
+                EstuaryGame mainGame = new EstuaryGame(frame);
+                contentPane.add(mainGame);
                 frame.setVisible(true);
                 
                 mc = new MouseController();
-        		frame.addMouseListener(mc);
-        		frame.addMouseMotionListener(mc);
+        		mainGame.addMouseListener(mc);
+        		mainGame.addMouseMotionListener(mc);
             }
         });
     }

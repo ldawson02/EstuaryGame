@@ -10,10 +10,10 @@ import eNums.ePlayerState;
 import model.Player;
 
 /**
- * The big bad index of images.
- * All of the images involved in the game are loaded into this one class, which resides in
- * the view.
- * Contains an instance of ItemSequences for each type of viewable object.
+ * The big bad index of images. Essentially a custom-rolled data structure of its own.
+ * All of the images involved in the game are loaded into this one class, which resides 
+ * in the view.
+ * Contains an instance of ImageSequence for each type of viewable object.
  * Every animation will be mapped out to an enum.
  * 
  * @author Ian
