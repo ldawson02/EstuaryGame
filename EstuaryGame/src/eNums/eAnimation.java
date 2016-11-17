@@ -19,6 +19,9 @@ public enum eAnimation {
 	recyclingFloat("recyclingFloat"),
 	recyclingCoast("recyclingCoast"),
 	recyclingLifted("recyclinglift"),
+	trashFloat("trashfloat"),
+	trashCoast("trashcoast"),
+	trashLifted("trashlift"),
 	gameOver("gameOver"),
 	error("error");
 	

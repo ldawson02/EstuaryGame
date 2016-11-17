@@ -8,8 +8,8 @@ public class Player extends Item implements Movers {
 	public ePlayerState state;
 	
 	public Player(){
-		this.setHeight(119);
-		this.setWidth(243);
+		this.setHeight(60);
+		this.setWidth(120);
 		this.setState(ePlayerState.Idle);
 	}
 	
@@ -36,9 +36,20 @@ public class Player extends Item implements Movers {
 
 	/**
 	 * @param state the state to set
+	 * affects the visuals wildly
 	 */
 	public void setState(ePlayerState state) {
 		this.state = state;
+		
+		if (state == ePlayerState.Idle) {
+			this.setHeight(60);
+			this.setWidth(120);
+		}
+		else if (state == ePlayerState.Lifting) {
+			this.setHeight(72);
+			this.setWidth(120);
+		}
+		
 	}
 
 	@Override

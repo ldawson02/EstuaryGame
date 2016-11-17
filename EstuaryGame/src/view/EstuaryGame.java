@@ -273,21 +273,28 @@ public class EstuaryGame extends JComponent {
     			paintArrow(g, d);
     		}
     		
+    		Image debrisImg = lib.draw(d);
+    		debrisImg = scaleFloater(debrisImg, d);
+    		g.drawImage(debrisImg, d.getPosX(), d.getPosY(), this);
+    		
+    		/*
     		if (d.getType() == eDebrisType.TRASH) {
     			//TODO: paint like trash
     			//Calling trash a yellow circle
     			
     			g.setColor(Color.YELLOW);
     			g.fillOval(d.getPosX(), d.getPosY(), d.getWidth(), d.getHeight());
-    		}
+    		}*/
+    		/*
     		else if (d.getType() == eDebrisType.RECYCLING) {
     			//TODO: paint like recycling
     			//Calling recycling a blue circle
     			g.setColor(Color.BLUE);
     			g.fillOval(d.getPosX(), d.getPosY(), d.getWidth(), d.getHeight());
-    		}	
+    		}	*/
     	}
     }
+    
     private void paintPowers(Graphics g) {
     	ArrayList<Powers> powers = gc.getItems().getAllPowers();
     	for (Powers d : powers) {
@@ -383,8 +390,8 @@ public class EstuaryGame extends JComponent {
     	g.fillRect((int) p.getPosX(), (int) p.getPosY(), (int) p.getWidth(), (int) p.getHeight());
     	*/
     	
-    	g.drawImage(lib.draw(p), p.getPosX(), p.getPosY(), this);
-    
+    	Image playerImg = scalePlayer(lib.draw(p), p);
+    	g.drawImage(playerImg, p.getPosX(), p.getPosY(), this);
     }
     
 
@@ -400,29 +407,12 @@ public class EstuaryGame extends JComponent {
     	d.throwDebris(n == d.getType().getType());
     	d.setController(gc);
     }
-    private void updateWrappers() {
-    	//TODO: Making this really inefficient to start
-    	//Can be better about it with an integrated controller
-    	actives.clearDebris();
-    	ActiveItems activeItems = gc.getItems();
-    	for (Debris d: activeItems.getAllDebris()) {
-    		actives.addDebris(d);
-    	}
+    
+    private Image scalePlayer(BufferedImage img, Player p) {
+    	return img.getScaledInstance(p.getWidth(), p.getHeight(), 10);
     }
     
-    private void lookForCollisions() {
-    	updateDebrisCollisions();
-    	//TODO: other collisions
-    }
-    
-    private void updateDebrisCollisions() {
-    	Rectangle playerRect = actives.getPlayer().getHitBox();
-    	for (DebrisWrapper dw : actives.getDebrisWrappers()) {
-    		if (dw.getHitBox().intersects(playerRect)) {
-    			//TODO: the player is touching the debris
-    			System.out.println("touched the debris!");
-    			dw.getDebrisItem().setState(eFloaterState.LIFTED);
-    		}
-    	}
+    private Image scaleFloater(Image img, Floater f) {
+    	return img.getScaledInstance(f.getWidth(), f.getHeight(), 10);
     }
 }
