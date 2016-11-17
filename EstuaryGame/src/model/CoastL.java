@@ -7,7 +7,6 @@ public class CoastL extends Coast {
 		setBarrierSpaces(Barriers.setUpLeftCoast());
 	}
 	
-	@Override
 	public void updateCoords() {
 		// TODO This will likely be in view tbh
 	}
