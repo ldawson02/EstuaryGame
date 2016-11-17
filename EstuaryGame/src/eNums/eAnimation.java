@@ -1,7 +1,8 @@
 package eNums;
 
 /**
- * Mapping out all the different animations and images used
+ * Mapping out all the different animations and images used.
+ * Must be mapped here to be loaded into ImageLibrary.
  * 
  * @author Ian
  * @version 1.0
@@ -12,7 +13,8 @@ public enum eAnimation {
 	background("background"),
 	clockback("clockback"),
 	playerIdle("player_idle"),
-	playerLift("player_lift");
+	playerLift("player_lift"),
+	error("error");
 	
 	private String folderName;
 	

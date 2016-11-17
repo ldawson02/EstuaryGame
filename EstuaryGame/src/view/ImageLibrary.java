@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.HashMap;
 
 import eNums.eAnimation;
+import eNums.ePlayerState;
+import model.Player;
 
 /**
  * The big bad index of images.
@@ -29,11 +31,40 @@ public class ImageLibrary {
 	
 	public static ImageLibrary loadLibrary() {
 		ImageLibrary lib = new ImageLibrary();
+
+		eAnimation[] allAnims = eAnimation.values();
 		
-		//TODO: load it in
+		for (eAnimation eAnim: allAnims) {
+			lib.getLibrary().put(eAnim, new ImageSequence(eAnim));
+		}
 		
 		return lib;
 	}
+	
+	public BufferedImage draw(eAnimation eAnim) {
+		ImageSequence seq = library.get(eAnim);
+		return (seq.draw());
+	}
+
+	public BufferedImage draw(Player p) {
+		if (p.getState() == ePlayerState.Idle) {
+			return draw(eAnimation.playerIdle);
+		}
+		else if (p.getState() == ePlayerState.Lifting) {
+			return draw(eAnimation.playerIdle);
+		}
+		else {
+			return draw(eAnimation.error);
+		}
+	}
+	
+	/**
+	 * @return the library
+	 */
+	public HashMap<eAnimation, ImageSequence> getLibrary() {
+		return library;
+	}
+	
 	/* The old implementation
 	ArrayList<ItemSequences> library;
 	

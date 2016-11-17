@@ -1,4 +1,4 @@
-package view.test;
+package test.view;
 
 import static org.junit.Assert.*;
 
