@@ -1,6 +1,9 @@
 package model;
 
+import java.util.ArrayList;
+
 import controller.ActiveItems;
+import eNums.eBarrierType;
 import eNums.eFloaterState;
 
 public class Rebuild extends Powers implements HealthChangers{
@@ -61,6 +64,12 @@ public class Rebuild extends Powers implements HealthChangers{
 	@Override
 	public void setVertex(int vertex) {
 		this.vertex = vertex;
+	}
+	
+	public void power(ArrayList<Barriers> barriers){
+		for(Barriers b : barriers){
+			b.setType(eBarrierType.Gabion);
+		}
 	}
 
 }

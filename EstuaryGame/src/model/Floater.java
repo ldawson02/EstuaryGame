@@ -10,7 +10,7 @@ import eNums.eFloaterState;
  * @since 10/26/16
  */
 public abstract class Floater extends Item {
-	private int speed = 5;
+	private int speed = 3;
 	private int vertex;
 	private eFloaterState state = eFloaterState.MOVING;
 	

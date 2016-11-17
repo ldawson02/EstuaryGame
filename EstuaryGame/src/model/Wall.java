@@ -4,11 +4,12 @@ import controller.ActiveItems;
 import eNums.eBarrierType;
 
 public class Wall extends Barriers {
-
+	private int wallDecayTime = 8000;
 
 	public Wall(int x, int y) {
 		super(x, y);
 		this.setType(eBarrierType.Wall);
+		this.setDecayTime(wallDecayTime);
 	}
 
 	@Override

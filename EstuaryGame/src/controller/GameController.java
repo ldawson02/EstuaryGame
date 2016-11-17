@@ -144,9 +144,11 @@ public class GameController {
 		for(Coast c : rightCoast){
 			items.addCoast(c);
 		}
-	
+		items.getAllBarriers().get(0).setType(eBarrierType.Gabion);
 		items.getAllBarriers().get(1).setType(eBarrierType.Wall);
+		items.getAllBarriers().get(2).setType(eBarrierType.Wall);
 		items.getAllBarriers().get(3).setType(eBarrierType.Wall);
+		items.getAllBarriers().get(4).setType(eBarrierType.Wall);
 		items.getAllBarriers().get(6).setType(eBarrierType.Wall);
 		items.getAllBarriers().get(7).setType(eBarrierType.Gabion);
 		
@@ -191,6 +193,7 @@ public class GameController {
 			bErode = new barrierErosion(b);
 			b.setbTimer(new Timer(this.erodeDelay, bErode));
 			b.geterosionTimer().start();
+			allTimers.add(b.geterosionTimer());
 		}
 		
 		coastErosion cErode;
@@ -198,6 +201,7 @@ public class GameController {
 			cErode = new coastErosion(c);
 			c.setErosionTimer(new Timer(this.erodeDelay, cErode));
 			c.getErosionTimer().start();
+			allTimers.add(c.getErosionTimer());
 		}
 		coastRErosion = new Timer(erodeDelay, RcoastMover);
 		coastLErosion = new Timer(erodeDelay, LcoastMover);
@@ -485,6 +489,7 @@ public class GameController {
 				else if(p.getState()==eFloaterState.INITIATED){
 					if(p instanceof Rebuild){	
 						//TODO:Rebuilding of coast
+						((Rebuild) p).power(items.getAllBarriers());
 						items.getHealthBar().update(eHealthChanges.CoastRebuilt.getDelta());
 					}
 					else{
@@ -598,15 +603,26 @@ public class GameController {
 			aveTime = b.getDecayTime();
 			erosionTime = r.nextInt(rTime) + aveTime - rTime/2;
 		}
-		
+		public void newTime(){
+			Random r = new Random();
+			aveTime = barrier.getType().getDecay();
+			erosionTime = r.nextInt(rTime) + aveTime - rTime/2;
+			System.out.println("new erosion: " + erosionTime);
+			
+		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			if(timePassed == 0){
+				newTime();
+			}
 			if(timePassed >= erosionTime){
 				barrier.erode();
 				timePassed = 0;
+				barrier.geterosionTimer().stop();
 			}
-			
-			timePassed+=erodeDelay;
+			else{
+				timePassed+=erodeDelay;
+			}
 		}
 		
 	}
@@ -727,15 +743,15 @@ public class GameController {
 		}
 	}
 	
-	public boolean emptyBarrierCollision(Barriers barr) {
+	public Barriers emptyBarrierCollision(Barriers barr) {
 		//checks if barr collided with any of the barriers and if it is empty
 		for (Barriers b : this.items.getAllBarriers()) {
 			if ((Collisions.checkCollision(b, barr) && (b.getType() == eBarrierType.EMPTY))) {
 				System.out.println("empty barrier collide");
-				return true;
+				return b;
 			}
 		}
-		return false;
+		return null;
 	}
 
 	public class MouseController extends JPanel implements MouseListener, MouseMotionListener {

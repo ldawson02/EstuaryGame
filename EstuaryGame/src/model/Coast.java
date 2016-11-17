@@ -36,7 +36,7 @@ public class Coast extends Item implements HealthChangers{
 	/**
 	 * The rate at which it erodes
 	 */
-	private double erosionRate = 8000;
+	private double erosionRate = 10000;
 	
 	private Barriers barrier;
 	private Timer erosionTimer;

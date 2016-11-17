@@ -14,4 +14,15 @@ public enum eBarrierType {
 		return type;
 	}
 	
+	public int getDecay(){
+		switch(this){
+		case Gabion:
+			return 7000;
+		case Wall:
+			return 10000;
+		default:
+			return 1;
+		}
+	}
+	
 }

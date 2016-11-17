@@ -20,6 +20,7 @@ import model.Wall;
 		private Wall wallSpawn = new Wall(Barriers.getLeftEdge(), 390);
 		private Gabions gabionsSpawn = new Gabions(Barriers.getRightEdge(), 390);
 		private Barriers dragged = null;
+		private Barriers dropSpot = null;
 				
 		public Barriers getWallSpawn() {
 			return wallSpawn;
@@ -69,14 +70,19 @@ import model.Wall;
 			if (dragging == false)
 				return;
 			dragging = false;
-			if ((dragged != null) && (gc.emptyBarrierCollision(dragged))) {  //dragged temp to any of the barrier spaces that was empty
+			dropSpot = gc.emptyBarrierCollision(dragged);
+			if ((dragged != null) && (dropSpot!=null)) {  //dragged temp to any of the barrier spaces that was empty
 				System.out.println("collided");
 				if (dragged.getType() == eBarrierType.Wall) {
 					gc.setBarrierType(dragged, eBarrierType.Wall); 
+					dropSpot.setType(eBarrierType.Wall);
+					dropSpot.geterosionTimer().start();
 					//set barrier with same coords as temp to Wall
 				}
 				else if (dragged.getType() == eBarrierType.Gabion) {
 					gc.setBarrierType(dragged, eBarrierType.Gabion);
+					dropSpot.setType(eBarrierType.Gabion);
+					dropSpot.geterosionTimer().start();
 				}
 			}
 			dragged = null; //done dragging, don't need dragging shape
@@ -114,7 +120,7 @@ import model.Wall;
 				return;
 			//update coords of dragged shape
 			if (dragged != null) {
-				dragged.updatePos(e.getX(), e.getY());
+				dragged.updatePos(e.getX() - dragged.getWidth()/2, e.getY() - dragged.getHeight()/2);
 			}
 			repaint();
 		}

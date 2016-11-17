@@ -4,10 +4,12 @@ import controller.ActiveItems;
 import eNums.eBarrierType;
 
 public class Gabions extends Barriers {
-	
+	private int gDecayTime = 12000;
+
 	public Gabions(int x, int y){
 		super(x,y);
 		this.setType(eBarrierType.Gabion);
+		this.setDecayTime(gDecayTime);
 	}
 	
 	@Override
