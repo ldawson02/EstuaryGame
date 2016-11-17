@@ -47,7 +47,7 @@ public class EstuaryGame extends JComponent {
 
     private static final long serialVersionUID = 1L;
 
-    private GameController gc;
+    private static GameController gc;
     private static MouseController mc;
     private JFrame mainFrame;
     BufferedImage bg;
@@ -92,6 +92,7 @@ public class EstuaryGame extends JComponent {
                 frame.setVisible(true);
                 
                 mc = new MouseController();
+                mc.setGC(gc);
         		mainGame.addMouseListener(mc);
         		mainGame.addMouseMotionListener(mc);
             }

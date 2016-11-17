@@ -19,6 +19,7 @@ public class Collisions {
 	}
 	
 	public static boolean checkCollision(Item i1, Item i2){		
+		/*
 		int i1L = i1.getPosX();
 		int i1R = i1L + i1.getWidth();
 		int i1T = i1.getPosY();
@@ -33,21 +34,16 @@ public class Collisions {
 		}
 		else{
 			return false;
-		}
-	}
+		}*/
+		Rectangle r1 = new Rectangle(i1.getPosX(), i1.getPosY(), i1.getWidth(), i1.getHeight());
+		Rectangle r2 = new Rectangle(i2.getPosX(), i2.getPosY(), i2.getWidth(), i2.getHeight());
+		return r1.intersects(r2);
 
-	public static boolean emptyBarrierCollision(Barriers barr) {
-		//checks if barr collided with any of the barriers and if it is empty
-		for (Barriers b : GameController.getItems().getAllBarriers()) {
-			if ((checkCollision(b, barr) && (b.getType() != eBarrierType.EMPTY))) {
-				return true;
-			}
-		}
-		return false;
 	}
 	
 	public static boolean pointInside(Item i, Point p) {
 		//convert item into rectangle
+		System.out.println("point inside");
 		Rectangle r = new Rectangle(i.getPosX(), i.getPosY(), i.getWidth(), i.getHeight());
 		if (r.contains(p)) {  //if p is within bounds of r (the item)
 			return true;
