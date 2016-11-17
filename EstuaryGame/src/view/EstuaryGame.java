@@ -5,6 +5,7 @@ import java.awt.Container;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Ellipse2D;
@@ -29,6 +30,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import controller.ActiveItems;
 import controller.GameController;
 import controller.MouseController;
+import eNums.eAnimation;
 import eNums.eBarrierType;
 import eNums.eFloaterState;
 import eNums.eDebrisType;
@@ -50,8 +52,14 @@ public class EstuaryGame extends JComponent {
     private static GameController gc;
     private static MouseController mc;
     private JFrame mainFrame;
+    private ImageLibrary lib;
+    
+    //Constant images
     BufferedImage bg;
     BufferedImage clockback;
+    BufferedImage gameOver;
+    Image trashBin;
+    Image recycBin;
     
     int screenX = 800;
     int screenY = 600;
@@ -81,10 +89,7 @@ public class EstuaryGame extends JComponent {
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setSize(800, 600);
                 frame.setFocusable(true);
-		    
-               
-		
-		    
+		 
                 Container contentPane = frame.getContentPane();
                 contentPane.setBackground(Color.LIGHT_GRAY);
                 EstuaryGame mainGame = new EstuaryGame(frame);
@@ -108,11 +113,10 @@ public class EstuaryGame extends JComponent {
     	actives = new activeViewItems();
     	actives.setPlayer(gc.getItems().getPlayer());
     	initImages();
-    	
     }
 
 	public void initTitleScreen(){
-		//this actually should probably be in the VIEW
+		//TODO: if we're lucky
 	}
 	
     public void bindKeyWith(String name, KeyStroke keyStroke, Action action) {
@@ -132,6 +136,14 @@ public class EstuaryGame extends JComponent {
     }
 
     private void initImages() {
+    	lib = ImageLibrary.loadLibrary();
+    	//Grab the constant ones
+    	bg = lib.draw(eAnimation.background);
+    	clockback = lib.draw(eAnimation.clockback);
+    	gameOver = lib.draw(eAnimation.gameOver);
+    	trashBin = lib.draw(eAnimation.trashBin).getScaledInstance(50, 50, 50);
+    	recycBin = lib.draw(eAnimation.recycleBin).getScaledInstance(50, 50, 50);
+    	/*
     	try {
     		bg = ImageIO.read(new File("resources/background/babybackground.png"));
     		clockback = ImageIO.read(new File("resources/clockback/clockback.png"));
@@ -139,6 +151,7 @@ public class EstuaryGame extends JComponent {
     	catch (IOException e) {
     		System.out.println("Background failed to load.");
     	}
+    	*/
     }
     
     @Override
@@ -147,12 +160,6 @@ public class EstuaryGame extends JComponent {
         
         //Paint background
         paintBackground(g);
-        
-        //Paint ScreenTimer
-        paintScreenTimer(g);
-       
-        //Paint healthBar
-        paintHealthBar(g);
         
         //Paint barriers
         paintBarriers(g);
@@ -168,10 +175,12 @@ public class EstuaryGame extends JComponent {
         
         //Paint player
         paintPlayer(g);
-        //System.out.println(gc.getItems().getPlayer().getState());
         
         //Paint health bar
         paintHealthBar(g);
+        
+        //Paint ScreenTimer
+        paintScreenTimer(g);
         
         timeElapsed = gc.getTheBigTimer();
         g.drawString(Integer.toString(timeElapsed), 40, 40);
@@ -181,7 +190,7 @@ public class EstuaryGame extends JComponent {
     private void paintBackground(Graphics g) {
     	//TODO: get a background
     	g.drawImage(bg, 0, 0, this);
-    	 
+    	
         g.setColor(Color.BLACK);
         Graphics2D g2d = (Graphics2D) g.create();
         QuadCurve2D quadLeft = new QuadCurve2D.Double(0, 0, 300, 150, 0, 300);
@@ -219,6 +228,10 @@ public class EstuaryGame extends JComponent {
         //outline
         g.setColor(Color.BLACK);
         g.drawOval((int)maxX,(int)maxY,(int) size,(int) size);
+        
+        if (timeElapsed >= maxTime) {
+        	g.drawImage(gameOver, 220, 200, this);
+        }
     }
     
     private void paintBarriers(Graphics g) {
@@ -298,6 +311,7 @@ public class EstuaryGame extends JComponent {
     		}	
     	}
     }
+    
     private void paintArrow(Graphics g, Debris d){
     	g.setColor(Color.BLACK);
     	int x1 = d.getPosX()+d.getWidth()/2;
@@ -313,12 +327,20 @@ public class EstuaryGame extends JComponent {
     }
     
     private void paintBins(Graphics g){
-    	Bin trash = gc.getItems().getTrashBin();
-    	Bin recycle = gc.getItems().getRecycleBin();
+    	//TODO: These need to be switched!! BUT I can't touch the controller now
+    	Bin recycle = gc.getItems().getTrashBin();
+    	Bin trash = gc.getItems().getRecycleBin();
+    	
+    	//Painting real images
+    	g.drawImage(trashBin, trash.getPosX(), trash.getPosY(), this);
+    	g.drawImage(recycBin, recycle.getPosX(), recycle.getPosY(), this);
+    	
+    	/* Old
     	g.setColor(Color.BLUE);
     	g.fillOval(trash.getPosX(), trash.getPosY(), trash.getWidth(), trash.getHeight());
     	g.setColor(Color.YELLOW);
     	g.fillOval(recycle.getPosX(), recycle.getPosY(), recycle.getWidth(), recycle.getHeight());
+    	*/
     }
     
     private void paintHealthBar(Graphics g) {
@@ -356,9 +378,15 @@ public class EstuaryGame extends JComponent {
     	if (p == null) {
     		return;
     	}
+    	/*
     	g.setColor(Color.RED);
     	g.fillRect((int) p.getPosX(), (int) p.getPosY(), (int) p.getWidth(), (int) p.getHeight());
+    	*/
+    	
+    	g.drawImage(lib.draw(p), p.getPosX(), p.getPosY(), this);
+    
     }
+    
 
     public void throwChoice(Debris d){
     	Object[] options = {"Trash", "Recycling"};

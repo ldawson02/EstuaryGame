@@ -17,7 +17,7 @@ import eNums.eScreenTimerState;
 
 public class ScreenTimer extends Item {
 
-	final int MAX_TIME = 10000; //ms
+	final int MAX_TIME = 4500; //ms
 	
 	private int maxTime;
 	private int timeRemaining;
