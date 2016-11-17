@@ -13,6 +13,8 @@ import java.util.Collections;
  * Required: A completely loaded ItemSequences object must have ImageSequences of
  * continuous SeqIDs from 0 to (numSeqs - 1).
  * 
+ * EDIT: As of v1.1 this is just absolutely unnecessary, but I'm afraid to delete it.
+ * 
  * @author Ian
  * @version 1.1
  * @since 11/16/16
