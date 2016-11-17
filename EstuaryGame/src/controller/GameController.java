@@ -639,10 +639,24 @@ public class GameController {
 	}
 	
 	public void setBarrierType(Barriers barr, eBarrierType t) {
+		//goes through list of barriers and changes the one with the matching coords to type t
 		for (Barriers b : this.items.getAllBarriers()) {
-			if (barr.getPosX() == b.getPosX()) //"match"
+			if (barr.getPosX() == b.getPosX()) { //"match"
+				System.out.println("set barrier type");
 				b.setType(t);
+			}
 		}
+	}
+	
+	public boolean emptyBarrierCollision(Barriers barr) {
+		//checks if barr collided with any of the barriers and if it is empty
+		for (Barriers b : this.items.getAllBarriers()) {
+			if ((Collisions.checkCollision(b, barr) && (b.getType() == eBarrierType.EMPTY))) {
+				System.out.println("empty barrier collide");
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public class MouseController extends JPanel implements MouseListener, MouseMotionListener {
