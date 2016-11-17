@@ -5,6 +5,7 @@ import java.awt.Container;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Ellipse2D;
@@ -57,8 +58,8 @@ public class EstuaryGame extends JComponent {
     BufferedImage bg;
     BufferedImage clockback;
     BufferedImage gameOver;
-    BufferedImage trashBin;
-    BufferedImage recycBin;
+    Image trashBin;
+    Image recycBin;
     
     int screenX = 800;
     int screenY = 600;
@@ -88,10 +89,7 @@ public class EstuaryGame extends JComponent {
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setSize(800, 600);
                 frame.setFocusable(true);
-		    
-               
-		
-		    
+		 
                 Container contentPane = frame.getContentPane();
                 contentPane.setBackground(Color.LIGHT_GRAY);
                 EstuaryGame mainGame = new EstuaryGame(frame);
@@ -142,8 +140,8 @@ public class EstuaryGame extends JComponent {
     	bg = lib.draw(eAnimation.background);
     	clockback = lib.draw(eAnimation.clockback);
     	gameOver = lib.draw(eAnimation.gameOver);
-    	trashBin = lib.draw(eAnimation.trashBin);
-    	recycBin = lib.draw(eAnimation.recycleBin);
+    	trashBin = lib.draw(eAnimation.trashBin).getScaledInstance(50, 50, 50);
+    	recycBin = lib.draw(eAnimation.recycleBin).getScaledInstance(50, 50, 50);
     	/*
     	try {
     		bg = ImageIO.read(new File("resources/background/babybackground.png"));
@@ -336,11 +334,12 @@ public class EstuaryGame extends JComponent {
     	g.drawImage(trashBin, trash.getPosX(), trash.getPosY(), this);
     	g.drawImage(recycBin, recycle.getPosX(), recycle.getPosY(), this);
     	
-    	
+    	/* Old
     	g.setColor(Color.BLUE);
     	g.fillOval(trash.getPosX(), trash.getPosY(), trash.getWidth(), trash.getHeight());
     	g.setColor(Color.YELLOW);
     	g.fillOval(recycle.getPosX(), recycle.getPosY(), recycle.getWidth(), recycle.getHeight());
+    	*/
     }
     
     private void paintHealthBar(Graphics g) {
