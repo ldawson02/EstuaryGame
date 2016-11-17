@@ -29,7 +29,7 @@ public class ImageSequence {
 	private ArrayList<BufferedImage> seq;
 	private int curFrame;
 	private int numFrames;
-	private int frameDelay = 4;
+	private int frameDelay = 8;
 	
 	private ImageSequence() {};
 	
@@ -42,7 +42,7 @@ public class ImageSequence {
 	
 	private void loadSequence(String filepath) {
 		//TODO: load in the images using paths <3
-		String srcpath = "resources\\";
+		String srcpath = "resources" + File.separator;
 		String fullpath = srcpath + filepath;
 		System.out.println("Loading: " + fullpath);
 		numFrames = 0;

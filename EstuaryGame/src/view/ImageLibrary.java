@@ -6,7 +6,10 @@ import java.util.Collections;
 import java.util.HashMap;
 
 import eNums.eAnimation;
+import eNums.eDebrisType;
+import eNums.eFloaterState;
 import eNums.ePlayerState;
+import model.Debris;
 import model.Player;
 
 /**
@@ -53,11 +56,38 @@ public class ImageLibrary {
 			return draw(eAnimation.playerIdle);
 		}
 		else if (p.getState() == ePlayerState.Lifting) {
-			return draw(eAnimation.playerIdle);
+			return draw(eAnimation.playerLift);
 		}
 		else {
 			return draw(eAnimation.error);
 		}
+	}
+	
+	public BufferedImage draw(Debris d) {
+		if (d.getType() == eDebrisType.RECYCLING) {
+			switch (d.getState()) {
+			case RESTING:
+			case THROWING:
+				return draw(eAnimation.recyclingCoast);
+			case LIFTED: 
+				return draw(eAnimation.recyclingLifted);
+			case MOVING:
+				return draw(eAnimation.recyclingFloat);
+			}
+		}
+		else if (d.getType() == eDebrisType.TRASH) {
+			switch (d.getState()) {
+			case RESTING:
+			case THROWING:
+				return draw(eAnimation.trashCoast);
+			case LIFTED: 
+				return draw(eAnimation.trashLifted);
+			case MOVING:
+				return draw(eAnimation.trashFloat);
+			}
+		}
+		//Implied else
+		return draw(eAnimation.error);
 	}
 	
 	/**
