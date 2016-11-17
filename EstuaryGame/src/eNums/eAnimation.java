@@ -14,6 +14,8 @@ public enum eAnimation {
 	clockback("clockback"),
 	playerIdle("player_idle"),
 	playerLift("player_lift"),
+	trashBin("trashbin"),
+	recycleBin("recyclingbin"),
 	error("error");
 	
 	private String folderName;
