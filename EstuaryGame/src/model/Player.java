@@ -8,8 +8,8 @@ public class Player extends Item implements Movers {
 	public ePlayerState state;
 	
 	public Player(){
-		this.setHeight(40);
-		this.setWidth(40);
+		this.setHeight(119);
+		this.setWidth(243);
 		this.setState(ePlayerState.Idle);
 	}
 	

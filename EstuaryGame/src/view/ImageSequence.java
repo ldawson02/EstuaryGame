@@ -29,7 +29,7 @@ public class ImageSequence {
 	private ArrayList<BufferedImage> seq;
 	private int curFrame;
 	private int numFrames;
-	private int frameDelay = 0;
+	private int frameDelay = 4;
 	
 	private ImageSequence() {};
 	
