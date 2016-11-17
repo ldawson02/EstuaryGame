@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
+import javax.swing.Timer;
+
 /**
 * The Coast class is the Model class for the coast item that is in the game.
 * 
@@ -10,7 +12,7 @@ import java.util.ArrayList;
 * @since 10/25/16
 */
 
-public abstract class Coast extends Item {
+public class Coast extends Item implements HealthChangers{
 
 	/**
 	 * The current size of the coast
@@ -26,20 +28,25 @@ public abstract class Coast extends Item {
 	 * The maximum size of the coast
 	 */
 	private int maxsize;
-	
+	private int height = 30;
+	private int width = 50;
 	/**
 	 * The rate at which it erodes
 	 */
 	private double erosionRate;
 	
+	private Barriers barrier;
+	private Timer erosionTimer;
 	/**
 	 * The Debris items on the coast
 	 */
-	
 	private ArrayList<Barriers> barriers;
 	
+
 	public Coast() {
 		super();
+		this.setHeight(height);
+		this.setWidth(width);
 	}
 	
 	/**
@@ -49,8 +56,17 @@ public abstract class Coast extends Item {
 	 */
 	public Coast(int x, int y) {
 		super(x, y);
+		this.setHeight(height);
+		this.setWidth(width);
 	}
 	
+	public Barriers getBarrier(){
+		return barrier;
+	}
+	
+	public void setBarrier(Barriers b){
+		this.barrier = b;
+	}
 	/**
 	 * @return the size
 	 */
@@ -154,5 +170,35 @@ public abstract class Coast extends Item {
 		
 	}
 	
-	public abstract void updateCoords();
+	//public abstract void updateCoords();
+	
+	public static ArrayList<Coast> setUpLeftCoast(ArrayList<Barriers> barriers) {
+		ArrayList<Coast> spaces = new ArrayList<Coast>();
+		
+		for (Barriers b : barriers) {
+			Coast c  =new Coast(b.getPosX(), Barriers.getBarrierY()-50);
+			c.setBarrier(b);
+			spaces.add(c);
+		}
+		
+		return spaces;
+	}
+	
+	public static ArrayList<Coast> setUpRightCoast(ArrayList<Barriers> barriers) {
+		ArrayList<Coast> spaces = new ArrayList<Coast>();
+		
+		for (Barriers b : barriers) {
+			Coast c = new Coast(b.getPosX(), Barriers.getBarrierY()-50);
+			c.setBarrier(b);
+			spaces.add(c);
+		}
+		
+		return spaces;
+	}
+
+	@Override
+	public void updateHealthBar() {
+		// TODO Auto-generated method stub
+		
+	}
 }

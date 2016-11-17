@@ -43,6 +43,7 @@ public class ActiveItems {
 
 	private ArrayList<Barriers> barriers;
 	private ArrayList<Debris> debris;
+	private ArrayList<Coast> coast;
 	private CoastL coastL;
 	private CoastR coastR;
 	private ArrayList<Powers> powerups;
@@ -53,6 +54,7 @@ public class ActiveItems {
 		//At the very least, initialize the lists and add the coasts
 		barriers = new ArrayList<Barriers>();
 		debris = new ArrayList<Debris>();
+		coast = new ArrayList<Coast>();
 		coastL = new CoastL();
 		coastR = new CoastR();
 		powerups = new ArrayList<Powers>();
@@ -88,6 +90,13 @@ public class ActiveItems {
 		return debris;
 	}
 	
+	public ArrayList<Coast> getCoast(){
+		return coast;
+	}
+	
+	public void addCoast(Coast c){
+		coast.add(c);
+	}
 	/**
 	 * @return the coastL
 	 */

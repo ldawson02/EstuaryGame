@@ -127,12 +127,20 @@ public class GameController {
 		mainGame.bindKeyWith("wallBuild", KeyStroke.getKeyStroke("h"), new wallAct());
 		
 		ArrayList<Barriers> left = Barriers.setUpLeftCoast();
+		ArrayList<Coast> leftCoast = Coast.setUpLeftCoast(left);
 		for (Barriers b : left) {
 			items.addBarrier(b);
 		}
+		for(Coast c : leftCoast){
+			items.addCoast(c);
+		}
 		ArrayList<Barriers> right = Barriers.setUpRightCoast();
+		ArrayList<Coast> rightCoast = Coast.setUpRightCoast(right);
 		for (Barriers b : right) {
 			items.addBarrier(b);
+		}
+		for(Coast c : rightCoast){
+			items.addCoast(c);
 		}
 	
 		items.getAllBarriers().get(1).setType(eBarrierType.Wall);

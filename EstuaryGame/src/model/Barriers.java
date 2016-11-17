@@ -17,7 +17,7 @@ public class Barriers extends Item implements Interactable, HealthChangers{
 	//overall state of the barrier
 	private int health;
 	private eBarrierType type;
-	private static int barrierY = 480;
+	private static int barrierY = 500;
 	
 	private static int leftEdge = 20;
 	private static int rightEdge = 740;
@@ -30,6 +30,9 @@ public class Barriers extends Item implements Interactable, HealthChangers{
 		return rightEdge;
 	}
 	
+	public static int getBarrierY(){
+		return barrierY;
+	}
 	/**
 	 * Constructor for Barrier
 	 */

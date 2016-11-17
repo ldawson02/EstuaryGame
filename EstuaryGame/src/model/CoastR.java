@@ -7,7 +7,7 @@ public class CoastR extends Coast {
 		setBarrierSpaces(Barriers.setUpRightCoast());
 	}
 	
-	@Override
+
 	public void updateCoords() {
 		// TODO Auto-generated method stub
 		
