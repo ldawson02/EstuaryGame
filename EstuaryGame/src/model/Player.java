@@ -1,14 +1,46 @@
 package model;
 
+import eNums.ePlayerState;
+
 public class Player extends Item implements Movers {
 
 	public int speed = 10;
-	public int direction;
+	public ePlayerState state;
 	
 	public Player(){
 		this.setHeight(40);
 		this.setWidth(40);
+		this.setState(ePlayerState.Idle);
 	}
+	
+	/**
+	 * @return the speed
+	 */
+	public int getSpeed() {
+		return speed;
+	}
+
+	/**
+	 * @param speed the speed to set
+	 */
+	public void setSpeed(int speed) {
+		this.speed = speed;
+	}
+
+	/**
+	 * @return the state
+	 */
+	public ePlayerState getState() {
+		return state;
+	}
+
+	/**
+	 * @param state the state to set
+	 */
+	public void setState(ePlayerState state) {
+		this.state = state;
+	}
+
 	@Override
 	public void move() {
 		// TODO Auto-generated method stub
