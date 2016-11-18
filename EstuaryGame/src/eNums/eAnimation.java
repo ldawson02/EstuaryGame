@@ -22,6 +22,8 @@ public enum eAnimation {
 	trashFloat("trashfloat"),
 	trashCoast("trashcoast"),
 	trashLifted("trashlift"),
+	remove("remove"),
+	removeLift("removelift"),
 	gameOver("gameOver"),
 	error("error");
 	
