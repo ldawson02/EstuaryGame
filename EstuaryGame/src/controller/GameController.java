@@ -243,6 +243,7 @@ public class GameController {
 	public void caughtSetup(Powers p){
 		this.initiatingPowerUp = true;
 		Action powerAction = new PowerInitiate(p);
+		items.getPlayer().setState(ePlayerState.Lifting);
 		mainGame.bindKeyWith("initiatePowerUp", KeyStroke.getKeyStroke("ENTER"), powerAction);
 		mainGame.unbindKeyWith("x.up", KeyStroke.getKeyStroke("UP"));
 		mainGame.unbindKeyWith("x.down", KeyStroke.getKeyStroke("DOWN"));
@@ -710,6 +711,7 @@ public class GameController {
 		public void actionPerformed(ActionEvent e) {
 			caughtPower.setState(eFloaterState.INITIATED);
 			thisGame.initiatedPowerSetup();
+			items.getPlayer().setState(ePlayerState.Idle);
 		}
 		
 	}

@@ -11,6 +11,9 @@ import eNums.eFloaterState;
 import eNums.ePlayerState;
 import model.Debris;
 import model.Player;
+import model.Powers;
+import model.Rebuild;
+import model.Remove;
 
 /**
  * The big bad index of images. Essentially a custom-rolled data structure of its own.
@@ -84,6 +87,33 @@ public class ImageLibrary {
 				return draw(eAnimation.trashLifted);
 			case MOVING:
 				return draw(eAnimation.trashFloat);
+			}
+		}
+		//Implied else
+		return draw(eAnimation.error);
+	}
+	
+	public BufferedImage draw(Powers p) {
+		if (p instanceof Remove) {
+			switch (p.getState()) {
+			case RESTING:
+			case THROWING:
+			case LIFTED: 
+			case INITIATED: 
+				return draw(eAnimation.removeLift);
+			case MOVING:
+				return draw(eAnimation.remove);
+			}
+		}
+		else if (p instanceof Rebuild) {
+			switch (p.getState()) {
+			case RESTING:
+			case THROWING:
+				//return draw(eAnimation.trashCoast);
+			case LIFTED: 
+				//return draw(eAnimation.trashLifted);
+			case MOVING:
+				return draw(eAnimation.clockback);
 			}
 		}
 		//Implied else

@@ -141,8 +141,11 @@ public class EstuaryGame extends JComponent {
     	bg = lib.draw(eAnimation.background);
     	clockback = lib.draw(eAnimation.clockback);
     	gameOver = lib.draw(eAnimation.gameOver);
-    	trashBin = lib.draw(eAnimation.trashBin).getScaledInstance(50, 50, 50);
-    	recycBin = lib.draw(eAnimation.recycleBin).getScaledInstance(50, 50, 50);
+    	
+    	Bin tb = gc.getItems().getTrashBin();
+    	trashBin = lib.draw(eAnimation.trashBin).getScaledInstance(tb.getWidth(), tb.getHeight(), 50);
+    	Bin rb = gc.getItems().getRecycleBin();
+    	recycBin = lib.draw(eAnimation.recycleBin).getScaledInstance(rb.getWidth(), rb.getHeight(), 50);
     	/*
     	try {
     		bg = ImageIO.read(new File("resources/background/babybackground.png"));
@@ -305,36 +308,27 @@ public class EstuaryGame extends JComponent {
     		Image debrisImg = lib.draw(d);
     		debrisImg = scaleFloater(debrisImg, d);
     		g.drawImage(debrisImg, d.getPosX(), d.getPosY(), this);
-    		
-    		/*
-    		if (d.getType() == eDebrisType.TRASH) {
-    			//TODO: paint like trash
-    			//Calling trash a yellow circle
-    			
-    			g.setColor(Color.YELLOW);
-    			g.fillOval(d.getPosX(), d.getPosY(), d.getWidth(), d.getHeight());
-    		}*/
-    		/*
-    		else if (d.getType() == eDebrisType.RECYCLING) {
-    			//TODO: paint like recycling
-    			//Calling recycling a blue circle
-    			g.setColor(Color.BLUE);
-    			g.fillOval(d.getPosX(), d.getPosY(), d.getWidth(), d.getHeight());
-    		}	*/
     	}
     }
     
     private void paintPowers(Graphics g) {
     	ArrayList<Powers> powers = gc.getItems().getAllPowers();
-    	for (Powers d : powers) {
+    	for (Powers p : powers) {
 
+    		Image power = lib.draw(p);
+    		power = scaleFloater(power, p);
+    		
+    		g.drawImage(power, p.getPosX(), p.getPosY(), this);
+    		
+    		/*
+    		
     		if (d.getState() == eFloaterState.LIFTED) {
     			//paintArrow(g, d);
     		}
     		
     		if (d instanceof Rebuild) {
-    			//TODO: paint like trash
-    			//Calling trash a yellow circle
+    			
+    		
     			
     			g.setColor(Color.CYAN);
     			g.fillOval(d.getPosX(), d.getPosY(), d.getWidth(), d.getHeight());
@@ -345,6 +339,8 @@ public class EstuaryGame extends JComponent {
     			g.setColor(Color.MAGENTA);
     			g.fillOval(d.getPosX(), d.getPosY(), d.getWidth(), d.getHeight());
     		}	
+    		
+    		*/
     	}
     }
     
@@ -442,10 +438,10 @@ public class EstuaryGame extends JComponent {
     }
     
     private Image scalePlayer(BufferedImage img, Player p) {
-    	return img.getScaledInstance(p.getWidth(), p.getHeight(), 10);
+    	return img.getScaledInstance(p.getWidth(), p.getHeight(), 50);
     }
     
     private Image scaleFloater(Image img, Floater f) {
-    	return img.getScaledInstance(f.getWidth(), f.getHeight(), 10);
+    	return img.getScaledInstance(f.getWidth(), f.getHeight(), 50);
     }
 }
