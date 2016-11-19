@@ -24,6 +24,7 @@ public enum eAnimation {
 	trashLifted("trashlift"),
 	remove("remove"),
 	removeLift("removelift"),
+	rebuild("rebuild"),
 	gameOver("gameOver"),
 	error("error");
 	
