@@ -109,11 +109,11 @@ public class ImageLibrary {
 			switch (p.getState()) {
 			case RESTING:
 			case THROWING:
-				//return draw(eAnimation.trashCoast);
 			case LIFTED: 
+			case INITIATED:
 				//return draw(eAnimation.trashLifted);
 			case MOVING:
-				return draw(eAnimation.clockback);
+				return draw(eAnimation.rebuild);
 			}
 		}
 		//Implied else
