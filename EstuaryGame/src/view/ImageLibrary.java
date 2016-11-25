@@ -46,7 +46,40 @@ public class ImageLibrary {
 		
 		System.out.println("All loaded.");
 		
+		lib.initScaleLibrary();
+		
+		lib.scaleLibrary(1.0);
+		
+		System.out.println("All scaled.");
+		
 		return lib;
+	}
+	
+	/*
+	 * This initializes the scaling on ALL the Images.
+	 * THIS IS HARD-CODED FOR A 600x800 RESOLUTION.
+	 */
+	private void initScaleLibrary() {
+		//TODO: this has to scale the images initially
+	}
+	
+	public void scaleLibrary(double scaleFactor) {
+		//TODO: this has to be able to update every image by a factor
+
+		eAnimation[] allAnims = eAnimation.values();
+		
+		for (eAnimation eAnim: allAnims) {
+			ImageSequence sq = this.getLibrary().get(eAnim);
+			BufferedImage exFrame = sq.getSeq().get(0);
+			//Get old dimensions
+			int oldWidth = exFrame.getWidth();
+			int oldHeight = exFrame.getHeight();
+			//Produce new dimensions
+			double newWidth = oldWidth * scaleFactor;
+			double newHeight = oldHeight * scaleFactor;
+			//TODO
+		}
+		
 	}
 	
 	public BufferedImage draw(eAnimation eAnim) {
