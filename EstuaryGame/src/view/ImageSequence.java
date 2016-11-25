@@ -42,7 +42,7 @@ public class ImageSequence {
 	
 	private void loadSequence(String filepath) {
 		//TODO: load in the images using paths <3
-		String srcpath = "resources\\";
+		String srcpath = "resources/";
 		String fullpath = srcpath + filepath;
 		System.out.println("Loading: " + fullpath);
 		numFrames = 0;
