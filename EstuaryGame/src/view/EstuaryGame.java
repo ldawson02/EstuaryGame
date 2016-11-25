@@ -62,6 +62,7 @@ public class EstuaryGame extends JComponent{
 
     static GameController gc;
    	static MouseController mc;
+   	private static JFrame frame;
     private JPanel mainFrame;
     private ImageLibrary lib;
     
@@ -72,8 +73,8 @@ public class EstuaryGame extends JComponent{
     Image trashBin;
     Image recycBin;
     
-    int screenX = 800;
-    int screenY = 600;
+    static int screenWidth = 800;
+    static int screenHeight = 600;
     
     int timeElapsed = 0;
 	
@@ -106,8 +107,6 @@ public class EstuaryGame extends JComponent{
                 TitleScreen titleScreen = new TitleScreen();
                 EstuaryGame mainGame = new EstuaryGame();
                 
-                
-    			
                 mainGame.addComponentListener ( new ComponentAdapter ()
                 {
                     public void componentShown ( ComponentEvent e )
@@ -133,14 +132,13 @@ public class EstuaryGame extends JComponent{
                 cards.add(mainGame, MainGame);
                 cards.add(endScreen, EndScreen);
                 
-                JFrame frame = new JFrame("Mainframe");
+                frame = new JFrame("Mainframe");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setSize(800, 600);
+                frame.setSize(screenWidth, screenHeight);
                 frame.add(cards, BorderLayout.CENTER);
                 frame.pack();
                 frame.setFocusable(true);
                 frame.setVisible(true);
-                
                 
             }
         });
@@ -217,6 +215,8 @@ public class EstuaryGame extends JComponent{
     	
         super.paintComponent(g); 
         
+        checkWindowDimensionChange();
+        
         //Paint background
         paintBackground(g);
         
@@ -243,11 +243,31 @@ public class EstuaryGame extends JComponent{
         //Paint ScreenTimer
         paintScreenTimer(g);
         
-        
-        
         timeElapsed = gc.getTheBigTimer();
         g.drawString(Integer.toString(timeElapsed), 40, 40);
-        
+    }
+    
+    private void checkWindowDimensionChange() {
+    	if ((this.getWidth() != EstuaryGame.screenWidth) || (this.getHeight() != EstuaryGame.screenHeight)) {
+    		System.out.println("Window size changed!");
+    		
+    		double scaleX = this.getWidth() / EstuaryGame.screenWidth;
+    		double scaleY = this.getHeight() / EstuaryGame.screenHeight;
+    		double scaleFactor;
+    		
+    		//Scale according to the smaller (maintains overall 3:4 ratio)
+    		if (scaleX > scaleY) {
+    			scaleFactor = scaleY;
+    		}
+    		else {
+    			scaleFactor = scaleX;
+    		}
+    		lib.scaleLibrary(scaleFactor);
+    		
+    		//Update static variables
+    		EstuaryGame.screenWidth = this.getWidth();
+    		EstuaryGame.screenHeight = this.getHeight();
+    	}
     }
     
     private void paintBackground(Graphics g) {
