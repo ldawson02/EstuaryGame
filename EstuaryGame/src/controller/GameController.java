@@ -3,6 +3,7 @@ package controller;
 import model.*;
 import view.*;
 
+import java.awt.CardLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -67,6 +68,8 @@ public class GameController {
 	erosion RcoastMover;
 	erosion LcoastMover;
 	
+	private boolean gameEnd;
+	
 	Collisions collision = new Collisions();
 	
 	public GameController(EstuaryGame mainGame){
@@ -97,6 +100,7 @@ public class GameController {
 		//TODO
 		return timeElapsed;
 	}
+	
 
 	public void normalKeyBind(){
 		mainGame.bindKeyWith("x.left", KeyStroke.getKeyStroke("LEFT"), leftAct);
@@ -211,6 +215,9 @@ public class GameController {
 	
 	public void gameOver(){
 		stopTimers();
+		Action endGameAct = new endGameAction();
+		mainGame.bindKeyWith("GotoEndGame", KeyStroke.getKeyStroke("ENTER"), endGameAct);
+		
 	}
 	
 	public void stopTimers(){
@@ -829,6 +836,17 @@ public class GameController {
 
 		}
 
+	}
+	
+	public class endGameAction extends AbstractAction{
+
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			CardLayout c1 = (CardLayout) (EstuaryGame.getCards().getLayout());
+			c1.last(EstuaryGame.getCards());
+		}
+		
 	}
 
 
