@@ -1,12 +1,20 @@
 package view;
 
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.QuadCurve2D;
@@ -19,9 +27,11 @@ import javax.imageio.ImageIO;
 import javax.swing.Action;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.Timer;
 import javax.swing.UIManager;
@@ -45,13 +55,14 @@ import model.Floater;
 import model.HealthBar;
 import model.Player;
 
-public class EstuaryGame extends JComponent {
+
+public class EstuaryGame extends JComponent{
 
     private static final long serialVersionUID = 1L;
 
-    private static GameController gc;
-    private static MouseController mc;
-    private JFrame mainFrame;
+    static GameController gc;
+   	static MouseController mc;
+    private JPanel mainFrame;
     private ImageLibrary lib;
     
     //Constant images
@@ -74,6 +85,9 @@ public class EstuaryGame extends JComponent {
     
     //For future collision handling:
     ArrayList<DebrisWrapper> debrisColliders;
+    
+    static JPanel cards = new JPanel(new CardLayout());
+    
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -84,27 +98,66 @@ public class EstuaryGame extends JComponent {
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
                     ex.printStackTrace();
                 }
+               
+                final String TitleScreen = "TitleScreen";
+                final String MainGame = "MainGame";
+                final String EndScreen = "EndScreen";
+                
+                TitleScreen titleScreen = new TitleScreen();
+                EstuaryGame mainGame = new EstuaryGame();
+                
+                
+    			
+                mainGame.addComponentListener ( new ComponentAdapter ()
+                {
+                    public void componentShown ( ComponentEvent e )
+                    {
+                        System.out.println ( "Component shown" );
+                        gc = new GameController(mainGame);
+                		mc = new MouseController();
+                        mc.setGC(gc);
+                        
+                		mainGame.addMouseListener(mc);
+                		mainGame.addMouseMotionListener(mc);
+           
+                		
+                    }
 
+                    public void componentHidden ( ComponentEvent e )
+                    {
+                        System.out.println ( "Component hidden" );
+                    }
+                } );
+                EndScreen endScreen = new EndScreen();
+                cards.add(titleScreen, TitleScreen);
+                cards.add(mainGame, MainGame);
+                cards.add(endScreen, EndScreen);
+                
                 JFrame frame = new JFrame("Mainframe");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setSize(800, 600);
+                frame.add(cards, BorderLayout.CENTER);
+                frame.pack();
                 frame.setFocusable(true);
-		 
-                Container contentPane = frame.getContentPane();
-                contentPane.setBackground(Color.LIGHT_GRAY);
-                EstuaryGame mainGame = new EstuaryGame(frame);
-                contentPane.add(mainGame);
                 frame.setVisible(true);
                 
-                mc = new MouseController();
-                mc.setGC(gc);
-        		mainGame.addMouseListener(mc);
-        		mainGame.addMouseMotionListener(mc);
+                
             }
         });
     }
+    
+    public EstuaryGame() {
+    	//Initialize a new GameController and connect them
+    	this.setDoubleBuffered(true);
+    	//gc = new GameController(this);
+    	//View items matter
+    	actives = new activeViewItems();
+    	actives.setPlayer(gc.getItems().getPlayer());
+    	initImages();
+    	
+    }
 
-    public EstuaryGame(JFrame f) {
+    public EstuaryGame(JPanel f) {
     	mainFrame = f;
     	//Initialize a new GameController and connect them
     	this.setDoubleBuffered(true);
@@ -113,10 +166,12 @@ public class EstuaryGame extends JComponent {
     	actives = new activeViewItems();
     	actives.setPlayer(gc.getItems().getPlayer());
     	initImages();
+    	
     }
 
-	public void initTitleScreen(){
+	public static void initTitleScreen(){
 		//TODO: if we're lucky
+		
 	}
 	
     public void bindKeyWith(String name, KeyStroke keyStroke, Action action) {
@@ -159,6 +214,7 @@ public class EstuaryGame extends JComponent {
     
     @Override
     protected void paintComponent(Graphics g) {
+    	
         super.paintComponent(g); 
         
         //Paint background
@@ -238,6 +294,10 @@ public class EstuaryGame extends JComponent {
         
         if (timeElapsed >= maxTime) {
         	g.drawImage(gameOver, 220, 200, this);
+        	
+        	g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
+        	g.drawString("Press Enter to See Score...", 275, 370);
+        	
         }
     }
     private void paintCoast(Graphics g){
@@ -403,6 +463,9 @@ public class EstuaryGame extends JComponent {
     	
         if (currHealth <= 0) {
         	g.drawImage(gameOver, 220, 200, this);
+        	
+        	g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
+        	g.drawString("Press Enter to See Score...", 275, 375);
         }
     }
     
@@ -444,4 +507,9 @@ public class EstuaryGame extends JComponent {
     private Image scaleFloater(Image img, Floater f) {
     	return img.getScaledInstance(f.getWidth(), f.getHeight(), 50);
     }
+
+    public static JPanel getCards(){
+    	return cards;
+    }
+
 }
