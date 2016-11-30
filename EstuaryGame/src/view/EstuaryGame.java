@@ -30,6 +30,7 @@ import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
@@ -87,7 +88,9 @@ public class EstuaryGame extends JComponent{
     ArrayList<DebrisWrapper> debrisColliders;
     
     static JPanel cards = new JPanel(new CardLayout());
-    
+    static TitleScreen titleScreen;
+    static EndScreen endScreen;
+    static EstuaryGame mainGame;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -103,32 +106,26 @@ public class EstuaryGame extends JComponent{
                 final String MainGame = "MainGame";
                 final String EndScreen = "EndScreen";
                 
-                TitleScreen titleScreen = new TitleScreen();
-                EstuaryGame mainGame = new EstuaryGame();
-                
+                titleScreen = new TitleScreen();
+                mainGame = new EstuaryGame();
+                endScreen = new EndScreen();
                 
     			
                 mainGame.addComponentListener ( new ComponentAdapter ()
                 {
                     public void componentShown ( ComponentEvent e )
                     {
+                    	
                         System.out.println ( "Component shown" );
-                        gc = new GameController(mainGame);
-                		mc = new MouseController();
-                        mc.setGC(gc);
-                        
-                		mainGame.addMouseListener(mc);
-                		mainGame.addMouseMotionListener(mc);
-           
-                		
+
                     }
 
                     public void componentHidden ( ComponentEvent e )
                     {
-                        System.out.println ( "Component hidden" );
+                    	
                     }
                 } );
-                EndScreen endScreen = new EndScreen();
+                
                 cards.add(titleScreen, TitleScreen);
                 cards.add(mainGame, MainGame);
                 cards.add(endScreen, EndScreen);
@@ -511,5 +508,11 @@ public class EstuaryGame extends JComponent{
     public static JPanel getCards(){
     	return cards;
     }
-
+    
+    public static void setMainGame(){
+    	mainGame = new EstuaryGame();
+    }
+    public static EstuaryGame getMainGame(){
+    	return mainGame;
+    }
 }

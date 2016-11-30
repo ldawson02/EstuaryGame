@@ -23,18 +23,24 @@ public class TitleScreen extends JComponent implements ActionListener{
     public TitleScreen(){
     	btn1.setActionCommand("START");
     	btn1.addActionListener(this);
-    	btn1.setBounds(new Rectangle(400,300,100,30));
+    	btn1.setBounds(new Rectangle(310,300,200,50));
     	this.add(btn1);
     }
 
 	
 	
 	public void actionPerformed(ActionEvent e){
-		CardLayout c1 = (CardLayout) (EstuaryGame.cards.getLayout());
+		CardLayout c1 = (CardLayout) (EstuaryGame.getCards().getLayout());
 		String cmd = e.getActionCommand();
         if(cmd.equals("START")){
-    		c1.next(EstuaryGame.cards);
-    		
+    		c1.next(EstuaryGame.getCards());
+    		EstuaryGame.gc = new GameController(EstuaryGame.mainGame);
+    		EstuaryGame.mc = new MouseController();
+    		EstuaryGame.mc.setGC(EstuaryGame.gc);
+            
+    		EstuaryGame.mainGame.addMouseListener(EstuaryGame.mc);
+    		EstuaryGame.mainGame.addMouseMotionListener(EstuaryGame.mc);
+        	
         }
     }
 	

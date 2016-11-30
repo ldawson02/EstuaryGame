@@ -3,6 +3,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import eNums.eBarrierType;
 import eNums.eDebrisType;
 import eNums.eFloaterState;
 import model.*;
@@ -77,6 +78,11 @@ public class ActiveItems {
 	public ArrayList<Barriers> getAllBarriers(){
 		return barriers;
 	}
+	public void setAllBarriers(){
+		for(Barriers b: barriers){
+			b.setType(eBarrierType.EMPTY);
+		}
+	}
 	
 	public boolean removeBarrier(Barriers b){
 		return barriers.remove(b);
@@ -121,6 +127,22 @@ public class ActiveItems {
 			if(d.getState() == eFloaterState.RESTING){
 				debrisitr.remove();
 			}
+		}
+	}
+	public void removeAllDebris(){
+		Iterator debrisitr = debris.iterator();
+		while(debrisitr.hasNext()){
+			Debris d = (Debris)debrisitr.next();
+			d.setState(eFloaterState.RESTING);
+			debrisitr.remove();
+		}
+	}
+	public void removeAllPowers(){
+		Iterator powersitr = powerups.iterator();
+		while(powersitr.hasNext()){
+			Powers p = (Powers)powersitr.next();
+			p.setState(eFloaterState.RESTING);
+			powersitr.remove();
 		}
 	}
 	

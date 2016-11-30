@@ -129,6 +129,9 @@ public class GameController {
 		downAct = new VAction(1 * mainPlayer.speed);
 		normalKeyBind();
 		
+		items.removeAllDebris();
+		items.setAllBarriers();
+		items.removeAllPowers();
 		
 		ArrayList<Barriers> left = Barriers.setUpLeftCoast();
 		ArrayList<Coast> leftCoast = Coast.setUpLeftCoast(left);
@@ -163,13 +166,15 @@ public class GameController {
 		items.getTrashBin().updatePos(50, 150);
 		items.getRecycleBin().updatePos(700, 150);
 		
+		
+		
 		//mainGame.imageLoad();
-		mainGame.initTitleScreen();
+		//mainGame.initTitleScreen();
 		startGame();
 	}
 	
 	public void tearDown(){
-		
+		mainGame.unbindKeyWith("GotoEndGame", KeyStroke.getKeyStroke("ENTER"));
 	}
 	
 	public void startGame(){
