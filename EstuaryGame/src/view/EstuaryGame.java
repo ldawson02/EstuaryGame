@@ -243,6 +243,8 @@ public class EstuaryGame extends JComponent{
         //Paint ScreenTimer
         paintScreenTimer(g);
         
+        paintScore(g);
+        
         
         
         timeElapsed = gc.getTheBigTimer();
@@ -484,6 +486,11 @@ public class EstuaryGame extends JComponent{
     	
     	Image playerImg = scalePlayer(lib.draw(p), p);
     	g.drawImage(playerImg, p.getPosX(), p.getPosY(), this);
+    }
+    
+    private void paintScore(Graphics g) {
+    	g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+    	g.drawString("Score: " + Integer.toString(gc.getScore()), 150, 40);
     }
     
 

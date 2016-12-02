@@ -3,7 +3,7 @@ package model;
 import controller.ActiveItems;
 import eNums.eFloaterState;
 
-public class Remove extends Powers implements HealthChangers {
+public class Remove extends Powers {
 	
 	private int vertex;
 	
@@ -45,13 +45,6 @@ public class Remove extends Powers implements HealthChangers {
 
 	@Override
 	public void PlayerCollision(Item item) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void updateHealthBar() {
 		// TODO Auto-generated method stub
 		
 	}
