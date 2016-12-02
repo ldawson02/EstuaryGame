@@ -72,7 +72,7 @@ import model.Wall;
 			dragging = false;
 			dropSpot = gc.emptyBarrierCollision(dragged);
 			if ((dragged != null) && (dropSpot!=null)) {  //dragged temp to any of the barrier spaces that was empty
-				System.out.println("collided");
+				System.out.println("new barrier");
 				if (dragged.getType() == eBarrierType.Wall) {
 					gc.setBarrierType(dragged, eBarrierType.Wall); 
 					dropSpot.setType(eBarrierType.Wall);
@@ -84,6 +84,7 @@ import model.Wall;
 					dropSpot.setType(eBarrierType.Gabion);
 					dropSpot.geterosionTimer().start();
 				}
+				gc.addScore(Barriers.getPointsMade());
 			}
 			dragged = null; //done dragging, don't need dragging shape
 			repaint();

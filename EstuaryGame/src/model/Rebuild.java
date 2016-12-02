@@ -3,14 +3,15 @@ package model;
 import java.util.ArrayList;
 
 import controller.ActiveItems;
+import controller.GameController;
 import eNums.eBarrierType;
 import eNums.eFloaterState;
 
-public class Rebuild extends Powers implements HealthChangers{
+public class Rebuild extends Powers {
 
 	private int vertex;
 	private eFloaterState state;
-	
+		
 	public Rebuild(int x, int y){
 		super(x,y);
 	};
@@ -43,12 +44,6 @@ public class Rebuild extends Powers implements HealthChangers{
 	public void disappear() {
 		// TODO Auto-generated method stub
 		//ActiveItems.powerups.remove(this);
-	}
-
-	@Override
-	public void updateHealthBar() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
