@@ -101,6 +101,9 @@ public class GameController {
 		return timeElapsed;
 	}
 	
+	public spawnDebris getSpawnDebris() {
+		return debrisMover;
+	}
 
 	public void normalKeyBind(){
 		mainGame.bindKeyWith("x.left", KeyStroke.getKeyStroke("LEFT"), leftAct);
@@ -166,7 +169,7 @@ public class GameController {
 		items.getTrashBin().updatePos(50, 150);
 		items.getRecycleBin().updatePos(700, 150);
 		
-		
+		ScoreController.setScore(0);
 		
 		//mainGame.imageLoad();
 		//mainGame.initTitleScreen();
