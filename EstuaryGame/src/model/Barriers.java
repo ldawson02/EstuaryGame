@@ -14,6 +14,11 @@ import eNums.eBarrierType;
  * @version 1.0
  * @since 10/25/16
  */
+/**barrier barrier barrier
+ * 
+ * 
+ *
+ */
 public class Barriers extends Item implements Interactable, HealthChangers{
 	private boolean protector = false;
 	private int decayTime = 7000;
