@@ -14,6 +14,10 @@ public class ScoreController {
 		return score;
 	}
 	
+	public static void setScore(int s) {
+		score = s;
+	}
+	
 	public static void scoreStorm() {
 		score = score + livedStorm;
 	}

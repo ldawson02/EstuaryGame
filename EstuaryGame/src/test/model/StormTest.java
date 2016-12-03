@@ -13,23 +13,25 @@ public class StormTest {
 
 	public Storm s;
 	
+	
 	@Test
 	public void appearTest() {
 		fail("Not yet implemented");
 	}
 
 	
+	
 	/*
 	 * should be able to get rid of gabions from the coasts by a certain amount-
 	 * either make them decay faster or get rid of a couple entirely
-	 */
+	 */ 
 	@Test
-	public void destroyGabionsTest() {
+	public void destroyBarriersTest() {
 		ArrayList<Gabions> gabs = new ArrayList<Gabions>();
 		for (int i = 0; i <= 10; i++) {
 			gabs.add(new Gabions(1,1));
 		}
-		s.destroyBarriers();
+		//s.destroyBarriers();
 		assertEquals(gabs.size(), 5);
 		
 		//should not get below 0
@@ -37,7 +39,7 @@ public class StormTest {
 		for (int i = 0; i < 3; i++) {
 			gab2.add(new Gabions(1,1));
 		}
-		s.destroyBarriers();
+		//s.destroyBarriers();
 		assertEquals(gab2.size(), 0);
 	}
 	
@@ -46,8 +48,9 @@ public class StormTest {
 	 * can be random
 	 */
 	
+	
 	@Test
-	public void addTrashTest() {
+	public void addDebrisTest() {
 		fail("Not yet implemented");
 	}
 }
