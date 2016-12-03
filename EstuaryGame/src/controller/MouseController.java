@@ -77,14 +77,15 @@ import model.Wall;
 					gc.setBarrierType(dragged, eBarrierType.Wall); 
 					dropSpot.setType(eBarrierType.Wall);
 					dropSpot.geterosionTimer().start();
+					ScoreController.scoreWall();
 					//set barrier with same coords as temp to Wall
 				}
 				else if (dragged.getType() == eBarrierType.Gabion) {
 					gc.setBarrierType(dragged, eBarrierType.Gabion);
 					dropSpot.setType(eBarrierType.Gabion);
 					dropSpot.geterosionTimer().start();
+					ScoreController.scoreGabion();
 				}
-				gc.addScore(ScoreController.madeBarrier);
 			}
 			dragged = null; //done dragging, don't need dragging shape
 			repaint();

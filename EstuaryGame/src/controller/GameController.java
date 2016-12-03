@@ -71,9 +71,7 @@ public class GameController {
 	private boolean gameEnd;
 	
 	Collisions collision = new Collisions();
-	
-	private int score = 0;
-	
+		
 	public GameController(EstuaryGame mainGame){
 		setMainGame(mainGame);
 		setup();
@@ -93,14 +91,6 @@ public class GameController {
 
 	public void setItems(ActiveItems items) {
 		this.items = items;
-	}
-	
-	public int getScore() {
-		return score;
-	}
-	
-	public void addScore(int s) {
-		score = score + s;
 	}
 	
 	/**
@@ -391,14 +381,13 @@ public class GameController {
 							d.setState(eFloaterState.RESTING);
 							toDelete.add(d);
 							items.getHealthBar().update(eHealthChanges.CorrectBin.getDelta());
-							addScore(ScoreController.rightBin);
+							ScoreController.scoreBin();
 						}
 						else {
 							System.out.print(" bin was incorrect.\n");
 							MovementController.wrongBinMove(d);
 							d.setState(eFloaterState.RESTING);
 							items.getHealthBar().update(eHealthChanges.IncorrectBin.getDelta());
-							addScore(ScoreController.wrongBin);
 						}
 					}
 					//If the debris hit the wrong bin it should go back to the coast
@@ -523,6 +512,7 @@ public class GameController {
 						items.getHealthBar().update(eHealthChanges.CoastDebrisRemoved.getDelta());
 						
 					}
+					ScoreController.scorePower();
 				}
 				
 			}

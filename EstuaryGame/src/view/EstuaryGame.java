@@ -41,6 +41,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import controller.ActiveItems;
 import controller.GameController;
 import controller.MouseController;
+import controller.ScoreController;
 import eNums.eAnimation;
 import eNums.eBarrierType;
 import eNums.eFloaterState;
@@ -487,7 +488,7 @@ public class EstuaryGame extends JComponent{
     
     private void paintScore(Graphics g) {
     	g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-    	g.drawString("Score: " + Integer.toString(gc.getScore()), 150, 40);
+    	g.drawString("Score: " + Integer.toString(ScoreController.getScore()), 150, 40);
     }
     
 
