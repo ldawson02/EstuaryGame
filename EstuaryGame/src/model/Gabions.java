@@ -3,15 +3,28 @@ package model;
 import controller.ActiveItems;
 import eNums.eBarrierType;
 
+/***
+ * the Gabion class has a constant gDecaytime
+ * @author Pu
+ *
+ */
 public class Gabions extends Barriers {
 	private int gDecayTime = 12000;
 
+	/**
+	 * the constructor of the gabions
+	 * @param x
+	 * @param y
+	 */
 	public Gabions(int x, int y){
 		super(x,y);
 		this.setType(eBarrierType.Gabion);
 		this.setDecayTime(gDecayTime);
 	}
 	
+	/**
+	 * build the gabions
+	 */
 	@Override
 	public void build(){
 		this.setDecayTime(0);
@@ -19,6 +32,9 @@ public class Gabions extends Barriers {
 		//ActiveItems.barriers.add(this);
 	}
 	@Override
+	/**
+	 * the gabions decay, so the health decays as time goes. 
+	 */
 	public void decay(int time){
 		int gabionHealth = (int) (this.getHealth() - 2.5*time);
 		this.setHealth(gabionHealth);

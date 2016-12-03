@@ -14,7 +14,12 @@ import eNums.eCoastState;
 * @version 1.0
 * @since 10/25/16
 */
-
+/**
+ * The coast has a current size for the coast, minumum and maxmum size of the coast, and a constant erosion rate, and coast has a constant
+ * height and width
+ * @author megan
+ *
+ */
 public class Coast extends Item implements HealthChangers{
 
 	/**
@@ -46,7 +51,9 @@ public class Coast extends Item implements HealthChangers{
 	private ArrayList<Barriers> barriers;
 	private eCoastState state = eCoastState.NO_HIT;
 	
-
+/**
+ * 
+ */
 	public Coast() {
 		super();
 		this.setHeight(height);
@@ -64,13 +71,22 @@ public class Coast extends Item implements HealthChangers{
 		this.setWidth(width);
 	}
 	
+	/**
+	 * Constructs a Coast with position (x, y) and barrier b
+	 * @param x
+	 * @param y
+	 * @param b
+	 */
 	public Coast(int x, int y, Barriers b){
 		super(x, y);
 		this.setHeight(height);
 		this.setWidth(width);
 		this.setBarrier(b);
 	}
-	
+	/**
+	 * barrier getter and setter
+	 * @return barrier
+	 */
 	public Barriers getBarrier(){
 		return barrier;
 	}
@@ -180,7 +196,10 @@ public class Coast extends Item implements HealthChangers{
 	public void changeErosionRate(double amount) {
 		
 	}
-	
+	/**
+	 * see if the barrier's type matches the ebarrier's type.
+	 * @return true or false.
+	 */
 	public boolean isProtected(){
 		if(barrier.getType() != eBarrierType.EMPTY){
 			return true;
@@ -191,7 +210,11 @@ public class Coast extends Item implements HealthChangers{
 	}
 	
 	//public abstract void updateCoords();
-	
+	/**
+	 *  set up the left coast, add the coast to the space.
+	 * @param barriers
+	 * @return spaces
+	 */
 	public static ArrayList<Coast> setUpLeftCoast(ArrayList<Barriers> barriers) {
 		ArrayList<Coast> spaces = new ArrayList<Coast>();
 		
@@ -203,7 +226,11 @@ public class Coast extends Item implements HealthChangers{
 		
 		return spaces;
 	}
-	
+	/**
+	 * set up the right coast, add the coast to the space
+	 * @param barriers
+	 * @return spaces
+	 */
 	public static ArrayList<Coast> setUpRightCoast(ArrayList<Barriers> barriers) {
 		ArrayList<Coast> spaces = new ArrayList<Coast>();
 		
@@ -221,7 +248,10 @@ public class Coast extends Item implements HealthChangers{
 		// TODO Auto-generated method stub
 		
 	}
-
+/** 
+ * get and set the state
+ * @return state;
+ */
 	public eCoastState getState() {
 		return state;
 	}
@@ -229,7 +259,10 @@ public class Coast extends Item implements HealthChangers{
 	public void setState(eCoastState state) {
 		this.state = state;
 	}
-
+/**
+ * get and set the erosion timer
+ * @return erosiontimer;
+ */
 	public Timer getErosionTimer() {
 		return erosionTimer;
 	}
