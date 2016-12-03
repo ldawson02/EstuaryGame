@@ -34,7 +34,9 @@ public class ScoreController {
 		score = score + gotPower;
 	}
 	
-	
+	public static void scoreHealth(int currHealth){
+		score = score + currHealth;
+	}
 	
 	//add more complex scoring w/ difficulty, etc.
 
