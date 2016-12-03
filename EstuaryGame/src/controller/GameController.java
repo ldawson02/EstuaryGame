@@ -391,14 +391,14 @@ public class GameController {
 							d.setState(eFloaterState.RESTING);
 							toDelete.add(d);
 							items.getHealthBar().update(eHealthChanges.CorrectBin.getDelta());
-							addScore(Debris.getPointsRight());
+							addScore(ScoreController.rightBin);
 						}
 						else {
 							System.out.print(" bin was incorrect.\n");
 							MovementController.wrongBinMove(d);
 							d.setState(eFloaterState.RESTING);
 							items.getHealthBar().update(eHealthChanges.IncorrectBin.getDelta());
-							addScore(Debris.getPointsWrong());
+							addScore(ScoreController.wrongBin);
 						}
 					}
 					//If the debris hit the wrong bin it should go back to the coast

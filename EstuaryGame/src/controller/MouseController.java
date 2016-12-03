@@ -84,7 +84,7 @@ import model.Wall;
 					dropSpot.setType(eBarrierType.Gabion);
 					dropSpot.geterosionTimer().start();
 				}
-				gc.addScore(Barriers.getPointsMade());
+				gc.addScore(ScoreController.madeBarrier);
 			}
 			dragged = null; //done dragging, don't need dragging shape
 			repaint();

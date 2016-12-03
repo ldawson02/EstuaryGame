@@ -25,9 +25,6 @@ public class Debris extends Floater{
 	private eThrowDirection throwDir = eThrowDirection.LEFT;
 	private GameController gc;
 	
-	private static int pointsWrong = -10;
-	private static int pointsRight = 10;
-	
 	/**
 	 * Private no-arg constructor to prevent creating a debris item without
 	 * a type (trash vs recycling)
@@ -48,14 +45,6 @@ public class Debris extends Floater{
 	//This is only connected when the Debris has been caught
 	public void setController(GameController game){
 		this.gc = game;
-	}
-	
-	public static int getPointsWrong() {
-		return pointsWrong;
-	}
-	
-	public static int getPointsRight() {
-		return pointsRight;
 	}
 	
 	/**
