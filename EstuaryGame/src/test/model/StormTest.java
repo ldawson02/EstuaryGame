@@ -29,7 +29,7 @@ public class StormTest {
 		for (int i = 0; i <= 10; i++) {
 			gabs.add(new Gabions(1,1));
 		}
-		s.destroyGabions();
+		s.destroyBarriers();
 		assertEquals(gabs.size(), 5);
 		
 		//should not get below 0
@@ -37,7 +37,7 @@ public class StormTest {
 		for (int i = 0; i < 3; i++) {
 			gab2.add(new Gabions(1,1));
 		}
-		s.destroyGabions();
+		s.destroyBarriers();
 		assertEquals(gab2.size(), 0);
 	}
 	
