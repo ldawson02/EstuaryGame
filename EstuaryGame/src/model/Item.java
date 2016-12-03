@@ -7,15 +7,17 @@ package model;
  * @version 1.0
  * @since 10/25/16
  */
-
+/**
+ * The itme should have a x position, y position, width and height
+ * @author Pu
+ *
+ */
 public abstract class Item {
 
 	private int posX;
 	private int posY;
 	private int width;
 	private int height;
-	private int objectID;
-	
 	/**
 	 * Constructor for Item
 	 * 

@@ -9,6 +9,11 @@ import eNums.eFloaterState;
  * @version 1.0
  * @since 10/26/16
  */
+/**
+ * the floater class has a constant speed, and a state, vertex.
+ * @author Pu
+ *
+ */
 public abstract class Floater extends Item {
 	private int speed = 1;
 	private int vertex;
@@ -20,6 +25,11 @@ public abstract class Floater extends Item {
 		setHeight(40);
 		this.state = eFloaterState.MOVING;
 	}
+	/**
+	 * construct the floater int(x,y)
+	 * @param x
+	 * @param y
+	 */
 	public Floater(int x, int y){
 		super(x,y);
 		setWidth(40);
@@ -35,11 +45,18 @@ public abstract class Floater extends Item {
 	public int getSpeed() {
 		return speed;
 	}
+	/**
+	 * get the state
+	 * @return state;
+	 */
 	
 	public eFloaterState getState(){
 		return state;
 	}
-	
+	/**
+	 * set the state
+	 * @param e
+	 */
 	public void setState(eFloaterState e){
 		//TODO: make sure you cant set illegal instances
 		/*
