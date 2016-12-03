@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * the constructor of the coast l
+ * @author megan
+ *
+ */
 public class CoastL extends Coast {
 
 	public CoastL() {

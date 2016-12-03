@@ -1,5 +1,9 @@
 package model;
 
+/**
+ * the abstract class  o
+ * @author megan
+ */
 public abstract class Friend extends Item {
 
 	public int requiredHealth;

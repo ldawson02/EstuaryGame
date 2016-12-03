@@ -16,13 +16,21 @@ public class Oyster extends Friend {
 	public int yloc;
 	//public Location current;
 	//public Location destination;
-	
+	/**
+	 * constructor an oyster
+	 * @param x
+	 * @param y
+	 */
 	public Oyster(int x, int y /*Location destination, Location current*/) {
 		this.xloc = x;
 		this.yloc = y;
 		//this.destination = destination;
 		//this.current = current;
 	}
+	/**
+	 * xloc getter and setter
+	 * @return
+	 */
 	public int getXloc() {
 		return xloc;
 	}
@@ -30,7 +38,10 @@ public class Oyster extends Friend {
 	public void setXloc(int xloc) {
 		this.xloc = xloc;
 	}
-
+/**
+ * yloc setter and getter
+ * @return
+ */
 	public int getYloc() {
 		return yloc;
 	}

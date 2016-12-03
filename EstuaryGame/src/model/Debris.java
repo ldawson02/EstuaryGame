@@ -43,11 +43,16 @@ public class Debris extends Floater{
 	}
 	
 	//This is only connected when the Debris has been caught
+	/**
+	 * set the controller
+	 * @param game
+	 */
 	public void setController(GameController game){
 		this.gc = game;
 	}
 	
 	/**
+	 * getter for type
 	 * @return the type
 	 */
 	public eDebrisType getType() {
@@ -55,6 +60,7 @@ public class Debris extends Floater{
 	}
 
 	/**
+	 * set the type
 	 * @param type the type to set
 	 */
 	public void setType(eDebrisType type) {
@@ -62,6 +68,7 @@ public class Debris extends Floater{
 	}
 
 	/**
+	 * get the state
 	 * @return the state
 	 */
 	public eFloaterState getState() {
@@ -69,12 +76,16 @@ public class Debris extends Floater{
 	}
 
 	/**
+	 * set the state
 	 * @param state the state to set
 	 */
 	public void setState(eFloaterState state) {
 		this.state = state;
 	}
-
+/**
+ * to check if it gets the correct bin or not
+ * @return true or false
+ */
 	public boolean getCorrectBin() {
 		/**
 		 * I don't understand how whether it was the correct bin was working before
@@ -90,14 +101,20 @@ public class Debris extends Floater{
 		
 		//return this.correctBin;
 	}
-	
+	/**
+	 * set the correct bin
+	 * @param correctBin
+	 */
 	public void setCorrectBin(eDebrisType correctBin) {
 		if (getType() == correctBin) 
 			this.correctBin = true;
 		else 
 			this.correctBin = false;
 	}
-
+/**
+ * getter for bin,Put recycle in first, then trash,if they throw Left return Left-most bin,else return right bin
+ * @return
+ */
 	public Bin getBin(){
 		ArrayList<Bin> LR = new ArrayList<Bin>();
 		//Put recycle in first, then trash
@@ -123,6 +140,10 @@ public class Debris extends Floater{
 		this.setState(eFloaterState.RESTING);
 	}
 	
+	/**
+	 * getter and setter for throw direction
+	 * @param e
+	 */
 	public void setThrowDirection(eThrowDirection e){
 		throwDir = e;
 	}

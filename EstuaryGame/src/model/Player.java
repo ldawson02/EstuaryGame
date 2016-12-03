@@ -7,6 +7,9 @@ public class Player extends Item implements Movers {
 	public int speed = 10;
 	public ePlayerState state;
 	
+	/**
+	 * construct a player in specific height, width and state.
+	 */
 	public Player(){
 		this.setHeight(60);
 		this.setWidth(120);
