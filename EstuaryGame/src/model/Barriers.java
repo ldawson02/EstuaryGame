@@ -27,12 +27,6 @@ public class Barriers extends Item implements Interactable, HealthChangers{
 	private static int leftEdge = 20;
 	private static int rightEdge = 740;
 	
-	private static int pointsMade = 5;
-	
-	public static int getPointsMade() {
-		return pointsMade;
-	}
-	
 	public static int getLeftEdge() {
 		return leftEdge;
 	}
