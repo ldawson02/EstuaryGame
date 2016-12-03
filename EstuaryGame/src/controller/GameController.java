@@ -409,14 +409,21 @@ public class GameController {
 	
 	//The point of this class is to create a timer that calls paint
 	public class mainTimer implements ActionListener{
-
+		public int scoringTime = 0;
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			mainGame.repaint();
 			if(items.getScreenTimer().getState() == eScreenTimerState.ON){
 				timeElapsed+=paintDelay;
+				scoringTime+=paintDelay;
 				items.getScreenTimer().setElapsedTime(timeElapsed);
+				
+				if(scoringTime >= items.getScreenTimer().getMaxTime()/500){
+					ScoreController.scoreHealth(items.getHealthBar().getHealth());
+					scoringTime = 0;
+				}
+				
 				if(items.getScreenTimer().getState()==eScreenTimerState.OFF){
 					gameOver();
 				}
