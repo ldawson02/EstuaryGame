@@ -92,6 +92,7 @@ public class EstuaryGame extends JComponent{
     static TitleScreen titleScreen;
     static EndScreen endScreen;
     static EstuaryGame mainGame;
+    static Tutorial tutorial;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -106,9 +107,11 @@ public class EstuaryGame extends JComponent{
                 final String TitleScreen = "TitleScreen";
                 final String MainGame = "MainGame";
                 final String EndScreen = "EndScreen";
+                final String Tutorial = "Tutorial";
                 
                 titleScreen = new TitleScreen();
                 mainGame = new EstuaryGame();
+                tutorial = new Tutorial();
                 endScreen = new EndScreen();
                 
     			
@@ -129,6 +132,7 @@ public class EstuaryGame extends JComponent{
                 
                 cards.add(titleScreen, TitleScreen);
                 cards.add(mainGame, MainGame);
+                cards.add(tutorial, Tutorial);
                 cards.add(endScreen, EndScreen);
                 
                 JFrame frame = new JFrame("Mainframe");

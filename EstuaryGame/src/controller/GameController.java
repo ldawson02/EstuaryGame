@@ -133,6 +133,7 @@ public class GameController {
 		downAct = new VAction(1 * mainPlayer.speed);
 		normalKeyBind();
 		
+		ScoreController.setScore(0);
 		items.removeAllDebris();
 		items.setAllBarriers();
 		items.removeAllPowers();
