@@ -17,14 +17,20 @@ import controller.MouseController;
 public class TitleScreen extends JComponent implements ActionListener{
 
     JButton btn1 = new JButton("Start");
+    JButton btn2 = new JButton("Tutorial");
     
     
     
     public TitleScreen(){
     	btn1.setActionCommand("START");
     	btn1.addActionListener(this);
-    	btn1.setBounds(new Rectangle(310,300,200,50));
+    	btn1.setBounds(new Rectangle(310,200,200,50));
     	this.add(btn1);
+    	
+    	btn2.setActionCommand("TUTORIAL");
+    	btn2.addActionListener(this);
+    	btn2.setBounds(new Rectangle(310,275,200,50));
+    	this.add(btn2);
     }
 
 	
@@ -40,6 +46,12 @@ public class TitleScreen extends JComponent implements ActionListener{
             
     		EstuaryGame.mainGame.addMouseListener(EstuaryGame.mc);
     		EstuaryGame.mainGame.addMouseMotionListener(EstuaryGame.mc);
+        	
+        }
+        
+        if(cmd.equals("TUTORIAL")){
+        	c1.show(EstuaryGame.getCards(), "Tutorial");
+        	//Any set up for tutorial to run
         	
         }
     }
