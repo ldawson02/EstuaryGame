@@ -1,11 +1,8 @@
+
 package test.model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
-import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -14,25 +11,25 @@ import model.Bin;
 
 public class BinTest {
 
-	public Bin trashBin;
-	public Bin recycleBin;
+	public static Bin trashBin;
+	public static Bin recycleBin;
 	
 	@BeforeClass
-	public void setUpBeforeClass() throws Exception {
+	public static void setUpBeforeClass() throws Exception {
 		trashBin = new Bin(eDebrisType.TRASH);
 		recycleBin = new Bin(eDebrisType.RECYCLING);
 	}
 
-	@AfterClass
-	public void tearDownAfterClass() throws Exception {
-	}
-
 	@Test
-	public void buildTest() {
+	public void test() {
 		assertNotNull(trashBin);
 		assertNotNull(recycleBin);
+		assertEquals(trashBin.getHeight(), 50);
+		assertEquals(trashBin.getWidth(), 50);
+		assertEquals(recycleBin.getHeight(), 50);
+		assertEquals(recycleBin.getWidth(), 50);
 	}
-	
+
 	@Test
 	public void typeTest(){
 		assertTrue(trashBin.getDebrisType() == eDebrisType.TRASH);
