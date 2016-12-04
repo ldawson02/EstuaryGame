@@ -109,10 +109,11 @@ public class GameController {
 		mainGame.bindKeyWith("x.down", KeyStroke.getKeyStroke("DOWN"), downAct);
 	}
 	public void setup(){
-		//Start the paint timer
-		theBigTimer = new Timer(paintDelay, new mainTimer());
-		theBigTimer.start();
-		allTimers.add(theBigTimer);
+		//Add health bar!!
+		items.addHealthBar(new HealthBar());
+		
+		//Add the screen Timer
+		items.addScreenTimer(new ScreenTimer());
 		
 		//Create the player
 		mainPlayer = new Player();
@@ -159,14 +160,15 @@ public class GameController {
 		items.getAllBarriers().get(6).setType(eBarrierType.Wall);
 		items.getAllBarriers().get(7).setType(eBarrierType.Gabion);
 		
-		//Add health bar!!
-		items.addHealthBar(new HealthBar());
 		
 		//Create the bins
 		items.getTrashBin().updatePos(50, 150);
 		items.getRecycleBin().updatePos(700, 150);
 		
-		
+		//Start the paint timer
+		theBigTimer = new Timer(paintDelay, new mainTimer());
+		theBigTimer.start();
+		allTimers.add(theBigTimer);
 		
 		//mainGame.imageLoad();
 		//mainGame.initTitleScreen();
@@ -181,7 +183,6 @@ public class GameController {
 		//set up automatic movements!
 		//	->create timer for debris
 		//Turn on the screen timer!
-		items.addScreenTimer(new ScreenTimer());
 		items.getScreenTimer().start();
 		
 		debrisMover = new spawnDebris();
@@ -197,13 +198,15 @@ public class GameController {
 		powersFloating.start();
 		allTimers.add(powersFloating);
 		
-		barrierErosion bErode;
+		barrierErosion bErode; int i = 0;
 		for(Barriers b: items.getAllBarriers()){
 			bErode = new barrierErosion(b);
 			b.setbTimer(new Timer(this.erodeDelay, bErode));
 			b.geterosionTimer().start();
 			allTimers.add(b.geterosionTimer());
+			i++;
 		}
+		System.out.println("NUMBER OF EROSION TIMERS: " + i);
 		
 		coastErosion cErode;
 		for(Coast c : items.getCoast()){
@@ -410,6 +413,9 @@ public class GameController {
 	//The point of this class is to create a timer that calls paint
 	public class mainTimer implements ActionListener{
 		public int scoringTime = 0;
+		final public int scoreCheck = items.getScreenTimer().getMaxTime()/500;
+		public int healthTime = 0;
+		final public int healthCheck = items.getScreenTimer().getMaxTime()/18;
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -417,13 +423,11 @@ public class GameController {
 			if(items.getScreenTimer().getState() == eScreenTimerState.ON){
 				timeElapsed+=paintDelay;
 				scoringTime+=paintDelay;
+				healthTime+=paintDelay;
 				items.getScreenTimer().setElapsedTime(timeElapsed);
 				
-				if(scoringTime >= items.getScreenTimer().getMaxTime()/500){
-					ScoreController.scoreHealth(items.getHealthBar().getHealth());
-					scoringTime = 0;
-				}
-				
+				checkScoreTime();
+				checkOverallHealth();
 				if(items.getScreenTimer().getState()==eScreenTimerState.OFF){
 					gameOver();
 				}
@@ -433,6 +437,19 @@ public class GameController {
 			}
 		}
 		
+		public void checkScoreTime(){
+			if(scoringTime >= scoreCheck){
+				ScoreController.scoreHealth(items.getHealthBar().getHealth());
+				scoringTime = 0;
+			}
+		}
+		
+		public void checkOverallHealth(){
+			if(healthTime >= healthCheck){
+				items.getHealthBar().update(eHealthChanges.RestingDebrisGradual.getDelta());
+				healthTime = 0;
+			}
+		}
 		
 		public int getTimeElapsed(){
 			return timeElapsed;
