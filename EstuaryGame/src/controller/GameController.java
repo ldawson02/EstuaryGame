@@ -101,6 +101,9 @@ public class GameController {
 		return timeElapsed;
 	}
 	
+	public spawnDebris getSpawnDebris() {
+		return debrisMover;
+	}
 
 	public void normalKeyBind(){
 		mainGame.bindKeyWith("x.left", KeyStroke.getKeyStroke("LEFT"), leftAct);
@@ -165,10 +168,13 @@ public class GameController {
 		items.getTrashBin().updatePos(50, 150);
 		items.getRecycleBin().updatePos(700, 150);
 		
+
 		//Start the paint timer
 		theBigTimer = new Timer(paintDelay, new mainTimer());
 		theBigTimer.start();
 		allTimers.add(theBigTimer);
+
+		ScoreController.setScore(0);
 		
 		//mainGame.imageLoad();
 		//mainGame.initTitleScreen();
