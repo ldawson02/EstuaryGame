@@ -145,6 +145,7 @@ public class GameController {
 		
 		//Reset stuff from last game
 		ScoreController.setScore(0);
+		Storm.setAppeared(false);
 		items.removeAllDebris();
 		items.setAllBarriers();
 		items.removeAllPowers();
@@ -467,12 +468,19 @@ public class GameController {
 	
 	//The point of this class is to create a timer that calls paint
 	public class mainTimer implements ActionListener{
+		int maxTime = items.getScreenTimer().getMaxTime();
+		
 		public int scoringTime = 0;
-		final public int scoreCheck = items.getScreenTimer().getMaxTime()/500;
+		final public int scoreCheck = maxTime/500;
 		public int healthTime = 0;
-		final public int healthCheck = items.getScreenTimer().getMaxTime()/18;
+		final public int healthCheck = maxTime/18;
 		final public int delaySpotlight = 1000;
-
+		
+		public int stormTime = 0;
+		public int realStormTime = 0;
+		boolean stormChecked = false;
+		final public int stormCheck = maxTime*3/4; //storm check 3/4th into the game
+		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			mainGame.repaint();
@@ -483,8 +491,10 @@ public class GameController {
 				timeElapsed+=paintDelay;
 				scoringTime+=paintDelay;
 				healthTime+=paintDelay;
+				stormTime+=paintDelay;
 				items.getScreenTimer().setElapsedTime(timeElapsed);
 				
+				checkStormTime();
 				checkScoreTime();
 				checkOverallHealth();
 				if(items.getScreenTimer().getState()==eScreenTimerState.OFF){
@@ -493,6 +503,29 @@ public class GameController {
 				if(items.getHealthBar().getHealth() <= 0){
 					gameOver();
 				}
+			}
+		}
+		
+		public void checkStormTime() {
+			if (stormTime >= 10000){
+				HealthBar hb = items.getHealthBar();
+				if (!Storm.getAppeared() && (hb.getHealth() >= hb.getMaxHealth()*.75)) {
+					if (!stormChecked) {
+						realStormTime = stormTime + delaySpotlight*3;
+						stormChecked = true;
+						System.out.println("\nStorm incoming in 3 seconds!!");
+					}
+					//storm appears only when it hasn't appeared yet, and current health is 75% or more
+					callStorm(stormTime);
+				}
+			}
+
+		}
+		
+		public void callStorm(int time){
+			if (stormTime >= realStormTime) {
+				Storm.stormEffects(items, debrisMover);
+				Storm.setAppeared(true);
 			}
 		}
 		
@@ -868,7 +901,7 @@ public class GameController {
 		//checks if barr collided with any of the barriers and if it is empty
 		for (Barriers b : this.items.getAllBarriers()) {
 			if ((Collisions.checkCollision(b, barr) && (b.getType() == eBarrierType.EMPTY))) {
-				System.out.println("empty barrier collide");
+				//System.out.println("empty barrier collide");
 				return b;
 			}
 		}

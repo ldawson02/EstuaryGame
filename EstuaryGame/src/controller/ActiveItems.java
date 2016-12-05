@@ -78,10 +78,21 @@ public class ActiveItems {
 	public ArrayList<Barriers> getAllBarriers(){
 		return barriers;
 	}
+	
 	public void setAllBarriers(){
 		for(Barriers b: barriers){
 			b.setType(eBarrierType.EMPTY);
 		}
+	}
+	
+	public int numActiveBarriers() {
+		int count = 0;
+		for(Barriers b: barriers) {
+			if (b.getType() != eBarrierType.EMPTY) {
+				count++;
+			}
+		}
+		return count;
 	}
 	
 	public boolean removeBarrier(Barriers b){
