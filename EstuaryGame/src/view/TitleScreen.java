@@ -1,7 +1,9 @@
 package view;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,11 +12,12 @@ import java.awt.event.ComponentListener;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JPanel;
 
 import controller.GameController;
 import controller.MouseController;
 
-public class TitleScreen extends JComponent implements ActionListener{
+public class TitleScreen extends JPanel implements ActionListener{
 
     JButton btn1 = new JButton("Start");
     JButton btn2 = new JButton("Tutorial");
@@ -22,6 +25,7 @@ public class TitleScreen extends JComponent implements ActionListener{
     
     
     public TitleScreen(){
+    	this.setLayout(null);
     	btn1.setActionCommand("START");
     	btn1.addActionListener(this);
     	btn1.setBounds(new Rectangle(310,200,200,50));
@@ -31,9 +35,11 @@ public class TitleScreen extends JComponent implements ActionListener{
     	btn2.addActionListener(this);
     	btn2.setBounds(new Rectangle(310,275,200,50));
     	this.add(btn2);
+    	
+    	this.setBackground(Color.BLACK);
+    	repaint();
     }
 
-	
 	
 	public void actionPerformed(ActionEvent e){
 		CardLayout c1 = (CardLayout) (EstuaryGame.getCards().getLayout());
@@ -52,7 +58,7 @@ public class TitleScreen extends JComponent implements ActionListener{
         if(cmd.equals("TUTORIAL")){
         	c1.show(EstuaryGame.getCards(), "Tutorial");
         	//Any set up for tutorial to run
-        	
+
         }
     }
 	

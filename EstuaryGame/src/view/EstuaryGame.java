@@ -52,7 +52,6 @@ import model.*;
 import model.Barriers;
 import model.Bin;
 import model.Debris;
-import model.Gabions;
 import model.Floater;
 import model.HealthBar;
 import model.Player;
@@ -114,7 +113,6 @@ public class EstuaryGame extends JComponent{
                 tutorial = new Tutorial();
                 endScreen = new EndScreen();
                 
-    			
                 mainGame.addComponentListener ( new ComponentAdapter ()
                 {
                     public void componentShown ( ComponentEvent e )
@@ -170,6 +168,7 @@ public class EstuaryGame extends JComponent{
     	initImages();
     	
     }
+    
 
 	public static void initTitleScreen(){
 		//TODO: if we're lucky

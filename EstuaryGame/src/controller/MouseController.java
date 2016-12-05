@@ -9,16 +9,15 @@ import javax.swing.JPanel;
 
 import eNums.eBarrierType;
 import model.Barriers;
-import model.Gabions;
-import model.Wall;
+
 
 	public class MouseController extends JPanel implements MouseListener, MouseMotionListener {
 		
 		private GameController gc;
 
 		boolean dragging = false;
-		private Wall wallSpawn = new Wall(Barriers.getLeftEdge(), 390);
-		private Gabions gabionsSpawn = new Gabions(Barriers.getRightEdge(), 390);
+		private Barriers wallSpawn = new Barriers(Barriers.getLeftEdge(), 390, eBarrierType.Wall);
+		private Barriers gabionsSpawn = new Barriers(Barriers.getRightEdge(), 390, eBarrierType.Gabion);
 		private Barriers dragged = null;
 		private Barriers dropSpot = null;
 				
