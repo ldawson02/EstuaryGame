@@ -42,7 +42,7 @@ import model.Barriers;
 			Point mouseCoords = new Point(e.getX(), e.getY());
 			
 			if (dragged == null) {	//the dragged "barrier" is not set yet
-				System.out.println("Mouse: " + mouseCoords.x + " " + mouseCoords.y);
+				//System.out.println("Mouse: " + mouseCoords.x + " " + mouseCoords.y);
 				if (Collisions.pointInside(wallSpawn, mouseCoords)) {
 					dragged = new Barriers(e.getX(), e.getY()); //set it to the same coords as mouse click
 					dragged.setType(eBarrierType.Wall);  //set type to wall
@@ -58,7 +58,7 @@ import model.Barriers;
 				dragging = true; //mouse is being dragged now
 			}
 			repaint();
-			System.out.println("pressed");
+			//System.out.println("pressed");
 
 		}
 
@@ -71,7 +71,7 @@ import model.Barriers;
 			dragging = false;
 			dropSpot = gc.emptyBarrierCollision(dragged);
 			if ((dragged != null) && (dropSpot!=null)) {  //dragged temp to any of the barrier spaces that was empty
-				System.out.println("new barrier");
+				//System.out.println("new barrier");
 				if (dragged.getType() == eBarrierType.Wall) {
 					gc.setBarrierType(dragged, eBarrierType.Wall); 
 					dropSpot.setType(eBarrierType.Wall);
