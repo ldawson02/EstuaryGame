@@ -495,7 +495,15 @@ public class EstuaryGame extends JComponent{
     }
     
 
-    public void throwChoice(Debris d){
+    public int getScreenX() {
+		return screenX;
+	}
+
+	public int getScreenY() {
+		return screenY;
+	}
+
+	public void throwChoice(Debris d){
     	Object[] options = {"Trash", "Recycling"};
     	int n = JOptionPane.showOptionDialog(mainFrame, "Where does this belong?", "Estuary Game",
     		    JOptionPane.YES_NO_CANCEL_OPTION,

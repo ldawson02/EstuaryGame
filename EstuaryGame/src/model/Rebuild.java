@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import controller.ActiveItems;
 import controller.GameController;
@@ -62,8 +63,18 @@ public class Rebuild extends Powers {
 	}
 	
 	public void power(ArrayList<Barriers> barriers){
+		int empty = 0;
+		ArrayList<Barriers> bEmpty = new ArrayList<Barriers>();
 		for(Barriers b : barriers){
-			b.setType(eBarrierType.Gabion);
+			if(b.getType()==eBarrierType.EMPTY){
+				bEmpty.add(b);
+				empty++;
+			}
+		}
+		int add = empty/2;
+		Collections.shuffle(bEmpty);
+		for(int i = 0; i < add; i++){
+			bEmpty.get(i).setType(eBarrierType.Gabion);
 		}
 	}
 

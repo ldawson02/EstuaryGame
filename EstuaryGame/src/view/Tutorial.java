@@ -10,11 +10,20 @@ import javax.swing.JComponent;
 
 import controller.GameController;
 import controller.MouseController;
+import eNums.eTutorialState;
+import model.Item;
 
 public class Tutorial extends JComponent implements ActionListener{
 
 	JButton btn1 = new JButton("Go to main game ->");
-		
+	private eTutorialState state;
+	public boolean spotlight;
+	public int timeInStage;
+
+	public void setSpotlight(boolean t){
+		spotlight = t;
+	}
+
 		public Tutorial(){
 	    	btn1.setActionCommand("START GAME");
 	    	btn1.addActionListener(this);
@@ -24,6 +33,31 @@ public class Tutorial extends JComponent implements ActionListener{
 	    	
 	    }
 	
+		public eTutorialState getState(){
+			return state;
+		}
+		
+		public void nextState(){
+			state = state.nextState();
+		}
+		
+		public void debrisCaught(){
+			spotlight = false;
+		}
+		
+		public void stageComplete(){
+			timeInStage = 0;
+			nextState();
+		}
+		
+		public int getTimeInStage(){
+			return timeInStage;
+		}
+		
+		public void addTime(int t){
+			timeInStage+=t;
+		}
+		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			CardLayout c1 = (CardLayout) (EstuaryGame.getCards().getLayout());
