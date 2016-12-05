@@ -74,7 +74,11 @@ public class GameController {
 		
 	public GameController(EstuaryGame mainGame){
 		setMainGame(mainGame);
-		setup();
+		setup(true);
+	}
+	
+	public GameController(Tutorial t){
+		setup(false);
 	}
 	
 	public EstuaryGame getMainGame() {
@@ -111,7 +115,9 @@ public class GameController {
 		mainGame.bindKeyWith("x.up", KeyStroke.getKeyStroke("UP"), upAct);
 		mainGame.bindKeyWith("x.down", KeyStroke.getKeyStroke("DOWN"), downAct);
 	}
-	public void setup(){
+
+	
+	public void setup(boolean game){
 		//Add health bar!!
 		items.addHealthBar(new HealthBar());
 		
@@ -133,6 +139,7 @@ public class GameController {
 		downAct = new VAction(1 * mainPlayer.speed);
 		normalKeyBind();
 		
+		//Reset stuff from last game
 		ScoreController.setScore(0);
 		items.removeAllDebris();
 		items.setAllBarriers();
@@ -175,11 +182,15 @@ public class GameController {
 		theBigTimer.start();
 		allTimers.add(theBigTimer);
 
-		ScoreController.setScore(0);
 		
 		//mainGame.imageLoad();
 		//mainGame.initTitleScreen();
-		startGame();
+		if(game){
+			startGame();
+		}
+		else{
+			startTutorial();
+		}
 	}
 	
 	public void tearDown(){
@@ -226,6 +237,10 @@ public class GameController {
 		coastLErosion = new Timer(erodeDelay, LcoastMover);
 		coastRErosion.start();
 		coastLErosion.start();
+	}
+	
+	public void startTutorial(){
+		//probably needs to be a timer just for tutorial
 	}
 	
 	public void gameOver(){

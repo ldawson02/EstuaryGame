@@ -12,14 +12,16 @@ import java.awt.event.ComponentListener;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import controller.GameController;
 import controller.MouseController;
 
-public class EndScreen extends JComponent implements ActionListener{
+public class EndScreen extends JPanel implements ActionListener{
 	JButton btn3 = new JButton("Replay");
     
     public EndScreen(){
+    	this.setLayout(null);
     	btn3.setActionCommand("REPLAY");
     	btn3.addActionListener(this);
     	btn3.setBounds(new Rectangle(310,300,200,50));
@@ -34,7 +36,7 @@ public class EndScreen extends JComponent implements ActionListener{
                  System.out.println ( "End Screen shown" );
                  if(EndScreen.this.isShowing()){
              		System.out.println ( "Component hidden" );
-             		/*int endHealth = EstuaryGame.gc.getItems().getHealthBar().getHealth();
+             		int endHealth = EstuaryGame.gc.getItems().getHealthBar().getHealth();
                     JLabel label1 = new JLabel("Overall Health of Estuary: " + endHealth);
                     label1.setBounds(new Rectangle(200,150,600,30));
                     label1.setFont(label1.getFont().deriveFont(20.0f));
@@ -55,7 +57,7 @@ public class EndScreen extends JComponent implements ActionListener{
 
                     EndScreen.this.add(label1);
                     EndScreen.this.add(label2);
-                    EndScreen.this.repaint();*/
+                    EndScreen.this.repaint();
              	}
                  
          		
