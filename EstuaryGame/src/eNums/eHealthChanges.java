@@ -22,7 +22,10 @@ public enum eHealthChanges {
 	eHealthChanges(int delta) {
 		this.delta = delta;
 	}
-	
+	/**
+	 * get the delta
+	 * @return delta
+	 */
 	public int getDelta() {
 		return delta;
 	}
