@@ -19,40 +19,15 @@ import eNums.eBarrierType;
  * 
  *
  */
-public class Barriers extends Item implements Interactable, HealthChangers{
+public class Barriers extends Item{
 	private boolean protector = false;
 	//overall state of the barrier
-	private int health;
 	private eBarrierType type;
 	private Timer erosionTimer;
-	
 	private static int barrierY = 500;
-	
 	private static int leftEdge = 20;
 	private static int rightEdge = 740;
 	
-	/**the getter for leftedge
-	 * 
-	 * @return leftedge;
-	 */
-	public static int getLeftEdge() {
-		return leftEdge;
-	}
-	
-	/**
-	 * the getter for right edge
-	 * @return right edge
-	 */
-	public static int getRightEdge() {
-		return rightEdge;
-	}
-	/**
-	 * the getter for barrier
-	 * @return barriery
-	 */
-	public static int getBarrierY(){
-		return barrierY;
-	}
 	/**
 	 * Constructor for Barrier
 	 */
@@ -70,13 +45,31 @@ public class Barriers extends Item implements Interactable, HealthChangers{
 		type = t;
 	}
 	
-	public void build() {
-	}
-	public void decay(int time) {
-	}
-	public void crumble() {
+	
+	/**the getter for leftedge
+	 * 
+	 * @return leftedge;
+	 */
+	public static int getLeftEdge() {
+		return leftEdge;
 	}
 	
+	/**
+	 * the getter for right edge
+	 * @return right edge
+	 */
+	public static int getRightEdge() {
+		return rightEdge;
+	}
+	/**
+	 * the getter the y value for all barriers
+	 * @return barriery
+	 */
+	public static int getBarrierY(){
+		return barrierY;
+	}
+
+
 	/**
 	 * the barrier will erode and then the barrier type will be empty.
 	 */
@@ -94,18 +87,6 @@ public class Barriers extends Item implements Interactable, HealthChangers{
 
 
 	/**
-	 * the getter and setter for health
-	 * @return health
-	 */
-	public int getHealth() {
-		return health;
-	}
-
-	public void setHealth(int health) {
-		this.health = health;
-	}
-
-	/**
 	 * the getter and setter for type
 	 * @return type
 	 */
@@ -117,17 +98,8 @@ public class Barriers extends Item implements Interactable, HealthChangers{
 		this.type = type;
 	}
 
-	@Override
-	public void updateHealthBar() {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void PlayerCollision(Item item) {
-		// TODO Auto-generated method stub
-		
-	}
+
 	/**
 	 * we set up the left coast, when the loop less than 5, the space will add barrier in left
 	 * @return spaces.
