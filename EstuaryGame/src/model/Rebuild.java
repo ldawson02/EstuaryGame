@@ -44,11 +44,6 @@ public class Rebuild extends Powers {
 		//ActiveItems.powerups.remove(this);
 	}
 
-	@Override
-	public void PlayerCollision(Item item) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public int getVertex() {

@@ -38,6 +38,9 @@ public class DebrisTest {
 	static Debris recyc;
 	static Coast coast;
 	static GameController gc;
+	static Debris randomDebris1;
+	static Debris randomDebris2;
+	
 	
 	
 	
@@ -69,14 +72,14 @@ public class DebrisTest {
 	}
 	
 	@Test
-	public void testCaughtandThrownCorrectDebris() throws InterruptedException, AWTException{
+	public void testCaughtandThrownCorrectTrash() throws InterruptedException, AWTException{
 		Thread.sleep(5000);
 		
 		ArrayList<Debris> debris = gc.getItems().getAllDebris();
 		Collisions collision = new Collisions();
 		Debris d = debris.get(0);
 		for(Debris deb: debris){
-			if(deb.getState() == eFloaterState.MOVING){
+			if(deb.getState() == eFloaterState.MOVING && deb.getType() == eDebrisType.TRASH){
 				d = deb;
 				break;
 			}
@@ -89,26 +92,57 @@ public class DebrisTest {
 		d.catching();
 		assertEquals(d.getState(), eFloaterState.LIFTED);
 		
-		if(d.getType() == eDebrisType.RECYCLING){
-			ThrowChoice action1 = gc.new ThrowChoice(eThrowDirection.LEFT, d);
-			action1.actionPerformed(new ActionEvent(action1, ActionEvent.ACTION_PERFORMED, null){});
-			//ThrowChosen
-			ThrowChosen action2 = gc.new ThrowChosen(d);
-			action2.actionPerformed(new ActionEvent(action2, ActionEvent.ACTION_PERFORMED, null){});
-			System.out.println(d.getState());
+
+		ThrowChoice action1 = gc.new ThrowChoice(eThrowDirection.RIGHT, d);
+		action1.actionPerformed(new ActionEvent(action1, ActionEvent.ACTION_PERFORMED, null){});
+		//ThrowChosen
+		ThrowChosen action2 = gc.new ThrowChosen(d);
+		action2.actionPerformed(new ActionEvent(action2, ActionEvent.ACTION_PERFORMED, null){});
 			
-			assertEquals(d.getState(), eFloaterState.THROWING);
-			
+		assertEquals(d.getState(), eFloaterState.THROWING);
+		
+		spawnDebris action3 = gc.new spawnDebris();
+		action3.actionPerformed(new ActionEvent(action3, ActionEvent.ACTION_PERFORMED, null){});
+		
+		Thread.sleep(2000);
+		assertEquals(d.getState(), eFloaterState.RESTING);
+		//Resting on a bin
+		System.out.println("d POSITION: " + d.getPosY());
+		assertTrue(d.getPosY()==150);
+		
+		
+	}
+	
+	@Test
+	public void testCaughtandThrownCorrectRecycling() throws InterruptedException{
+		ArrayList<Debris> debris = gc.getItems().getAllDebris();
+		Collisions collision = new Collisions();
+		Debris d = debris.get(0);
+		for(Debris deb: debris){
+			if(deb.getState() == eFloaterState.MOVING && deb.getType() == eDebrisType.RECYCLING){
+				d = deb;
+				break;
+			}
 		}
-		if(d.getType() == eDebrisType.TRASH){
-			ThrowChoice action1 = gc.new ThrowChoice(eThrowDirection.RIGHT, d);
-			action1.actionPerformed(new ActionEvent(action1, ActionEvent.ACTION_PERFORMED, null){});
-			//ThrowChosen
-			ThrowChosen action2 = gc.new ThrowChosen(d);
-			action2.actionPerformed(new ActionEvent(action2, ActionEvent.ACTION_PERFORMED, null){});
+		int d_xpos = d.getPosX();
+		int d_ypos = d.getPosY();
+		gc.getMainPlayer().updatePos(d_xpos, d_ypos);
+		assertTrue(collision.checkCollision(gc.getMainPlayer(),d));
+		Thread.sleep(500);
+		d.catching();
+		assertEquals(d.getState(), eFloaterState.LIFTED);
+		
+		
+		ThrowChoice action1 = gc.new ThrowChoice(eThrowDirection.LEFT, d);
+		action1.actionPerformed(new ActionEvent(action1, ActionEvent.ACTION_PERFORMED, null){});
+		//ThrowChosen
+		ThrowChosen action2 = gc.new ThrowChosen(d);
+		action2.actionPerformed(new ActionEvent(action2, ActionEvent.ACTION_PERFORMED, null){});
+		System.out.println(d.getState());
 			
-			assertEquals(d.getState(), eFloaterState.THROWING);
-		}
+		assertEquals(d.getState(), eFloaterState.THROWING);
+			
+		
 		
 		spawnDebris action3 = gc.new spawnDebris();
 		action3.actionPerformed(new ActionEvent(action3, ActionEvent.ACTION_PERFORMED, null){});
@@ -118,17 +152,16 @@ public class DebrisTest {
 		//Resting on a bin
 		assertTrue(d.getPosY()==150);
 		
-		
 	}
 	@Test
-	public void testCaughtandThrownIncorrectDebris() throws InterruptedException, AWTException{
+	public void testCaughtandThrownIncorrectTrash() throws InterruptedException, AWTException{
 		Thread.sleep(5000);
 		
 		ArrayList<Debris> debris = gc.getItems().getAllDebris();
 		Collisions collision = new Collisions();
 		Debris d = debris.get(0);
 		for(Debris deb: debris){
-			if(deb.getState() == eFloaterState.MOVING){
+			if(deb.getState() == eFloaterState.MOVING && deb.getType() == eDebrisType.TRASH){
 				d = deb;
 				break;
 			}
@@ -141,24 +174,13 @@ public class DebrisTest {
 		d.catching();
 		assertEquals(d.getState(), eFloaterState.LIFTED);
 		
-		if(d.getType() == eDebrisType.RECYCLING){
-			ThrowChoice action1 = gc.new ThrowChoice(eThrowDirection.RIGHT, d);
-			action1.actionPerformed(new ActionEvent(action1, ActionEvent.ACTION_PERFORMED, null){});
-			//ThrowChosen
-			ThrowChosen action2 = gc.new ThrowChosen(d);
-			action2.actionPerformed(new ActionEvent(action2, ActionEvent.ACTION_PERFORMED, null){});
-			
-			assertEquals(d.getState(), eFloaterState.THROWING);
-			
-		}
-		if(d.getType() == eDebrisType.TRASH){
-			ThrowChoice action1 = gc.new ThrowChoice(eThrowDirection.LEFT, d);
-			action1.actionPerformed(new ActionEvent(action1, ActionEvent.ACTION_PERFORMED, null){});
-			//ThrowChosen
-			ThrowChosen action2 = gc.new ThrowChosen(d);
-			action2.actionPerformed(new ActionEvent(action2, ActionEvent.ACTION_PERFORMED, null){});
-			assertEquals(d.getState(), eFloaterState.THROWING);
-		}
+		
+		ThrowChoice action1 = gc.new ThrowChoice(eThrowDirection.LEFT, d);
+		action1.actionPerformed(new ActionEvent(action1, ActionEvent.ACTION_PERFORMED, null){});
+		//ThrowChosen
+		ThrowChosen action2 = gc.new ThrowChosen(d);
+		action2.actionPerformed(new ActionEvent(action2, ActionEvent.ACTION_PERFORMED, null){});
+		assertEquals(d.getState(), eFloaterState.THROWING);
 		
 		spawnDebris action3 = gc.new spawnDebris();
 		action3.actionPerformed(new ActionEvent(action3, ActionEvent.ACTION_PERFORMED, null){});
@@ -172,13 +194,70 @@ public class DebrisTest {
 	}
 	
 	@Test
+	public void testCaughtandThrownIncorrectRecycle() throws InterruptedException{
+		Thread.sleep(5000);
+		
+		ArrayList<Debris> debris = gc.getItems().getAllDebris();
+		Collisions collision = new Collisions();
+		Debris d = debris.get(0);
+		for(Debris deb: debris){
+			if(deb.getState() == eFloaterState.MOVING && deb.getType() == eDebrisType.RECYCLING){
+				d = deb;
+				break;
+			}
+		}
+		
+		ThrowChoice action1 = gc.new ThrowChoice(eThrowDirection.RIGHT, d);
+		action1.actionPerformed(new ActionEvent(action1, ActionEvent.ACTION_PERFORMED, null){});
+		//ThrowChosen
+		ThrowChosen action2 = gc.new ThrowChosen(d);
+		action2.actionPerformed(new ActionEvent(action2, ActionEvent.ACTION_PERFORMED, null){});
+			
+		assertEquals(d.getState(), eFloaterState.THROWING);
+		
+		spawnDebris action3 = gc.new spawnDebris();
+		action3.actionPerformed(new ActionEvent(action3, ActionEvent.ACTION_PERFORMED, null){});
+		Thread.sleep(2000);
+		assertEquals(d.getState(), eFloaterState.RESTING);
+		//Resting on a coast
+		assertTrue(d.getPosY()>300);
+		assertTrue(d.getPosX()<200 || d.getPosX()>600);
+			
+		
+		
+	}
+	
+	@Test
 	public void testThrowTrashCorrect() {
 		trash.catching();
 		trash.setCorrectBin(eDebrisType.TRASH);
 		trash.throwDebris(trash.getCorrectBin());	
 		assertEquals(trash.getState(), eFloaterState.THROWING);
-
 		assertEquals(eThrowDirection.RIGHT.getDirection(), eDebrisType.TRASH.getType());
+		
+		recyc.catching();
+		recyc.setCorrectBin(eDebrisType.RECYCLING);
+		recyc.throwDebris(recyc.getCorrectBin());	
+		assertEquals(recyc.getState(), eFloaterState.THROWING);
+		assertEquals(eThrowDirection.LEFT.getDirection(), eDebrisType.RECYCLING.getType());
+		
+		
+	}
+	
+	@Test
+	public void testSetType(){
+		randomDebris1 = new Debris(4,2);
+		randomDebris2 = new Debris(5,6);
+		assertEquals(randomDebris1.getPosX(), 4);
+		assertEquals(randomDebris1.getPosY(), 2);
+		assertEquals(randomDebris2.getPosX(), 5);
+		assertEquals(randomDebris2.getPosY(), 6);
+		
+		randomDebris1.setType(eDebrisType.TRASH);
+		randomDebris2.setType(eDebrisType.RECYCLING);
+		assertEquals(randomDebris1.getType(), eDebrisType.TRASH);
+		assertEquals(randomDebris2.getType(), eDebrisType.RECYCLING);
+		
 		
 		
 	}

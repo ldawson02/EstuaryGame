@@ -10,7 +10,7 @@ import controller.GameController;
  * @since 10/26/16
  */
 
-public abstract class Powers extends Floater implements Interactable {
+public abstract class Powers extends Floater {
 	
 	public Powers(int x, int y){
 		super(x,y);
