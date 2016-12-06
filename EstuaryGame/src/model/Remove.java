@@ -46,12 +46,6 @@ public class Remove extends Powers {
 	}
 
 
-	@Override
-	public void PlayerCollision(Item item) {
-		// TODO Auto-generated method stub
-		
-	}
-
 
 	@Override
 	public int getVertex() {

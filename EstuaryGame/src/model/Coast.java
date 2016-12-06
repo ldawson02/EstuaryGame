@@ -20,7 +20,7 @@ import eNums.eCoastState;
  * @author megan
  *
  */
-public class Coast extends Item implements HealthChangers{
+public class Coast extends Item{
 
 	
 
@@ -198,11 +198,7 @@ public class Coast extends Item implements HealthChangers{
 		return spaces;
 	}
 
-	@Override
-	public void updateHealthBar() {
-		// TODO Auto-generated method stub
-		
-	}
+
 /** 
  * get and set the state
  * @return state;
