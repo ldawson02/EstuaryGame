@@ -28,6 +28,9 @@ public class ScreenTimer extends Item {
 	
     private eScreenTimerState state;
 	
+    /**
+     * construct a screen timer
+     */
 	public ScreenTimer() {
 		state = eScreenTimerState.OFF;
 		maxTime = MAX_TIME;
@@ -125,10 +128,16 @@ public class ScreenTimer extends Item {
 		this.state = state;
 	}
 
+	/**
+	 * when start, the state is on
+	 */
 	public void start(){
 		this.state = eScreenTimerState.ON;
 	}
 	
+	/**
+	 * when the time does not remain, the game ends
+	 */
 	public void updateRemaining() {
 		timeRemaining = maxTime - elapsedTime;
 		if (timeRemaining <= 0) {
@@ -136,15 +145,23 @@ public class ScreenTimer extends Item {
 			System.out.println("Game over!");
 		}
 	}
-	
+	/**
+	 * screen timer freeze, set the state to frozen
+	 */
 	public void freeze(){
 		setState(eScreenTimerState.FROZEN);
 	}
 	
+	/**
+	 * the timer state on
+	 */
 	public void Continue(){
 		setState(eScreenTimerState.ON);
 	}
 	
+	/**
+	 * timer off
+	 */
 	public void endGame(){
 		setState(eScreenTimerState.OFF);
 	}

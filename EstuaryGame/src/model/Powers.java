@@ -12,6 +12,11 @@ import controller.GameController;
 
 public abstract class Powers extends Floater implements Interactable {
 	
+	/**
+	 * construct powers
+	 * @param x
+	 * @param y
+	 */
 	public Powers(int x, int y){
 		super(x,y);
 	};

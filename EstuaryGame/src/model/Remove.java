@@ -7,6 +7,11 @@ public class Remove extends Powers {
 	
 	private int vertex;
 	
+	/**
+	 * construct a remove function
+	 * @param x
+	 * @param y
+	 */
 	public Remove(int x, int y){
 		super(x,y);
 	};
@@ -18,6 +23,9 @@ public class Remove extends Powers {
 		
 	}
 
+	/**
+	 * set the state to lifted
+	 */
 	@Override
 	public void catching() {
 		this.setState(eFloaterState.LIFTED);
@@ -49,7 +57,9 @@ public class Remove extends Powers {
 		
 	}
 
-
+/**
+ * get and set the vertex
+ */
 	@Override
 	public int getVertex() {
 		return vertex;
