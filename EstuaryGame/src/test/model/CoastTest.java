@@ -8,6 +8,7 @@ import org.junit.Test;
 import controller.GameController;
 import model.Coast;
 import model.CoastR;
+import view.EstuaryGame;
 
 public class CoastTest {
 	
@@ -19,6 +20,7 @@ public class CoastTest {
 	public static void setUpBeforeClass() throws Exception {
 		coast = new CoastR();
 		coast.setErosionRate(erosionRate);
+		gc = new GameController(new EstuaryGame());
 	}
 
 
@@ -35,5 +37,7 @@ public class CoastTest {
 		coast.changeErosionRate(-5);
 		assertTrue(coast.getErosionRate() == erosionRate - 5);
 	}
+	
+	
 
 }
