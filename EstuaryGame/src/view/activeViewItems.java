@@ -10,6 +10,7 @@ import model.Player;
 
 public class activeViewItems {
 
+	
 	ArrayList<DebrisWrapper> debrisWrappers;
 	PlayerWrapper player;
 	
