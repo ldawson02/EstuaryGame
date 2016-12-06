@@ -37,7 +37,7 @@ public class GameController {
 
 	//the big shebang
 	private EstuaryGame mainGame;
-	Player mainPlayer;
+	private Player mainPlayer;
 	private static ActiveItems items = new ActiveItems();
 	private ImageLibrary library;
 	Action leftAct;
@@ -84,6 +84,7 @@ public class GameController {
 		tutorialMode = true;
 		setup(false);
 	}
+
 	
 	public EstuaryGame getMainGame() {
 		return mainGame;
@@ -129,18 +130,18 @@ public class GameController {
 		items.addScreenTimer(new ScreenTimer());
 		
 		//Create the player
-		mainPlayer = new Player();
-		items.setMainPlayer(mainPlayer);
-		mainPlayer.updatePos(380, 280); //These are hard coded
+		setMainPlayer(new Player());
+		items.setMainPlayer(getMainPlayer());
+		getMainPlayer().updatePos(380, 280); //These are hard coded
 		
 		//Connect the Collision controller w the Player
-		collision.setPlayer(mainPlayer);
+		collision.setPlayer(getMainPlayer());
 		
 		//bind the keys
-		leftAct = new HAction(-1 * mainPlayer.speed);
-		rightAct = new HAction(1 * mainPlayer.speed);
-		upAct = new VAction(-1 * mainPlayer.speed);
-		downAct = new VAction(1 * mainPlayer.speed);
+		leftAct = new HAction(-1 * getMainPlayer().speed);
+		rightAct = new HAction(1 * getMainPlayer().speed);
+		upAct = new VAction(-1 * getMainPlayer().speed);
+		downAct = new VAction(1 * getMainPlayer().speed);
 		normalKeyBind();
 		
 		//Reset stuff from last game
@@ -403,7 +404,7 @@ public class GameController {
 						//sequence of events for a caught Debris initiated
 						thisGame.caughtSetup(d);
 						//Move the trash to above the Player's head
-						d.updatePos(mainPlayer.getPosX()+mainPlayer.getWidth()/2 - d.getWidth()/2, mainPlayer.getPosY()-d.getHeight());
+						d.updatePos(getMainPlayer().getPosX()+getMainPlayer().getWidth()/2 - d.getWidth()/2, getMainPlayer().getPosY()-d.getHeight());
 					}
 					
 					//If the debris hit the coast this round, decrement health
@@ -634,7 +635,7 @@ public class GameController {
 					if(collision.checkCollision(p) && !thisGame.choosingThrow && !thisGame.initiatingPowerUp){
 						p.catching();
 						thisGame.caughtSetup(p);
-						p.updatePos(mainPlayer.getPosX()+mainPlayer.getWidth()/2 - p.getWidth()/2, mainPlayer.getPosY()-p.getHeight());
+						p.updatePos(getMainPlayer().getPosX()+getMainPlayer().getWidth()/2 - p.getWidth()/2, getMainPlayer().getPosY()-p.getHeight());
 					}
 					
 				}
@@ -795,7 +796,7 @@ public class GameController {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			mainPlayer.updatePosX(mainPlayer.getPosX() + moveSize);
+			getMainPlayer().updatePosX(getMainPlayer().getPosX() + moveSize);
 		}
 		
 	}
@@ -815,7 +816,7 @@ public class GameController {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			mainPlayer.updatePosY(mainPlayer.getPosY()+moveSize);
+			getMainPlayer().updatePosY(getMainPlayer().getPosY()+moveSize);
 		}
 		
 	}
@@ -908,6 +909,15 @@ public class GameController {
 		return null;
 	}
 
+	public Player getMainPlayer() {
+		return mainPlayer;
+	}
+
+
+	public void setMainPlayer(Player mainPlayer) {
+		this.mainPlayer = mainPlayer;
+	}
+
 	public class MouseController extends JPanel implements MouseListener, MouseMotionListener {
 
 		boolean dragging = false;
@@ -993,6 +1003,8 @@ public class GameController {
 		}
 		
 	}
+	
+	
 
 
 }

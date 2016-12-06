@@ -15,7 +15,7 @@ public class CoastRTest {
 	public CoastR coast;
 	int maxsize = 5;
 	int minsize = 0;
-	double erosionrate = 1.0;
+	int erosionrate = 1;
 	
 	//tentative: based on positions
 	//right coast  (all positions are X)
@@ -32,7 +32,7 @@ public class CoastRTest {
 	public void tearDownAfterClass() throws Exception {
 	}
 
-	@Before
+	/**@Before
 	public void setUp() throws Exception {
 		coast.setMaxsize(maxsize);
 		coast.setMinsize(minsize);
@@ -90,12 +90,12 @@ public class CoastRTest {
 		//Should not have changed yet
 		assertTrue(coast.getErosionRate() == erosionrate);
 		//Test a positive change
-		coast.changeErosionRate(1.0);
-		assertTrue(coast.getErosionRate() == erosionrate + 1.0);
+		coast.changeErosionRate(1);
+		assertTrue(coast.getErosionRate() == erosionrate + 1);
 		//Test a negative change
 		coast.setErosionRate(erosionrate);
-		coast.changeErosionRate(-0.5);
-		assertTrue(coast.getErosionRate() == erosionrate - 0.5);
+		coast.changeErosionRate(-5);
+		assertTrue(coast.getErosionRate() == erosionrate - 5);
 	}	
 	
 	@Test
@@ -112,5 +112,5 @@ public class CoastRTest {
 		assertEquals(coast.getPosX(), minposition);
 		coast.rebuild();
 		assertEquals(coast.getPosX(), maxposition);
-	}
+	}**/
 }

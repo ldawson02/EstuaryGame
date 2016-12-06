@@ -32,7 +32,7 @@ public class CoastLTest {
 	public void tearDownAfterClass() throws Exception {
 	}
 
-	@Before
+	/**@Before
 	public void setUp() throws Exception {
 		coast.setMaxsize(maxsize);
 		coast.setMinsize(minsize);
@@ -42,12 +42,12 @@ public class CoastLTest {
 
 	@After
 	public void tearDown() throws Exception {
-	}
+	}**/
 
 	/**
 	 * 
 	 */
-	@Test
+	/**@Test
 	public void erodeTest() {
 		//Should start at max size
 		assertEquals(coast.getSize(), maxsize);
@@ -115,5 +115,5 @@ public class CoastLTest {
 		assertEquals(coast.getPosX(), minposition);
 		coast.rebuild();
 		assertEquals(coast.getPosX(), maxposition);
-	}
+	}**/
 }

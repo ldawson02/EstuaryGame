@@ -2,49 +2,51 @@ package test.model;
 
 import static org.junit.Assert.*;
 
+import java.awt.AWTException;
+import java.awt.Desktop.Action;
+import java.awt.Robot;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+
+import javax.swing.KeyStroke;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import eNums.eFloaterState;
+import controller.Collisions;
+import controller.GameController;
 import eNums.eDebrisType;
+import eNums.eFloaterState;
 import eNums.eThrowDirection;
-import model.CoastL;
-import model.CoastR;
+import model.Coast;
 import model.Debris;
+import model.Player;
+import view.EstuaryGame;
 
 public class DebrisTest {
 
 	//TODO: Technically, the coasts and the debris need to be connected
 	//through the GameController
-	Debris trash;
-	Debris recyc;
-	CoastL coastL;
-	CoastR coastR;
+	static Debris trash;
+	static Debris recyc;
+	static Coast coast;
+	static GameController gc;
+	
 	
 	@BeforeClass
-	public void setUpBeforeClass() throws Exception {
+	public static void setUpBeforeClass() throws Exception {
 		trash = new Debris(eDebrisType.TRASH);
 		recyc = new Debris(eDebrisType.RECYCLING);
-		coastL = new CoastL();
-		coastR = new CoastR();
-	}
-
-	@AfterClass
-	public void tearDownAfterClass() throws Exception {
-	}
-
-	@Before
-	public void setUp() throws Exception {
+		coast = new Coast();
+		gc = new GameController(new EstuaryGame());
 		trash.setState(eFloaterState.MOVING);
 		recyc.setState(eFloaterState.MOVING);
 	}
 
-	@After
-	public void tearDown() throws Exception {
-	}
 
 	@Test
 	public void testRest() {
@@ -52,42 +54,93 @@ public class DebrisTest {
 		trash.rest();
 		assertEquals(trash.getState(), eFloaterState.RESTING);
 	}
+	@Test
+	public void testSpawnDebris() throws InterruptedException {
+		Thread.sleep(10000);
+		assertFalse(gc.getItems().getAllDebris().isEmpty());
+	}
+	@Test
+	public void testRestingDebris(){
+		//gc.getItems()
+	}
 	
-	/**
+	@Test
+	public void testCaughtandThrownCorrectDebris() throws InterruptedException, AWTException{
+		Thread.sleep(10000);
+		
+		ArrayList<Debris> debris = gc.getItems().getAllDebris();
+		Collisions collision = new Collisions();
+		Debris d = debris.get(0);
+		for(Debris deb: debris){
+			if(deb.getState() == eFloaterState.MOVING){
+				d = deb;
+				break;
+			}
+		}
+		int d_xpos = d.getPosX();
+		int d_ypos = d.getPosY();
+		gc.getMainPlayer().updatePos(d_xpos, d_ypos);
+		assertTrue(collision.checkCollision(gc.getMainPlayer(),d));
+		Thread.sleep(500);
+		assertEquals(d.getState(), eFloaterState.LIFTED);
+		
+		Robot robot = new Robot();
+		if(d.getType() == eDebrisType.RECYCLING){
+			/*robot.keyPress(KeyEvent.VK_LEFT);
+			Thread.sleep(250);
+			robot.keyRelease(KeyEvent.VK_LEFT);
+			Thread.sleep(250);
+			robot.keyPress(KeyEvent.VK_ENTER);
+			Thread.sleep(250);
+			robot.keyRelease(KeyEvent.VK_ENTER);
+			Thread.sleep(250);*/
+			
+			//controller.GameController.ThrowChoice action = new controller.GameController.ThrowChoice(eThrowDirection.LEFT,d);
+			//action.actionPerformed(new ActionEvent(, ActionEvent.ACTION_PERFORMED, null){});
+			//ThrowChosen
+			//System.out.println(d.getState());
+			//assertEquals(d.getState(), eFloaterState.THROWING);
+			
+		}
+		if(d.getType() == eDebrisType.TRASH){
+			/**robot.keyPress(KeyEvent.VK_RIGHT);
+			Thread.sleep(250);
+			robot.keyRelease(KeyEvent.VK_RIGHT);
+			Thread.sleep(250);
+			robot.keyPress(KeyEvent.VK_ENTER);
+			Thread.sleep(250);
+			robot.keyRelease(KeyEvent.VK_ENTER);
+			Thread.sleep(250);**/
+			//System.out.println(d.getState());
+			//assertEquals(d.getState(), eFloaterState.THROWING);
+		}
+		
+		
+	}
+	
 	@Test
 	public void testThrowTrashCorrect() {
-		//Empty coasts
-		assertEquals(coastL.getBuildUp().count(), 0);
-		assertEquals(coastR.getBuildUp().count(), 0);
-		//Throw it correctly
-		trash.setState(eFloaterState.LIFTED);
+		trash.catching();
 		trash.setCorrectBin(eDebrisType.TRASH);
-		trash.throwDebris(trash.getCorrectBin());
-		assertEquals(eThrowDirection.LEFT.getDirection(), eDebrisType.TRASH.getType());
-		//Should not build up the coasts
-		assertEquals(coastL.getBuildUp().count(), 0);
-		assertEquals(coastR.getBuildUp().count(), 0);
+		trash.throwDebris(trash.getCorrectBin());	
+		assertEquals(trash.getState(), eFloaterState.THROWING);
+
+		assertEquals(eThrowDirection.RIGHT.getDirection(), eDebrisType.TRASH.getType());
+		
+		
 	}
-	/**
-	@Test
+	
+	/**@Test
 	public void testThrowTrashIncorrect() {
-		//Empty coasts
-		assertEquals(coastL.getBuildUp().count(), 0);
-		assertEquals(coastR.getBuildUp().count(), 0);
-		//Throw it correctly
-		trash.setState(eDebrisState.LIFTED);
+		trash.catching();
 		trash.throwDebris(eThrowDirection.RIGHT);
 		assertEquals(eThrowDirection.RIGHT.getDirection(), eDebrisType.RECYCLING.getType());
-		//Should build up the right coast
-		assertEquals(coastR.getBuildUp().count(), 1);
-		assertEquals(coastL.getBuildUp().count(), 0);
+		
 	}
 	
 	@Test
 	public void testThrowRecyclingCorrect() {
-		//Empty coasts
-		assertEquals(coastL.getBuildUp().count(), 0);
-		assertEquals(coastR.getBuildUp().count(), 0);
+		
 		//Throw it correctly
 		recyc.setState(eDebrisState.LIFTED);
 		recyc.throwDebris(eThrowDirection.RIGHT);
@@ -117,7 +170,6 @@ public class DebrisTest {
 		assertTrue(recyc.correctBin(eThrowDirection.RIGHT));
 		assertFalse(trash.correctBin(eThrowDirection.RIGHT));
 		assertFalse(recyc.correctBin(eThrowDirection.LEFT));
-	}
-	*/
+	}**/
 }
 
