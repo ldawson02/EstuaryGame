@@ -12,14 +12,23 @@ import java.awt.event.ComponentListener;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import controller.GameController;
 import controller.MouseController;
 
-public class EndScreen extends JComponent implements ActionListener{
+/**
+ * when the game ends, end screen shows up to see if replay the game or not.
+ *
+ */
+public class EndScreen extends JPanel implements ActionListener{
 	JButton btn3 = new JButton("Replay");
     
+	/**
+	 * using jbutton to set up the bound, and add action listener to the button
+	 */
     public EndScreen(){
+    	this.setLayout(null);
     	btn3.setActionCommand("REPLAY");
     	btn3.addActionListener(this);
     	btn3.setBounds(new Rectangle(310,300,200,50));
@@ -29,12 +38,16 @@ public class EndScreen extends JComponent implements ActionListener{
 
     	 this.addComponentListener ( new ComponentAdapter ()
          {
+    		 /**
+    		  * when the game ends, there will be end health shown up, and also set up the jlabel to see the overall health
+    		  * if the end health equals to 0, then the estuary game was not saved, and set up other end health data to see the result
+    		  */
              public void componentShown ( ComponentEvent e )
              {
                  System.out.println ( "End Screen shown" );
                  if(EndScreen.this.isShowing()){
              		System.out.println ( "Component hidden" );
-             		/*int endHealth = EstuaryGame.gc.getItems().getHealthBar().getHealth();
+             		int endHealth = EstuaryGame.gc.getItems().getHealthBar().getHealth();
                     JLabel label1 = new JLabel("Overall Health of Estuary: " + endHealth);
                     label1.setBounds(new Rectangle(200,150,600,30));
                     label1.setFont(label1.getFont().deriveFont(20.0f));
@@ -55,7 +68,7 @@ public class EndScreen extends JComponent implements ActionListener{
 
                     EndScreen.this.add(label1);
                     EndScreen.this.add(label2);
-                    EndScreen.this.repaint();*/
+                    EndScreen.this.repaint();
              	}
                  
          		
@@ -68,7 +81,9 @@ public class EndScreen extends JComponent implements ActionListener{
              }
          } );
     }
-	
+	/**
+	 * if click the replay, the game will be reset up 
+	 */
 	public void actionPerformed(ActionEvent e){
 		CardLayout c1 = (CardLayout) (EstuaryGame.getCards().getLayout());
 		String cmd = e.getActionCommand();

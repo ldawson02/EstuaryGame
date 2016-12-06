@@ -52,7 +52,6 @@ import model.*;
 import model.Barriers;
 import model.Bin;
 import model.Debris;
-import model.Gabions;
 import model.Floater;
 import model.HealthBar;
 import model.Player;
@@ -92,6 +91,7 @@ public class EstuaryGame extends JComponent{
     static TitleScreen titleScreen;
     static EndScreen endScreen;
     static EstuaryGame mainGame;
+    static Tutorial tutorial;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -106,12 +106,13 @@ public class EstuaryGame extends JComponent{
                 final String TitleScreen = "TitleScreen";
                 final String MainGame = "MainGame";
                 final String EndScreen = "EndScreen";
+                final String Tutorial = "Tutorial";
                 
                 titleScreen = new TitleScreen();
                 mainGame = new EstuaryGame();
+                tutorial = new Tutorial();
                 endScreen = new EndScreen();
                 
-    			
                 mainGame.addComponentListener ( new ComponentAdapter ()
                 {
                     public void componentShown ( ComponentEvent e )
@@ -129,6 +130,7 @@ public class EstuaryGame extends JComponent{
                 
                 cards.add(titleScreen, TitleScreen);
                 cards.add(mainGame, MainGame);
+                cards.add(tutorial, Tutorial);
                 cards.add(endScreen, EndScreen);
                 
                 JFrame frame = new JFrame("Mainframe");
@@ -166,6 +168,7 @@ public class EstuaryGame extends JComponent{
     	initImages();
     	
     }
+    
 
 	public static void initTitleScreen(){
 		//TODO: if we're lucky
@@ -492,7 +495,15 @@ public class EstuaryGame extends JComponent{
     }
     
 
-    public void throwChoice(Debris d){
+    public int getScreenX() {
+		return screenX;
+	}
+
+	public int getScreenY() {
+		return screenY;
+	}
+
+	public void throwChoice(Debris d){
     	Object[] options = {"Trash", "Recycling"};
     	int n = JOptionPane.showOptionDialog(mainFrame, "Where does this belong?", "Estuary Game",
     		    JOptionPane.YES_NO_CANCEL_OPTION,

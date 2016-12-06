@@ -5,7 +5,7 @@ import eNums.eBarrierType;
 
 /***
  * the Gabion class has a constant gDecaytime
- * @author Pu
+ * 
  *
  */
 public class Gabions extends Barriers {

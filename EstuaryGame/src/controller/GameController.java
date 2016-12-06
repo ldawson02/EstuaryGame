@@ -1,3 +1,4 @@
+
 package controller;
 
 import model.*;
@@ -31,7 +32,13 @@ import eNums.eHealthChanges;
 import eNums.ePlayerState;
 import eNums.eScreenTimerState;
 import eNums.eThrowDirection;
+import eNums.eTutorialState;
 
+/**
+ * this class is the game controller
+ * 
+ *
+ */
 public class GameController {
 
 	//the big shebang
@@ -54,10 +61,9 @@ public class GameController {
 	Timer powersFloating;
 	final private int erodeDelay = 100;//TODO
 	
-	Timer coastRErosion;
-	Timer coastLErosion;
 	private GameController thisGame = this;
 	private ArrayList<Timer> allTimers = new ArrayList<Timer>();
+	private ArrayList<Timer> tutorialTimers = new ArrayList<Timer>();
 	
 	final private int paintDelay = 30;
 	Timer theBigTimer;
@@ -65,18 +71,37 @@ public class GameController {
 	
 	spawnDebris debrisMover;
 	spawnPowers powerMover;
-	erosion RcoastMover;
-	erosion LcoastMover;
+	//erosion RcoastMover;
+	//erosion LcoastMover;
 	
 	private boolean gameEnd;
+	public boolean tutorialMode = false;
+	public Tutorial tutorial;
 	
 	Collisions collision = new Collisions();
 		
+	/**
+	 * construct the game controller
+	 * @param mainGame
+	 */
 	public GameController(EstuaryGame mainGame){
 		setMainGame(mainGame);
-		setup();
+		setup(true);
+	}
+	/**
+	 * construct the game controller
+	 * @param t
+	 */
+	public GameController(Tutorial t){
+		tutorial = t;
+		tutorialMode = true;
+		setup(false);
 	}
 	
+	/**
+	 * main game getter and setter
+	 * @return
+	 */
 	public EstuaryGame getMainGame() {
 		return mainGame;
 	}
@@ -85,6 +110,10 @@ public class GameController {
 		this.mainGame = mainGame;
 	}
 
+	/**
+	 * get and set the items
+	 * @return items
+	 */
 	public static ActiveItems getItems() {
 		return items;
 	}
@@ -101,18 +130,34 @@ public class GameController {
 		return timeElapsed;
 	}
 	
+	/**
+	 * get spawn debris
+	 * @return
+	 */
+	public spawnDebris getSpawnDebris() {
+		return debrisMover;
+	}
 
+	/**
+	 * set up the keyboard using left, right, up and down
+	 */
 	public void normalKeyBind(){
 		mainGame.bindKeyWith("x.left", KeyStroke.getKeyStroke("LEFT"), leftAct);
 		mainGame.bindKeyWith("x.right", KeyStroke.getKeyStroke("RIGHT"), rightAct);
 		mainGame.bindKeyWith("x.up", KeyStroke.getKeyStroke("UP"), upAct);
 		mainGame.bindKeyWith("x.down", KeyStroke.getKeyStroke("DOWN"), downAct);
 	}
-	public void setup(){
-		//Start the paint timer
-		theBigTimer = new Timer(paintDelay, new mainTimer());
-		theBigTimer.start();
-		allTimers.add(theBigTimer);
+
+	/**
+	 * we set up the game, add the health bar, screen timer, player, bind the keys and other things listed in the comment
+	 * @param game
+	 */
+	public void setup(boolean game){
+		//Add health bar!!
+		items.addHealthBar(new HealthBar());
+		
+		//Add the screen Timer
+		items.addScreenTimer(new ScreenTimer());
 		
 		//Create the player
 		mainPlayer = new Player();
@@ -129,6 +174,9 @@ public class GameController {
 		downAct = new VAction(1 * mainPlayer.speed);
 		normalKeyBind();
 		
+		//Reset stuff from last game
+		ScoreController.setScore(0);
+		Storm.setAppeared(false);
 		items.removeAllDebris();
 		items.setAllBarriers();
 		items.removeAllPowers();
@@ -159,35 +207,43 @@ public class GameController {
 		items.getAllBarriers().get(6).setType(eBarrierType.Wall);
 		items.getAllBarriers().get(7).setType(eBarrierType.Gabion);
 		
-		//Add health bar!!
-		items.addHealthBar(new HealthBar());
 		
 		//Create the bins
 		items.getTrashBin().updatePos(50, 150);
 		items.getRecycleBin().updatePos(700, 150);
 		
-		
+
+		//Start the paint timer
+		theBigTimer = new Timer(paintDelay, new mainTimer());
+		theBigTimer.start();
+		allTimers.add(theBigTimer);
+
 		
 		//mainGame.imageLoad();
 		//mainGame.initTitleScreen();
-		startGame();
+		if(game){
+			startGame();
+		}
+		else{
+			startTutorial();
+		}
 	}
-	
+	//TODO
 	public void tearDown(){
 		mainGame.unbindKeyWith("GotoEndGame", KeyStroke.getKeyStroke("ENTER"));
 	}
 	
+	/**
+	 * start the game we set up the timer for debris and turn on the screen timer
+	 */
 	public void startGame(){
 		//set up automatic movements!
 		//	->create timer for debris
 		//Turn on the screen timer!
-		items.addScreenTimer(new ScreenTimer());
 		items.getScreenTimer().start();
 		
 		debrisMover = new spawnDebris();
 		powerMover = new spawnPowers();
-		RcoastMover = new erosion(items.getCoastR());
-		LcoastMover = new erosion(items.getCoastL());
 		
 		debrisFloating = new Timer(floatDelay, debrisMover);
 		debrisFloating.start();
@@ -197,13 +253,22 @@ public class GameController {
 		powersFloating.start();
 		allTimers.add(powersFloating);
 		
-		barrierErosion bErode;
+		erosionSetup();
+
+	}
+	/**
+	 * set up the erosion, the barrier will set the btimer and erosion timer
+	 */
+	public void erosionSetup(){
+		barrierErosion bErode; int i = 0;
 		for(Barriers b: items.getAllBarriers()){
 			bErode = new barrierErosion(b);
 			b.setbTimer(new Timer(this.erodeDelay, bErode));
 			b.geterosionTimer().start();
 			allTimers.add(b.geterosionTimer());
+			i++;
 		}
+		System.out.println("NUMBER OF EROSION TIMERS: " + i);
 		
 		coastErosion cErode;
 		for(Coast c : items.getCoast()){
@@ -212,12 +277,25 @@ public class GameController {
 			c.getErosionTimer().start();
 			allTimers.add(c.getErosionTimer());
 		}
-		coastRErosion = new Timer(erodeDelay, RcoastMover);
-		coastLErosion = new Timer(erodeDelay, LcoastMover);
-		coastRErosion.start();
-		coastLErosion.start();
 	}
-	
+	//TODO
+	public void startTutorial(){
+		//probably needs to be a timer just for tutorial
+		debrisMover = new spawnDebris(true);
+		powerMover = new spawnPowers();
+		
+		debrisFloating = new Timer(floatDelay, debrisMover);
+		debrisFloating.start();
+		tutorialTimers.add(debrisFloating);
+
+		
+		//Add power timer, but don't start it yet
+		powersFloating = new Timer(floatDelay, powerMover);
+		tutorialTimers.add(powersFloating);
+	}
+	/**
+	 * one the game overs, the timer stops and game act ends.
+	 */
 	public void gameOver(){
 		stopTimers();
 		Action endGameAct = new endGameAction();
@@ -225,16 +303,26 @@ public class GameController {
 		
 	}
 	
+	/**
+	 * stop the timer
+	 */
 	public void stopTimers(){
 		for(Timer t : allTimers){
 			t.stop();
 		}
 	}
+	/**
+	 * load the images
+	 */
 	public void imageLoad(){
 		//TODO: that method currently returns a completely empty instance
 		library = ImageLibrary.loadLibrary();
 	}
 	
+	/**
+	 * set up the caught
+	 * @param d
+	 */
 	public void caughtSetup(Debris d){
 		this.choosingThrow = true;
 		items.mainPlayer.setState(ePlayerState.Lifting);
@@ -264,13 +352,18 @@ public class GameController {
 		
 		
 	}
-	
+	/**
+	 * see comment
+	 */
 	public void thrownSetup(){
 		//Return the keys to their original state, allow Player to move
 		normalKeyBind();
 		mainGame.unbindKeyWith("throwDebris", KeyStroke.getKeyStroke("ENTER"));
 		this.choosingThrow = false;
 	}
+	/**
+	 * initiate the power
+	 */
 	public void initiatedPowerSetup(){
 		normalKeyBind();
 		mainGame.unbindKeyWith("throwDebris", KeyStroke.getKeyStroke("ENTER"));
@@ -307,12 +400,23 @@ public class GameController {
 		final public int rTime = 500;
 	
 		
+		/**
+		 * construct the spawndebris
+		 */
 		public spawnDebris(){
 			items.addDebris(newDebris());
 			resetTimer();
 		}
 		
-		//returns a new randomly generated piece of Debris
+		public spawnDebris(boolean t){
+			items.addDebris(newDebris());
+			resetTimer();
+		}
+		
+		/**
+		 * returns a new randomly generated piece of Debris
+		 * @return d
+		 */
 		public Debris newDebris(){
 			Random r = new Random();
 			//generate initial position;
@@ -333,20 +437,22 @@ public class GameController {
 			return d;
 		}
 		
-		//resets the spawnTimeDebris to a new randomly generated number (within range)
+		/**
+		 * resets the spawnTimeDebris to a new randomly generated number (within range)
+		 */
 		public void resetTimer(){
 			Random r = new Random();
 			spawnTimeDebris = r.nextInt(rTime) + aveTime - rTime/2;
 			timePassed = 0;
 		}
 		
+		/**
+		 * might want to put this for loop in its own class in the Controller and make each item float,
+		 * also set the debris state to lifted and more detail are listed in the comment line
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//if the timer goes off then add another piece of debris at the top
-			if(timePassed >= spawnTimeDebris){
-				items.addDebris(newDebris());
-				resetTimer();
-			}
+
 			ArrayList<Debris> toDelete = new ArrayList<Debris>();
 			//might want to put this for loop in its own class in the Controller
 			for(Debris d : items.getAllDebris()){
@@ -356,6 +462,9 @@ public class GameController {
 					if(!thisGame.choosingThrow && collision.checkCollision(d) && !thisGame.initiatingPowerUp){
 						//sets the Debris state to Lifted
 						d.catching();
+						if(tutorialMode){
+							tutorial.setSpotlight(false);
+						}
 						//sequence of events for a caught Debris initiated
 						thisGame.caughtSetup(d);
 						//Move the trash to above the Player's head
@@ -375,6 +484,9 @@ public class GameController {
 
 					//Update the healthbar if it hit on this round
 					if (d.getState() == eFloaterState.HITBIN) {
+						if(tutorialMode){
+							tutorial.nextState();
+						}
 						System.out.print("\nBin hit this round and");
 						if (d.getCorrectBin()) {
 							System.out.print(" bin was correct.\n");
@@ -398,25 +510,69 @@ public class GameController {
 			for(Debris del : toDelete){
 				items.removeDebris(del);
 			}
+			
+			if(tutorialMode){
+				//Don't add any more debris if it's tutorial mode
+				return;
+			}
+			
+			//if the timer goes off then add another piece of debris at the top
+			if(timePassed >= spawnTimeDebris){
+				items.addDebris(newDebris());
+				resetTimer();
+			}
+			
 			timePassed+=floatDelay;
 		}
 		
+		/**
+		 * update the average time
+		 * @param newTime
+		 */
 		public void updateAveTime(int newTime){
 			aveTime = newTime;
 		}
 		
 	}
 	
-	//The point of this class is to create a timer that calls paint
+	/**
+	 * The point of this class is to create a timer that calls paint
+	 * 
+	 *
+	 */
 	public class mainTimer implements ActionListener{
-
+		int maxTime = items.getScreenTimer().getMaxTime();
+		
+		public int scoringTime = 0;
+		final public int scoreCheck = maxTime/500;
+		public int healthTime = 0;
+		final public int healthCheck = maxTime/18;
+		final public int delaySpotlight = 1000;
+		
+		public int stormTime = 0;
+		public int realStormTime = 0;
+		boolean stormChecked = false;
+		final public int stormCheck = maxTime*3/4; //storm check 3/4th into the game
 		
 		@Override
+		/**
+		 * check the timer and set up the storm time, health time, scoring time and elapsed time
+		 */
 		public void actionPerformed(ActionEvent e) {
 			mainGame.repaint();
+			if(tutorialMode){
+				return;
+			}
 			if(items.getScreenTimer().getState() == eScreenTimerState.ON){
 				timeElapsed+=paintDelay;
+				scoringTime+=paintDelay;
+				healthTime+=paintDelay;
+				stormTime+=paintDelay;
 				items.getScreenTimer().setElapsedTime(timeElapsed);
+				
+				checkStormTime();
+				checkScoreTime();
+				checkOverallHealth();
 				if(items.getScreenTimer().getState()==eScreenTimerState.OFF){
 					gameOver();
 				}
@@ -425,14 +581,90 @@ public class GameController {
 				}
 			}
 		}
+		/**
+		 * set up the real storm time and call storm if stormchecked is true.
+		 */
+		public void checkStormTime() {
+			if (stormTime >= 10000){  //later change this to stormCheck
+				HealthBar hb = items.getHealthBar();
+				if (!Storm.getAppeared() && (hb.getHealth() >= hb.getMaxHealth()*.75)) {
+					if (!stormChecked) {
+						realStormTime = stormTime + delaySpotlight*3;
+						stormChecked = true;
+						System.out.println("\nStorm incoming in 3 seconds!!");
+					}
+					//storm appears only when it hasn't appeared yet, and current health is 75% or more
+					callStorm(stormTime);
+				}
+			}
+
+		}
+		/**
+		 * call storm if storm time larger than real time
+		 * @param time
+		 */
+		public void callStorm(int time){
+			if (stormTime >= realStormTime) {
+				Storm.stormEffects(items, debrisMover);
+				Storm.setAppeared(true);
+			}
+		}
 		
-		
+		/**
+		 * check the score time if it is larger than score check, the controller set the score health.
+		 */
+		public void checkScoreTime(){
+			if(scoringTime >= scoreCheck){
+				ScoreController.scoreHealth(items.getHealthBar().getHealth());
+				scoringTime = 0;
+			}
+		}
+		/**
+		 * TODO
+		 */
+		public void checkOverallHealth(){
+			if(healthTime >= healthCheck){
+				items.getHealthBar().update(eHealthChanges.RestingDebrisGradual.getDelta());
+				healthTime = 0;
+			}
+		}
+		/**
+		 * time elaperd getter
+		 * @return
+		 */
 		public int getTimeElapsed(){
 			return timeElapsed;
 		}
+		
+		//TODO
+		public void tutorialTimer(){
+			if(tutorial.getTimeInStage() > delaySpotlight){
+				tutorial.setSpotlight(true);
+			}
+			if(tutorial.getState()==eTutorialState.DEBRIS){
+				//check if you need to add another debris
+				int distance = mainGame.getScreenY();
+				for(Debris d : GameController.getItems().getAllDebris()){
+					if(d.getPosY() < distance){
+						distance = d.getPosY();
+					}
+				}
+				if(distance > mainGame.getScreenY()/4){
+					debrisMover.newDebris();
+				}
+				
+			}
+			tutorial.addTime(paintDelay);
+		}
+		
+
 	}
 	
-	//At (slightly) random intervals spawn powers, only should be initialized once!!
+	/**
+	 * At (slightly) random intervals spawn powers, only should be initialized once!!
+	 *
+	 *
+	 */
 	public class spawnPowers implements ActionListener{
 		public int timePassed = 0;
 		public int spawnTimePowers;
@@ -466,14 +698,18 @@ public class GameController {
 
 		}
 		
-		
+		/**
+		 * reset the timer
+		 */
 		public void resetTimer(){
 			Random r = new Random();
 			spawnTimePowers = r.nextInt(rTime) + aveTime - rTime/2;
 			timePassed = 0;
 		}
 		
-		//Unimplemented methods
+		/**
+		 * Unimplemented methods
+		 */
 		public void quickSpawn(){
 			items.addPower(newPower());
 		}
@@ -502,12 +738,12 @@ public class GameController {
 				}
 				else if(p.getState()==eFloaterState.INITIATED){
 					if(p instanceof Rebuild){	
-						//TODO:Rebuilding of coast
 						((Rebuild) p).power(items.getAllBarriers());
 						items.getHealthBar().update(eHealthChanges.CoastRebuilt.getDelta());
 					}
 					else{
 						//Removes all Debris from coast
+						//TODO: remove up to a certain amount of debris
 						items.removeAllRestingDebris();
 						items.getHealthBar().update(eHealthChanges.CoastDebrisRemoved.getDelta());
 						
@@ -533,7 +769,7 @@ public class GameController {
 
 	}
 	
-	//At (slightly) random intervals erode stuff
+/**	//At (slightly) random intervals erode stuff
 	//there should be one for each coast line, probably also gabions, independent erosion patterns
 	public class erosion implements ActionListener{
 		public int timePassed;
@@ -567,14 +803,21 @@ public class GameController {
 		}
 		
 	}
-	
+*/
+	/**
+	 * the coast erosion has a coast, and timer
+	 *
+	 */
 	public class coastErosion implements ActionListener{
 		private Coast coast;
 		public int timePassed;
 		public int erosionTime;
 		public int aveTime;
 		final public int rTime = 5000;
-		
+		/**
+		 * construct the coast erosion
+		 * @param c
+		 */
 		public coastErosion(Coast c){
 			coast = c;
 			Random r = new Random();
@@ -586,6 +829,9 @@ public class GameController {
 		
 		
 		@Override
+		/**
+		 * if time passed larger than erosion time, then the coast erode, otherwise reset the time passed.
+		 */
 		public void actionPerformed(ActionEvent e) {
 			if(coast.isProtected()){
 				//System.out.println("The coast is protected at: " + coast.getPosX());
@@ -604,36 +850,50 @@ public class GameController {
 		
 	}
 	
+	/**
+	 * 
+	 * this class has to have a barrier, erosion time, average time, and time passed variable
+	 *
+	 */
 	public class barrierErosion implements ActionListener{
 		private Barriers barrier;
 		public int timePassed;
 		public int erosionTime;
 		public int aveTime;
-		final public int rTime = 1000;
+		final public int rTime = 2000;
 		
+		/**
+		 * construct the barrier erosion
+		 * @param b
+		 */
 		public barrierErosion(Barriers b){
 			barrier = b;
-			Random r = new Random();
-			//assumes decay rate in Barriers is in milliseconds
-			aveTime = b.getDecayTime();
-			erosionTime = r.nextInt(rTime) + aveTime - rTime/2;
 		}
+		/**
+		 * set up the variable time
+		 */
 		public void newTime(){
 			Random r = new Random();
-			aveTime = barrier.getType().getDecay();
+			aveTime = barrier.getDecayTime();
 			erosionTime = r.nextInt(rTime) + aveTime - rTime/2;
 			System.out.println("new erosion: " + erosionTime);
 			
 		}
 		@Override
+		/**
+		 * if barrier's type is empty, then stops, and time passed larger than erosion time, the barrier will erode.
+		 * 
+		 */
 		public void actionPerformed(ActionEvent e) {
+			if(barrier.getType()==eBarrierType.EMPTY){
+				return;
+			}
 			if(timePassed == 0){
 				newTime();
 			}
 			if(timePassed >= erosionTime){
 				barrier.erode();
 				timePassed = 0;
-				barrier.geterosionTimer().stop();
 			}
 			else{
 				timePassed+=erodeDelay;
@@ -651,10 +911,17 @@ public class GameController {
 			this.moveSize = jump;
 		}
 		
+		/**
+		 * update the speed
+		 * @param jump
+		 */
 		public void updateSpeed(int jump){
 			this.moveSize = jump;
 		}
 		
+		/**
+		 * set up the main player's updated position
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			mainPlayer.updatePosX(mainPlayer.getPosX() + moveSize);
@@ -670,23 +937,37 @@ public class GameController {
 		public VAction(int jump){
 			this.moveSize = jump;
 		}
-		
+		/**
+		 * update the speed 
+		 * @param jump
+		 */
 		public void updateSpeed(int jump){
 			this.moveSize = jump;
 		}
 		
 		@Override
+		/**
+		 * update the main player's position
+		 */
 		public void actionPerformed(ActionEvent e) {
 			mainPlayer.updatePosY(mainPlayer.getPosY()+moveSize);
 		}
 		
 	}
 	
-	//When the player catches Debris, left and right keys bind with this action
+	/**
+	 * When the player catches Debris, left and right keys bind with this action
+	 *
+	 */
 	public class ThrowChoice extends AbstractAction{
 		private eThrowDirection dir;
 		private Debris caughtDebris;
 		
+		/**
+		 * consruct the throw choice
+		 * @param dir
+		 * @param d
+		 */
 		public ThrowChoice(eThrowDirection dir, Debris d){
 			this.dir = dir;
 			this.caughtDebris = d;
@@ -700,7 +981,10 @@ public class GameController {
 		
 	}
 	
-	//Action to be bound with the enter key when a piece of Debris is caught. Pressing enter releases the Debris
+	/**
+	 * Action to be bound with the enter key when a piece of Debris is caught. Pressing enter releases the Debri
+	 *
+	 */
 	public class ThrowChosen extends AbstractAction{
 
 		private Debris caughtDebris;
@@ -708,6 +992,9 @@ public class GameController {
 			this.caughtDebris = d;
 		}
 		@Override
+		/**
+		 * set up the item's state and caught debris's state
+		 */
 		public void actionPerformed(ActionEvent e) {
 			caughtDebris.setState(eFloaterState.THROWING);
 			items.getPlayer().setState(ePlayerState.Idle);
@@ -718,10 +1005,17 @@ public class GameController {
 	public class PowerInitiate extends AbstractAction{
 
 		private Powers caughtPower;
+		/**
+		 * construct powerinitiate
+		 * @param p
+		 */
 		public PowerInitiate(Powers p){
 			this.caughtPower = p;
 		}
 		@Override
+		/**
+		 * the basic set up for power
+		 */
 		public void actionPerformed(ActionEvent e) {
 			caughtPower.setState(eFloaterState.INITIATED);
 			thisGame.initiatedPowerSetup();
@@ -730,6 +1024,11 @@ public class GameController {
 		
 	}
 	
+	/**
+	 * to see if barriers has collision or not.
+	 * @param r
+	 * @return
+	 */
 	public Barriers collision(Rectangle r) {
 		/*
 		if ( ((x2 <= (x1+w1)) && (x2 >= x1)) //checking x left edge collisions
@@ -744,7 +1043,11 @@ public class GameController {
 
 		return null;
 	}
-	
+	/**
+	 * goes through list of barriers and changes the one with the matching coords to type t
+	 * @param barr
+	 * @param t
+	 */
 	public void setBarrierType(Barriers barr, eBarrierType t) {
 		//goes through list of barriers and changes the one with the matching coords to type t
 		for (Barriers b : this.items.getAllBarriers()) {
@@ -759,11 +1062,16 @@ public class GameController {
 		}
 	}
 	
+	/**
+	 * checks if barr collided with any of the barriers and if it is empty
+	 * @param barr
+	 * @return
+	 */
 	public Barriers emptyBarrierCollision(Barriers barr) {
 		//checks if barr collided with any of the barriers and if it is empty
 		for (Barriers b : this.items.getAllBarriers()) {
 			if ((Collisions.checkCollision(b, barr) && (b.getType() == eBarrierType.EMPTY))) {
-				System.out.println("empty barrier collide");
+				//System.out.println("empty barrier collide");
 				return b;
 			}
 		}
@@ -792,7 +1100,6 @@ public class GameController {
 			}
 			temp = new Rectangle(e.getX(), e.getY(), bWidth, bHeight); 
 			//the temp rectangle made here for dragging
-
 			dragging = true;
 			repaint();*/
 			System.out.println(e.getClickCount());

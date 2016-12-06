@@ -12,7 +12,13 @@ import model.Remove;
 public class MovementController {
 	static int windowHeight = 600;
 	static int windowWidth = 800;
-	static int sizeofDebrisCoast = 50; 
+	static int sizeofDebrisCoast = 50;
+	
+	/**
+	 * get a start position
+	 * @param shift
+	 * @return
+	 */
 	public static int getStart(int shift){
 		int xstart = 0;
 		if(shift <= windowWidth/2){
@@ -23,7 +29,10 @@ public class MovementController {
 		}
 		return xstart;	
 	}
-	
+	/**
+	 * update the move position 
+	 * @param floater
+	 */
 	public static void move(Floater floater){
 		if(floater.getState()==eFloaterState.RESTING){
 			return;
@@ -68,7 +77,11 @@ public class MovementController {
 		
 	}
 	
-
+/**
+ * when the trash or things has to go to the bin, the position set up s
+ * @param f
+ * @param b
+ */
 	
 	public static void Throw(Floater f, Bin b){
 			//System.out.println("bin" + b.getPosX());
@@ -86,7 +99,10 @@ public class MovementController {
 			
 		
 	}
-	
+	/**
+	 * When things has a wrong bin move, reset the position
+	 * @param f
+	 */
 	public static void wrongBinMove(Floater f){
 		double deltaX;
 		if(f.getPosX() < windowWidth/2){

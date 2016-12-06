@@ -7,17 +7,36 @@ import controller.*;
 import eNums.eBarrierType;
 import model.*;
 
+/**
+ * the collision has a mainplaer
+ * 
+ *
+ */
 public class Collisions {
 	private Player mainPlayer;
 	
+	/**
+	 * set the player
+	 * @param p
+	 */
 	public void setPlayer(Player p){
 		mainPlayer = p;
 	}
-	
+	/**
+	 * check the collison
+	 * @param i
+	 * @return
+	 */
 	public boolean checkCollision(Item i){
 		return checkCollision(mainPlayer, i);
 	}
 	
+	/**
+	 * when item i1 and item i2 interacts, collection happens.
+	 * @param i1
+	 * @param i2
+	 * @return
+	 */
 	public static boolean checkCollision(Item i1, Item i2){		
 		/*
 		int i1L = i1.getPosX();
@@ -42,10 +61,15 @@ public class Collisions {
 		
 
 	}
-	
+	/**
+	 * convert the item into rectangle
+	 * @param i
+	 * @param p
+	 * @return
+	 */
 	public static boolean pointInside(Item i, Point p) {
 		//convert item into rectangle
-		System.out.println("point inside");
+		//System.out.println("point inside");
 		Rectangle r = new Rectangle(i.getPosX(), i.getPosY(), i.getWidth(), i.getHeight());
 		if (r.contains(p)) {  //if p is within bounds of r (the item)
 			return true;

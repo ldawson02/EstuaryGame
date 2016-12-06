@@ -21,7 +21,6 @@ import eNums.eBarrierType;
  */
 public class Barriers extends Item implements Interactable, HealthChangers{
 	private boolean protector = false;
-	private int decayTime = 7000;
 	//overall state of the barrier
 	private int health;
 	private eBarrierType type;
@@ -64,6 +63,13 @@ public class Barriers extends Item implements Interactable, HealthChangers{
 		type = eBarrierType.EMPTY;
 	};
 	
+	public Barriers(int x, int y, eBarrierType t){
+		super(x,y);
+		setWidth(40);
+		setHeight(20);
+		type = t;
+	}
+	
 	public void build() {
 	}
 	public void decay(int time) {
@@ -83,12 +89,9 @@ public class Barriers extends Item implements Interactable, HealthChangers{
 	 * @return decaytime;
 	 */
 	public int getDecayTime() {
-		return decayTime;
+		return this.getType().getDecay();
 	}
 
-	public void setDecayTime(int decayTime) {
-		this.decayTime = decayTime;
-	}
 
 	/**
 	 * the getter and setter for health
