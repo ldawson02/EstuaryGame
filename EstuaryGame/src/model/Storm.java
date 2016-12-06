@@ -37,7 +37,7 @@ public class Storm {
 		System.out.println("storm commence");
 		destroyBarriers(ai);
 		System.out.println("done barriers destroyed");
-		addDebris(sd);
+		addDebris(ai, sd);
 		System.out.println("done debris added");
 	}
 	
@@ -67,11 +67,11 @@ public class Storm {
 	/**
 	 * Adds 5-10 debris to the coast
 	 */
-	public static void addDebris(spawnDebris sd) {
+	public static void addDebris(ActiveItems ai, spawnDebris sd) {
 		
 		int addDebris = (int) (Math.random() * 6 + 5); 
 		for (int i = 0; i < addDebris; i++) {
-			sd.newDebris();
+			ai.addDebris(sd.newDebris());
 			System.out.println("storm debris created");
 		}
 		System.out.print(addDebris);

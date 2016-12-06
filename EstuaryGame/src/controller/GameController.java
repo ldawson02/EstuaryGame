@@ -507,7 +507,7 @@ public class GameController {
 		}
 		
 		public void checkStormTime() {
-			if (stormTime >= 10000){
+			if (stormTime >= 10000){  //later change this to stormCheck
 				HealthBar hb = items.getHealthBar();
 				if (!Storm.getAppeared() && (hb.getHealth() >= hb.getMaxHealth()*.75)) {
 					if (!stormChecked) {
