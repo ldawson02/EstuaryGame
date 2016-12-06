@@ -22,26 +22,18 @@ import eNums.eCoastState;
  */
 public class Coast extends Item implements HealthChangers{
 
-	/**
-	 * The current size of the coast
-	 */
-	private int size;
 	
-	/**
-	 * The minimum size of the coast
-	 */
-	private int minsize;
+
 	
 	/**
 	 * The maximum size of the coast
 	 */
-	private int maxsize;
 	private int height = 30;
 	private int width = 50;
 	/**
 	 * The rate at which it erodes
 	 */
-	private double erosionRate = 10000;
+	private int erosionRate = 10000;
 	
 	private Barriers barrier;
 	private Timer erosionTimer;
@@ -94,47 +86,9 @@ public class Coast extends Item implements HealthChangers{
 	public void setBarrier(Barriers b){
 		this.barrier = b;
 	}
-	/**
-	 * @return the size
-	 */
-	public int getSize() {
-		return size;
-	}
+	
 
-	/**
-	 * @param size the size to set
-	 */
-	public void setSize(int size) {
-		this.size = size;
-	}
 
-	/**
-	 * @return the minsize
-	 */
-	public int getMinsize() {
-		return minsize;
-	}
-
-	/**
-	 * @param minsize the minsize to set
-	 */
-	public void setMinsize(int minsize) {
-		this.minsize = minsize;
-	}
-
-	/**
-	 * @return the maxsize
-	 */
-	public int getMaxsize() {
-		return maxsize;
-	}
-
-	/**
-	 * @param maxsize the maxsize to set
-	 */
-	public void setMaxsize(int maxsize) {
-		this.maxsize = maxsize;
-	}
 
 	/**
 	 * @return the erosionRate
@@ -146,7 +100,7 @@ public class Coast extends Item implements HealthChangers{
 	/**
 	 * @param erosionRate the erosionRate to set
 	 */
-	public void setErosionRate(double erosionRate) {
+	public void setErosionRate(int erosionRate) {
 		this.erosionRate = erosionRate;
 	}
 
@@ -193,7 +147,8 @@ public class Coast extends Item implements HealthChangers{
 	 * Changes the erosion rate by the specified amount
 	 * @param amount
 	 */
-	public void changeErosionRate(double amount) {
+	public void changeErosionRate(int amount) {
+		this.erosionRate = this.erosionRate + amount;
 		
 	}
 	/**

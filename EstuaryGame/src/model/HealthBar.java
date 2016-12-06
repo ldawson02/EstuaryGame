@@ -36,7 +36,7 @@ public class HealthBar extends Item {
 	public void update(int points) {
 		this.health += points;
 		if (health > maxHealth) {
-			health = 70;
+			health = 100;
 		}
 		else if (health < minHealth) {
 			health = 0;
