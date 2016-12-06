@@ -45,7 +45,7 @@ public class Collisions {
 	
 	public static boolean pointInside(Item i, Point p) {
 		//convert item into rectangle
-		System.out.println("point inside");
+		//System.out.println("point inside");
 		Rectangle r = new Rectangle(i.getPosX(), i.getPosY(), i.getWidth(), i.getHeight());
 		if (r.contains(p)) {  //if p is within bounds of r (the item)
 			return true;

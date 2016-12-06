@@ -2,7 +2,9 @@ package model;
 
 import java.util.ArrayList;
 
+import controller.ActiveItems;
 import controller.GameController;
+import controller.GameController.spawnDebris;
 import eNums.eBarrierType;
 import eNums.eDebrisType;
 
@@ -16,46 +18,61 @@ public class Storm {
 	* @version 1.0
 	* @since 10/25/16
 	*/
-		
-	/**
-	 * Constructs a Storm at 0,0
-	 */
+	
+	private static boolean appeared = false;
+	
+	public static boolean getAppeared() {
+		return appeared;
+	}
+	
+	public static void setAppeared(boolean b) {
+		appeared = b;
+	}
 	
 	/**
 	 * Makes the storm in the game at x, y 
 	 */
-	public void appear() {
-		
+	
+	public static void stormEffects(ActiveItems ai, spawnDebris sd) {
+		System.out.println("storm commence");
+		destroyBarriers(ai);
+		System.out.println("done barriers destroyed");
+		addDebris(ai, sd);
+		System.out.println("done debris added");
 	}
 	
 	/**
-	 * Destroys the barriers 
+	 * Destroys the half of the existing barriers
 	 */
-	public void destroyBarriers(GameController gc) {
-		//50%
-		int destroyBarriers = gc.getItems().getAllBarriers().size() / 2;
+	public static void destroyBarriers(ActiveItems ai) {
 		
-		while (destroyBarriers > 0) {
-			ArrayList<Barriers> gcBarriers = gc.getItems().getAllBarriers();
-			int random = (int) (Math.random() * gcBarriers.size());
-			if (gcBarriers.get(random).getType() != eBarrierType.EMPTY) {
-				gc.getItems().getAllBarriers().remove(random);
-				destroyBarriers--;
+		int activeBarriers = ai.numActiveBarriers();
+		System.out.println("# active barriers: " + activeBarriers);
+		int destroyBarriers = activeBarriers/2;
+		//# of barriers to be destroyed
+		
+		//while (!ai.allEmptyBarriers()) {
+			while (destroyBarriers > 0) {
+				ArrayList<Barriers> barriers = ai.getAllBarriers();
+				int random = (int) (Math.random() * barriers.size());
+				if (barriers.get(random).getType() != eBarrierType.EMPTY) {
+					barriers.get(random).setType(eBarrierType.EMPTY);
+					destroyBarriers--;
+					System.out.println("storm destroyed a barrier");
+				}
 			}
-		}
-	}
-	
-	public void stormEffects(GameController gc) {
+		
 	}
 	
 	/**
-	 * Adds a # of trash, numTrash
+	 * Adds 5-10 debris to the coast
 	 */
-	public void addDebris(GameController gc) {
-		//total+5-10
+	public static void addDebris(ActiveItems ai, spawnDebris sd) {
+		
 		int addDebris = (int) (Math.random() * 6 + 5); 
 		for (int i = 0; i < addDebris; i++) {
-			
+			ai.addDebris(sd.newDebris());
+			System.out.println("storm debris created");
 		}
 		System.out.print(addDebris);
 	}

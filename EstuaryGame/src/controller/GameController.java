@@ -37,7 +37,7 @@ public class GameController {
 
 	//the big shebang
 	private EstuaryGame mainGame;
-	Player mainPlayer;
+	private Player mainPlayer;
 	private static ActiveItems items = new ActiveItems();
 	private ImageLibrary library;
 	Action leftAct;
@@ -84,6 +84,7 @@ public class GameController {
 		tutorialMode = true;
 		setup();
 	}
+
 	
 	public void tutorialOff(){
 		tutorialMode = false;
@@ -136,22 +137,23 @@ public class GameController {
 		items.addScreenTimer(new ScreenTimer());
 		
 		//Create the player
-		mainPlayer = new Player();
-		items.setMainPlayer(mainPlayer);
-		mainPlayer.updatePos(380, 280); //These are hard coded
+		setMainPlayer(new Player());
+		items.setMainPlayer(getMainPlayer());
+		getMainPlayer().updatePos(380, 280); //These are hard coded
 		
 		//Connect the Collision controller w the Player
-		collision.setPlayer(mainPlayer);
+		collision.setPlayer(getMainPlayer());
 		
 		//bind the keys
-		leftAct = new HAction(-1 * mainPlayer.speed);
-		rightAct = new HAction(1 * mainPlayer.speed);
-		upAct = new VAction(-1 * mainPlayer.speed);
-		downAct = new VAction(1 * mainPlayer.speed);
+		leftAct = new HAction(-1 * getMainPlayer().speed);
+		rightAct = new HAction(1 * getMainPlayer().speed);
+		upAct = new VAction(-1 * getMainPlayer().speed);
+		downAct = new VAction(1 * getMainPlayer().speed);
 		normalKeyBind();
 		
 		//Reset stuff from last game
 		ScoreController.setScore(0);
+		Storm.setAppeared(false);
 		items.removeAllDebris();
 		items.setAllBarriers();
 		items.removeAllPowers();
@@ -444,7 +446,8 @@ public class GameController {
 			for(Debris d : items.getAllDebris()){
 				//make each item float
 				if(d.getState()==eFloaterState.MOVING){
-					move(d);	
+
+					move(d);
 					//If the debris hit the coast this round, decrement health
 					if (d.getState() == eFloaterState.RESTING) {
 						System.out.println("Debris hit coast");
@@ -477,11 +480,20 @@ public class GameController {
 	
 	//The point of this class is to create a timer that calls paint
 	public class mainTimer implements ActionListener{
+		int maxTime = items.getScreenTimer().getMaxTime();
+		
 		public int scoringTime = 0;
-		final public int scoreCheck = items.getScreenTimer().getMaxTime()/500;
+		final public int scoreCheck = maxTime/500;
 		public int healthTime = 0;
-		final public int healthCheck = items.getScreenTimer().getMaxTime()/18;
 
+		final public int healthCheck = maxTime/18;
+		final public int delaySpotlight = 1000;
+		
+		public int stormTime = 0;
+		public int realStormTime = 0;
+		boolean stormChecked = false;
+		final public int stormCheck = maxTime*3/4; //storm check 3/4th into the game
+		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			mainGame.repaint();
@@ -490,8 +502,10 @@ public class GameController {
 				timeElapsed+=paintDelay;
 				scoringTime+=paintDelay;
 				healthTime+=paintDelay;
+				stormTime+=paintDelay;
 				items.getScreenTimer().setElapsedTime(timeElapsed);
 				
+				checkStormTime();
 				checkScoreTime();
 				checkOverallHealth();
 				if(items.getScreenTimer().getState()==eScreenTimerState.OFF){
@@ -500,6 +514,29 @@ public class GameController {
 				if(items.getHealthBar().getHealth() <= 0){
 					gameOver();
 				}
+			}
+		}
+		
+		public void checkStormTime() {
+			if (stormTime >= 10000){  //later change this to stormCheck
+				HealthBar hb = items.getHealthBar();
+				if (!Storm.getAppeared() && (hb.getHealth() >= hb.getMaxHealth()*.75)) {
+					if (!stormChecked) {
+						realStormTime = stormTime + delaySpotlight*3;
+						stormChecked = true;
+						System.out.println("\nStorm incoming in 3 seconds!!");
+					}
+					//storm appears only when it hasn't appeared yet, and current health is 75% or more
+					callStorm(stormTime);
+				}
+			}
+
+		}
+		
+		public void callStorm(int time){
+			if (stormTime >= realStormTime) {
+				Storm.stormEffects(items, debrisMover);
+				Storm.setAppeared(true);
 			}
 		}
 		
@@ -771,7 +808,7 @@ public class GameController {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			mainPlayer.updatePosX(mainPlayer.getPosX() + moveSize);
+			getMainPlayer().updatePosX(getMainPlayer().getPosX() + moveSize);
 		}
 		
 	}
@@ -791,7 +828,7 @@ public class GameController {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			mainPlayer.updatePosY(mainPlayer.getPosY()+moveSize);
+			getMainPlayer().updatePosY(getMainPlayer().getPosY()+moveSize);
 		}
 		
 	}
@@ -877,11 +914,20 @@ public class GameController {
 		//checks if barr collided with any of the barriers and if it is empty
 		for (Barriers b : this.items.getAllBarriers()) {
 			if ((Collisions.checkCollision(b, barr) && (b.getType() == eBarrierType.EMPTY))) {
-				System.out.println("empty barrier collide");
+				//System.out.println("empty barrier collide");
 				return b;
 			}
 		}
 		return null;
+	}
+
+	public Player getMainPlayer() {
+		return mainPlayer;
+	}
+
+
+	public void setMainPlayer(Player mainPlayer) {
+		this.mainPlayer = mainPlayer;
 	}
 
 	public class MouseController extends JPanel implements MouseListener, MouseMotionListener {
@@ -969,6 +1015,8 @@ public class GameController {
 		}
 		
 	}
+	
+	
 
 
 }
