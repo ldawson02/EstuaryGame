@@ -14,6 +14,11 @@ import eNums.eBarrierType;
  * @version 1.0
  * @since 10/25/16
  */
+/**barrier class has a constant decaytime, and has health which type of barrier erosion time, and constant barriery,leftedge and rightedge
+ * 
+ * 
+ *
+ */
 public class Barriers extends Item implements Interactable, HealthChangers{
 	private boolean protector = false;
 	private int decayTime = 7000;
@@ -27,14 +32,25 @@ public class Barriers extends Item implements Interactable, HealthChangers{
 	private static int leftEdge = 20;
 	private static int rightEdge = 740;
 	
+	/**the getter for leftedge
+	 * 
+	 * @return leftedge;
+	 */
 	public static int getLeftEdge() {
 		return leftEdge;
 	}
 	
+	/**
+	 * the getter for right edge
+	 * @return right edge
+	 */
 	public static int getRightEdge() {
 		return rightEdge;
 	}
-	
+	/**
+	 * the getter for barrier
+	 * @return barriery
+	 */
 	public static int getBarrierY(){
 		return barrierY;
 	}
@@ -54,10 +70,18 @@ public class Barriers extends Item implements Interactable, HealthChangers{
 	}
 	public void crumble() {
 	}
+	
+	/**
+	 * the barrier will erode and then the barrier type will be empty.
+	 */
 	public void erode(){
 		this.setType(eBarrierType.EMPTY);
 	}
 
+	/**
+	 * the decaytime getter and setter
+	 * @return decaytime;
+	 */
 	public int getDecayTime() {
 		return decayTime;
 	}
@@ -66,6 +90,10 @@ public class Barriers extends Item implements Interactable, HealthChangers{
 		this.decayTime = decayTime;
 	}
 
+	/**
+	 * the getter and setter for health
+	 * @return health
+	 */
 	public int getHealth() {
 		return health;
 	}
@@ -74,6 +102,10 @@ public class Barriers extends Item implements Interactable, HealthChangers{
 		this.health = health;
 	}
 
+	/**
+	 * the getter and setter for type
+	 * @return type
+	 */
 	public eBarrierType getType() {
 		return type;
 	}
@@ -93,7 +125,10 @@ public class Barriers extends Item implements Interactable, HealthChangers{
 		// TODO Auto-generated method stub
 		
 	}
-	
+	/**
+	 * we set up the left coast, when the loop less than 5, the space will add barrier in left
+	 * @return spaces.
+	 */
 	public static ArrayList<Barriers> setUpLeftCoast() {
 		ArrayList<Barriers> spaces = new ArrayList<Barriers>();
 		
@@ -103,7 +138,10 @@ public class Barriers extends Item implements Interactable, HealthChangers{
 		
 		return spaces;
 	}
-	
+	/**
+	 * we set up the right coast, when the loop less than 5, the space will add barrier in right
+	 * @return spaces.
+	 */
 	public static ArrayList<Barriers> setUpRightCoast() {
 		ArrayList<Barriers> spaces = new ArrayList<Barriers>();
 		
@@ -113,7 +151,11 @@ public class Barriers extends Item implements Interactable, HealthChangers{
 		
 		return spaces;
 	}
-	
+	/**
+	 * set up the barrier type, we goes through list of barriers and changes the one with the matching coords to type t, if matches, set the type to t
+	 * @param barr
+	 * @param t
+	 */
 	public static void setBarrierType(Barriers barr, eBarrierType t) {
 		//goes through list of barriers and changes the one with the matching coords to type t
 		for (Barriers b : GameController.getItems().getAllBarriers()) {
@@ -126,14 +168,25 @@ public class Barriers extends Item implements Interactable, HealthChangers{
 		return protector;
 	}
 
+	/**
+	 * set the protector
+	 * @param protector
+	 */
 	public void setProtector(boolean protector) {
 		this.protector = protector;
 	}
-
+/**
+ * get the erosion timer
+ * @return erosiontimer;
+ */
 	public Timer geterosionTimer() {
 		return erosionTimer;
 	}
 
+	/** 
+	 * set the btimer
+	 * @param bTimer
+	 */
 	public void setbTimer(Timer bTimer) {
 		this.erosionTimer = bTimer;
 	}

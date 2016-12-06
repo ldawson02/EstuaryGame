@@ -18,13 +18,21 @@ public class HorseshoeCrab extends Friend{
 	public int yloc;
 	//public Location current;
 	//public Location destination;
-	
+	/**
+	 * construct a horseshoe crab
+	 * @param x
+	 * @param y
+	 */
 	public HorseshoeCrab(int x, int y /*Location destination, Location current*/) {
 		this.xloc = x;
 		this.yloc = y;
 		//this.destination = destination;
 		//this.current = current;
 	}
+	/**
+	 * xloc getter and setter
+	 * @return
+	 */
 	public int getXloc() {
 		return xloc;
 	}
@@ -33,6 +41,10 @@ public class HorseshoeCrab extends Friend{
 		this.xloc = xloc;
 	}
 
+	/**
+	 * yloc getter and setter
+	 * @return
+	 */
 	public int getYloc() {
 		return yloc;
 	}
