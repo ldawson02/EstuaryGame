@@ -21,10 +21,13 @@ public class TitleScreen extends JPanel implements ActionListener{
 
     JButton btn1 = new JButton("Start");
     JButton btn2 = new JButton("Tutorial");
+    EstuaryGame game;
+    Tutorial tutorial;
     
     
-    
-    public TitleScreen(){
+    public TitleScreen(EstuaryGame g, Tutorial t){
+    	game = g;
+    	tutorial = t;
     	this.setLayout(null);
     	btn1.setActionCommand("START");
     	btn1.addActionListener(this);
@@ -58,9 +61,24 @@ public class TitleScreen extends JPanel implements ActionListener{
         if(cmd.equals("TUTORIAL")){
         	c1.show(EstuaryGame.getCards(), "Tutorial");
         	//Any set up for tutorial to run
-
+        	tutorial.start();
+        	/**
+    		EstuaryGame.gc = new GameController(EstuaryGame.mainGame);
+    		EstuaryGame.mc = new MouseController();
+    		EstuaryGame.mc.setGC(EstuaryGame.gc);
+            
+    		EstuaryGame.gc.setTutorial(tutorial);
+    		EstuaryGame.mainGame.addMouseListener(EstuaryGame.mc);
+    		EstuaryGame.mainGame.addMouseMotionListener(EstuaryGame.mc);
+			*/
         }
     }
+	
+	@Override
+	public void paintComponent(Graphics g) {
+		
+		
+	}
 	
 	 @Override
 	    public Dimension getPreferredSize()

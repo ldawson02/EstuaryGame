@@ -55,11 +55,11 @@ public class GameController {
 	Timer powersFloating;
 	final private int erodeDelay = 100;//TODO
 	
-	private GameController thisGame = this;
+	GameController thisGame = this;
 	private ArrayList<Timer> allTimers = new ArrayList<Timer>();
 	private ArrayList<Timer> tutorialTimers = new ArrayList<Timer>();
 	
-	final private int paintDelay = 30;
+	protected final int paintDelay = 30;
 	Timer theBigTimer;
 	private int timeElapsed = 0;
 	
@@ -69,22 +69,29 @@ public class GameController {
 	//erosion LcoastMover;
 	
 	private boolean gameEnd;
-	public boolean tutorialMode = false;
-	public Tutorial tutorial;
+	/**public boolean tutorialMode = false;
+	public Tutorial tutorial;*/
 	
 	Collisions collision = new Collisions();
 		
 	public GameController(EstuaryGame mainGame){
 		setMainGame(mainGame);
-		setup(true);
+		setup();
 	}
-	
-	public GameController(Tutorial t){
+	/**
+	public void setTutorial(Tutorial t){
 		tutorial = t;
 		tutorialMode = true;
-		setup(false);
+		setup();
 	}
 	
+	public void tutorialOff(){
+		tutorialMode = false;
+		for(Timer t : tutorialTimers){
+			t.stop();
+		}
+		setup();
+	}*/
 	public EstuaryGame getMainGame() {
 		return mainGame;
 	}
@@ -121,7 +128,7 @@ public class GameController {
 	}
 
 	
-	public void setup(boolean game){
+	public void setup(){
 		//Add health bar!!
 		items.addHealthBar(new HealthBar());
 		
@@ -181,20 +188,18 @@ public class GameController {
 		items.getRecycleBin().updatePos(700, 150);
 		
 
-		//Start the paint timer
-		theBigTimer = new Timer(paintDelay, new mainTimer());
-		theBigTimer.start();
+		setUpPaintTimer();
 		allTimers.add(theBigTimer);
-
 		
 		//mainGame.imageLoad();
 		//mainGame.initTitleScreen();
-		if(game){
-			startGame();
-		}
-		else{
-			startTutorial();
-		}
+		startGame();
+	}
+	
+	public void setUpPaintTimer(){
+		//Start the paint timer
+		theBigTimer = new Timer(paintDelay, new mainTimer());
+		theBigTimer.start();
 	}
 	
 	public void tearDown(){
@@ -384,6 +389,53 @@ public class GameController {
 			timePassed = 0;
 		}
 		
+		public void move(Debris d){
+			MovementController.move(d);
+			if(!thisGame.choosingThrow && collision.checkCollision(d) && !thisGame.initiatingPowerUp){
+				//sets the Debris state to Lifted
+				d.catching();
+				/**if(tutorialMode){
+					tutorial.setSpotlight(false);
+					System.out.println("in tutorial");
+				}*/
+				//sequence of events for a caught Debris initiated
+				thisGame.caughtSetup(d);
+				//Move the trash to above the Player's head
+				d.updatePos(mainPlayer.getPosX()+mainPlayer.getWidth()/2 - d.getWidth()/2, mainPlayer.getPosY()-d.getHeight());
+			}
+		}
+		
+		public void throwing(Debris d, ArrayList<Debris> toDelete){
+			//This should be a sequence like move()
+			//Function could return true or false to indicate it it's hit the Bin yet, then initiate next sequence
+			MovementController.Throw(d, d.getBin());
+
+			//Update the healthbar if it hit on this round
+			if (d.getState() == eFloaterState.HITBIN) {
+				System.out.print("\nBin hit this round and");
+				if (d.getCorrectBin()) {
+					System.out.print(" bin was correct.\n");
+					d.setState(eFloaterState.RESTING);
+					toDelete.add(d);
+					items.getHealthBar().update(eHealthChanges.CorrectBin.getDelta());
+					ScoreController.scoreBin();
+				}
+				else {
+					System.out.print(" bin was incorrect.\n");
+					MovementController.wrongBinMove(d);
+					d.setState(eFloaterState.RESTING);
+					items.getHealthBar().update(eHealthChanges.IncorrectBin.getDelta());
+				}
+			}
+			//If the debris hit the wrong bin it should go back to the coast
+		
+		}
+		
+		public void spawnTimeReached(){
+			items.addDebris(newDebris());
+			resetTimer();
+		}
+		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
@@ -392,19 +444,7 @@ public class GameController {
 			for(Debris d : items.getAllDebris()){
 				//make each item float
 				if(d.getState()==eFloaterState.MOVING){
-					MovementController.move(d);
-					if(!thisGame.choosingThrow && collision.checkCollision(d) && !thisGame.initiatingPowerUp){
-						//sets the Debris state to Lifted
-						d.catching();
-						if(tutorialMode){
-							tutorial.setSpotlight(false);
-						}
-						//sequence of events for a caught Debris initiated
-						thisGame.caughtSetup(d);
-						//Move the trash to above the Player's head
-						d.updatePos(mainPlayer.getPosX()+mainPlayer.getWidth()/2 - d.getWidth()/2, mainPlayer.getPosY()-d.getHeight());
-					}
-					
+					move(d);	
 					//If the debris hit the coast this round, decrement health
 					if (d.getState() == eFloaterState.RESTING) {
 						System.out.println("Debris hit coast");
@@ -412,48 +452,18 @@ public class GameController {
 					}
 				}
 				else if(d.getState()==eFloaterState.THROWING){
-					//This should be a sequence like move()
-					//Function could return true or false to indicate it it's hit the Bin yet, then initiate next sequence
-					MovementController.Throw(d, d.getBin());
-
-					//Update the healthbar if it hit on this round
-					if (d.getState() == eFloaterState.HITBIN) {
-						if(tutorialMode){
-							tutorial.nextState();
-						}
-						System.out.print("\nBin hit this round and");
-						if (d.getCorrectBin()) {
-							System.out.print(" bin was correct.\n");
-							d.setState(eFloaterState.RESTING);
-							toDelete.add(d);
-							items.getHealthBar().update(eHealthChanges.CorrectBin.getDelta());
-							ScoreController.scoreBin();
-						}
-						else {
-							System.out.print(" bin was incorrect.\n");
-							MovementController.wrongBinMove(d);
-							d.setState(eFloaterState.RESTING);
-							items.getHealthBar().update(eHealthChanges.IncorrectBin.getDelta());
-						}
-					}
-					//If the debris hit the wrong bin it should go back to the coast
+					throwing(d, toDelete);
 				}
-				
 			}
+			
 			//Now delete any debris that hit
 			for(Debris del : toDelete){
 				items.removeDebris(del);
 			}
-			
-			if(tutorialMode){
-				//Don't add any more debris if it's tutorial mode
-				return;
-			}
-			
+				
 			//if the timer goes off then add another piece of debris at the top
 			if(timePassed >= spawnTimeDebris){
-				items.addDebris(newDebris());
-				resetTimer();
+				spawnTimeReached();
 			}
 			
 			timePassed+=floatDelay;
@@ -471,14 +481,11 @@ public class GameController {
 		final public int scoreCheck = items.getScreenTimer().getMaxTime()/500;
 		public int healthTime = 0;
 		final public int healthCheck = items.getScreenTimer().getMaxTime()/18;
-		final public int delaySpotlight = 1000;
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			mainGame.repaint();
-			if(tutorialMode){
-				return;
-			}
+
 			if(items.getScreenTimer().getState() == eScreenTimerState.ON){
 				timeElapsed+=paintDelay;
 				scoringTime+=paintDelay;
@@ -514,26 +521,6 @@ public class GameController {
 			return timeElapsed;
 		}
 		
-		public void tutorialTimer(){
-			if(tutorial.getTimeInStage() > delaySpotlight){
-				tutorial.setSpotlight(true);
-			}
-			if(tutorial.getState()==eTutorialState.DEBRIS){
-				//check if you need to add another debris
-				int distance = mainGame.getScreenY();
-				for(Debris d : GameController.getItems().getAllDebris()){
-					if(d.getPosY() < distance){
-						distance = d.getPosY();
-					}
-				}
-				if(distance > mainGame.getScreenY()/4){
-					debrisMover.newDebris();
-				}
-				
-			}
-			tutorial.addTime(paintDelay);
-		}
-		
 
 	}
 	
@@ -550,14 +537,25 @@ public class GameController {
 
 		public Powers newPower(){
 			Random r = new Random();
+			Powers p;
+			if(r.nextInt()%2==0){
+				p = newPower(new Rebuild());
+			}
+			else{
+				p = newPower(new Remove());
+			}
+			
+			return p;
+		}
+		
+		public Powers newPower(Powers p){
+			Random r = new Random();
 			//generate initial position;
 			int randomx = r.nextInt(500)+150;
 			System.out.println("power:" + randomx);
 			int xPos = MovementController.getStart(randomx);
 			
-			int ptype = r.nextInt() % 2;
-			Powers p;
-			if(ptype==0){
+			if(p instanceof Rebuild){
 				System.out.println("rebuild");
 				p = new Rebuild(xPos,0);
 			}
@@ -568,7 +566,6 @@ public class GameController {
 			p.setVertex(xPos);
 			
 			return p;
-
 		}
 		
 		
@@ -582,28 +579,36 @@ public class GameController {
 		public void quickSpawn(){
 			items.addPower(newPower());
 		}
-		public void quickSpawnRebuild(){}
-		public void quickSpawnRemove(){}
+		public void quickSpawnRebuild(){
+			items.addPower(newPower(new Rebuild()));
+		}
+		public void quickSpawnRemove(){
+			items.addPower(newPower(new Remove()));
+		}
 
+		public void move(Powers p){
+			MovementController.move(p);
+			
+			if(collision.checkCollision(p) && !thisGame.choosingThrow && !thisGame.initiatingPowerUp){
+				p.catching();
+				thisGame.caughtSetup(p);
+				p.updatePos(mainPlayer.getPosX()+mainPlayer.getWidth()/2 - p.getWidth()/2, mainPlayer.getPosY()-p.getHeight());
+			}
+		}
+		
+		public void spawnTimeReached(){
+			System.out.println("new power spawn");
+			items.addPower(newPower());
+			resetTimer();
+		}
+		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//if the timer goes off then add another power at the top
-			if(timePassed >= spawnTimePowers){
-				System.out.println("new power spawn !!!!!!!!!!!!!!!");
-				items.addPower(newPower());
-				resetTimer();
-			}
+
 			for(Powers p : items.getAllPowers()){
 				//make each item float
 				if(p.getState()==eFloaterState.MOVING){
-					MovementController.move(p);
-			
-					if(collision.checkCollision(p) && !thisGame.choosingThrow && !thisGame.initiatingPowerUp){
-						p.catching();
-						thisGame.caughtSetup(p);
-						p.updatePos(mainPlayer.getPosX()+mainPlayer.getWidth()/2 - p.getWidth()/2, mainPlayer.getPosY()-p.getHeight());
-					}
-					
+					move(p);
 				}
 				else if(p.getState()==eFloaterState.INITIATED){
 					if(p instanceof Rebuild){	
@@ -628,6 +633,10 @@ public class GameController {
 				if(p.getState() == eFloaterState.INITIATED || p.getState() == eFloaterState.RESTING){
 					poweritr.remove();
 				}
+			}
+			//if the timer goes off then add another power at the top
+			if(timePassed >= spawnTimePowers){
+				spawnTimeReached();
 			}
 			timePassed+=floatDelay;
 		}

@@ -16,7 +16,9 @@ public class Rebuild extends Powers {
 	public Rebuild(int x, int y){
 		super(x,y);
 	};
-	
+	public Rebuild(){
+		super();
+	}
 	@Override
 	public void floating() {
 		// TODO Auto-generated method stub
@@ -26,11 +28,6 @@ public class Rebuild extends Powers {
 	@Override
 	public void catching() {
 		this.setState(eFloaterState.LIFTED);
-		/*
-		// TODO Auto-generated method stub
-		for (Coast c : ActiveItems.coasts){
-			c.rebuild();	
-		}*/
 		
 	}
 

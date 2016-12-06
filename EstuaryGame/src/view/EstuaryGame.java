@@ -108,9 +108,10 @@ public class EstuaryGame extends JComponent{
                 final String EndScreen = "EndScreen";
                 final String Tutorial = "Tutorial";
                 
-                titleScreen = new TitleScreen();
+             
                 mainGame = new EstuaryGame();
                 tutorial = new Tutorial();
+                titleScreen = new TitleScreen(mainGame, tutorial);
                 endScreen = new EndScreen();
                 
                 mainGame.addComponentListener ( new ComponentAdapter ()

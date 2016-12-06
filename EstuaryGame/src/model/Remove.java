@@ -11,6 +11,9 @@ public class Remove extends Powers {
 		super(x,y);
 	};
 	
+	public Remove(){
+		super();
+	}
 
 	@Override
 	public void floating() {
