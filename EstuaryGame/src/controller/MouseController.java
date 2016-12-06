@@ -21,22 +21,40 @@ import model.Barriers;
 		private Barriers dragged = null;
 		private Barriers dropSpot = null;
 				
+		/**
+		 * wall spawn getter
+		 * @return wallSpawn
+		 */
 		public Barriers getWallSpawn() {
 			return wallSpawn;
 		}
 		
+		/**
+		 * gabion spawn getter
+		 * @return gabionsSpawn
+		 */
 		public Barriers getGabionsSpawn() {
 			return gabionsSpawn;
 		}
-		
+		/**
+		 * dragged getter
+		 * @return dragged
+		 */
 		public Barriers getDragged() {
 			return dragged;
 		}
 		
+		/**
+		 * GAME CONTROLLER SETTER
+		 * @param g
+		 */
 		public void setGC(GameController g) {
 			this.gc = g;
 		}
 		
+		/**
+		 * this method is to see after the mouse pressed, the wall and gabion's action
+		 */
 		@Override
 		public void mousePressed(MouseEvent e) {
 			Point mouseCoords = new Point(e.getX(), e.getY());
@@ -116,6 +134,9 @@ import model.Barriers;
 
 
 		@Override
+		/**
+		 * IF mouse dragged , the posion updated.
+		 */
 		public void mouseDragged(MouseEvent e) {
 			if (dragging == false)
 				return;
