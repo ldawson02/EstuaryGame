@@ -169,13 +169,7 @@ public class EstuaryGame extends JComponent{
     	initImages();
     	
     }
-    
-
-	public static void initTitleScreen(){
-		//TODO: if we're lucky
-		
-	}
-	
+ 
     public void bindKeyWith(String name, KeyStroke keyStroke, Action action) {
         InputMap im = getInputMap(WHEN_IN_FOCUSED_WINDOW);
         ActionMap am = getActionMap();
@@ -220,7 +214,7 @@ public class EstuaryGame extends JComponent{
         super.paintComponent(g); 
         
         //Paint background
-        paintBackground(g);
+        //paintBackground(g);
         
         paintCoast(g);
         
@@ -304,32 +298,33 @@ public class EstuaryGame extends JComponent{
         	
         }
     }
-    private void paintCoast(Graphics g){
+    
+    private void paintCoast(Graphics g) {
     	for(Coast c : gc.getItems().getCoast()){
-    		Color color;
+    		BufferedImage coast;
     		switch (c.getState()){
     		case NO_HIT:
-    			color = new Color(242,204,155);
+    			coast = lib.drawCoast(0, 0);
     			break;
     		case ONE_HIT:
-    			color = new Color(232,194,144);
+    			coast = lib.drawCoast(1, 0);
     			break;
     		case TWO_HIT:
-    			color = new Color(222,182,131);
-    			break;
-    		case THREE_HIT:
-    			color = new Color(209,168,115);
+    			coast = lib.drawCoast(2, 0);
     			break;
     		case ERODED:
-    			color = new Color(209,168,115,0);
+    			coast = lib.drawCoast(3, 0);
     			break;
     		default: 
-    			color = new Color(0,0,0,0);	
+    			coast = lib.drawCoast(3, 0);
     		}
-    		g.setColor(color);
-    		g.fillRect(c.getPosX(), c.getPosY(), c.getWidth(), c.getHeight());
+    		
+    		g.drawImage(coast, c.getPosX(), c.getPosY(), this);
+    		
+    		//g.fillRect(c.getPosX(), c.getPosY(), c.getWidth(), c.getHeight());
     	}
     }
+    
     private void paintBarriers(Graphics g) {
     	ArrayList<Barriers> barriers = gc.getItems().getAllBarriers();
     	for (Barriers b : barriers) {
@@ -383,28 +378,6 @@ public class EstuaryGame extends JComponent{
     		power = scaleFloater(power, p);
     		
     		g.drawImage(power, p.getPosX(), p.getPosY(), this);
-    		
-    		/*
-    		
-    		if (d.getState() == eFloaterState.LIFTED) {
-    			//paintArrow(g, d);
-    		}
-    		
-    		if (d instanceof Rebuild) {
-    			
-    		
-    			
-    			g.setColor(Color.CYAN);
-    			g.fillOval(d.getPosX(), d.getPosY(), d.getWidth(), d.getHeight());
-    		}
-    		else if (d instanceof Remove) {
-    			//TODO: paint like recycling
-    			//Calling recycling a blue circle
-    			g.setColor(Color.MAGENTA);
-    			g.fillOval(d.getPosX(), d.getPosY(), d.getWidth(), d.getHeight());
-    		}	
-    		
-    		*/
     	}
     }
     
@@ -431,12 +404,6 @@ public class EstuaryGame extends JComponent{
     	g.drawImage(trashBin, trash.getPosX(), trash.getPosY(), this);
     	g.drawImage(recycBin, recycle.getPosX(), recycle.getPosY(), this);
     	
-    	/* Old
-    	g.setColor(Color.BLUE);
-    	g.fillOval(trash.getPosX(), trash.getPosY(), trash.getWidth(), trash.getHeight());
-    	g.setColor(Color.YELLOW);
-    	g.fillOval(recycle.getPosX(), recycle.getPosY(), recycle.getWidth(), recycle.getHeight());
-    	*/
     }
     
     private void paintHealthBar(Graphics g) {
