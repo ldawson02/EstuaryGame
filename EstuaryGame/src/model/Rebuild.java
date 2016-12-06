@@ -10,7 +10,6 @@ import eNums.eFloaterState;
 
 /**
  * the rubuild class has a vertex and a floater state
- *
  */
 public class Rebuild extends Powers {
 

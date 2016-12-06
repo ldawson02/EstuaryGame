@@ -24,6 +24,7 @@ public class Remove extends Powers {
 	}
 
 	/**
+	 * 
 	 * set the state to lifted
 	 */
 	@Override

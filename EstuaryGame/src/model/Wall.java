@@ -5,8 +5,7 @@ import eNums.eBarrierType;
 
 /**
  * This class entends a barrier, it will be builded, and it also can be decayed 
- * @author megan
- *
+ * 
  */
 public class Wall extends Barriers {
 	private int wallDecayTime = 8000;

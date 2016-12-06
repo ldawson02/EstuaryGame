@@ -4,7 +4,6 @@ import controller.GameController;
 
 /**
  * 
- * 
  * @author Rachel Muzzelo
  * @version 1.0
  * @since 10/26/16
