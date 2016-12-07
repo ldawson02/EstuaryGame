@@ -75,14 +75,14 @@ import model.Barriers;
 				if (dragged.getType() == eBarrierType.Wall) {
 					gc.setBarrierType(dragged, eBarrierType.Wall); 
 					dropSpot.setType(eBarrierType.Wall);
-					dropSpot.geterosionTimer().start();
+					dropSpot.getErosionTimer().start();
 					ScoreController.scoreWall();
 					//set barrier with same coords as temp to Wall
 				}
 				else if (dragged.getType() == eBarrierType.Gabion) {
 					gc.setBarrierType(dragged, eBarrierType.Gabion);
 					dropSpot.setType(eBarrierType.Gabion);
-					dropSpot.geterosionTimer().start();
+					dropSpot.getErosionTimer().start();
 					ScoreController.scoreGabion();
 				}
 			}

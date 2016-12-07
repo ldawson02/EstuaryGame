@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+
+import controller.ActiveItems;
 import controller.GameController;
 
 /**
@@ -18,6 +21,6 @@ public abstract class Powers extends Floater {
 	public Powers(){
 		super();
 	}
-	public abstract void appear();
-	public abstract void disappear();
+	
+	public abstract void power(ActiveItems items);
 }

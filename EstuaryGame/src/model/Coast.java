@@ -22,9 +22,6 @@ import eNums.eCoastState;
  */
 public class Coast extends Item{
 
-	
-
-	
 	/**
 	 * The maximum size of the coast
 	 */
@@ -42,10 +39,8 @@ public class Coast extends Item{
 	 */
 	private ArrayList<Barriers> barriers;
 	private eCoastState state = eCoastState.NO_HIT;
+
 	
-/**
- * 
- */
 	public Coast() {
 		super();
 		this.setHeight(height);
@@ -104,30 +99,7 @@ public class Coast extends Item{
 		this.erosionRate = erosionRate;
 	}
 
-	/**
-	 * @return the buildUp
-	 */
-	
-	/**
-	 * @return the barrierSpaces
-	 */
-	public ArrayList<Barriers> getBarriers() {
-		return barriers;
-	}
 
-	/**
-	 * @param barrierSpaces the barrierSpaces to set
-	 */
-	public void setBarrierSpaces(ArrayList<Barriers> barriers) {
-		this.barriers = barriers;
-	}
-	
-	/*
-	 * for CoastL and CoastR, get all the debris items
-	public ArrayList<Debris> getBuildUp() {
-		return ArrayList<Debris>();
-	}
-	*/
 
 	/**
 	 * Decreases the size of the coast by one, if possible
@@ -152,7 +124,7 @@ public class Coast extends Item{
 		
 	}
 	/**
-	 * see if the barrier's type matches the ebarrier's type.
+	 * See if the barrier on the coast is empty(returns false) or protecting it(returns true)
 	 * @return true or false.
 	 */
 	public boolean isProtected(){

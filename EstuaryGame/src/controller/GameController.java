@@ -233,9 +233,9 @@ public class GameController {
 		barrierErosion bErode; int i = 0;
 		for(Barriers b: items.getAllBarriers()){
 			bErode = new barrierErosion(b);
-			b.setbTimer(new Timer(this.erodeDelay, bErode));
-			b.geterosionTimer().start();
-			allTimers.add(b.geterosionTimer());
+			b.setErosionTimer(new Timer(this.erodeDelay, bErode));
+			b.getErosionTimer().start();
+			allTimers.add(b.getErosionTimer());
 			i++;
 		}
 		System.out.println("NUMBER OF EROSION TIMERS: " + i);
@@ -648,7 +648,7 @@ public class GameController {
 					move(p);
 				}
 				else if(p.getState()==eFloaterState.INITIATED){
-					if(p instanceof Rebuild){	
+					/**if(p instanceof Rebuild){	
 						((Rebuild) p).power(items.getAllBarriers());
 						items.getHealthBar().update(eHealthChanges.CoastRebuilt.getDelta());
 					}
@@ -658,7 +658,8 @@ public class GameController {
 						items.removeAllRestingDebris();
 						items.getHealthBar().update(eHealthChanges.CoastDebrisRemoved.getDelta());
 						
-					}
+					}**/
+					p.power(items);
 					ScoreController.scorePower();
 				}
 				

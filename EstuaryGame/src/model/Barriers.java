@@ -126,18 +126,6 @@ public class Barriers extends Item{
 		
 		return spaces;
 	}
-	/**
-	 * set up the barrier type, we goes through list of barriers and changes the one with the matching coords to type t, if matches, set the type to t
-	 * @param barr
-	 * @param t
-	 */
-	public static void setBarrierType(Barriers barr, eBarrierType t) {
-		//goes through list of barriers and changes the one with the matching coords to type t
-		for (Barriers b : GameController.getItems().getAllBarriers()) {
-			if (barr.getPosX() == b.getPosX()) //"match"
-				b.setType(t);
-		}
-	}
 
 	public boolean isProtector() {
 		return protector;
@@ -154,15 +142,15 @@ public class Barriers extends Item{
  * get the erosion timer
  * @return erosiontimer;
  */
-	public Timer geterosionTimer() {
+	public Timer getErosionTimer() {
 		return erosionTimer;
 	}
 
 	/** 
-	 * set the btimer
+	 * set the erosion timer
 	 * @param bTimer
 	 */
-	public void setbTimer(Timer bTimer) {
+	public void setErosionTimer(Timer bTimer) {
 		this.erosionTimer = bTimer;
 	}
 
