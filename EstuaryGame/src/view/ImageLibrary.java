@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -92,24 +93,21 @@ public class ImageLibrary {
 		
 		for (eAnimation eAnim: allAnims) {
 			ImageSequence sq = this.getLibrary().get(eAnim);
-			BufferedImage exFrame = sq.getSeq().get(0);
+			Image exFrame = sq.getSeq().get(0);
 			//Get old dimensions
-			int oldWidth = exFrame.getWidth();
-			int oldHeight = exFrame.getHeight();
+			//TODO
 			//Produce new dimensions
-			double newWidth = oldWidth * scaleFactor;
-			double newHeight = oldHeight * scaleFactor;
 			//TODO
 		}
 		
 	}
 	
-	public BufferedImage draw(eAnimation eAnim) {
+	public Image draw(eAnimation eAnim) {
 		ImageSequence seq = library.get(eAnim);
 		return (seq.draw());
 	}
 
-	public BufferedImage draw(Player p) {
+	public Image draw(Player p) {
 		if (p.getState() == ePlayerState.Idle) {
 			return draw(eAnimation.playerIdle);
 		}
@@ -121,7 +119,7 @@ public class ImageLibrary {
 		}
 	}
 	
-	public BufferedImage draw(Debris d) {
+	public Image draw(Debris d) {
 		if (d.getType() == eDebrisType.RECYCLING) {
 			switch (d.getState()) {
 			case RESTING:
@@ -149,7 +147,7 @@ public class ImageLibrary {
 		return draw(eAnimation.error);
 	}
 	
-	public BufferedImage draw(Powers p) {
+	public Image draw(Powers p) {
 		if (p instanceof Remove) {
 			switch (p.getState()) {
 			case RESTING:
@@ -176,7 +174,7 @@ public class ImageLibrary {
 		return draw(eAnimation.error);
 	}
 	
-	public BufferedImage drawCoast(int thisState, int leftState) {
+	public Image drawCoast(int thisState, int leftState) {
 		try {
 			return coastLibrary[thisState][leftState];
 		}
