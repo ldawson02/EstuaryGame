@@ -47,7 +47,7 @@ public class BinTest {
 	public void typeTest(){
 		assertTrue(trashBin.getDebrisType() == eDebrisType.TRASH);
 		assertTrue(recycleBin.getDebrisType() == eDebrisType.RECYCLING);
-		assertTrue(gc.getItems().getRecycleBin().trashType == eDebrisType.RECYCLING);
-		assertTrue(gc.getItems().getTrashBin().trashType == eDebrisType.TRASH);
+		assertTrue(gc.getItems().getRecycleBin().getDebrisType() == eDebrisType.RECYCLING);
+		assertTrue(gc.getItems().getTrashBin().getDebrisType() == eDebrisType.TRASH);
 	}
 }
