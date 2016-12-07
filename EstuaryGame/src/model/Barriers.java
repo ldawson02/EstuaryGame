@@ -120,8 +120,9 @@ public class Barriers extends Item{
 	public static ArrayList<Barriers> setUpRightCoast() {
 		ArrayList<Barriers> spaces = new ArrayList<Barriers>();
 		
+		int leftestRightCoast = rightEdge - (50 * 4);
 		for (int i = 0; i < 5; i++) {
-			spaces.add(new Barriers(rightEdge-50*i, barrierY));
+			spaces.add(new Barriers(leftestRightCoast + 50*i, barrierY));
 		}
 		
 		return spaces;

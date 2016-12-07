@@ -1,9 +1,13 @@
 package view;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+
+import javax.imageio.ImageIO;
 
 import eNums.eAnimation;
 import eNums.eDebrisType;
@@ -20,19 +24,24 @@ import model.Remove;
  * All of the images involved in the game are loaded into this one class, which resides 
  * in the view.
  * Contains an instance of ImageSequence for each type of viewable object.
- * Every animation will be mapped out to an enum.
+ * Every animation will be mapped out to an enum, save for the coast images.
+ * 
+ * Due to the complexity of the coast's images, the loading of the coast is handled
+ * separately, as a 2D array.
  * 
  * @author Ian
- * @version 1.1
+ * @version 1.2
  * @since 11/16/16
  */
 
 public class ImageLibrary {
 
 	private HashMap<eAnimation, ImageSequence> library;
+	private BufferedImage[][] coastLibrary;
 	
 	private ImageLibrary() {
 		library = new HashMap<eAnimation, ImageSequence>();
+		coastLibrary = new BufferedImage[4][4];
 	}
 	
 	public static ImageLibrary loadLibrary() {
@@ -44,9 +53,55 @@ public class ImageLibrary {
 			lib.getLibrary().put(eAnim, new ImageSequence(eAnim));
 		}
 		
+		lib.loadCoastLibrary();
+		
 		System.out.println("All loaded.");
 		
+		lib.initScaleLibrary();
+		
+		lib.scaleLibrary(1.0);
+		
+		System.out.println("All scaled.");
+		
 		return lib;
+	}
+	
+	private void loadCoastLibrary() {
+		System.out.println("Loading: erosions files");
+		String srcpath = "resources" + File.separator + "erosion" + File.separator;
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				String filepath = srcpath + "erosion " + i + "-" + j + ".png";
+				coastLibrary[i][j] = createImage(filepath);
+			}
+		}
+	}
+	
+	/*
+	 * This initializes the scaling on ALL the Images.
+	 * THIS IS HARD-CODED FOR A 600x800 RESOLUTION.
+	 */
+	private void initScaleLibrary() {
+		//TODO: this has to scale the images initially
+	}
+	
+	public void scaleLibrary(double scaleFactor) {
+		//TODO: this has to be able to update every image by a factor
+
+		eAnimation[] allAnims = eAnimation.values();
+		
+		for (eAnimation eAnim: allAnims) {
+			ImageSequence sq = this.getLibrary().get(eAnim);
+			BufferedImage exFrame = sq.getSeq().get(0);
+			//Get old dimensions
+			int oldWidth = exFrame.getWidth();
+			int oldHeight = exFrame.getHeight();
+			//Produce new dimensions
+			double newWidth = oldWidth * scaleFactor;
+			double newHeight = oldHeight * scaleFactor;
+			//TODO
+		}
+		
 	}
 	
 	public BufferedImage draw(eAnimation eAnim) {
@@ -120,6 +175,17 @@ public class ImageLibrary {
 		return draw(eAnimation.error);
 	}
 	
+	public BufferedImage drawCoast(int thisState, int leftState) {
+		try {
+			return coastLibrary[thisState][leftState];
+		}
+		catch (IndexOutOfBoundsException e) {
+			System.out.println("Coast state not found");
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	/**
 	 * @return the library
 	 */
@@ -127,42 +193,24 @@ public class ImageLibrary {
 		return library;
 	}
 	
-	/* The old implementation
-	ArrayList<ItemSequences> library;
-	
-	private ImageLibrary() {
-		library = new ArrayList<ItemSequences>();
-	}
-	
-	private void setLibrary(ArrayList<ItemSequences> lib) {
-		this.library = lib;
-	}
-	
 	/**
-	 * The biggest nightmare of a function, handles the loading of every image used in the game.
-	 * Splits up by the type of item.
-	 * 
-	 * @return the loaded library
-	 
-	public static ImageLibrary loadLibrary() {
-		ImageLibrary ImageLib = new ImageLibrary();
-		ArrayList<ItemSequences> lib = new ArrayList<ItemSequences>();
-		
-		
-		//TODO: yeah the majority here can't be done yet
-		//This is gonna be virtually all hard-coded
-		//Just let this be my burden
-		
-		
-		Collections.sort(lib);
-		ImageLib.setLibrary(lib);
-		return ImageLib;
+	 * @return the coastLibrary
+	 * Only used for testing
+	 */
+	public BufferedImage[][] getCoastLibrary() {
+		return coastLibrary;
+	}
+
+	private BufferedImage createImage(String filename){
+		BufferedImage bufferedImage;
+		try {
+			bufferedImage = ImageIO.read(new File(filename));
+			return bufferedImage;
+		} catch (IOException e) {
+			System.out.println("Couldn't create image from " + filename);
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
-	public BufferedImage draw() {
-		//TODO: gotta figure out what exactly is passed in
-		return(library.get(0).draw(0));
-	}
-	
-	*/
 }

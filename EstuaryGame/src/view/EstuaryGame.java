@@ -45,6 +45,7 @@ import controller.ScoreController;
 import eNums.eAnimation;
 import eNums.eBarrierType;
 import eNums.eFloaterState;
+import eNums.ePlayerState;
 import eNums.eDebrisType;
 
 import model.*;
@@ -83,6 +84,8 @@ public class EstuaryGame extends JComponent{
     
     Rectangle player;
     activeViewItems actives;
+    
+    boolean gameFinished = false;
     
     //For future collision handling:
     ArrayList<DebrisWrapper> debrisColliders;
@@ -169,13 +172,7 @@ public class EstuaryGame extends JComponent{
     	initImages();
     	
     }
-    
-
-	public static void initTitleScreen(){
-		//TODO: if we're lucky
-		
-	}
-	
+ 
     public void bindKeyWith(String name, KeyStroke keyStroke, Action action) {
         InputMap im = getInputMap(WHEN_IN_FOCUSED_WINDOW);
         ActionMap am = getActionMap();
@@ -216,7 +213,6 @@ public class EstuaryGame extends JComponent{
     
     @Override
     protected void paintComponent(Graphics g) {
-    	
         super.paintComponent(g); 
         
         //Paint background
@@ -243,11 +239,10 @@ public class EstuaryGame extends JComponent{
         paintHealthBar(g);
         
         //Paint ScreenTimer
-        paintScreenTimer(g);
+        if (!gameFinished)
+        	paintScreenTimer(g);
         
         paintScore(g);
-        
-        
         
         timeElapsed = gc.getTheBigTimer();
         g.drawString(Integer.toString(timeElapsed), 40, 40);
@@ -297,39 +292,78 @@ public class EstuaryGame extends JComponent{
         g.drawOval((int)maxX,(int)maxY,(int) size,(int) size);
         
         if (timeElapsed >= maxTime) {
-        	g.drawImage(gameOver, 220, 200, this);
-        	
-        	g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
-        	g.drawString("Press Enter to See Score...", 275, 370);
-        	
+        	paintGameOver(g);
+        	endGameMotion();
         }
     }
-    private void paintCoast(Graphics g){
+    
+    private void paintCoast(Graphics g) {
+		Coast prevCoast = null;
     	for(Coast c : gc.getItems().getCoast()){
-    		Color color;
+    		BufferedImage coast;
+    		
+    		switch (c.getCoastID()) {
+    		case 1:
+    			prevCoast = c;
+    			coast = lib.drawCoast(c.getState().getHits(), 3);
+    			break;
+    		case 2:
+    		case 3:
+    		case 4:
+    		case 7:
+    		case 8:
+    		case 9:
+    			int prevCoastState = prevCoast.getState().getHits();
+    			coast = lib.drawCoast(c.getState().getHits(), prevCoastState);
+    			prevCoast = c;
+    			break;
+    		case 5:
+    			prevCoastState = prevCoast.getState().getHits();
+    			coast = lib.drawCoast(3, prevCoastState);
+    			prevCoast = c;
+    			break;
+    		case 6: 
+    			prevCoast = c;
+    			coast = lib.drawCoast(c.getState().getHits(), 3);
+    			break;
+    		case 10:
+    			prevCoastState = prevCoast.getState().getHits();
+    			coast = lib.drawCoast(3, prevCoastState);
+    			prevCoast = c;
+    			break;
+    		default:
+    			coast = lib.drawCoast(0, 1);
+    		}
+    		
+    		/*
     		switch (c.getState()){
     		case NO_HIT:
-    			color = new Color(242,204,155);
+    			coast = lib.drawCoast(0, 0);
     			break;
     		case ONE_HIT:
-    			color = new Color(232,194,144);
+    			coast = lib.drawCoast(1, 0);
     			break;
     		case TWO_HIT:
-    			color = new Color(222,182,131);
-    			break;
-    		case THREE_HIT:
-    			color = new Color(209,168,115);
+    			coast = lib.drawCoast(2, 0);
     			break;
     		case ERODED:
-    			color = new Color(209,168,115,0);
+    			coast = lib.drawCoast(3, 0);
     			break;
     		default: 
-    			color = new Color(0,0,0,0);	
+    			coast = lib.drawCoast(3, 0);
     		}
-    		g.setColor(color);
-    		g.fillRect(c.getPosX(), c.getPosY(), c.getWidth(), c.getHeight());
+    		*/
+    		
+    		g.drawImage(coast, c.getPosX(), c.getPosY(), this);
+    		
+    		//g.fillRect(c.getPosX(), c.getPosY(), c.getWidth(), c.getHeight());
     	}
     }
+    
+    //private Coast getPrevCoast(Coast cIn) {
+    	//TODO
+    //}
+    
     private void paintBarriers(Graphics g) {
     	ArrayList<Barriers> barriers = gc.getItems().getAllBarriers();
     	for (Barriers b : barriers) {
@@ -383,28 +417,6 @@ public class EstuaryGame extends JComponent{
     		power = scaleFloater(power, p);
     		
     		g.drawImage(power, p.getPosX(), p.getPosY(), this);
-    		
-    		/*
-    		
-    		if (d.getState() == eFloaterState.LIFTED) {
-    			//paintArrow(g, d);
-    		}
-    		
-    		if (d instanceof Rebuild) {
-    			
-    		
-    			
-    			g.setColor(Color.CYAN);
-    			g.fillOval(d.getPosX(), d.getPosY(), d.getWidth(), d.getHeight());
-    		}
-    		else if (d instanceof Remove) {
-    			//TODO: paint like recycling
-    			//Calling recycling a blue circle
-    			g.setColor(Color.MAGENTA);
-    			g.fillOval(d.getPosX(), d.getPosY(), d.getWidth(), d.getHeight());
-    		}	
-    		
-    		*/
     	}
     }
     
@@ -431,12 +443,6 @@ public class EstuaryGame extends JComponent{
     	g.drawImage(trashBin, trash.getPosX(), trash.getPosY(), this);
     	g.drawImage(recycBin, recycle.getPosX(), recycle.getPosY(), this);
     	
-    	/* Old
-    	g.setColor(Color.BLUE);
-    	g.fillOval(trash.getPosX(), trash.getPosY(), trash.getWidth(), trash.getHeight());
-    	g.setColor(Color.YELLOW);
-    	g.fillOval(recycle.getPosX(), recycle.getPosY(), recycle.getWidth(), recycle.getHeight());
-    	*/
     }
     
     private void paintHealthBar(Graphics g) {
@@ -466,14 +472,11 @@ public class EstuaryGame extends JComponent{
     	g.drawRect((int)barX, (int)barY,(int) barWidth,(int) barHeight);
     	
         if (currHealth <= 0) {
-        	g.drawImage(gameOver, 220, 200, this);
-        	
-        	g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
-        	g.drawString("Press Enter to See Score...", 275, 375);
+        	paintGameOver(g);
+        	endGameMotion();
+        	gameFinished = true;
         }
     }
-    
-
     
     private void paintPlayer(Graphics g) {
     	Player p = gc.getItems().getMainPlayer();
@@ -481,10 +484,6 @@ public class EstuaryGame extends JComponent{
     	if (p == null) {
     		return;
     	}
-    	/*
-    	g.setColor(Color.RED);
-    	g.fillRect((int) p.getPosX(), (int) p.getPosY(), (int) p.getWidth(), (int) p.getHeight());
-    	*/
     	
     	Image playerImg = scalePlayer(lib.draw(p), p);
     	g.drawImage(playerImg, p.getPosX(), p.getPosY(), this);
@@ -495,7 +494,34 @@ public class EstuaryGame extends JComponent{
     	g.drawString("Score: " + Integer.toString(ScoreController.getScore()), 150, 40);
     }
     
-
+    private void paintGameOver(Graphics g) {
+    	g.setColor(new Color(255, 255, 255, 120));
+    	g.fillRect(0, 0, screenX, screenY);
+    	
+    	g.drawImage(gameOver, 220, 200, this);
+    	
+    	g.setColor(Color.BLACK);
+    	g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
+    	g.drawString("Press Enter to See Score...", 275, 370);
+    }
+    
+    private void endGameMotion() {
+    	//Stop player motion
+    	gc.getItems().getPlayer().setState(ePlayerState.Lifting);
+    	//Stop floater motion
+    	for (Debris d: gc.getItems().getAllDebris()) {
+    		d.setState(eFloaterState.RESTING);
+    	}
+    	for (Powers p: gc.getItems().getAllPowers()) {
+    		p.setState(eFloaterState.RESTING);
+    	}
+    	//Disable controls
+    	unbindKeyWith("x.up", KeyStroke.getKeyStroke("UP"));
+		unbindKeyWith("x.down", KeyStroke.getKeyStroke("DOWN"));
+		unbindKeyWith("x.left", KeyStroke.getKeyStroke("LEFT"));
+		unbindKeyWith("x.right", KeyStroke.getKeyStroke("RIGHT"));
+    }
+    
     public int getScreenX() {
 		return screenX;
 	}

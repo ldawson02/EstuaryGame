@@ -33,7 +33,10 @@ public enum eAnimation {
 	eAnimation(String folder) {
 		this.folderName = folder;
 	}
-	
+	/**
+	 * get the path
+	 * @return foldername;
+	 */
 	public String getPath() {
 		return folderName;
 	}

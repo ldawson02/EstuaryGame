@@ -26,6 +26,8 @@ public class ImageLibraryTest {
 		for (eAnimation e: allAnims) {
 			assertEquals(lib.getLibrary().containsKey(e), true);
 		}
+		
+		assertEquals(lib.getCoastLibrary().length, 4);
 	}
 
 	@Test
