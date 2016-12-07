@@ -11,10 +11,20 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 import javax.swing.Timer;
+
+import Serialization.Controller.CleanUpSerializeAction;
+import Serialization.Controller.ReadSerializeAction;
+import Serialization.Controller.SerializeAction;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -34,13 +44,12 @@ import eNums.eScreenTimerState;
 import eNums.eThrowDirection;
 import eNums.eTutorialState;
 
-public class GameController {
+public class GameController implements Serializable {
 
 	//the big shebang
-	private EstuaryGame mainGame;
+	private static EstuaryGame mainGame;
 	private Player mainPlayer;
-	private static ActiveItems items = new ActiveItems();
-	private ImageLibrary library;
+	private ActiveItems items = new ActiveItems();
 	Action leftAct;
 	Action rightAct;
 	Action upAct;
@@ -103,7 +112,7 @@ public class GameController {
 		this.mainGame = mainGame;
 	}
 
-	public static ActiveItems getItems() {
+	public ActiveItems getItems() {
 		return items;
 	}
 
@@ -129,6 +138,12 @@ public class GameController {
 		mainGame.bindKeyWith("x.up", KeyStroke.getKeyStroke("UP"), upAct);
 		mainGame.bindKeyWith("x.down", KeyStroke.getKeyStroke("DOWN"), downAct);
 	}
+	
+	public void serializationKeyBind() {
+		mainGame.bindKeyWith("serialize", KeyStroke.getKeyStroke('1'), new SerializeAction());
+		mainGame.bindKeyWith("readserialized", KeyStroke.getKeyStroke('2'), new ReadSerializeAction());
+		mainGame.bindKeyWith("cleanupserialized", KeyStroke.getKeyStroke('3'), new CleanUpSerializeAction());
+	}
 
 	
 	public void setup(){
@@ -152,6 +167,8 @@ public class GameController {
 		upAct = new VAction(-1 * getMainPlayer().getSpeed());
 		downAct = new VAction(1 * getMainPlayer().getSpeed());
 		normalKeyBind();
+		
+		serializationKeyBind();
 		
 		//Reset stuff from last game
 		ScoreController.setScore(0);
@@ -195,7 +212,6 @@ public class GameController {
 		setUpPaintTimer();
 		allTimers.add(theBigTimer);
 		
-		//mainGame.imageLoad();
 		//mainGame.initTitleScreen();
 		startGame();
 	}
@@ -264,10 +280,6 @@ public class GameController {
 			t.stop();
 		}
 	}
-	public void imageLoad(){
-		//TODO: that method currently returns a completely empty instance
-		library = ImageLibrary.loadLibrary();
-	}
 	
 	public void caughtSetup(Debris d){
 		this.choosingThrow = true;
@@ -334,10 +346,26 @@ public class GameController {
 	 *        will be called continuously throughout the entire lifecycle of the
 	 *        game
 	 */
-	public class spawnDebris implements ActionListener{
+	public class spawnDebris implements ActionListener, Serializable {
 		public int timePassed = 0;
 		//The time after which debris should spawn again (changes every time respawned)
 		public int spawnTimeDebris;
+		public int getTimePassed() {
+			return timePassed;
+		}
+
+		public void setTimePassed(int timePassed) {
+			this.timePassed = timePassed;
+		}
+
+		public int getSpawnTimeDebris() {
+			return spawnTimeDebris;
+		}
+
+		public void setSpawnTimeDebris(int spawnTimeDebris) {
+			this.spawnTimeDebris = spawnTimeDebris;
+		}
+
 		//The average length of time based on difficulty
 		public int aveTime = 3000;
 		//The limit to the random distributions range in milliseconds (AKA +- rTime/2)
@@ -369,7 +397,8 @@ public class GameController {
 			} else {
 				d = new Debris(eDebrisType.RECYCLING);
 			}
-			d.setController(thisGame); //Bin stuff
+			//d.setController(thisGame); //Bin stuff
+			d.setBins(items.getTrashBin(), items.getRecycleBin());
 			d.updatePos(xPos, 0);
 			d.setVertex(xPos);
 			return d;
@@ -473,7 +502,7 @@ public class GameController {
 	}
 	
 	//The point of this class is to create a timer that calls paint
-	public class mainTimer implements ActionListener{
+	public class mainTimer implements ActionListener, Serializable {
 		int maxTime = items.getScreenTimer().getMaxTime();
 		
 		public int scoringTime = 0;
@@ -560,7 +589,7 @@ public class GameController {
 	}
 	
 	//At (slightly) random intervals spawn powers, only should be initialized once!!
-	public class spawnPowers implements ActionListener{
+	public class spawnPowers implements ActionListener, Serializable {
 		public int timePassed = 0;
 		public int spawnTimePowers;
 		public int aveTime = 10000;
@@ -674,7 +703,7 @@ public class GameController {
 
 	}
 	
-	public class coastErosion implements ActionListener{
+	public class coastErosion implements ActionListener, Serializable {
 		private Coast coast;
 		public int timePassed;
 		public int erosionTime;
@@ -687,7 +716,7 @@ public class GameController {
 			//assumes erosion rate in Coast is in milliseconds
 			aveTime = (int) c.getErosionRate();
 			erosionTime = r.nextInt(rTime) + aveTime - rTime/2;
-			timePassed =0;
+			timePassed = 0;
 		}
 		
 		
@@ -706,11 +735,10 @@ public class GameController {
 					timePassed+=erodeDelay;
 				}
 			}
-		}
-		
+		}	
 	}
 	
-	public class barrierErosion implements ActionListener{
+	public class barrierErosion implements ActionListener, Serializable {
 		private Barriers barrier;
 		public int timePassed = 0;
 		public int erosionTime;
@@ -906,7 +934,109 @@ public class GameController {
 		
 	}
 	
+	public class SerializeAction extends AbstractAction {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			//Serialize to file
+			try
+			{
+				System.out.print("writing");
+				FileOutputStream fos = new FileOutputStream("testSerialize.ser");
+				ObjectOutputStream oos = new ObjectOutputStream(fos);
+				//TODO
+				
+				//oos.writeObject(items);
+				//Write the player
+				oos.writeObject(mainPlayer);
+				//Write the ActiveItems
+				oos.writeObject(items);
+				//Write the rest
+				oos.writeObject(debrisFloating);
+				oos.writeObject(powersFloating);
+				oos.writeObject(choosingThrow);
+				oos.writeObject(initiatingPowerUp);
+				oos.writeObject(allTimers);
+				oos.writeObject(theBigTimer);
+				oos.writeObject(paintTimer);
+				oos.writeObject(timeElapsed);
+				oos.writeObject(debrisMover);
+				oos.writeObject(powerMover);
+				
+				oos.close();
+			}
+			catch (Exception ex)
+			{
+				System.out.println("Exception thrown during test: " + ex.toString());
+				ex.printStackTrace();
+			}
+
+		}
+
+
+	}
+
+	public class ReadSerializeAction extends AbstractAction {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			//Serialize to file
+			try
+			{
+				System.out.print("reading");
+				FileInputStream fis = new FileInputStream("testSerialize.ser");
+				ObjectInputStream ois = new ObjectInputStream(fis);
+
+				//TODO: ois.readObject()
+				//Write the player
+				mainPlayer = (Player) ois.readObject();
+				//Write the ActiveItems
+				items = (ActiveItems) ois.readObject();
+				//Write the rest
+				debrisFloating = (Timer) ois.readObject();
+				powersFloating = (Timer) ois.readObject();
+				
+				choosingThrow = (boolean) ois.readObject();
+				initiatingPowerUp = (boolean) ois.readObject();
+				
+				ArrayList<Timer> readObject = (ArrayList<Timer>) ois.readObject();
+				allTimers = readObject;
+				
+				theBigTimer = (Timer) ois.readObject();
+				paintTimer = (mainTimer) ois.readObject();
+				
+				timeElapsed = (int) ois.readObject();
+				
+				debrisMover = (spawnDebris) ois.readObject();
+				powerMover = (spawnPowers) ois.readObject();			
+
+				ois.close();
+			}
+			catch (Exception ex)
+			{
+				System.out.println("Exception thrown during test: " + ex.toString());
+			}
+		}
+	}
 	
+	public class CleanUpSerializeAction extends AbstractAction {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			//Serialize to file
+			try
+			{
+				//Clean up the file
+				new File("testSerialize.ser").delete();
+			}
+			catch (Exception ex)
+			{
+				System.out.println("Exception thrown during test: " + ex.toString());
+			}
+		}
+
+
+	}
 
 
 }

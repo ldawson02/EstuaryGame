@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -33,7 +34,7 @@ import model.Remove;
  * separately, as a 2D array.
  * 
  * @author Ian
- * @version 1.2
+ * @version 1.3
  * @since 11/16/16
  */
 

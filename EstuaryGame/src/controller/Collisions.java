@@ -2,6 +2,7 @@ package controller;
 
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.io.Serializable;
 
 import controller.*;
 import eNums.eBarrierType;
@@ -12,7 +13,7 @@ import model.*;
  * 
  *
  */
-public class Collisions {
+public class Collisions implements Serializable {
 	private Player mainPlayer;
 	
 	/**

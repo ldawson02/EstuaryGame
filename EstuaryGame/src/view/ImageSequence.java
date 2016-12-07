@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -167,5 +168,19 @@ public class ImageSequence {
 	 */
 	public int getNumFrames() {
 		return numFrames;
+	}
+
+	/**
+	 * @return the defaultHeight
+	 */
+	public int getDefaultHeight() {
+		return defaultHeight;
+	}
+
+	/**
+	 * @return the defaultWidth
+	 */
+	public int getDefaultWidth() {
+		return defaultWidth;
 	}
 }

@@ -18,13 +18,13 @@ import eNums.eThrowDirection;
  * @since 10/25/16
  */
 
-public class Debris extends Floater implements Serializable{
+public class Debris extends Floater implements Serializable {
 
 	private eDebrisType type;
 	private eFloaterState state;
 	private boolean correctBin;
 	private eThrowDirection throwDir = eThrowDirection.LEFT;
-	private GameController gc;
+	ArrayList<Bin> LR;
 	
 	/**
 	 * Private no-arg constructor to prevent creating a debris item without
@@ -41,15 +41,7 @@ public class Debris extends Floater implements Serializable{
 		super();
 		this.type = etype;
 		this.state = eFloaterState.MOVING; // Moving by default on creation
-	}
-	
-	//This is only connected when the Debris has been caught
-	/**
-	 * set the controller
-	 * @param game
-	 */
-	public void setController(GameController game){
-		this.gc = game;
+		LR = new ArrayList<Bin>();
 	}
 	
 	/**
@@ -102,17 +94,15 @@ public class Debris extends Floater implements Serializable{
  * Get the bin in the throw direction
  * @return
  */
-	public Bin getBin(){
-		ArrayList<Bin> LR = new ArrayList<Bin>();
-		//Put recycle in first, then trash
-		LR.add(gc.getItems().getRecycleBin());
-		LR.add(gc.getItems().getTrashBin());
-		
+	public void setBins(Bin recyc, Bin trash) {
+		LR.add(recyc);
+		LR.add(trash);
 		if(LR.get(0).getPosX() > LR.get(1).getPosX()){
 			Collections.reverse(LR);
 		}
-
-		
+	}
+	
+	public Bin getBin(){
 		//if they throw Left return Left-most bin
 		if(throwDir==eThrowDirection.LEFT){
 			return LR.get(0);

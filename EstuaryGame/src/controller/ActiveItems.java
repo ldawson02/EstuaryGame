@@ -1,20 +1,36 @@
 package controller;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+
 import java.util.Iterator;
 
 import eNums.eBarrierType;
 import eNums.eDebrisType;
 import eNums.eFloaterState;
 import model.*;
-public class ActiveItems {
+
+public class ActiveItems implements Serializable {
 	//class that holds all our actual active items in an instance of the game
 	Player mainPlayer;
-
+	private HealthBar hBar;
+	private ScreenTimer screenTimer;
+	private ArrayList<Barriers> barriers;
+	private ArrayList<Debris> debris;
+	private ArrayList<Coast> coast;
+	private ArrayList<Powers> powerups;
+	private Bin TrashBin;
+	private Bin RecycleBin;
+	
 	/**
 	 * @return the mainPlayer
 	 */
 	public Player getMainPlayer() {
+		return mainPlayer;
+	}
+	
+	public Player getPlayer() {
+		//an accident
 		return mainPlayer;
 	}
 
@@ -25,9 +41,6 @@ public class ActiveItems {
 		this.mainPlayer = mainPlayer;
 	}
 
-	private HealthBar hBar;
-	
-	private ScreenTimer screenTimer;
 	/**
 	 * @return the screenTimer
 	 */
@@ -42,12 +55,7 @@ public class ActiveItems {
 		this.screenTimer = screenTimer;
 	}
 
-	private ArrayList<Barriers> barriers;
-	private ArrayList<Debris> debris;
-	private ArrayList<Coast> coast;
-	private ArrayList<Powers> powerups;
-	private Bin TrashBin;
-	private Bin RecycleBin;
+
 	
 	public ActiveItems() {
 		//At the very least, initialize the lists and add the coasts
@@ -57,14 +65,6 @@ public class ActiveItems {
 		powerups = new ArrayList<Powers>();
 		TrashBin = new Bin(eDebrisType.TRASH);
 		RecycleBin = new Bin(eDebrisType.RECYCLING);
-	}
-	
-	/**
-	 * Allows access to the main Player for the Model and View
-	 * @return
-	 */
-	public Player getPlayer(){
-		return mainPlayer;
 	}
 	
 	/**
@@ -172,5 +172,4 @@ public class ActiveItems {
 	public Bin getRecycleBin(){
 		return RecycleBin;
 	}
-		
 }
