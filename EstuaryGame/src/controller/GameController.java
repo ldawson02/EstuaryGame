@@ -730,6 +730,7 @@ public class GameController implements Serializable {
 				if(timePassed >= erosionTime){
 					coast.erode();
 					timePassed = 0;
+					items.getHealthBar().update(eHealthChanges.CoastEroded.getDelta());
 				}
 				else{
 					timePassed+=erodeDelay;
@@ -768,6 +769,7 @@ public class GameController implements Serializable {
 			if(timePassed >= erosionTime){
 				barrier.erode();
 				timePassed = 0;
+				items.getHealthBar().update(eHealthChanges.BarrierFallen.getDelta());
 			}
 			else if(barrier.getState()!=eBarrierState.ONE_HIT & timePassed >= (1/2)*erosionTime){
 				barrier.erodeHalf();
