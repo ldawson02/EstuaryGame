@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.swing.Timer;
@@ -19,7 +20,7 @@ import eNums.eBarrierType;
  * 
  *
  */
-public class Barriers extends Item{
+public class Barriers extends Item implements Serializable{
 	private boolean protector = false;
 	//overall state of the barrier
 	private eBarrierType type;

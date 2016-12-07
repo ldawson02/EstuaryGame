@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.swing.Timer;
@@ -20,7 +21,7 @@ import eNums.eCoastState;
  * @author megan
  *
  */
-public class Coast extends Item{
+public class Coast extends Item implements Serializable{
 
 	private int coastID;
 	/**

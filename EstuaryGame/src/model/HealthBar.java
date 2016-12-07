@@ -1,5 +1,7 @@
 package model;
-	
+
+import java.io.Serializable;
+
 /**
 * The HealthBar class holds information about the health of the estuary and has the update method
 * 
@@ -12,7 +14,7 @@ package model;
  * @author Pu
  *
  */
-public class HealthBar extends Item {
+public class HealthBar extends Item implements Serializable {
 	private final int maxHealth = 100;
 	private final int minHealth = 0;
 	private final int height = 25;

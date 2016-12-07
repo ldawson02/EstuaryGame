@@ -1,12 +1,14 @@
 package model;
 
+import java.io.Serializable;
+
 import eNums.eDebrisType;
 /**
  * 
  * the Bin has a trashType
  *
  */
-public class Bin extends Item{
+public class Bin extends Item implements Serializable{
 
 	public eDebrisType debrisType;
 	

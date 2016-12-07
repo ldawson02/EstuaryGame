@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -7,7 +8,7 @@ import controller.ActiveItems;
 import eNums.eBarrierType;
 import eNums.eFloaterState;
 
-public class Remove extends Powers {
+public class Remove extends Powers implements Serializable{
 	
 	private int vertex;
 	

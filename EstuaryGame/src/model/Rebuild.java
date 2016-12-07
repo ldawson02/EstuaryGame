@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -8,7 +9,7 @@ import controller.GameController;
 import eNums.eBarrierType;
 import eNums.eFloaterState;
 
-public class Rebuild extends Powers {
+public class Rebuild extends Powers implements Serializable{
 
 	private int vertex;
 	private eFloaterState state;
