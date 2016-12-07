@@ -27,24 +27,27 @@ public class Barriers extends Item implements Serializable{
 	private eBarrierType type;
 	private eBarrierState state = eBarrierState.NO_HIT;
 	private Timer erosionTimer;
-	private static int barrierY = 500;
-	private static int leftEdge = 20;
-	private static int rightEdge = 740;
+	private static int barrierY = 525;
+	private static int leftEdge = 0;
+	private static int rightEdge = 750;
+	public static final int defaultHeight = 37;
+	public static final int defaultWidth = 45;
+	
 	
 	/**
 	 * Constructor for Barrier
 	 */
 	public Barriers(int x, int y){
 		super(x,y);
-		setWidth(40);
-		setHeight(20);
+		setWidth(defaultWidth);
+		setHeight(defaultHeight);
 		type = eBarrierType.EMPTY;
 	};
 	
 	public Barriers(int x, int y, eBarrierType t){
 		super(x,y);
-		setWidth(40);
-		setHeight(20);
+		setWidth(defaultWidth);
+		setHeight(defaultHeight);
 		type = t;
 	}
 	
@@ -92,8 +95,7 @@ public class Barriers extends Item implements Serializable{
 	public int getDecayTime() {
 		return this.getType().getDecay();
 	}
-
-
+	
 	/**
 	 * the getter and setter for type
 	 * @return type
