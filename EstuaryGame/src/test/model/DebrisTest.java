@@ -41,6 +41,10 @@ public class DebrisTest {
 	static GameController gc;
 	static Debris randomDebris1;
 	static Debris randomDebris2;
+	static Debris d1;
+	static Debris d2;
+	static Debris d3;
+	static Debris d4;
 	
 	
 	
@@ -53,16 +57,16 @@ public class DebrisTest {
 		gc = new GameController(new EstuaryGame());
 		trash.setState(eFloaterState.MOVING);
 		recyc.setState(eFloaterState.MOVING);
-		Debris d1 = new Debris(100,10);
+		d1 = new Debris(300,10);
 		d1.setType(eDebrisType.TRASH);
-		Debris d2 = new Debris(200,20);
+		d2 = new Debris(200,20);
 		d2.setType(eDebrisType.TRASH);
 		gc.getItems().getAllDebris().add(d1);
 		gc.getItems().getAllDebris().add(d2);
-		Debris d3 = new Debris(250,10);
-		d1.setType(eDebrisType.RECYCLING);
-		Debris d4 = new Debris(300,40);
-		d2.setType(eDebrisType.RECYCLING);
+		d3 = new Debris(250,10);
+		d3.setType(eDebrisType.RECYCLING);
+		d4 = new Debris(300,40);
+		d4.setType(eDebrisType.RECYCLING);
 		gc.getItems().getAllDebris().add(d3);
 		gc.getItems().getAllDebris().add(d4);
 	}
@@ -85,13 +89,7 @@ public class DebrisTest {
 	public void testCaughtandThrownCorrectTrash() throws InterruptedException, AWTException{
 		ArrayList<Debris> debris = gc.getItems().getAllDebris();
 		Collisions collision = new Collisions();
-		Debris d = debris.get(0);
-		for(Debris deb: debris){
-			if(deb.getState() == eFloaterState.MOVING && deb.getType() == eDebrisType.TRASH){
-				d = deb;
-				break;
-			}
-		}
+		Debris d = d1;
 		int d_xpos = d.getPosX();
 		int d_ypos = d.getPosY();
 		gc.getMainPlayer().updatePos(d_xpos, d_ypos);
@@ -124,13 +122,7 @@ public class DebrisTest {
 	public void testCaughtandThrownCorrectRecycling() throws InterruptedException{
 		ArrayList<Debris> debris = gc.getItems().getAllDebris();
 		Collisions collision = new Collisions();
-		Debris d = debris.get(0);
-		for(Debris deb: debris){
-			if(deb.getState() == eFloaterState.MOVING && deb.getType() == eDebrisType.RECYCLING){
-				d = deb;
-				break;
-			}
-		}
+		Debris d = d3;
 		int d_xpos = d.getPosX();
 		int d_ypos = d.getPosY();
 		gc.getMainPlayer().updatePos(d_xpos, d_ypos);
@@ -164,13 +156,7 @@ public class DebrisTest {
 	public void testCaughtandThrownIncorrectTrash() throws InterruptedException, AWTException{
 		ArrayList<Debris> debris = gc.getItems().getAllDebris();
 		Collisions collision = new Collisions();
-		Debris d = debris.get(0);
-		for(Debris deb: debris){
-			if(deb.getState() == eFloaterState.MOVING && deb.getType() == eDebrisType.TRASH){
-				d = deb;
-				break;
-			}
-		}
+		Debris d = d2;
 		int d_xpos = d.getPosX();
 		int d_ypos = d.getPosY();
 		gc.getMainPlayer().updatePos(d_xpos, d_ypos);
@@ -202,13 +188,7 @@ public class DebrisTest {
 	public void testCaughtandThrownIncorrectRecycle() throws InterruptedException{
 		ArrayList<Debris> debris = gc.getItems().getAllDebris();
 		Collisions collision = new Collisions();
-		Debris d = debris.get(0);
-		for(Debris deb: debris){
-			if(deb.getState() == eFloaterState.MOVING && deb.getType() == eDebrisType.RECYCLING){
-				d = deb;
-				break;
-			}
-		}
+		Debris d = d4;
 		
 		ThrowChoice action1 = gc.new ThrowChoice(eThrowDirection.RIGHT, d);
 		action1.actionPerformed(new ActionEvent(action1, ActionEvent.ACTION_PERFORMED, null){});
