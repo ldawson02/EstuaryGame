@@ -27,7 +27,7 @@ import eNums.eAnimation;
 public class ImageSequence {
 
 	private eAnimation animID;
-	private ArrayList<Image> seq;
+	private ArrayList<BufferedImage> seq;
 	private int curFrame;
 	private int numFrames;
 	private int frameDelay = 10;
@@ -38,7 +38,7 @@ public class ImageSequence {
 	
 	public ImageSequence(eAnimation ID) {
 		this.animID = ID;
-		seq = new ArrayList<Image>();
+		seq = new ArrayList<BufferedImage>();
 		curFrame = 0;
 		loadSequence(ID.getPath());
 	}
@@ -90,8 +90,8 @@ public class ImageSequence {
 		return null;
 	}
 
-	public Image draw() {
-		Image toReturn = seq.get(curFrame / (1 + frameDelay));
+	public BufferedImage draw() {
+		BufferedImage toReturn = seq.get(curFrame / (1 + frameDelay));
 		curFrame += 1;
 		if (curFrame == numFrames*(1 + frameDelay)) {
 			curFrame = 0;
@@ -144,7 +144,7 @@ public class ImageSequence {
 	/**
 	 * @return the seq
 	 */
-	public ArrayList<Image> getSeq() {
+	public ArrayList<BufferedImage> getSeq() {
 		return seq;
 	}
 
