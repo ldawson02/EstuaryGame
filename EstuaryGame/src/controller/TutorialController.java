@@ -9,13 +9,17 @@ import javax.swing.KeyStroke;
 import javax.swing.Timer;
 
 import controller.GameController.mainTimer;
+import eNums.eBarrierState;
 import eNums.eBarrierType;
+import eNums.eDebrisType;
 import eNums.eFloaterState;
 import eNums.eHealthChanges;
 import eNums.eTutorialState;
 import model.Barriers;
 import model.Coast;
 import model.Debris;
+import model.DrawableItem;
+import model.Item;
 import model.Powers;
 import view.EstuaryGame;
 import view.Tutorial;
@@ -33,6 +37,7 @@ public class TutorialController extends GameController {
 	private mainTimer tutorialPaintTimer;
 	private unpause unpauseAction;
 	private Timer erosionTimer;
+	private ArrayList<Timer> erosionTimers = new ArrayList<Timer>();
 	
 	public TutorialController(Tutorial mainGame) {
 		super(mainGame);
@@ -52,8 +57,9 @@ public class TutorialController extends GameController {
 		getItems().getAllBarriers().get(8).setType(eBarrierType.Wall);
 		getItems().getAllBarriers().get(9).setType(eBarrierType.Gabion);
 		getItems().getAllBarriers().get(1).setType(eBarrierType.Gabion);
-		getItems().getAllBarriers().get(2).setType(eBarrierType.Gabion);
+		getItems().getAllBarriers().get(2).setType(eBarrierType.Wall);
 		getItems().getAllBarriers().get(3).setType(eBarrierType.Gabion);
+		//getItems().getAllBarriers().get(6).setType(eBarrierType.EMPTY);
 	}
 	
 	@Override
@@ -84,6 +90,12 @@ public class TutorialController extends GameController {
 		//this.getMainGame().bindKeyWith("continueTutorial", KeyStroke.getKeyStroke("ENTER"), unpauseAction);
 	}
 	
+	public void stopErosionTimers(){
+		for(Timer t : erosionTimers){
+			t.stop();
+		}
+	}
+	
 	public void startStage(){
 		System.out.println("State is: " + t.getState());
 		switch(t.getState()){
@@ -94,8 +106,13 @@ public class TutorialController extends GameController {
 			erosion1Setup();
 			break;
 		case EROSION_WALL:
+			erosion2Setup();
+			break;
+		case EROSION_CHOICE:
+			erosion3Setup();
 			break;
 		case POWERS_REMOVE:
+			stopErosionTimers();
 		case POWERS_REBUILD:
 			powerSetup(t.getState());
 			break;
@@ -123,24 +140,100 @@ public class TutorialController extends GameController {
 		System.out.println("Erosion setup");
 		t.addMouseListener(t.mc);
 		t.addMouseMotionListener(t.mc);
+		t.mc.setWallSpawnable(false);
 		
-		Coast focusCoast = getItems().getCoast().get(5);
+		freezeMotion();
+		
+		Coast focusCoast = getItems().getCoast().get(5); //Barrier above should be empty
 		t.setSpotlightItem(focusCoast);
+		Barriers focusBarrierSpot = focusCoast.getBarrier();
+		focusBarrierSpot.setErosionTimer(new Timer(erodeCallDelay, new barrierErosion(focusBarrierSpot)));
+		//focusBarrierSpot.getErosionTimer().start();
 		
-		//set up the mousecontroller?
-		erosionTimer = new Timer(erodeCallDelay, new erosion(focusCoast));
-		erosionTimer.start();
+		focusCoast.setErosionTimer(new Timer(erodeCallDelay, new erosion(focusCoast)));
+		focusCoast.getErosionTimer().start();
 		
-		//this.stageComplete();
+		erosionTimers.add(focusBarrierSpot.getErosionTimer());
+		erosionTimers.add(focusCoast.getErosionTimer());
+	}
+	
+	public void erosion2Setup(){
+		t.mc.setGabionSpawnable(false);
+		t.mc.setWallSpawnable(true);
+		
+		Coast focusCoast = getItems().getCoast().get(6);
+		Barriers focusBarrierSpot = focusCoast.getBarrier();
+		t.setSpotlightItem(focusBarrierSpot);
+		focusCoast.setErosionTimer(new Timer(erodeCallDelay, new erosion(focusCoast)));
+		focusBarrierSpot.setErosionTimer(new Timer(erodeCallDelay, new erosion(focusBarrierSpot,focusCoast, 2000)));
+		focusBarrierSpot.getErosionTimer().start();
+		
+		erosionTimers.add(focusBarrierSpot.getErosionTimer());
+		erosionTimers.add(focusCoast.getErosionTimer());
+	}
+	
+	public void erosion3Setup(){
+		t.mc.setGabionSpawnable(true);
+		t.mc.setWallSpawnable(true);
+		
+		Coast focusCoast1 = getItems().getCoast().get(5);
+		Coast focusCoast2 = getItems().getCoast().get(6);
+		//not sure if this will work well, but want to draw spotlight at the center of both these items
+		t.setSpotlightItem(new DrawableItem(focusCoast1.getPosX(), focusCoast1.getPosY(), focusCoast1.getWidth()+focusCoast2.getWidth(), focusCoast1.getHeight()));
+		Barriers focusBarrierSpot1 = focusCoast1.getBarrier();
+		Barriers focusBarrierSpot2 = focusCoast2.getBarrier();
+		if(focusBarrierSpot1.getType()!=eBarrierType.Gabion || focusBarrierSpot2.getType()!=eBarrierType.Wall){
+			System.out.println("ERROR IN BARRIERS");
+		}
+		
+		focusCoast1.setErosionTimer(new Timer(erodeCallDelay, new erosion(focusCoast1)));
+		focusCoast2.setErosionTimer(new Timer(erodeCallDelay, new erosion(focusCoast2)));
+		
+		focusBarrierSpot1.setErosionTimer(new Timer(erodeCallDelay, new erosion(focusBarrierSpot1,focusCoast1, 7000)));
+		focusBarrierSpot1.getErosionTimer().start();
+		focusBarrierSpot2.setErosionTimer(new Timer(erodeCallDelay, new erosion(focusBarrierSpot2,focusCoast2, 2500)));
+		focusBarrierSpot2.getErosionTimer().start();
+		
+		erosionTimers.add(focusBarrierSpot1.getErosionTimer());
+		erosionTimers.add(focusCoast1.getErosionTimer());
+		erosionTimers.add(focusBarrierSpot2.getErosionTimer());
+		erosionTimers.add(focusCoast2.getErosionTimer());
 	}
 	
 	public void powerSetup(eTutorialState state){
+		normalKeyBind();
+		if(state == eTutorialState.POWERS_REMOVE){
+			removeSetup();
+		}
 		this.powerMover = new spawnPowers(state);
 		powersFloating = new Timer(this.getFloatDelay(), powerMover);
 		powersFloating.start();
 	}
 	
+	public void removeSetup(){
+		//need to add trash to walls first so that they can be deleted
+		ArrayList<Debris> toAdd = new ArrayList<Debris>();
+		toAdd.add(new Debris(36, 290));
+		toAdd.add(new Debris(45, 230));
+		toAdd.add(new Debris(46, 320));
+		toAdd.add(new Debris(738, 243));
+		toAdd.add(new Debris(741, 285));
+		int i = 0;
+		for(Debris d:toAdd){
+			d.setState(eFloaterState.RESTING);
+			if(i%2==0){
+				d.setType(eDebrisType.TRASH);
+			}else{
+				d.setType(eDebrisType.RECYCLING);
+			}
+			getItems().addDebris(d);
+			i++;
+		}
+		
+	}
+	
 	public void healthSetup(){
+		System.out.println("in health setup");
 		t.setSpotlightItem(getItems().getHealthBar());
 	}
 	
@@ -177,7 +270,9 @@ public class TutorialController extends GameController {
 		}
 		
 		public void checkHealthLimit(){
+			System.out.println(timeInStage);
 			if(timeInStage >= healthStageTime){
+				System.out.println("Changed state from CheckHealthLimit");
 				stageComplete();
 			}
 		}
@@ -263,11 +358,13 @@ public class TutorialController extends GameController {
 	
 	public class spawnPowers extends GameController.spawnPowers implements ActionListener{
 		eTutorialState eState;
+		private int time = 0;
 		
 		public spawnPowers(eTutorialState e){
 			super();
 			eState = e;
 			quickSpawn();
+			time = 0;
 		}
 		
 		@Override
@@ -300,8 +397,10 @@ public class TutorialController extends GameController {
 		@Override
 		public void actionPerformed(ActionEvent e){
 			super.actionPerformed(e);
-			if(!thisGame.getItems().getAllPowers().contains(t.getSpotlightItem())){
+			if(time!= 0 & !thisGame.getItems().getAllPowers().contains(t.getSpotlightItem())){
+				System.out.println("Stopping power: " + eState);
 				powersFloating.stop();
+				t.setSpotlight(false);
 				stageComplete();
 			}
 			else{
@@ -316,28 +415,84 @@ public class TutorialController extends GameController {
 					quickSpawn();
 				}
 			}
+			time+=floatDelay;
 		}
 	}
 	
 	public class erosion implements ActionListener{
 		private Coast erodingCoast;
+		private Coast protectedCoast;
+		private Barriers erodingBarrier;
 		private int erodeDelay = 3000;
 		private int time = 0;
 		
 		public erosion(Coast c){
 			erodingCoast = c;
-			
+			erodingBarrier = null;
 		}
-		@Override
-		public void actionPerformed(ActionEvent e){
-			time += erodeCallDelay;
+		
+		public erosion(Barriers b, Coast c, int time){
+			erodingBarrier = b;
+			erodingCoast = null;
+			protectedCoast = c;
+			erodeDelay = time;
+		}
+		public void coastErosion(){
 			if(time >= erodeDelay){
 				erodingCoast.erode();
 				time = 0;
 				erodeDelay = 10000;
+				t.spotlight = false;
+				t.spotlightSwitched = true;
+				//TODO: something to point to painting the drag and drop arrow
 			}
 			if(erodingCoast.isProtected()){
+				if(time == 0){
+					return;
+				}
+				if(t.getState() == eTutorialState.EROSION_CHOICE){
+					stageComplete();
+				}
 				//They added the barrier! Yay!
+				else if(erodingCoast.getBarrier().getType()==eBarrierType.Gabion){
+					//Finished the gabion stage
+					erodingCoast.getErosionTimer().stop();
+					erodingCoast.getBarrier().getErosionTimer().stop();
+					stageComplete();
+				}
+				else if(erodingCoast.getBarrier().getType()==eBarrierType.Wall){
+					//Finished the wall stage
+					erodingCoast.getErosionTimer().stop();
+					erodingCoast.getBarrier().getErosionTimer().stop();
+					stageComplete();
+				}
+			}else{
+				time+=erodeCallDelay;
+			}
+		}
+		
+		public void barrierErosion(){
+			time+=erodeCallDelay;
+			if(time >= erodeDelay){
+				erodingBarrier.erode();
+				t.setSpotlight(false);
+				t.spotlightSwitched = true;
+				erodingBarrier.getErosionTimer().stop();
+				System.out.println("starting protected coast timer: " );
+				protectedCoast.getErosionTimer().start();
+			}
+			else if(erodingBarrier.getState()!=eBarrierState.ONE_HIT & time >= (1/2)*erodeDelay){
+				erodingBarrier.erodeHalf();
+			}
+			
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent e){
+			if(erodingCoast!=null){
+				coastErosion();
+			}else if(erodingBarrier!=null){
+				barrierErosion();
 			}
 		}
 	}

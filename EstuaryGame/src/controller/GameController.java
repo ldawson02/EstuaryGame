@@ -24,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
 import controller.*;
+import eNums.eBarrierState;
 import eNums.eBarrierType;
 import eNums.eDebrisType;
 import eNums.eFloaterState;
@@ -290,12 +291,15 @@ public class GameController {
 		Action powerAction = new PowerInitiate(p);
 		items.getPlayer().setState(ePlayerState.Lifting);
 		mainGame.bindKeyWith("initiatePowerUp", KeyStroke.getKeyStroke("ENTER"), powerAction);
+		freezeMotion();
+		
+	}
+	
+	public void freezeMotion(){
 		mainGame.unbindKeyWith("x.up", KeyStroke.getKeyStroke("UP"));
 		mainGame.unbindKeyWith("x.down", KeyStroke.getKeyStroke("DOWN"));
 		mainGame.unbindKeyWith("x.left", KeyStroke.getKeyStroke("LEFT"));
 		mainGame.unbindKeyWith("x.right", KeyStroke.getKeyStroke("RIGHT"));
-		
-		
 	}
 	
 	public void thrownSetup(){
@@ -383,10 +387,6 @@ public class GameController {
 			if(!thisGame.choosingThrow && collision.checkCollision(d) && !thisGame.initiatingPowerUp){
 				//sets the Debris state to Lifted
 				d.catching();
-				/**if(tutorialMode){
-					tutorial.setSpotlight(false);
-					System.out.println("in tutorial");
-				}*/
 				//sequence of events for a caught Debris initiated
 				thisGame.caughtSetup(d);
 				//Move the trash to above the Player's head
@@ -705,7 +705,7 @@ public class GameController {
 	
 	public class barrierErosion implements ActionListener{
 		private Barriers barrier;
-		public int timePassed;
+		public int timePassed = 0;
 		public int erosionTime;
 		public int aveTime;
 		final public int rTime = 2000;
@@ -720,17 +720,23 @@ public class GameController {
 			System.out.println("new erosion: " + erosionTime);
 			
 		}
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(barrier.getType()==eBarrierType.EMPTY){
 				return;
 			}
+
 			if(timePassed == 0){
 				newTime();
 			}
 			if(timePassed >= erosionTime){
 				barrier.erode();
 				timePassed = 0;
+			}
+			else if(barrier.getState()!=eBarrierState.ONE_HIT & timePassed >= (1/2)*erosionTime){
+				barrier.erodeHalf();
+				timePassed+=erodeDelay;
 			}
 			else{
 				timePassed+=erodeDelay;
@@ -856,6 +862,11 @@ public class GameController {
 		}
 	}
 	
+	/**
+	 * Returns whether a Barrier barr has collided with any other Barrier on the screen
+	 * @param barr
+	 * @return
+	 */
 	public Barriers emptyBarrierCollision(Barriers barr) {
 		//checks if barr collided with any of the barriers and if it is empty
 		for (Barriers b : this.items.getAllBarriers()) {

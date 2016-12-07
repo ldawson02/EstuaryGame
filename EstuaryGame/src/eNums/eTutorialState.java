@@ -1,7 +1,7 @@
 package eNums;
 
 public enum eTutorialState {
-	DEBRIS(0), EROSION_GABION(1), EROSION_WALL(1), POWERS_REMOVE(2), POWERS_REBUILD(2), HEALTH(3), TIMER(4), DONE(5), IDLE(-1);
+	DEBRIS(0), EROSION_GABION(1), EROSION_WALL(1), EROSION_CHOICE(1), POWERS_REMOVE(2), POWERS_REBUILD(2), HEALTH(3), TIMER(4), DONE(5), IDLE(-1);
 	
 	private int state;
 	
@@ -19,6 +19,9 @@ public enum eTutorialState {
 			state = EROSION_WALL;
 			break;
 		case EROSION_WALL:
+			state = EROSION_CHOICE;
+			break;
+		case EROSION_CHOICE:
 			state = POWERS_REMOVE;
 			break;
 		case POWERS_REMOVE:

@@ -20,6 +20,8 @@ import model.Barriers;
 		private Barriers gabionsSpawn = new Barriers(Barriers.getRightEdge(), 390, eBarrierType.Gabion);
 		private Barriers dragged = null;
 		private Barriers dropSpot = null;
+		private boolean wallSpawnable = true;
+		private boolean gabionSpawnable = true;
 				
 		/**
 		 * wall spawn getter
@@ -52,6 +54,14 @@ import model.Barriers;
 			this.gc = g;
 		}
 		
+		public void setWallSpawnable(boolean t){
+			wallSpawnable = t;
+		}
+		
+		public void setGabionSpawnable(boolean t){
+			gabionSpawnable = t;
+		}
+		
 		/**
 		 * this method is to see after the mouse pressed, the wall and gabion's action
 		 */
@@ -61,13 +71,13 @@ import model.Barriers;
 			
 			if (dragged == null) {	//the dragged "barrier" is not set yet
 				System.out.println("Mouse: " + mouseCoords.x + " " + mouseCoords.y);
-				if (Collisions.pointInside(wallSpawn, mouseCoords)) {
+				if (wallSpawnable && Collisions.pointInside(wallSpawn, mouseCoords)) {
 					dragged = new Barriers(e.getX(), e.getY()); //set it to the same coords as mouse click
 					dragged.setType(eBarrierType.Wall);  //set type to wall
 					//System.out.println("inside wallspawn: " + dragged.getPosX() + " "+ dragged.getPosY());
 
 				}
-				else if (Collisions.pointInside(gabionsSpawn, mouseCoords)) {
+				else if (gabionSpawnable && Collisions.pointInside(gabionsSpawn, mouseCoords)) {
 					dragged = new Barriers(e.getX(), e.getY()); //set it to the same coords as mouse click
 					dragged.setType(eBarrierType.Gabion);  //set type to gabion
 					//System.out.println("inside gabionspawn: " + dragged.getPosX() + " "+ dragged.getPosY());
@@ -83,7 +93,9 @@ import model.Barriers;
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			
-			
+			if(dragged == null){
+				return;
+			}
 			if (dragging == false)
 				return;
 			dragging = false;
@@ -105,8 +117,6 @@ import model.Barriers;
 				}
 			}
 			dragged = null; //done dragging, don't need dragging shape
-			repaint();
-			// TODO Auto-generated method stub
 			
 			
 			/*

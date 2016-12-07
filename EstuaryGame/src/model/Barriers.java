@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.swing.Timer;
 
 import controller.GameController;
+import eNums.eBarrierState;
 import eNums.eBarrierType;
 
 /**
@@ -24,6 +25,7 @@ public class Barriers extends Item implements Serializable{
 	private boolean protector = false;
 	//overall state of the barrier
 	private eBarrierType type;
+	private eBarrierState state = eBarrierState.NO_HIT;
 	private Timer erosionTimer;
 	private static int barrierY = 500;
 	private static int leftEdge = 20;
@@ -76,6 +78,11 @@ public class Barriers extends Item implements Serializable{
 	 */
 	public void erode(){
 		this.setType(eBarrierType.EMPTY);
+		this.setState(eBarrierState.NO_HIT);
+	}
+	
+	public void erodeHalf(){
+		this.setState(eBarrierState.ONE_HIT);
 	}
 
 	/**
@@ -97,9 +104,16 @@ public class Barriers extends Item implements Serializable{
 
 	public void setType(eBarrierType type) {
 		this.type = type;
+		this.setState(eBarrierState.NO_HIT);
 	}
 
-
+	public eBarrierState getState(){
+		return state;
+	}
+	
+	public void setState(eBarrierState s){
+		state = s;
+	}
 
 	/**
 	 * we set up the left coast, when the loop less than 5, the space will add barrier in left
