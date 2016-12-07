@@ -77,6 +77,13 @@ public class PlayerTest {
 		
 	}
 	
+	@Test
+	public void getAndSetSpeed(){
+		Player player = new Player();
+		player.setSpeed(7);
+		assertEquals(player.getSpeed(), 7);
+	}
+	
 
 
 }
