@@ -30,6 +30,7 @@ public class ScreenTimer extends Item implements Serializable {
     private eScreenTimerState state;
 	
 	public ScreenTimer() {
+		super(400, 20);
 		state = eScreenTimerState.OFF;
 		maxTime = MAX_TIME;
 	}

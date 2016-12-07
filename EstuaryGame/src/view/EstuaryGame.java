@@ -77,6 +77,7 @@ public class EstuaryGame extends JComponent{
     Image recycBin;
     Image tutClockArrow;
     Image tutHealthArrow;
+    Image spotlight;
     
     int screenX = 800;
     int screenY = 600;
@@ -201,10 +202,8 @@ public class EstuaryGame extends JComponent{
     	gameOver = lib.draw(eAnimation.gameOver);
     	tutClockArrow = lib.draw(eAnimation.clockArrow);
     	tutHealthArrow = lib.draw(eAnimation.healthArrow);
-    	
-    	Bin rb = gc.getItems().getRecycleBin();
+    	spotlight = lib.draw(eAnimation.spotlight);
     	recycBin = lib.draw(eAnimation.recycleBin);
-    	Bin tb = gc.getItems().getTrashBin();
     	trashBin = lib.draw(eAnimation.trashBin);
     }
     
@@ -239,6 +238,9 @@ public class EstuaryGame extends JComponent{
         if (!gameFinished)
         	paintScreenTimer(g);
         
+        //paintSpotlight(g, gc.getItems().getAllDebris().get(0));
+        paintSpotlight(g, gc.getItems().getScreenTimer());
+        
         paintScore(g);
         
         timeElapsed = gc.getTheBigTimer();
@@ -247,18 +249,7 @@ public class EstuaryGame extends JComponent{
     }
     
     private void paintBackground(Graphics g) {
-    	//TODO: get a background
     	g.drawImage(bg, 0, 0, this);
-    	/*
-        g.setColor(Color.BLACK);
-        Graphics2D g2d = (Graphics2D) g.create();
-        QuadCurve2D quadLeft = new QuadCurve2D.Double(0, 0, 300, 150, 0, 300);
-        QuadCurve2D quadRight = new QuadCurve2D.Double(800, 0, 500, 150, 800, 300);
-        g2d.draw(quadLeft);
-        g2d.draw(quadRight);
-        
-        Ellipse2D bounds = new Ellipse2D.Double(50, 150, 700, 300);
-        g2d.draw(bounds);*/
     }
     
     private void paintScreenTimer(Graphics g) {
@@ -506,6 +497,17 @@ public class EstuaryGame extends JComponent{
     	g.drawImage(tutHealthArrow, paintX, paintY, this);
     }
     
+    public void paintSpotlight(Graphics g, Item i) {
+    	int paintX = i.getPosX() - 800 + (i.getWidth()/2);
+    	int paintY = i.getPosY() - 600 + (i.getHeight()/2);
+    	g.drawImage(spotlight, paintX, paintY, this);
+    }
+    
+    public void paintSpotlight(Graphics g, int x, int y) {
+    	int paintX = x - 800;
+    	int paintY = y - 600;
+    	g.drawImage(spotlight, paintX, paintY, this);
+    }
     
     private void endGameMotion() {
     	//Stop player motion
@@ -531,10 +533,6 @@ public class EstuaryGame extends JComponent{
 	public int getScreenY() {
 		return screenY;
 	}
-    
-    private Image scalePlayer(Image img, Player p) {
-    	return img.getScaledInstance(p.getWidth(), p.getHeight(), 50);
-    }
 
     public static JPanel getCards(){
     	return cards;

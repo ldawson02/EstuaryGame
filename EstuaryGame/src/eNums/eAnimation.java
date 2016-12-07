@@ -28,6 +28,7 @@ public enum eAnimation {
 	gameOver("gameOver"),
 	clockArrow("clockarrow"),
 	healthArrow("healtharrow"),
+	spotlight("spotlight"),
 	error("error");
 	
 	private String folderName;
