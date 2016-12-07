@@ -24,12 +24,6 @@ public class Remove extends Powers implements Serializable{
 	@Override
 	public void catching() {
 		this.setState(eFloaterState.LIFTED);
-		/*
-		// TODO Auto-generated method stub
-		for (Debris d : ActiveItems.debris){
-			ActiveItems.debris.remove(d);	
-		}
-		*/
 	}
 	@Override
 	public void power(ActiveItems items){
@@ -52,15 +46,5 @@ public class Remove extends Powers implements Serializable{
 		}**/
 	}
 
-
-	@Override
-	public int getVertex() {
-		return vertex;
-	}
-	
-	@Override
-	public void setVertex(int vertex) {
-		this.vertex = vertex;
-	}
 
 }
