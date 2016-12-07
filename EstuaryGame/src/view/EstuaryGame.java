@@ -68,9 +68,9 @@ public class EstuaryGame extends JComponent{
     private ImageLibrary lib;
     
     //Constant images
-    BufferedImage bg;
-    BufferedImage clockback;
-    BufferedImage gameOver;
+    Image bg;
+    Image clockback;
+    Image gameOver;
     Image trashBin;
     Image recycBin;
     
@@ -196,19 +196,10 @@ public class EstuaryGame extends JComponent{
     	clockback = lib.draw(eAnimation.clockback);
     	gameOver = lib.draw(eAnimation.gameOver);
     	
-    	Bin tb = gc.getItems().getTrashBin();
-    	trashBin = lib.draw(eAnimation.trashBin).getScaledInstance(tb.getWidth(), tb.getHeight(), 50);
     	Bin rb = gc.getItems().getRecycleBin();
-    	recycBin = lib.draw(eAnimation.recycleBin).getScaledInstance(rb.getWidth(), rb.getHeight(), 50);
-    	/*
-    	try {
-    		bg = ImageIO.read(new File("resources/background/babybackground.png"));
-    		clockback = ImageIO.read(new File("resources/clockback/clockback.png"));
-    	}
-    	catch (IOException e) {
-    		System.out.println("Background failed to load.");
-    	}
-    	*/
+    	recycBin = lib.draw(eAnimation.recycleBin);
+    	Bin tb = gc.getItems().getTrashBin();
+    	trashBin = lib.draw(eAnimation.trashBin);
     }
     
     @Override
@@ -300,7 +291,7 @@ public class EstuaryGame extends JComponent{
     private void paintCoast(Graphics g) {
 		Coast prevCoast = null;
     	for(Coast c : gc.getItems().getCoast()){
-    		BufferedImage coast;
+    		Image coast;
     		
     		switch (c.getCoastID()) {
     		case 1:
@@ -360,10 +351,6 @@ public class EstuaryGame extends JComponent{
     	}
     }
     
-    //private Coast getPrevCoast(Coast cIn) {
-    	//TODO
-    //}
-    
     private void paintBarriers(Graphics g) {
     	ArrayList<Barriers> barriers = gc.getItems().getAllBarriers();
     	for (Barriers b : barriers) {
@@ -404,7 +391,6 @@ public class EstuaryGame extends JComponent{
     		}
     		
     		Image debrisImg = lib.draw(d);
-    		debrisImg = scaleFloater(debrisImg, d);
     		g.drawImage(debrisImg, d.getPosX(), d.getPosY(), this);
     	}
     }
@@ -414,7 +400,6 @@ public class EstuaryGame extends JComponent{
     	for (Powers p : powers) {
 
     		Image power = lib.draw(p);
-    		power = scaleFloater(power, p);
     		
     		g.drawImage(power, p.getPosX(), p.getPosY(), this);
     	}
@@ -485,8 +470,7 @@ public class EstuaryGame extends JComponent{
     		return;
     	}
     	
-    	Image playerImg = scalePlayer(lib.draw(p), p);
-    	g.drawImage(playerImg, p.getPosX(), p.getPosY(), this);
+    	g.drawImage(lib.draw(p), p.getPosX(), p.getPosY(), this);
     }
     
     private void paintScore(Graphics g) {
@@ -529,14 +513,9 @@ public class EstuaryGame extends JComponent{
 	public int getScreenY() {
 		return screenY;
 	}
-
     
-    private Image scalePlayer(BufferedImage img, Player p) {
+    private Image scalePlayer(Image img, Player p) {
     	return img.getScaledInstance(p.getWidth(), p.getHeight(), 50);
-    }
-    
-    private Image scaleFloater(Image img, Floater f) {
-    	return img.getScaledInstance(f.getWidth(), f.getHeight(), 50);
     }
 
     public static JPanel getCards(){

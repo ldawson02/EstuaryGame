@@ -27,7 +27,8 @@ import eNums.eAnimation;
 public class ImageSequence {
 
 	private eAnimation animID;
-	private ArrayList<BufferedImage> seq;
+	private ArrayList<Image> seq;
+
 	private int curFrame;
 	private int numFrames;
 	private int frameDelay = 10;
@@ -38,7 +39,7 @@ public class ImageSequence {
 	
 	public ImageSequence(eAnimation ID) {
 		this.animID = ID;
-		seq = new ArrayList<BufferedImage>();
+		seq = new ArrayList<Image>();
 		curFrame = 0;
 		loadSequence(ID.getPath());
 	}
@@ -62,7 +63,13 @@ public class ImageSequence {
 					throw new ResourceException(next);
 				}
 				
-				seq.add(createImage(next.toString()));
+				BufferedImage toAdd = createImage(next.toString());
+				if (seq.isEmpty()) {
+					defaultHeight = toAdd.getHeight();
+					defaultWidth = toAdd.getWidth();
+				}
+				seq.add(toAdd);
+				
 				numFrames++;
 			}
 			
@@ -90,8 +97,8 @@ public class ImageSequence {
 		return null;
 	}
 
-	public BufferedImage draw() {
-		BufferedImage toReturn = seq.get(curFrame / (1 + frameDelay));
+	public Image draw() {
+		Image toReturn = seq.get(curFrame / (1 + frameDelay));
 		curFrame += 1;
 		if (curFrame == numFrames*(1 + frameDelay)) {
 			curFrame = 0;
@@ -144,10 +151,17 @@ public class ImageSequence {
 	/**
 	 * @return the seq
 	 */
-	public ArrayList<BufferedImage> getSeq() {
+	public ArrayList<Image> getSeq() {
 		return seq;
 	}
 
+	/**
+	 * @param seq the seq to set
+	 */
+	public void setSeq(ArrayList<Image> seq) {
+		this.seq = seq;
+	}
+	
 	/**
 	 * @return the numFrames
 	 */

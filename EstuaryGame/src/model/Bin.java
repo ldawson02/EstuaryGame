@@ -12,6 +12,9 @@ public class Bin extends Item implements Serializable{
 
 	public eDebrisType debrisType;
 	
+	public static final int defaultHeight = 50;
+	public static final int defaultWidth = 50;
+	
 	private Bin(){};
 	
 	/**
@@ -20,8 +23,8 @@ public class Bin extends Item implements Serializable{
 	 */
 	public Bin(eDebrisType t){
 		this.debrisType = t;
-		this.setHeight(50);
-		this.setWidth(50);
+		this.setHeight(defaultHeight);
+		this.setWidth(defaultWidth);
 	}
 	
 	/**

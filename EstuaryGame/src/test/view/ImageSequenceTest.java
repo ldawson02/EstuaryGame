@@ -2,6 +2,7 @@ package test.view;
 
 import static org.junit.Assert.*;
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -29,7 +30,7 @@ public class ImageSequenceTest {
 	@Test
 	public void testDraw() {
 		ImageSequence seq = new ImageSequence(eAnimation.playerIdle);
-		ArrayList<BufferedImage> frames = seq.getSeq();
+		ArrayList<Image> frames = seq.getSeq();
 		assertEquals(seq.draw(), frames.get(0));
 		assertEquals(seq.draw(), frames.get(1));
 		assertEquals(seq.draw(), frames.get(2));
@@ -40,7 +41,7 @@ public class ImageSequenceTest {
 	public void testDrawWithDelay() {
 		ImageSequence seq = new ImageSequence(eAnimation.playerIdle);
 		seq.setFrameDelay(1);
-		ArrayList<BufferedImage> frames = seq.getSeq();
+		ArrayList<Image> frames = seq.getSeq();
 		assertEquals(seq.draw(), frames.get(0));
 		assertEquals(seq.draw(), frames.get(0));
 		assertEquals(seq.draw(), frames.get(1));

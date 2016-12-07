@@ -21,10 +21,13 @@ public abstract class Floater extends Item implements Serializable {
 	private int vertex;
 	private eFloaterState state = eFloaterState.MOVING;
 	
+	public static final int defaultWidth = 40;
+	public static final int defaultHeight = 40;
+	
 	public Floater(){
 		super();
-		setWidth(40);
-		setHeight(40);
+		setWidth(defaultWidth);
+		setHeight(defaultHeight);
 		this.state = eFloaterState.MOVING;
 	}
 	/**
