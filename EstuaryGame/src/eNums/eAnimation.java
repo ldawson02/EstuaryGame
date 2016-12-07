@@ -26,6 +26,9 @@ public enum eAnimation {
 	removeLift("removelift"),
 	rebuild("rebuild"),
 	gameOver("gameOver"),
+	clockArrow("clockarrow"),
+	healthArrow("healtharrow"),
+	spotlight("spotlight"),
 	error("error");
 	
 	private String folderName;
@@ -33,6 +36,7 @@ public enum eAnimation {
 	eAnimation(String folder) {
 		this.folderName = folder;
 	}
+	
 	/**
 	 * get the path
 	 * @return foldername;
