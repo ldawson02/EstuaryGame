@@ -145,10 +145,10 @@ public class GameController {
 		collision.setPlayer(getMainPlayer());
 		
 		//bind the keys
-		leftAct = new HAction(-1 * getMainPlayer().speed);
-		rightAct = new HAction(1 * getMainPlayer().speed);
-		upAct = new VAction(-1 * getMainPlayer().speed);
-		downAct = new VAction(1 * getMainPlayer().speed);
+		leftAct = new HAction(-1 * getMainPlayer().getSpeed());
+		rightAct = new HAction(1 * getMainPlayer().getSpeed());
+		upAct = new VAction(-1 * getMainPlayer().getSpeed());
+		downAct = new VAction(1 * getMainPlayer().getSpeed());
 		normalKeyBind();
 		
 		//Reset stuff from last game

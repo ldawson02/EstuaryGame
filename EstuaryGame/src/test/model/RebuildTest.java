@@ -66,9 +66,7 @@ public class RebuildTest {
 	
 	@Test
 	public void testCaughtandInitiated() throws InterruptedException{
-		
-		
-		Thread.sleep(10000);
+		Thread.sleep(5000);
 		ArrayList<Powers>  powers = gc.getItems().getAllPowers();
 		Collisions collision = new Collisions();
 		Powers p = powers.get(0);

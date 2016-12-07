@@ -2,120 +2,81 @@ package test.model;
 
 import static org.junit.Assert.*;
 
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import controller.GameController;
+import controller.GameController.HAction;
+import controller.GameController.ThrowChoice;
+import controller.GameController.VAction;
 import eNums.eDebrisType;
+import eNums.ePlayerState;
+import eNums.eThrowDirection;
 import model.Barriers;
 import model.Debris;
-import model.Gabions;
 import model.Player;
-import model.Wall;
+import view.EstuaryGame;
 
 public class PlayerTest {
 
-	public static Player p;
 	public static ArrayList<Barriers> barriers;
 	public static ArrayList<Debris> debris;
 	public static GameController gc;
+	static Player gamePlayer;
 	
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		p = new Player();
-		
-		/**gabions.add(new Gabions(0,0));
-		gabions.add(new Gabions(0,5));
-		gabions.add(new Gabions(10,10));
-		gabions.add(new Gabions(30,10));
-		
-		walls.add(new Wall(0,0));
-		walls.add(new Wall(9,13));
-		
-		debris.add(new Debris(eDebrisType.RECYCLING));
-		debris.add(new Debris(eDebrisType.TRASH));
-		debris.add(new Debris(eDebrisType.TRASH));
-		debris.add(new Debris(eDebrisType.RECYCLING));**/
+		gc = new GameController(new EstuaryGame());
+		gamePlayer = gc.getMainPlayer();
 		
 	}
 
 	@Test
-	public void testMove(){
-		int initialX = p.getPosX();
-		int initialY = p.getPosY();
+	public void testHorizontalRightMove() throws InterruptedException{
+		int initialX = gamePlayer.getPosX();
+		HAction action1 = gc.new HAction(gamePlayer.getSpeed());
+		action1.actionPerformed(new ActionEvent(action1, ActionEvent.ACTION_PERFORMED, null){});
+		assertEquals(gamePlayer.getPosX(), initialX + gamePlayer.getSpeed());
 		
-		p.move();
-		int afterX = p.getPosX();
-		int afterY = p.getPosY();
-		
-		assertFalse(initialX==afterX);
-		assertFalse(initialY == afterY);
-		
-		p.move();
-		
-		assertFalse(afterX == p.getPosX());
-		assertFalse(afterY == p.getPosY());
 	}
-	
-	/**@Test
-	public void buildGabionTest() {
-		//This wouldn't actually work unless gabions was attached to the controller, these two pieces are disparate currently
-		int initNumGabions = gabions.size();
-		p.buildGabion();
-		
-		int afterNumGabions = gabions.size();
-		
-		assertTrue(initNumGabions == afterNumGabions - 1);
-		
-		p.buildGabion();
-		
-		assertTrue(afterNumGabions == gabions.size() - 1);
+	@Test
+	public void testHorizontalLeftMove(){
+		int initialX = gamePlayer.getPosX();
+		HAction action1 = gc.new HAction(-gamePlayer.getSpeed());
+		action1.actionPerformed(new ActionEvent(action1, ActionEvent.ACTION_PERFORMED, null){});
+		assertEquals(gamePlayer.getPosX(), initialX - gamePlayer.getSpeed());
 	}
 	
 	@Test
-	public void buildWallTest(){
-		//This wouldn't actually work unless gabions was attached to the controller, these two pieces are disparate currently
-		int initNumWalls = walls.size();
-		p.buildWall();
-
-		int afterNumWalls = walls.size();
-
-		assertTrue(initNumWalls == afterNumWalls - 1);
-
-		p.buildWall();
-
-		assertTrue(afterNumWalls == walls.size() - 1);
+	public void testVerticalUpMove(){
+		int initialY = gamePlayer.getPosY();
+		VAction action1 = gc.new VAction(gamePlayer.getSpeed());
+		action1.actionPerformed(new ActionEvent(action1, ActionEvent.ACTION_PERFORMED, null){});
+		assertEquals(gamePlayer.getPosY(), initialY + gamePlayer.getSpeed());
 	}
 	
 	@Test
-	public void pickUpDebrisTest(){
-		int initNumDebris = debris.size();
-		p.pickUpDebris();
-		int afterNumDebris = debris.size();
-		
-		assertTrue(initNumDebris == afterNumDebris - 1);
-		
-		//probably check to see that the instance of the trash is null but idk
-		
-		p.pickUpDebris();
-		
-		assertTrue(afterNumDebris == debris.size() - 1);
+	public void testVerticalDownMove(){
+		int initialY = gamePlayer.getPosY();
+		VAction action1 = gc.new VAction(-gamePlayer.getSpeed());
+		action1.actionPerformed(new ActionEvent(action1, ActionEvent.ACTION_PERFORMED, null){});
+		assertEquals(gamePlayer.getPosY(), initialY - gamePlayer.getSpeed());
 	}
 	
 	@Test
-	public void throwDebrisTest(){
-		//This should test to make sure that the debris has been thrown??
+	public void testPlayerHeight(){
+		Player p = new Player();
+		assertEquals(p.getState(), ePlayerState.Idle);
+		assertEquals(p.getHeight(), p.idleHeight);
+		p.setState(ePlayerState.Lifting);
+		assertEquals(p.getHeight(), p.liftingHeight);
 		
-		int initX = debris.get(0).getPosX();
-		int initY = debris.get(0).getPosY();
-		
-		p.throwDebris(debris.get(0));
-		
-		assertFalse(initX == debris.get(0).getPosX());
-		assertFalse(initY == debris.get(0).getPosY());
-	}**/
+	}
+	
+
 
 }

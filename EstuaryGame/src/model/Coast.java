@@ -102,10 +102,6 @@ public class Coast extends Item implements Serializable{
 	public void setErosionRate(int erosionRate) {
 		this.erosionRate = erosionRate;
 	}
-
-	/**
-	 * @return the buildUp
-	 */
 	
 	/**
 	 * @return the barrierSpaces
@@ -114,19 +110,6 @@ public class Coast extends Item implements Serializable{
 		return barriers;
 	}
 
-	/**
-	 * @param barrierSpaces the barrierSpaces to set
-	 */
-	public void setBarrierSpaces(ArrayList<Barriers> barriers) {
-		this.barriers = barriers;
-	}
-	
-	/*
-	 * for CoastL and CoastR, get all the debris items
-	public ArrayList<Debris> getBuildUp() {
-		return ArrayList<Debris>();
-	}
-	*/
 
 	/**
 	 * Decreases the size of the coast by one, if possible
