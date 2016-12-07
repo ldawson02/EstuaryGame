@@ -238,10 +238,6 @@ public class EstuaryGame extends JComponent{
         if (!gameFinished)
         	paintScreenTimer(g);
         
-        //paintSpotlight(g, gc.getItems().getAllDebris().get(0));
-        //paintSpotlight(g, gc.getItems().getScreenTimer());
-        //paintFocus(g);
-        
         paintScore(g);
         
         timeElapsed = gc.getTheBigTimer();
