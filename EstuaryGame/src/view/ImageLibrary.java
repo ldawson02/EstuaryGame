@@ -144,6 +144,7 @@ public class ImageLibrary {
 				return draw(eAnimation.trashFloat);
 			}
 		}
+		
 		//Implied else
 		return draw(eAnimation.error);
 	}

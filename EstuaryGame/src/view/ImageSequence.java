@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -26,16 +27,18 @@ import eNums.eAnimation;
 public class ImageSequence {
 
 	private eAnimation animID;
-	private ArrayList<BufferedImage> seq;
+	private ArrayList<Image> seq;
 	private int curFrame;
 	private int numFrames;
 	private int frameDelay = 10;
+	private int defaultHeight;
+	private int defaultWidth;
 	
 	private ImageSequence() {};
 	
 	public ImageSequence(eAnimation ID) {
 		this.animID = ID;
-		seq = new ArrayList<BufferedImage>();
+		seq = new ArrayList<Image>();
 		curFrame = 0;
 		loadSequence(ID.getPath());
 	}
@@ -73,8 +76,6 @@ public class ImageSequence {
 			System.out.println("Resource error: " + e.errorPath.toString());
 			e.printStackTrace();
 		}
-		
-		
 	}
 	
 	private BufferedImage createImage(String filename){
@@ -89,8 +90,8 @@ public class ImageSequence {
 		return null;
 	}
 
-	public BufferedImage draw() {
-		BufferedImage toReturn = seq.get(curFrame / (1 + frameDelay));
+	public Image draw() {
+		Image toReturn = seq.get(curFrame / (1 + frameDelay));
 		curFrame += 1;
 		if (curFrame == numFrames*(1 + frameDelay)) {
 			curFrame = 0;
@@ -143,7 +144,7 @@ public class ImageSequence {
 	/**
 	 * @return the seq
 	 */
-	public ArrayList<BufferedImage> getSeq() {
+	public ArrayList<Image> getSeq() {
 		return seq;
 	}
 
@@ -153,69 +154,4 @@ public class ImageSequence {
 	public int getNumFrames() {
 		return numFrames;
 	}
-	
-	/* The old implementation
-	public int SeqID;
-	private ArrayList<BufferedImage> seq;
-	private int curFrame;
-	private int numFrames;
-	
-	
-	private ImageSequence() {
-		//Hidden no-arg
-	}
-	
-	public ImageSequence(int SeqID, String filepath, int frames, int imageWidth, int imageHeight) {
-		seq = new ArrayList<BufferedImage>();
-		//TODO: how are filepaths going to work?? tentatively:
-		loadImages(filepath, frames, imageWidth, imageHeight);
-		numFrames = frames;
-		curFrame = 0;
-	}
-	
-	public void reset() {
-		curFrame = 0;
-	}
-	
-	public BufferedImage draw() {
-		BufferedImage toReturn = seq.get(curFrame);
-		curFrame += 1;
-		if (curFrame == numFrames) {
-			curFrame = 0;
-		}
-		return toReturn;
-	}
-	
-	private void loadImages(String filepath, int frames, int imageWidth, int imageHeight) {
-		String srcpath = "resources/";
-		BufferedImage sheet = createImage(srcpath + filepath);
-		for (int i = 0; i < frames; i++) {
-			seq.add(sheet.getSubimage(imageWidth*i, 0, imageWidth, imageHeight));
-		}
-	}
-	
-	private BufferedImage createImage(String filename){
-		BufferedImage bufferedImage;
-		try {
-			bufferedImage = ImageIO.read(new File(filename));
-			return bufferedImage;
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	@Override
-	public int compareTo(ImageSequence seq2) {
-		if (SeqID < seq2.SeqID) {
-			return -1;
-		}
-		else if (SeqID == seq2.SeqID) {
-			return 0;
-		}
-		else {
-			return 1;
-		}
-	}
-	*/
 }
