@@ -33,6 +33,7 @@ public class Remove extends Powers {
 	@Override
 	public void power(ActiveItems items){
 		//ArrayList<Debris> debris = items.getAllDebris();
+		
 		items.removeAllRestingDebris();
 		/**int empty = 0;
 		ArrayList<Debris> dEmpty = new ArrayList<Debris>();
