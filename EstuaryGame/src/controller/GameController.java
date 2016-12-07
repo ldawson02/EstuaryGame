@@ -47,7 +47,7 @@ import eNums.eTutorialState;
 public class GameController implements Serializable {
 
 	//the big shebang
-	private EstuaryGame mainGame;
+	private static EstuaryGame mainGame;
 	private Player mainPlayer;
 	private ActiveItems items = new ActiveItems();
 	Action leftAct;
@@ -716,7 +716,7 @@ public class GameController implements Serializable {
 			//assumes erosion rate in Coast is in milliseconds
 			aveTime = (int) c.getErosionRate();
 			erosionTime = r.nextInt(rTime) + aveTime - rTime/2;
-			timePassed =0;
+			timePassed = 0;
 		}
 		
 		
@@ -735,8 +735,7 @@ public class GameController implements Serializable {
 					timePassed+=erodeDelay;
 				}
 			}
-		}
-		
+		}	
 	}
 	
 	public class barrierErosion implements ActionListener, Serializable {
@@ -951,11 +950,18 @@ public class GameController implements Serializable {
 				//Write the player
 				oos.writeObject(mainPlayer);
 				//Write the ActiveItems
-				ArrayList<Debris> debs = items.getAllDebris();
-				oos.writeObject(new Debris(eDebrisType.RECYCLING));
-				oos.writeObject(items.getAllBarriers());
-				
-				oos.writeObject(debrisMover.getTimePassed());
+				oos.writeObject(items);
+				//Write the rest
+				oos.writeObject(debrisFloating);
+				oos.writeObject(powersFloating);
+				oos.writeObject(choosingThrow);
+				oos.writeObject(initiatingPowerUp);
+				oos.writeObject(allTimers);
+				oos.writeObject(theBigTimer);
+				oos.writeObject(paintTimer);
+				oos.writeObject(timeElapsed);
+				oos.writeObject(debrisMover);
+				oos.writeObject(powerMover);
 				
 				oos.close();
 			}
@@ -982,7 +988,27 @@ public class GameController implements Serializable {
 				ObjectInputStream ois = new ObjectInputStream(fis);
 
 				//TODO: ois.readObject()
+				//Write the player
+				mainPlayer = (Player) ois.readObject();
+				//Write the ActiveItems
+				items = (ActiveItems) ois.readObject();
+				//Write the rest
+				debrisFloating = (Timer) ois.readObject();
+				powersFloating = (Timer) ois.readObject();
 				
+				choosingThrow = (boolean) ois.readObject();
+				initiatingPowerUp = (boolean) ois.readObject();
+				
+				ArrayList<Timer> readObject = (ArrayList<Timer>) ois.readObject();
+				allTimers = readObject;
+				
+				theBigTimer = (Timer) ois.readObject();
+				paintTimer = (mainTimer) ois.readObject();
+				
+				timeElapsed = (int) ois.readObject();
+				
+				debrisMover = (spawnDebris) ois.readObject();
+				powerMover = (spawnPowers) ois.readObject();			
 
 				ois.close();
 			}
@@ -991,8 +1017,6 @@ public class GameController implements Serializable {
 				System.out.println("Exception thrown during test: " + ex.toString());
 			}
 		}
-
-
 	}
 	
 	public class CleanUpSerializeAction extends AbstractAction {

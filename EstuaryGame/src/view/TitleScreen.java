@@ -25,7 +25,7 @@ public class TitleScreen extends JPanel implements ActionListener{
     Tutorial tutorial;
     
     
-    public TitleScreen(EstuaryGame g, Tutorial t){
+    public TitleScreen(EstuaryGame g, Tutorial t) {
     	game = g;
     	tutorial = t;
     	this.setLayout(null);

@@ -36,9 +36,7 @@ public class Coast extends Item implements Serializable{
 	
 	private Barriers barrier;
 	private Timer erosionTimer;
-	/**
-	 * The Debris items on the coast
-	 */
+	
 	private ArrayList<Barriers> barriers;
 	private eCoastState state = eCoastState.NO_HIT;
 	
