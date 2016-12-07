@@ -474,6 +474,7 @@ public class EstuaryGame extends JComponent{
         if (currHealth <= 0) {
         	paintGameOver(g);
         	endGameMotion();
+        	gameFinished = true;
         }
     }
     
@@ -483,10 +484,6 @@ public class EstuaryGame extends JComponent{
     	if (p == null) {
     		return;
     	}
-    	/*
-    	g.setColor(Color.RED);
-    	g.fillRect((int) p.getPosX(), (int) p.getPosY(), (int) p.getWidth(), (int) p.getHeight());
-    	*/
     	
     	Image playerImg = scalePlayer(lib.draw(p), p);
     	g.drawImage(playerImg, p.getPosX(), p.getPosY(), this);

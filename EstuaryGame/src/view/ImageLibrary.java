@@ -195,6 +195,7 @@ public class ImageLibrary {
 	
 	/**
 	 * @return the coastLibrary
+	 * Only used for testing
 	 */
 	public BufferedImage[][] getCoastLibrary() {
 		return coastLibrary;
