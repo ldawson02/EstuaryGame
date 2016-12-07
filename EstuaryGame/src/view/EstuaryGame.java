@@ -8,6 +8,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -16,6 +17,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.QuadCurve2D;
 import java.awt.image.BufferedImage;
@@ -73,6 +75,8 @@ public class EstuaryGame extends JComponent{
     Image gameOver;
     Image trashBin;
     Image recycBin;
+    Image tutClockArrow;
+    Image tutHealthArrow;
     
     int screenX = 800;
     int screenY = 600;
@@ -195,6 +199,8 @@ public class EstuaryGame extends JComponent{
     	bg = lib.draw(eAnimation.background);
     	clockback = lib.draw(eAnimation.clockback);
     	gameOver = lib.draw(eAnimation.gameOver);
+    	tutClockArrow = lib.draw(eAnimation.clockArrow);
+    	tutHealthArrow = lib.draw(eAnimation.healthArrow);
     	
     	Bin rb = gc.getItems().getRecycleBin();
     	recycBin = lib.draw(eAnimation.recycleBin);
@@ -488,6 +494,18 @@ public class EstuaryGame extends JComponent{
     	g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
     	g.drawString("Press Enter to See Score...", 275, 370);
     }
+    
+    public void paintClockArrow(Graphics g, int x, int y) {
+    	g.drawImage(tutClockArrow, x + 5, y + 5, this);
+    }
+    
+    public void paintHealthArrow(Graphics g, int x, int y) {
+    	int paintX = x + 5;
+    	int paintY = y - 73;
+    	g.fillOval(x, y, 3, 3);
+    	g.drawImage(tutHealthArrow, paintX, paintY, this);
+    }
+    
     
     private void endGameMotion() {
     	//Stop player motion
