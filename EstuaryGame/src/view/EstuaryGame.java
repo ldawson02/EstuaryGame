@@ -45,6 +45,7 @@ import controller.ScoreController;
 import eNums.eAnimation;
 import eNums.eBarrierType;
 import eNums.eFloaterState;
+import eNums.ePlayerState;
 import eNums.eDebrisType;
 
 import model.*;
@@ -83,6 +84,8 @@ public class EstuaryGame extends JComponent{
     
     Rectangle player;
     activeViewItems actives;
+    
+    boolean gameFinished = false;
     
     //For future collision handling:
     ArrayList<DebrisWrapper> debrisColliders;
@@ -210,7 +213,6 @@ public class EstuaryGame extends JComponent{
     
     @Override
     protected void paintComponent(Graphics g) {
-    	
         super.paintComponent(g); 
         
         //Paint background
@@ -237,11 +239,10 @@ public class EstuaryGame extends JComponent{
         paintHealthBar(g);
         
         //Paint ScreenTimer
-        paintScreenTimer(g);
+        if (!gameFinished)
+        	paintScreenTimer(g);
         
         paintScore(g);
-        
-        
         
         timeElapsed = gc.getTheBigTimer();
         g.drawString(Integer.toString(timeElapsed), 40, 40);
@@ -291,11 +292,8 @@ public class EstuaryGame extends JComponent{
         g.drawOval((int)maxX,(int)maxY,(int) size,(int) size);
         
         if (timeElapsed >= maxTime) {
-        	g.drawImage(gameOver, 220, 200, this);
-        	
-        	g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
-        	g.drawString("Press Enter to See Score...", 275, 370);
-        	
+        	paintGameOver(g);
+        	endGameMotion();
         }
     }
     
@@ -474,14 +472,10 @@ public class EstuaryGame extends JComponent{
     	g.drawRect((int)barX, (int)barY,(int) barWidth,(int) barHeight);
     	
         if (currHealth <= 0) {
-        	g.drawImage(gameOver, 220, 200, this);
-        	
-        	g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
-        	g.drawString("Press Enter to See Score...", 275, 375);
+        	paintGameOver(g);
+        	endGameMotion();
         }
     }
-    
-
     
     private void paintPlayer(Graphics g) {
     	Player p = gc.getItems().getMainPlayer();
@@ -503,7 +497,34 @@ public class EstuaryGame extends JComponent{
     	g.drawString("Score: " + Integer.toString(ScoreController.getScore()), 150, 40);
     }
     
-
+    private void paintGameOver(Graphics g) {
+    	g.setColor(new Color(255, 255, 255, 120));
+    	g.fillRect(0, 0, screenX, screenY);
+    	
+    	g.drawImage(gameOver, 220, 200, this);
+    	
+    	g.setColor(Color.BLACK);
+    	g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
+    	g.drawString("Press Enter to See Score...", 275, 370);
+    }
+    
+    private void endGameMotion() {
+    	//Stop player motion
+    	gc.getItems().getPlayer().setState(ePlayerState.Lifting);
+    	//Stop floater motion
+    	for (Debris d: gc.getItems().getAllDebris()) {
+    		d.setState(eFloaterState.RESTING);
+    	}
+    	for (Powers p: gc.getItems().getAllPowers()) {
+    		p.setState(eFloaterState.RESTING);
+    	}
+    	//Disable controls
+    	unbindKeyWith("x.up", KeyStroke.getKeyStroke("UP"));
+		unbindKeyWith("x.down", KeyStroke.getKeyStroke("DOWN"));
+		unbindKeyWith("x.left", KeyStroke.getKeyStroke("LEFT"));
+		unbindKeyWith("x.right", KeyStroke.getKeyStroke("RIGHT"));
+    }
+    
     public int getScreenX() {
 		return screenX;
 	}
