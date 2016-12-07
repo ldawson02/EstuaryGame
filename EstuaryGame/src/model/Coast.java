@@ -22,13 +22,11 @@ import eNums.eCoastState;
  */
 public class Coast extends Item{
 
-	
-
-	
+	private int coastID;
 	/**
 	 * The maximum size of the coast
 	 */
-	private int height = 30;
+	private int height = 150;
 	private int width = 50;
 	/**
 	 * The rate at which it erodes
@@ -173,10 +171,13 @@ public class Coast extends Item{
 	public static ArrayList<Coast> setUpLeftCoast(ArrayList<Barriers> barriers) {
 		ArrayList<Coast> spaces = new ArrayList<Coast>();
 		
+		int ID = 1;
 		for (Barriers b : barriers) {
 			Coast c  =new Coast(b.getPosX(), Barriers.getBarrierY()-30);
 			c.setBarrier(b);
+			c.setCoastID(ID);
 			spaces.add(c);
+			ID++;
 		}
 		
 		return spaces;
@@ -189,10 +190,13 @@ public class Coast extends Item{
 	public static ArrayList<Coast> setUpRightCoast(ArrayList<Barriers> barriers) {
 		ArrayList<Coast> spaces = new ArrayList<Coast>();
 		
+		int ID = 6;
 		for (Barriers b : barriers) {
 			Coast c = new Coast(b.getPosX(), Barriers.getBarrierY()-30);
 			c.setBarrier(b);
+			c.setCoastID(ID);
 			spaces.add(c);
+			ID++;
 		}
 		
 		return spaces;
@@ -220,5 +224,19 @@ public class Coast extends Item{
 
 	public void setErosionTimer(Timer erosionTimer) {
 		this.erosionTimer = erosionTimer;
+	}
+
+	/**
+	 * @return the coastID
+	 */
+	public int getCoastID() {
+		return coastID;
+	}
+
+	/**
+	 * @param coastID the coastID to set
+	 */
+	public void setCoastID(int coastID) {
+		this.coastID = coastID;
 	}
 }

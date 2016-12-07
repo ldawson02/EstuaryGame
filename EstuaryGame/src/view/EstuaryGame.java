@@ -214,7 +214,7 @@ public class EstuaryGame extends JComponent{
         super.paintComponent(g); 
         
         //Paint background
-        //paintBackground(g);
+        paintBackground(g);
         
         paintCoast(g);
         
@@ -300,8 +300,44 @@ public class EstuaryGame extends JComponent{
     }
     
     private void paintCoast(Graphics g) {
+		Coast prevCoast = null;
     	for(Coast c : gc.getItems().getCoast()){
     		BufferedImage coast;
+    		
+    		switch (c.getCoastID()) {
+    		case 1:
+    			prevCoast = c;
+    			coast = lib.drawCoast(c.getState().getHits(), 3);
+    			break;
+    		case 2:
+    		case 3:
+    		case 4:
+    		case 7:
+    		case 8:
+    		case 9:
+    			int prevCoastState = prevCoast.getState().getHits();
+    			coast = lib.drawCoast(c.getState().getHits(), prevCoastState);
+    			prevCoast = c;
+    			break;
+    		case 5:
+    			prevCoastState = prevCoast.getState().getHits();
+    			coast = lib.drawCoast(3, prevCoastState);
+    			prevCoast = c;
+    			break;
+    		case 6: 
+    			prevCoast = c;
+    			coast = lib.drawCoast(c.getState().getHits(), 3);
+    			break;
+    		case 10:
+    			prevCoastState = prevCoast.getState().getHits();
+    			coast = lib.drawCoast(3, prevCoastState);
+    			prevCoast = c;
+    			break;
+    		default:
+    			coast = lib.drawCoast(0, 1);
+    		}
+    		
+    		/*
     		switch (c.getState()){
     		case NO_HIT:
     			coast = lib.drawCoast(0, 0);
@@ -318,12 +354,17 @@ public class EstuaryGame extends JComponent{
     		default: 
     			coast = lib.drawCoast(3, 0);
     		}
+    		*/
     		
     		g.drawImage(coast, c.getPosX(), c.getPosY(), this);
     		
     		//g.fillRect(c.getPosX(), c.getPosY(), c.getWidth(), c.getHeight());
     	}
     }
+    
+    //private Coast getPrevCoast(Coast cIn) {
+    	//TODO
+    //}
     
     private void paintBarriers(Graphics g) {
     	ArrayList<Barriers> barriers = gc.getItems().getAllBarriers();

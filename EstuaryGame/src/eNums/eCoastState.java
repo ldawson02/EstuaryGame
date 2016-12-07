@@ -8,7 +8,10 @@ public enum eCoastState {
 	
 	private int hits;
 
-	eCoastState(int i){}
+	eCoastState(int i){
+		hits = i;
+	}
+	
 	/**
 	 * get the hits
 	 * @return hits
