@@ -22,6 +22,7 @@ import controller.GameController;
 import controller.GameController.ThrowChoice;
 import controller.GameController.ThrowChosen;
 import controller.GameController.spawnDebris;
+import controller.MovementController;
 import eNums.eDebrisType;
 import eNums.eFloaterState;
 import eNums.eThrowDirection;
@@ -59,11 +60,11 @@ public class DebrisTest {
 		recyc.setState(eFloaterState.MOVING);
 		d1 = new Debris(300,10);
 		d1.setType(eDebrisType.TRASH);
-		d2 = new Debris(200,20);
+		d2 = new Debris(200,300);
 		d2.setType(eDebrisType.TRASH);
 		gc.getItems().getAllDebris().add(d1);
 		gc.getItems().getAllDebris().add(d2);
-		d3 = new Debris(250,10);
+		d3 = new Debris(700,350);
 		d3.setType(eDebrisType.RECYCLING);
 		d4 = new Debris(300,40);
 		d4.setType(eDebrisType.RECYCLING);
@@ -90,6 +91,7 @@ public class DebrisTest {
 		ArrayList<Debris> debris = gc.getItems().getAllDebris();
 		Collisions collision = new Collisions();
 		Debris d = d1;
+		MovementController.move(d);
 		int d_xpos = d.getPosX();
 		int d_ypos = d.getPosY();
 		gc.getMainPlayer().updatePos(d_xpos, d_ypos);
@@ -123,6 +125,7 @@ public class DebrisTest {
 		ArrayList<Debris> debris = gc.getItems().getAllDebris();
 		Collisions collision = new Collisions();
 		Debris d = d3;
+		MovementController.move(d);
 		int d_xpos = d.getPosX();
 		int d_ypos = d.getPosY();
 		gc.getMainPlayer().updatePos(d_xpos, d_ypos);
@@ -157,6 +160,7 @@ public class DebrisTest {
 		ArrayList<Debris> debris = gc.getItems().getAllDebris();
 		Collisions collision = new Collisions();
 		Debris d = d2;
+		MovementController.move(d);
 		int d_xpos = d.getPosX();
 		int d_ypos = d.getPosY();
 		gc.getMainPlayer().updatePos(d_xpos, d_ypos);
@@ -189,7 +193,14 @@ public class DebrisTest {
 		ArrayList<Debris> debris = gc.getItems().getAllDebris();
 		Collisions collision = new Collisions();
 		Debris d = d4;
-		
+		MovementController.move(d);
+		int d_xpos = d.getPosX();
+		int d_ypos = d.getPosY();
+		gc.getMainPlayer().updatePos(d_xpos, d_ypos);
+		assertTrue(collision.checkCollision(gc.getMainPlayer(),d));
+		Thread.sleep(500);
+		d.catching();
+		assertEquals(d.getState(), eFloaterState.LIFTED);
 		ThrowChoice action1 = gc.new ThrowChoice(eThrowDirection.RIGHT, d);
 		action1.actionPerformed(new ActionEvent(action1, ActionEvent.ACTION_PERFORMED, null){});
 		//ThrowChosen
