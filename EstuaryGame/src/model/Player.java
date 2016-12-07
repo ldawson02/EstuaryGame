@@ -6,16 +6,17 @@ public class Player extends Item{
 
 	public int speed = 10;
 	public ePlayerState state;
-	public final int idleHeight = 60;
-	public final int width = 120;
-	public final int liftingHeight = 72;
+	public static final int idleHeight = 60;
+	public static final int defaultWidth = 120;
+	public static final int liftingHeight = 72;
+	
 	/**
 	 * construct a player in specific height, width and state.
 	 */
 	public Player(){
 		super();
 		super.setHeight(idleHeight);
-		super.setWidth(width);
+		super.setWidth(defaultWidth);
 		this.setState(ePlayerState.Idle);
 	}
 	
@@ -49,11 +50,11 @@ public class Player extends Item{
 		
 		if (state == ePlayerState.Idle) {
 			this.setHeight(idleHeight);
-			this.setWidth(width);
+			this.setWidth(defaultWidth);
 		}
 		else if (state == ePlayerState.Lifting) {
 			this.setHeight(liftingHeight);
-			this.setWidth(width);
+			this.setWidth(defaultWidth);
 		}
 		
 	}

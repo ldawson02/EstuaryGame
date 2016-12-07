@@ -28,6 +28,7 @@ public class ImageSequence {
 
 	private eAnimation animID;
 	private ArrayList<Image> seq;
+
 	private int curFrame;
 	private int numFrames;
 	private int frameDelay = 10;
@@ -154,6 +155,13 @@ public class ImageSequence {
 		return seq;
 	}
 
+	/**
+	 * @param seq the seq to set
+	 */
+	public void setSeq(ArrayList<Image> seq) {
+		this.seq = seq;
+	}
+	
 	/**
 	 * @return the numFrames
 	 */

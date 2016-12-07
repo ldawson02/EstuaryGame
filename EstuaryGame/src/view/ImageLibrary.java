@@ -14,7 +14,9 @@ import eNums.eAnimation;
 import eNums.eDebrisType;
 import eNums.eFloaterState;
 import eNums.ePlayerState;
+import model.Bin;
 import model.Debris;
+import model.Floater;
 import model.Player;
 import model.Powers;
 import model.Rebuild;
@@ -60,8 +62,6 @@ public class ImageLibrary {
 		
 		lib.initScaleLibrary();
 		
-		lib.scaleLibrary(1.0);
-		
 		System.out.println("All scaled.");
 		
 		return lib;
@@ -81,9 +81,90 @@ public class ImageLibrary {
 	/*
 	 * This initializes the scaling on ALL the Images.
 	 * THIS IS HARD-CODED FOR A 600x800 RESOLUTION.
+	 * This is the worst method ever, but improved efficiency considerably.
 	 */
 	private void initScaleLibrary() {
 		//TODO: this has to scale the images initially
+		//Scale player
+		ArrayList<Image> scaled = new ArrayList<Image>();
+		for (Image idles : library.get(eAnimation.playerIdle).getSeq()) {
+			scaled.add(idles.getScaledInstance(Player.defaultWidth, Player.idleHeight, Image.SCALE_SMOOTH));
+		}
+		library.get(eAnimation.playerIdle).setSeq(scaled);
+		
+		ArrayList<Image> scaled2 = new ArrayList<Image>();
+		for (Image lifts : library.get(eAnimation.playerLift).getSeq()) {
+			scaled2.add(lifts.getScaledInstance(Player.defaultWidth, Player.liftingHeight, Image.SCALE_SMOOTH));
+		}
+		library.get(eAnimation.playerLift).setSeq(scaled2);
+		
+		ArrayList<Image> scaled3 = new ArrayList<Image>();
+		//Scale bins
+		for (Image bin1 : library.get(eAnimation.recycleBin).getSeq()) {
+			scaled3.add(bin1.getScaledInstance(Bin.defaultWidth, Bin.defaultHeight, Image.SCALE_SMOOTH));
+		}
+		library.get(eAnimation.recycleBin).setSeq(scaled3);
+		
+		ArrayList<Image> scaled4 = new ArrayList<Image>();
+		for (Image bin2 : library.get(eAnimation.trashBin).getSeq()) {
+			scaled4.add(bin2.getScaledInstance(Bin.defaultWidth, Bin.defaultHeight, Image.SCALE_SMOOTH));
+		}
+		library.get(eAnimation.trashBin).setSeq(scaled4);
+		
+		ArrayList<Image> scaled5 = new ArrayList<Image>();
+		//Scale floaters
+		for (Image recyc1 : library.get(eAnimation.recyclingCoast).getSeq()) {
+			scaled5.add(recyc1.getScaledInstance(Floater.defaultWidth, Floater.defaultHeight, Image.SCALE_SMOOTH));
+		}
+		library.get(eAnimation.recyclingCoast).setSeq(scaled5);
+		
+		ArrayList<Image> scaled6 = new ArrayList<Image>();
+		for (Image recyc2 : library.get(eAnimation.recyclingFloat).getSeq()) {
+			scaled6.add(recyc2.getScaledInstance(Floater.defaultWidth, Floater.defaultHeight, Image.SCALE_SMOOTH));
+		}
+		library.get(eAnimation.recyclingFloat).setSeq(scaled6);
+		
+		ArrayList<Image> scaled7 = new ArrayList<Image>();
+		for (Image recyc3 : library.get(eAnimation.recyclingLifted).getSeq()) {
+			scaled7.add(recyc3.getScaledInstance(Floater.defaultWidth, Floater.defaultHeight, Image.SCALE_SMOOTH));
+		}
+		library.get(eAnimation.recyclingLifted).setSeq(scaled7);
+		
+		ArrayList<Image> scaled8 = new ArrayList<Image>();
+		for (Image trash1 : library.get(eAnimation.trashCoast).getSeq()) {
+			scaled8.add(trash1.getScaledInstance(Floater.defaultWidth, Floater.defaultHeight, Image.SCALE_SMOOTH));
+		}
+		library.get(eAnimation.trashCoast).setSeq(scaled8);
+		
+		ArrayList<Image> scaled9 = new ArrayList<Image>();
+		for (Image trash2 : library.get(eAnimation.trashFloat).getSeq()) {
+			scaled9.add(trash2.getScaledInstance(Floater.defaultWidth, Floater.defaultHeight, Image.SCALE_SMOOTH));
+		}
+		library.get(eAnimation.trashFloat).setSeq(scaled9);
+		
+		ArrayList<Image> scaled10 = new ArrayList<Image>();
+		for (Image trash3 : library.get(eAnimation.trashLifted).getSeq()) {
+			scaled10.add(trash3.getScaledInstance(Floater.defaultWidth, Floater.defaultHeight, Image.SCALE_SMOOTH));
+		}
+		library.get(eAnimation.trashLifted).setSeq(scaled10);
+		
+		ArrayList<Image> scaled11 = new ArrayList<Image>();
+		for (Image rebuild : library.get(eAnimation.rebuild).getSeq()) {
+			scaled11.add(rebuild.getScaledInstance(Floater.defaultWidth, Floater.defaultHeight, Image.SCALE_SMOOTH));
+		}
+		library.get(eAnimation.rebuild).setSeq(scaled11);
+		
+		ArrayList<Image> scaled12 = new ArrayList<Image>();
+		for (Image remove1 : library.get(eAnimation.remove).getSeq()) {
+			scaled12.add(remove1.getScaledInstance(Floater.defaultWidth, Floater.defaultHeight, Image.SCALE_SMOOTH));
+		}
+		library.get(eAnimation.remove).setSeq(scaled12);
+		
+		ArrayList<Image> scaled13 = new ArrayList<Image>();
+		for (Image remove2 : library.get(eAnimation.removeLift).getSeq()) {
+			scaled13.add(remove2.getScaledInstance(Floater.defaultWidth, Floater.defaultHeight, Image.SCALE_SMOOTH));
+		}
+		library.get(eAnimation.removeLift).setSeq(scaled13);
 	}
 	
 	public void scaleLibrary(double scaleFactor) {
