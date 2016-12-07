@@ -500,6 +500,10 @@ public class GameController {
 		public void actionPerformed(ActionEvent e) {
 			mainGame.repaint();
 
+			checkItems();
+		}
+		
+		public void checkItems(){
 			if(items.getScreenTimer().getState() == eScreenTimerState.ON){
 				timeElapsed+=paintDelay;
 				scoringTime+=paintDelay;

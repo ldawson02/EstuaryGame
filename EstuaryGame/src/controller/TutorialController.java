@@ -21,7 +21,7 @@ public class TutorialController extends GameController {
 	private int floatDelay = 100;
 	private int delaySpotlight = 1000;
 	private int healthStageTime = 5000;
-	private int timerStageTimer = 5000;
+	private int timerStageTime = 5000;
 	public int timeInStage;
 	private mainTimer tutorialPaintTimer;
 	
@@ -101,9 +101,7 @@ public class TutorialController extends GameController {
 		powersFloating.start();
 	}
 	
-	public void healthSetup(){
-		tutorialPaintTimer.healthTimerStart(healthStageTime);
-	}
+	public void healthSetup(){}
 	
 	public void timerSetup(){}
 	
@@ -112,7 +110,40 @@ public class TutorialController extends GameController {
 		@Override
 		public void actionPerformed(ActionEvent e){
 			super.actionPerformed(e);
-			
+		}
+		
+		@Override
+		public void checkItems(){
+			switch(t.getState()){
+			case HEALTH:
+				checkHealthLimit();
+				break;
+			case TIMER:
+				checkTimerLimit();
+				break;
+			default:
+				checkExcessTime();
+			}
+			timeInStage+=paintDelay;
+		}
+		
+		public void checkHealthLimit(){
+			if(timeInStage >= healthStageTime){
+				stageComplete();
+			}
+		}
+		
+		public void checkTimerLimit(){
+			if(timeInStage >= timerStageTime){
+				stageComplete();
+			}
+		}
+		
+		public void checkExcessTime(){
+			if(timeInStage >= 100000){
+				System.out.println("Tutorial Stalled!");
+				stageComplete();
+			}
 		}
 		
 		public void healthTimerStart(int hTime){
