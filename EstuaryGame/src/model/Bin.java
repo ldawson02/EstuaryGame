@@ -12,7 +12,7 @@ public class Bin extends Item implements Serializable{
 
 	public eDebrisType debrisType;
 	
-	//private Bin(){};
+	private Bin(){};
 	
 	/**
 	 * the constructor of the bin
