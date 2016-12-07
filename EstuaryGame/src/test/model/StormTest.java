@@ -60,14 +60,6 @@ public class StormTest {
 	
 	@Test
 	public void addDebrisTest() {
-		/*
-		int addDebris = (int) (Math.random() * 6 + 5); 
-		for (int i = 0; i < addDebris; i++) {
-			ai.addDebris(sd.newDebris());
-			System.out.println("storm debris created");
-		}
-		 */
-		//should add 5-10 pieces of debris
 		EstuaryGame eg = new EstuaryGame();
 		GameController gc = new GameController(eg);
 		gc.startGame();
