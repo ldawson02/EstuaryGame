@@ -20,7 +20,6 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.QuadCurve2D;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -86,9 +85,6 @@ public class EstuaryGame extends JComponent{
 	
     private int bWidth = 40;
     private int bHeight = 20;
-    
-    Rectangle player;
-    activeViewItems actives;
     
     boolean gameFinished = false;
     
@@ -160,8 +156,6 @@ public class EstuaryGame extends JComponent{
     	this.setDoubleBuffered(true);
     	//gc = new GameController(this);
     	//View items matter
-    	actives = new activeViewItems();
-    	actives.setPlayer(gc.getItems().getPlayer());
     	initImages();
     	
     }
@@ -172,8 +166,6 @@ public class EstuaryGame extends JComponent{
     	this.setDoubleBuffered(true);
     	gc = new GameController(this);
     	//View items matter
-    	actives = new activeViewItems();
-    	actives.setPlayer(gc.getItems().getPlayer());
     	initImages();
     	
     }

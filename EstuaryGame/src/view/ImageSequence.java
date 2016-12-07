@@ -25,7 +25,7 @@ import eNums.eAnimation;
  * @since 11/16/2016
  *
  */
-public class ImageSequence implements Serializable {
+public class ImageSequence {
 
 	private eAnimation animID;
 	private ArrayList<Image> seq;

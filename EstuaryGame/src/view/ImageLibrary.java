@@ -38,7 +38,7 @@ import model.Remove;
  * @since 11/16/16
  */
 
-public class ImageLibrary implements Serializable {
+public class ImageLibrary {
 
 	private HashMap<eAnimation, ImageSequence> library;
 	private BufferedImage[][] coastLibrary;
