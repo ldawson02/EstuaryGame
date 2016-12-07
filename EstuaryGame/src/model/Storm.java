@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import controller.ActiveItems;
@@ -8,7 +9,7 @@ import controller.GameController.spawnDebris;
 import eNums.eBarrierType;
 import eNums.eDebrisType;
 
-public class Storm {
+public class Storm implements Serializable {
 	
 	/**
 	* Storm class- has appear(), destroyBarriers(), and addDebris() methods

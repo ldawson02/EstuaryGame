@@ -1,8 +1,10 @@
 package model;
 
+import java.io.Serializable;
+
 import eNums.ePlayerState;
 
-public class Player extends Item{
+public class Player extends Item implements Serializable{
 
 	public int speed = 10;
 	public ePlayerState state;

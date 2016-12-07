@@ -2,6 +2,7 @@ package model;
 
 import eNums.eFloaterState;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -17,7 +18,7 @@ import eNums.eThrowDirection;
  * @since 10/25/16
  */
 
-public class Debris extends Floater{
+public class Debris extends Floater implements Serializable{
 
 	private eDebrisType type;
 	private eFloaterState state;

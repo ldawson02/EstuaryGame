@@ -1,5 +1,7 @@
 package model;
 
+import java.io.Serializable;
+
 import eNums.eFloaterState;
 
 /**
@@ -14,7 +16,7 @@ import eNums.eFloaterState;
  * @author Pu
  *
  */
-public abstract class Floater extends Item {
+public abstract class Floater extends Item implements Serializable {
 	private int speed = 1;
 	private int vertex;
 	private eFloaterState state = eFloaterState.MOVING;
