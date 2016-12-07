@@ -1,4 +1,7 @@
+
 package test.model;
+
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
@@ -9,48 +12,73 @@ import controller.GameController;
 import eNums.eBarrierType;
 import eNums.eDebrisType;
 import model.Barriers;
-import model.Debris;
-import model.Gabions;
+import model.Bin;
 import model.Player;
-import model.Wall;
+import view.EstuaryGame;
+
 
 public class BarriersTest {
-	public static Player p;
-	public static ArrayList<Barriers> barriers;
-	public static GameController gc;
+	static GameController gc;
+	static Barriers b1;
+	static Barriers b2;
+	static Barriers b3;
 	
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		p = new Player();
-		Barriers b1 = new Barriers(0,0);
-		b1.setType(eBarrierType.Gabion);
+		gc = new GameController(new EstuaryGame());
+		b1 = new Barriers(100,60, eBarrierType.Gabion);
+		b2 = new Barriers(200, 60, eBarrierType.Wall);
+		b3 = new Barriers(300, 60);
+	}
+	
+	@Test
+	public void BarrierTypeTest(){
+		assertEquals(b1.getType(), eBarrierType.Gabion);
+		assertEquals(b2.getType(), eBarrierType.Wall);
+		assertEquals(b3.getType(), eBarrierType.EMPTY);
+		b3.setType(eBarrierType.Gabion);
+		assertEquals(b3.getType(), eBarrierType.Gabion);
 		
-		barriers.add(b1);
-		/**gabions.add(new Gabions(0,5));
-		gabions.add(new Gabions(10,10));
-		gabions.add(new Gabions(30,10));
-		
-		walls.add(new Wall(0,0));
-		walls.add(new Wall(9,13));**/
+		assertEquals(b1.getHeight(), 20);
+		assertEquals(b1.getWidth(), 40);
 		
 		
 	}
 	
 	@Test
 	public void erodeTest(){
-		//b1.setbTimer();
+		b1.erode();
+		assertEquals(b1.getType(), eBarrierType.EMPTY);
+		b2.erode();
+		assertEquals(b2.getType(), eBarrierType.EMPTY);
 		
 	}
 	
 	@Test
-	public void setupCoastTest(){
+	public void setupLeftCoastTest(){
+		ArrayList<Barriers> leftbarriers = Barriers.setUpLeftCoast();
+		assertEquals(leftbarriers.size(),5);
+		int i=0;
+		for(Barriers b: leftbarriers){
+			assertEquals(b.getPosY(),b.getBarrierY());
+			assertEquals(b.getPosX(), b.getLeftEdge()+50*i);
+			i++;
+		}
 		
 	}
 	
 	@Test
-	public void setBarrierTypeTest(){
+	public void setupRightCoastTest(){
+		ArrayList<Barriers> rightbarriers = Barriers.setUpRightCoast();
+		assertEquals(rightbarriers.size(),5);
+		int i=0;
+		for(Barriers b: rightbarriers){
+			assertEquals(b.getPosY(),b.getBarrierY());
+			assertEquals(b.getPosX(), (b.getRightEdge()-200)+50*i);
+			i++;
+		}
 		
-	}
+	}	
 
 }
