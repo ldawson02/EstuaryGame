@@ -204,6 +204,8 @@ public class TutorialController extends GameController {
 		normalKeyBind();
 		if(state == eTutorialState.POWERS_REMOVE){
 			removeSetup();
+		}else{
+			rebuildSetup();
 		}
 		this.powerMover = new spawnPowers(state);
 		powersFloating = new Timer(this.getFloatDelay(), powerMover);
@@ -228,6 +230,15 @@ public class TutorialController extends GameController {
 			}
 			getItems().addDebris(d);
 			i++;
+		}
+		
+	}
+	
+	public void rebuildSetup(){
+		//need to erode some walls
+		int[] nums = {1, 3, 4, 6, 8};
+		for(int i : nums){
+			getItems().getAllBarriers().get(i).erode();
 		}
 		
 	}
@@ -270,9 +281,7 @@ public class TutorialController extends GameController {
 		}
 		
 		public void checkHealthLimit(){
-			System.out.println(timeInStage);
 			if(timeInStage >= healthStageTime){
-				System.out.println("Changed state from CheckHealthLimit");
 				stageComplete();
 			}
 		}

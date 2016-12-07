@@ -382,8 +382,7 @@ public class GameController {
 			timePassed = 0;
 		}
 		
-		public void move(Debris d){
-			MovementController.move(d);
+		public void checkCatchDebris(Debris d){
 			if(!thisGame.choosingThrow && collision.checkCollision(d) && !thisGame.initiatingPowerUp){
 				//sets the Debris state to Lifted
 				d.catching();
@@ -392,6 +391,11 @@ public class GameController {
 				//Move the trash to above the Player's head
 				d.updatePos(mainPlayer.getPosX()+mainPlayer.getWidth()/2 - d.getWidth()/2, mainPlayer.getPosY()-d.getHeight());
 			}
+		}
+		
+		public void move(Debris d){
+			MovementController.move(d);
+			checkCatchDebris(d);
 		}
 		
 		public void throwing(Debris d, ArrayList<Debris> toDelete){
@@ -443,6 +447,9 @@ public class GameController {
 				}
 				else if(d.getState()==eFloaterState.THROWING){
 					throwing(d, toDelete);
+				}
+				else if(d.getState()==eFloaterState.RESTING) {
+					checkCatchDebris(d);
 				}
 			}
 			

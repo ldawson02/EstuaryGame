@@ -28,7 +28,9 @@ public class Collisions {
 	 * @return
 	 */
 	public boolean checkCollision(Item i){
-		return checkCollision(mainPlayer, i);
+		Rectangle r1 = new Rectangle(i.getPosX(), i.getPosY(), i.getWidth(), i.getHeight());
+		Rectangle r2 = new Rectangle(mainPlayer.getPosX(), mainPlayer.getPosY(), mainPlayer.getWidth(), mainPlayer.getHeight());
+		return r1.intersects(r2);
 	}
 	
 	/**
