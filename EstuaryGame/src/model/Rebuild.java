@@ -28,14 +28,6 @@ public class Rebuild extends Powers implements Serializable{
 	}
 
 
-	@Override
-	public int getVertex() {
-		return vertex;
-	}
-	@Override
-	public void setVertex(int vertex) {
-		this.vertex = vertex;
-	}
 	
 	@Override
 	public void power(ActiveItems items){

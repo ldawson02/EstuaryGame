@@ -28,6 +28,7 @@ import eNums.eThrowDirection;
 import model.Coast;
 import model.Debris;
 import model.Player;
+import model.Rebuild;
 import view.EstuaryGame;
 
 public class DebrisTest {
@@ -52,6 +53,18 @@ public class DebrisTest {
 		gc = new GameController(new EstuaryGame());
 		trash.setState(eFloaterState.MOVING);
 		recyc.setState(eFloaterState.MOVING);
+		Debris d1 = new Debris(100,10);
+		d1.setType(eDebrisType.TRASH);
+		Debris d2 = new Debris(200,20);
+		d2.setType(eDebrisType.TRASH);
+		gc.getItems().getAllDebris().add(d1);
+		gc.getItems().getAllDebris().add(d2);
+		Debris d3 = new Debris(250,10);
+		d1.setType(eDebrisType.RECYCLING);
+		Debris d4 = new Debris(300,40);
+		d2.setType(eDebrisType.RECYCLING);
+		gc.getItems().getAllDebris().add(d3);
+		gc.getItems().getAllDebris().add(d4);
 	}
 
 
@@ -63,18 +76,13 @@ public class DebrisTest {
 	}
 	@Test
 	public void testSpawnDebris() throws InterruptedException {
-		Thread.sleep(10000);
+		Thread.sleep(1000);
+		spawnDebris spawn1 = gc.new spawnDebris();
 		assertFalse(gc.getItems().getAllDebris().isEmpty());
-	}
-	@Test
-	public void testRestingDebris(){
-		//gc.getItems()
 	}
 	
 	@Test
 	public void testCaughtandThrownCorrectTrash() throws InterruptedException, AWTException{
-		Thread.sleep(5000);
-		
 		ArrayList<Debris> debris = gc.getItems().getAllDebris();
 		Collisions collision = new Collisions();
 		Debris d = debris.get(0);
@@ -107,15 +115,13 @@ public class DebrisTest {
 		Thread.sleep(2000);
 		assertEquals(d.getState(), eFloaterState.RESTING);
 		//Resting on a bin
-		System.out.println("d POSITION: " + d.getPosY());
-		assertTrue(d.getPosY()==150);
+		assertTrue(d.getPosY()>140 && d.getPosY()<160);
 		
 		
 	}
 	
 	@Test
 	public void testCaughtandThrownCorrectRecycling() throws InterruptedException{
-		Thread.sleep(5000);
 		ArrayList<Debris> debris = gc.getItems().getAllDebris();
 		Collisions collision = new Collisions();
 		Debris d = debris.get(0);
@@ -151,13 +157,11 @@ public class DebrisTest {
 		Thread.sleep(2000);
 		assertEquals(d.getState(), eFloaterState.RESTING);
 		//Resting on a bin
-		assertTrue(d.getPosY()==150);
+		assertTrue(d.getPosY()>140 && d.getPosY()<160);
 		
 	}
 	@Test
 	public void testCaughtandThrownIncorrectTrash() throws InterruptedException, AWTException{
-		Thread.sleep(5000);
-		
 		ArrayList<Debris> debris = gc.getItems().getAllDebris();
 		Collisions collision = new Collisions();
 		Debris d = debris.get(0);
@@ -196,8 +200,6 @@ public class DebrisTest {
 	
 	@Test
 	public void testCaughtandThrownIncorrectRecycle() throws InterruptedException{
-		Thread.sleep(5000);
-		
 		ArrayList<Debris> debris = gc.getItems().getAllDebris();
 		Collisions collision = new Collisions();
 		Debris d = debris.get(0);
@@ -244,6 +246,16 @@ public class DebrisTest {
 		assertEquals(randomDebris2.getType(), eDebrisType.RECYCLING);
 		
 		
+		
+	}
+	
+	@Test
+	public void testGetandSetThrowDirection(){
+		trash.setThrowDirection(eThrowDirection.RIGHT);
+		assertEquals(trash.getThrowDirection(), eThrowDirection.RIGHT);
+		
+		recyc.setThrowDirection(eThrowDirection.LEFT);
+		assertEquals(recyc.getThrowDirection(), eThrowDirection.LEFT);
 		
 	}
 	
