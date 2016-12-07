@@ -24,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
 import controller.*;
+import eNums.eBarrierState;
 import eNums.eBarrierType;
 import eNums.eDebrisType;
 import eNums.eFloaterState;
@@ -61,6 +62,7 @@ public class GameController {
 	
 	protected final int paintDelay = 30;
 	Timer theBigTimer;
+	mainTimer paintTimer;
 	private int timeElapsed = 0;
 	
 	spawnDebris debrisMover;
@@ -180,7 +182,7 @@ public class GameController {
 		items.getAllBarriers().get(1).setType(eBarrierType.Wall);
 		items.getAllBarriers().get(2).setType(eBarrierType.Wall);
 		items.getAllBarriers().get(3).setType(eBarrierType.Wall);
-		items.getAllBarriers().get(4).setType(eBarrierType.Wall);
+		items.getAllBarriers().get(4).setType(eBarrierType.Gabion);
 		items.getAllBarriers().get(6).setType(eBarrierType.Wall);
 		items.getAllBarriers().get(7).setType(eBarrierType.Gabion);
 		
@@ -200,7 +202,8 @@ public class GameController {
 	
 	public void setUpPaintTimer(){
 		//Start the paint timer
-		theBigTimer = new Timer(paintDelay, new mainTimer());
+		paintTimer = new mainTimer();
+		theBigTimer = new Timer(paintDelay, paintTimer);
 		theBigTimer.start();
 	}
 	
@@ -249,21 +252,6 @@ public class GameController {
 		}
 	}
 	
-	public void startTutorial(){
-		//probably needs to be a timer just for tutorial
-		debrisMover = new spawnDebris(true);
-		powerMover = new spawnPowers();
-		
-		debrisFloating = new Timer(floatDelay, debrisMover);
-		debrisFloating.start();
-		tutorialTimers.add(debrisFloating);
-
-		
-		//Add power timer, but don't start it yet
-		powersFloating = new Timer(floatDelay, powerMover);
-		tutorialTimers.add(powersFloating);
-	}
-	
 	public void gameOver(){
 		stopTimers();
 		Action endGameAct = new endGameAction();
@@ -303,12 +291,15 @@ public class GameController {
 		Action powerAction = new PowerInitiate(p);
 		items.getPlayer().setState(ePlayerState.Lifting);
 		mainGame.bindKeyWith("initiatePowerUp", KeyStroke.getKeyStroke("ENTER"), powerAction);
+		freezeMotion();
+		
+	}
+	
+	public void freezeMotion(){
 		mainGame.unbindKeyWith("x.up", KeyStroke.getKeyStroke("UP"));
 		mainGame.unbindKeyWith("x.down", KeyStroke.getKeyStroke("DOWN"));
 		mainGame.unbindKeyWith("x.left", KeyStroke.getKeyStroke("LEFT"));
 		mainGame.unbindKeyWith("x.right", KeyStroke.getKeyStroke("RIGHT"));
-		
-		
 	}
 	
 	public void thrownSetup(){
@@ -391,20 +382,20 @@ public class GameController {
 			timePassed = 0;
 		}
 		
-		public void move(Debris d){
-			MovementController.move(d);
+		public void checkCatchDebris(Debris d){
 			if(!thisGame.choosingThrow && collision.checkCollision(d) && !thisGame.initiatingPowerUp){
 				//sets the Debris state to Lifted
 				d.catching();
-				/**if(tutorialMode){
-					tutorial.setSpotlight(false);
-					System.out.println("in tutorial");
-				}*/
 				//sequence of events for a caught Debris initiated
 				thisGame.caughtSetup(d);
 				//Move the trash to above the Player's head
 				d.updatePos(mainPlayer.getPosX()+mainPlayer.getWidth()/2 - d.getWidth()/2, mainPlayer.getPosY()-d.getHeight());
 			}
+		}
+		
+		public void move(Debris d){
+			MovementController.move(d);
+			checkCatchDebris(d);
 		}
 		
 		public void throwing(Debris d, ArrayList<Debris> toDelete){
@@ -457,6 +448,9 @@ public class GameController {
 				else if(d.getState()==eFloaterState.THROWING){
 					throwing(d, toDelete);
 				}
+				else if(d.getState()==eFloaterState.RESTING) {
+					checkCatchDebris(d);
+				}
 			}
 			
 			//Now delete any debris that hit
@@ -498,6 +492,10 @@ public class GameController {
 		public void actionPerformed(ActionEvent e) {
 			mainGame.repaint();
 
+			checkItems();
+		}
+		
+		public void checkItems(){
 			if(items.getScreenTimer().getState() == eScreenTimerState.ON){
 				timeElapsed+=paintDelay;
 				scoringTime+=paintDelay;
@@ -594,11 +592,11 @@ public class GameController {
 			
 			if(p instanceof Rebuild){
 				System.out.println("rebuild");
-				p = new Rebuild(xPos,0);
+				p.updatePos(xPos,0);
 			}
 			else{
 				System.out.println("remove");
-				p = new Remove(xPos,0);
+				p.updatePos(xPos,0);
 			}
 			p.setVertex(xPos);
 			
@@ -639,6 +637,8 @@ public class GameController {
 			resetTimer();
 		}
 		
+
+		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
@@ -648,17 +648,6 @@ public class GameController {
 					move(p);
 				}
 				else if(p.getState()==eFloaterState.INITIATED){
-					/**if(p instanceof Rebuild){	
-						((Rebuild) p).power(items.getAllBarriers());
-						items.getHealthBar().update(eHealthChanges.CoastRebuilt.getDelta());
-					}
-					else{
-						//Removes all Debris from coast
-						//TODO: remove up to a certain amount of debris
-						items.removeAllRestingDebris();
-						items.getHealthBar().update(eHealthChanges.CoastDebrisRemoved.getDelta());
-						
-					}**/
 					p.power(items);
 					ScoreController.scorePower();
 				}
@@ -684,43 +673,6 @@ public class GameController {
 		}
 
 	}
-	
-/**	//At (slightly) random intervals erode stuff
-
-	//there should be one for each coast line, probably also gabions, independent erosion patterns
-	public class erosion implements ActionListener{
-		public int timePassed;
-		public int erosionTime;
-		public int aveTime;
-		final public int rTime = 500;
-		
-		public erosion(Coast c){
-			Random r = new Random();
-			//assumes erosion rate in Coast is in milliseconds
-			aveTime = (int) c.getErosionRate();
-			erosionTime = r.nextInt(rTime) + aveTime - rTime/2;
-		}
-		
-		public erosion(Barriers b){
-			Random r = new Random();
-			//assumes decay rate in Barriers is in milliseconds
-			aveTime = b.getDecayTime();
-			erosionTime = r.nextInt(rTime) + aveTime - rTime/2;
-		}
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if(timePassed >= erosionTime){
-				//erode some stuff
-				
-				timePassed = 0;
-			}
-			
-			timePassed+=erodeDelay;
-		}
-		
-	}
-*/
 	
 	public class coastErosion implements ActionListener{
 		private Coast coast;
@@ -760,7 +712,7 @@ public class GameController {
 	
 	public class barrierErosion implements ActionListener{
 		private Barriers barrier;
-		public int timePassed;
+		public int timePassed = 0;
 		public int erosionTime;
 		public int aveTime;
 		final public int rTime = 2000;
@@ -775,17 +727,23 @@ public class GameController {
 			System.out.println("new erosion: " + erosionTime);
 			
 		}
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(barrier.getType()==eBarrierType.EMPTY){
 				return;
 			}
+
 			if(timePassed == 0){
 				newTime();
 			}
 			if(timePassed >= erosionTime){
 				barrier.erode();
 				timePassed = 0;
+			}
+			else if(barrier.getState()!=eBarrierState.ONE_HIT & timePassed >= (1/2)*erosionTime){
+				barrier.erodeHalf();
+				timePassed+=erodeDelay;
 			}
 			else{
 				timePassed+=erodeDelay;
@@ -911,6 +869,11 @@ public class GameController {
 		}
 	}
 	
+	/**
+	 * Returns whether a Barrier barr has collided with any other Barrier on the screen
+	 * @param barr
+	 * @return
+	 */
 	public Barriers emptyBarrierCollision(Barriers barr) {
 		//checks if barr collided with any of the barriers and if it is empty
 		for (Barriers b : this.items.getAllBarriers()) {
@@ -931,80 +894,6 @@ public class GameController {
 		this.mainPlayer = mainPlayer;
 	}
 
-	public class MouseController extends JPanel implements MouseListener, MouseMotionListener {
-
-		boolean dragging = false;
-		Rectangle temp; //the thing being dragged
-		private eBarrierType type; 
-
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			System.out.println(type + " clicked");
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			/*
-			Point p = new Point(e.getX(), e.getY());
-			if (wallSpawn.contains(p)) {
-				type = eBarrierType.Wall;
-			} else if (gabionsSpawn.contains(p)) {
-				type = eBarrierType.Gabion;
-			}
-			temp = new Rectangle(e.getX(), e.getY(), bWidth, bHeight); 
-			//the temp rectangle made here for dragging
-
-			dragging = true;
-			repaint();*/
-			System.out.println(e.getClickCount());
-			System.out.println(type + " pressed");
-
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			if (dragging == false)
-				return;
-			dragging = false;
-			Barriers b = collision(temp);
-			if (b != null) {  //there was a collision, the temp rectangle selected a barrier space 
-								//(do we want it so a new barrier can only be made if the space is empty?)
-				if (type == eBarrierType.Wall) {
-					setBarrierType(b, eBarrierType.Wall); //set barrier at the coords type to wall 
-				}
-				else if (type == eBarrierType.Gabion) {
-					setBarrierType(b, eBarrierType.Gabion);
-				}
-			}
-			temp = null; //we no longer need this temp rectangle
-			repaint();
-			// TODO Auto-generated method stub
-
-		}
-		
-		@Override
-		public void mouseEntered(MouseEvent e) {}
-
-		@Override
-		public void mouseExited(MouseEvent e) {}
-
-		@Override
-		public void mouseDragged(MouseEvent e) {
-			if (dragging == false)
-				return;
-			//update coords of temp rectangle-barrier
-			//idea: use barriers for spawns and temp, convert to Rectangle when needed to compare intersections etc.
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mouseMoved(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-	}
 	
 	public class endGameAction extends AbstractAction{
 

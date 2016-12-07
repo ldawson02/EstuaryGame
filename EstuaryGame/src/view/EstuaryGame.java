@@ -1,4 +1,4 @@
-package view;
+package view; 
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -65,7 +65,7 @@ public class EstuaryGame extends JComponent{
     private static final long serialVersionUID = 1L;
 
     static GameController gc;
-   	static MouseController mc;
+   	public static MouseController mc;
     private JPanel mainFrame;
     private ImageLibrary lib;
     
@@ -77,7 +77,7 @@ public class EstuaryGame extends JComponent{
     Image recycBin;
     Image tutClockArrow;
     Image tutHealthArrow;
-    Image spotlight;
+    Image spotlightImage;
     
     int screenX = 800;
     int screenY = 600;
@@ -202,7 +202,7 @@ public class EstuaryGame extends JComponent{
     	gameOver = lib.draw(eAnimation.gameOver);
     	tutClockArrow = lib.draw(eAnimation.clockArrow);
     	tutHealthArrow = lib.draw(eAnimation.healthArrow);
-    	spotlight = lib.draw(eAnimation.spotlight);
+    	spotlightImage = lib.draw(eAnimation.spotlight);
     	recycBin = lib.draw(eAnimation.recycleBin);
     	trashBin = lib.draw(eAnimation.trashBin);
     }
@@ -239,7 +239,8 @@ public class EstuaryGame extends JComponent{
         	paintScreenTimer(g);
         
         //paintSpotlight(g, gc.getItems().getAllDebris().get(0));
-        paintSpotlight(g, gc.getItems().getScreenTimer());
+        //paintSpotlight(g, gc.getItems().getScreenTimer());
+        //paintFocus(g);
         
         paintScore(g);
         
@@ -485,29 +486,9 @@ public class EstuaryGame extends JComponent{
     	g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
     	g.drawString("Press Enter to See Score...", 275, 370);
     }
+   
     
-    public void paintClockArrow(Graphics g, int x, int y) {
-    	g.drawImage(tutClockArrow, x + 5, y + 5, this);
-    }
-    
-    public void paintHealthArrow(Graphics g, int x, int y) {
-    	int paintX = x + 5;
-    	int paintY = y - 73;
-    	g.fillOval(x, y, 3, 3);
-    	g.drawImage(tutHealthArrow, paintX, paintY, this);
-    }
-    
-    public void paintSpotlight(Graphics g, Item i) {
-    	int paintX = i.getPosX() - 800 + (i.getWidth()/2);
-    	int paintY = i.getPosY() - 600 + (i.getHeight()/2);
-    	g.drawImage(spotlight, paintX, paintY, this);
-    }
-    
-    public void paintSpotlight(Graphics g, int x, int y) {
-    	int paintX = x - 800;
-    	int paintY = y - 600;
-    	g.drawImage(spotlight, paintX, paintY, this);
-    }
+    public void paintFocus(Graphics g){}
     
     private void endGameMotion() {
     	//Stop player motion
