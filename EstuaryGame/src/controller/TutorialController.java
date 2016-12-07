@@ -4,12 +4,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.AbstractAction;
+import javax.swing.KeyStroke;
 import javax.swing.Timer;
 
 import controller.GameController.mainTimer;
+import eNums.eBarrierType;
 import eNums.eFloaterState;
 import eNums.eHealthChanges;
 import eNums.eTutorialState;
+import model.Barriers;
+import model.Coast;
 import model.Debris;
 import model.Powers;
 import view.EstuaryGame;
@@ -19,22 +24,36 @@ public class TutorialController extends GameController {
 
 	Tutorial t;
 	private int floatDelay = 100;
+	private int erodeCallDelay = 100;
 	private int delaySpotlight = 1000;
 	private int healthStageTime = 5000;
 	private int timerStageTime = 5000;
+	private int idleTime = 500000;
 	public int timeInStage;
 	private mainTimer tutorialPaintTimer;
+	private unpause unpauseAction;
+	private Timer erosionTimer;
 	
 	public TutorialController(Tutorial mainGame) {
 		super(mainGame);
 		t = mainGame;
+		unpauseAction = new unpause();
+		tutorialSetup();
+		debrisSetup();
 		debrisFloating.setDelay(floatDelay);
 	}
 
 	@Override
 	public void startGame(){
 		System.out.println("POLYMORPHISM");
-		debrisSetup();
+	}
+	
+	public void tutorialSetup(){
+		getItems().getAllBarriers().get(8).setType(eBarrierType.Wall);
+		getItems().getAllBarriers().get(9).setType(eBarrierType.Gabion);
+		getItems().getAllBarriers().get(1).setType(eBarrierType.Gabion);
+		getItems().getAllBarriers().get(2).setType(eBarrierType.Gabion);
+		getItems().getAllBarriers().get(3).setType(eBarrierType.Gabion);
 	}
 	
 	@Override
@@ -55,8 +74,14 @@ public class TutorialController extends GameController {
 		t.spotlight = false;
 		t.nextState();
 		timeInStage = 0;
-		
 		startStage();
+	}
+	
+	public void stageIdle(){
+		t.spotlightSwitched = true;
+		t.spotlight = false;
+		t.setState(eTutorialState.IDLE);
+		//this.getMainGame().bindKeyWith("continueTutorial", KeyStroke.getKeyStroke("ENTER"), unpauseAction);
 	}
 	
 	public void startStage(){
@@ -65,8 +90,10 @@ public class TutorialController extends GameController {
 		case DEBRIS:
 			debrisSetup();
 			break;
-		case EROSION:
-			erosionSetup();
+		case EROSION_GABION:
+			erosion1Setup();
+			break;
+		case EROSION_WALL:
 			break;
 		case POWERS_REMOVE:
 		case POWERS_REBUILD:
@@ -78,6 +105,8 @@ public class TutorialController extends GameController {
 		case TIMER:
 			timerSetup();
 			break;
+		case DONE:
+			doneSetup();
 		default:
 			break;
 		}
@@ -90,9 +119,19 @@ public class TutorialController extends GameController {
 		debrisFloating.start();
 	}
 	
-	public void erosionSetup(){
+	public void erosion1Setup(){
 		System.out.println("Erosion setup");
-		this.stageComplete();
+		t.addMouseListener(t.mc);
+		t.addMouseMotionListener(t.mc);
+		
+		Coast focusCoast = getItems().getCoast().get(5);
+		t.setSpotlightItem(focusCoast);
+		
+		//set up the mousecontroller?
+		erosionTimer = new Timer(erodeCallDelay, new erosion(focusCoast));
+		erosionTimer.start();
+		
+		//this.stageComplete();
 	}
 	
 	public void powerSetup(eTutorialState state){
@@ -101,9 +140,18 @@ public class TutorialController extends GameController {
 		powersFloating.start();
 	}
 	
-	public void healthSetup(){}
+	public void healthSetup(){
+		t.setSpotlightItem(getItems().getHealthBar());
+	}
 	
-	public void timerSetup(){}
+	public void timerSetup(){
+		t.setSpotlightItem(getItems().getScreenTimer());
+	}
+	
+	public void doneSetup(){
+		t.spotlightSwitched = true;
+		t.setSpotlightItem(null);
+	}
 	
 	public class mainTimer extends GameController.mainTimer implements ActionListener{
 		
@@ -114,6 +162,7 @@ public class TutorialController extends GameController {
 		
 		@Override
 		public void checkItems(){
+			checkSpotlight();
 			switch(t.getState()){
 			case HEALTH:
 				checkHealthLimit();
@@ -139,10 +188,15 @@ public class TutorialController extends GameController {
 			}
 		}
 		
+		public void checkSpotlight(){
+			if(timeInStage >= delaySpotlight && !t.spotlightSwitched){
+				t.spotlight = true;
+			}
+		}
+		
 		public void checkExcessTime(){
-			if(timeInStage >= 100000){
-				System.out.println("Tutorial Stalled!");
-				stageComplete();
+			if(t.getState() != eTutorialState.IDLE && timeInStage >= idleTime){
+				//stageIdle();
 			}
 		}
 		
@@ -156,6 +210,13 @@ public class TutorialController extends GameController {
 
 		@Override
 		public void spawnTimeReached(){}
+		
+		@Override
+		public Debris newDebris(){
+			Debris d = super.newDebris();
+			t.setSpotlightItem(d);
+			return d;
+		}
 		
 		@Override
 		public void move(Debris d){
@@ -259,12 +320,36 @@ public class TutorialController extends GameController {
 	}
 	
 	public class erosion implements ActionListener{
+		private Coast erodingCoast;
+		private int erodeDelay = 3000;
+		private int time = 0;
 		
+		public erosion(Coast c){
+			erodingCoast = c;
+			
+		}
 		@Override
 		public void actionPerformed(ActionEvent e){
-			
+			time += erodeCallDelay;
+			if(time >= erodeDelay){
+				erodingCoast.erode();
+				time = 0;
+				erodeDelay = 10000;
+			}
+			if(erodingCoast.isProtected()){
+				//They added the barrier! Yay!
+			}
 		}
 	}
 	
+	public class unpause extends AbstractAction{
+		
+		@Override
+		public void actionPerformed(ActionEvent e){
+			System.out.println("hit enter!");
+			t.setState(t.getLastState());
+			startStage();
+		}
+	}
 
 }

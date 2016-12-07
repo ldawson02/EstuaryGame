@@ -181,7 +181,7 @@ public class GameController {
 		items.getAllBarriers().get(1).setType(eBarrierType.Wall);
 		items.getAllBarriers().get(2).setType(eBarrierType.Wall);
 		items.getAllBarriers().get(3).setType(eBarrierType.Wall);
-		items.getAllBarriers().get(4).setType(eBarrierType.Wall);
+		items.getAllBarriers().get(4).setType(eBarrierType.Gabion);
 		items.getAllBarriers().get(6).setType(eBarrierType.Wall);
 		items.getAllBarriers().get(7).setType(eBarrierType.Gabion);
 		
@@ -249,21 +249,6 @@ public class GameController {
 			c.getErosionTimer().start();
 			allTimers.add(c.getErosionTimer());
 		}
-	}
-	
-	public void startTutorial(){
-		//probably needs to be a timer just for tutorial
-		debrisMover = new spawnDebris(true);
-		powerMover = new spawnPowers();
-		
-		debrisFloating = new Timer(floatDelay, debrisMover);
-		debrisFloating.start();
-		tutorialTimers.add(debrisFloating);
-
-		
-		//Add power timer, but don't start it yet
-		powersFloating = new Timer(floatDelay, powerMover);
-		tutorialTimers.add(powersFloating);
 	}
 	
 	public void gameOver(){

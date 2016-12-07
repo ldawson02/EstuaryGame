@@ -15,7 +15,7 @@ import model.Barriers;
 		
 		private GameController gc;
 
-		boolean dragging = false;
+		boolean dragging = false; 
 		private Barriers wallSpawn = new Barriers(Barriers.getLeftEdge(), 390, eBarrierType.Wall);
 		private Barriers gabionsSpawn = new Barriers(Barriers.getRightEdge(), 390, eBarrierType.Gabion);
 		private Barriers dragged = null;
@@ -60,7 +60,7 @@ import model.Barriers;
 			Point mouseCoords = new Point(e.getX(), e.getY());
 			
 			if (dragged == null) {	//the dragged "barrier" is not set yet
-				//System.out.println("Mouse: " + mouseCoords.x + " " + mouseCoords.y);
+				System.out.println("Mouse: " + mouseCoords.x + " " + mouseCoords.y);
 				if (Collisions.pointInside(wallSpawn, mouseCoords)) {
 					dragged = new Barriers(e.getX(), e.getY()); //set it to the same coords as mouse click
 					dragged.setType(eBarrierType.Wall);  //set type to wall
