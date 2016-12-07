@@ -6,51 +6,76 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-import model.Gabions;
+import controller.ActiveItems;
+import controller.GameController;
+import controller.GameController.spawnDebris;
+import eNums.eBarrierType;
+import model.Barriers;
 import model.Storm;
+import view.EstuaryGame;
 
 public class StormTest {
 
-	public Storm s;
-	
+	@Test
+	public void getAppearedTest() {
+		assertFalse(Storm.getAppeared());  //starts off false
+		Storm.setAppeared(true);
+		assertTrue(Storm.getAppeared());
+	}
 	
 	@Test
-	public void appearTest() {
-		fail("Not yet implemented");
+	public void setAppearedTest() {
+		assertFalse(Storm.getAppeared());
+		Storm.setAppeared(true);
+		assertTrue(Storm.getAppeared());
+		Storm.setAppeared(false);
+		assertFalse(Storm.getAppeared());
 	}
-
 	
+	@Test
+	public void stormEffectsTest() {
+		destroyBarriersTest();
+		addDebrisTest();
+	}
 	
-	/*
-	 * should be able to get rid of gabions from the coasts by a certain amount-
-	 * either make them decay faster or get rid of a couple entirely
-	 */ 
 	@Test
 	public void destroyBarriersTest() {
-		ArrayList<Gabions> gabs = new ArrayList<Gabions>();
-		for (int i = 0; i <= 10; i++) {
-			gabs.add(new Gabions(1,1));
-		}
-		//s.destroyBarriers();
-		assertEquals(gabs.size(), 5);
-		
-		//should not get below 0
-		ArrayList<Gabions> gab2 = new ArrayList<Gabions>();
-		for (int i = 0; i < 3; i++) {
-			gab2.add(new Gabions(1,1));
-		}
-		//s.destroyBarriers();
-		assertEquals(gab2.size(), 0);
+		ActiveItems ai = new ActiveItems();
+		ai.addBarrier(new Barriers(1, 2, eBarrierType.Gabion));
+		ai.addBarrier(new Barriers(2, 2, eBarrierType.Gabion));
+		ai.addBarrier(new Barriers(3, 2, eBarrierType.Wall));
+		ai.addBarrier(new Barriers(4, 2, eBarrierType.EMPTY));
+		ai.addBarrier(new Barriers(5, 2, eBarrierType.Gabion));
+		ai.addBarrier(new Barriers(1, 2, eBarrierType.EMPTY));
+		//has 6 total barriers, 4 that are active, should destroy half of that -> 2 active leftover
+		Storm.destroyBarriers(ai);
+		assertEquals(ai.numActiveBarriers(), 2);
+		ai.addBarrier(new Barriers(1, 1, eBarrierType.Wall));
+		ai.addBarrier(new Barriers(1, 1, eBarrierType.Gabion));
+		ai.addBarrier(new Barriers(1, 1, eBarrierType.Wall));
+		//now 9 total, 5 that are active -> should have 3 active leftover
+		Storm.destroyBarriers(ai);
+		assertEquals(ai.numActiveBarriers(), 3);
 	}
-	
-	/*
-	 * create an AllDebris class which will have an added # of debris, and the types 
-	 * can be random
-	 */
-	
 	
 	@Test
 	public void addDebrisTest() {
-		fail("Not yet implemented");
+		/*
+		int addDebris = (int) (Math.random() * 6 + 5); 
+		for (int i = 0; i < addDebris; i++) {
+			ai.addDebris(sd.newDebris());
+			System.out.println("storm debris created");
+		}
+		 */
+		//should add 5-10 pieces of debris
+		EstuaryGame eg = new EstuaryGame();
+		GameController gc = new GameController(eg);
+		gc.startGame();
+		int currDebris = gc.getItems().getAllDebris().size();
+		assertEquals(currDebris, 2);
+		//current # debris = 2, after storm should be 7-12
+		Storm.addDebris(gc.getItems(), gc.getSpawnDebris());
+		int afterStorm = gc.getItems().getAllDebris().size();
+		assertTrue((afterStorm >= 7) && (afterStorm <= 12));
 	}
 }
