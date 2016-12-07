@@ -20,7 +20,8 @@ public class Tutorial extends EstuaryGame implements ActionListener{
 	private eTutorialState state = eTutorialState.DEBRIS;
 	public boolean spotlight = false;
 	public boolean spotlightSwitched = false;
-	public TutorialController tc;
+	private Item spotlightItem;
+	public TutorialController tc; 
 
 	public boolean getSpotlightSwitched(){
 		return spotlightSwitched;
@@ -29,6 +30,14 @@ public class Tutorial extends EstuaryGame implements ActionListener{
 	public void setSpotlight(boolean t){
 		spotlight = t;
 		spotlightSwitched = true;
+	}
+	
+	public void setSpotlightItem(Item i){
+		spotlightItem = i;
+	}
+	
+	public Item getSpotlightItem(){
+		return spotlightItem;
 	}
 
 	public Tutorial(){

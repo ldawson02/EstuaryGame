@@ -20,7 +20,10 @@ public class TutorialController extends GameController {
 	Tutorial t;
 	private int floatDelay = 100;
 	private int delaySpotlight = 1000;
+	private int healthStageTime = 5000;
+	private int timerStageTimer = 5000;
 	public int timeInStage;
+	private mainTimer tutorialPaintTimer;
 	
 	public TutorialController(Tutorial mainGame) {
 		super(mainGame);
@@ -37,7 +40,9 @@ public class TutorialController extends GameController {
 	@Override
 	public void setUpPaintTimer(){
 		//Start the paint timer
-		theBigTimer = new Timer(paintDelay, new mainTimer());
+		System.out.println("Paint timer setup in subclass");
+		paintTimer = new mainTimer();
+		theBigTimer = new Timer(paintDelay, paintTimer);
 		theBigTimer.start();
 	}
 	
@@ -96,7 +101,9 @@ public class TutorialController extends GameController {
 		powersFloating.start();
 	}
 	
-	public void healthSetup(){}
+	public void healthSetup(){
+		tutorialPaintTimer.healthTimerStart(healthStageTime);
+	}
 	
 	public void timerSetup(){}
 	
@@ -108,56 +115,8 @@ public class TutorialController extends GameController {
 			
 		}
 		
-		
-		public void tutorialTimer(){
-			if(timeInStage >= delaySpotlight && !t.getSpotlightSwitched()){
-				t.setSpotlight(true);
-			}
-			switch (t.getState()){
-			case DEBRIS:
-				debrisStage();
-				break;
-			case EROSION:
-				erosionStage();
-				break;
-			case POWERS_REMOVE:
-				removeStage();
-				break;
-			case POWERS_REBUILD:
-				rebuildStage();
-				break;
-			case HEALTH:
-				healthStage();
-			case TIMER:
-				timerStage();
-				break;
-			default:
-				break;
-			}
-			timeInStage+=paintDelay;
-		}
-		
-		public void debrisStage(){}
-		
-		public void erosionStage(){
-
-			// this part seems like its gonna be pretty complicated
-		}
-		
-		public void removeStage(){
+		public void healthTimerStart(int hTime){
 			
-		}
-		
-		public void rebuildStage(){
-			
-		}
-		
-		public void healthStage(){
-			//turn on the arrow and text
-		}
-		
-		public void timerStage(){
-			//turn on the arrow and text
 		}
 		
 	}
@@ -182,7 +141,7 @@ public class TutorialController extends GameController {
 				if(toDelete.contains(d)){
 					debrisFloating.stop();
 					stageComplete();
-					System.out.println("Completed Tutorial Stage");
+					System.out.println("Completed Debris Tutorial Stage");
 				}				
 			}
 			else{
@@ -220,12 +179,17 @@ public class TutorialController extends GameController {
 		}
 		
 		@Override
+		public void spawnTimeReached(){}
+		
+		@Override
 		public void quickSpawn(){
 			switch(eState){
 			case POWERS_REMOVE:
+				System.out.println("making new Remove");
 				super.quickSpawnRemove();
 				break;
 			case POWERS_REBUILD:
+				System.out.println("making new Rebuild");
 				super.quickSpawnRebuild();
 				break;
 			default:
@@ -235,17 +199,30 @@ public class TutorialController extends GameController {
 		}
 		
 		@Override
+		public Powers newPower(Powers p){
+			p = super.newPower(p);
+			t.setSpotlightItem(p);
+			return p;
+		}
+		
+		@Override
 		public void actionPerformed(ActionEvent e){
 			super.actionPerformed(e);
-			int distance = t.getScreenY();
-			for(Powers p : thisGame.getItems().getAllPowers()){
-				if(p.getPosY() < distance){
-					distance = p.getPosY();
-				}
+			if(!thisGame.getItems().getAllPowers().contains(t.getSpotlightItem())){
+				powersFloating.stop();
+				stageComplete();
 			}
-			
-			if(distance >= t.getScreenY()/4){
-				quickSpawn();
+			else{
+				int distance = t.getScreenY();
+				for(Powers p : thisGame.getItems().getAllPowers()){
+					if(p.getPosY() < distance){
+						distance = p.getPosY();
+					}
+				}
+				
+				if(distance >= t.getScreenY()/4){
+					quickSpawn();
+				}
 			}
 		}
 	}

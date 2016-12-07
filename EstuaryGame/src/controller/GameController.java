@@ -61,6 +61,7 @@ public class GameController {
 	
 	protected final int paintDelay = 30;
 	Timer theBigTimer;
+	mainTimer paintTimer;
 	private int timeElapsed = 0;
 	
 	spawnDebris debrisMover;
@@ -200,7 +201,8 @@ public class GameController {
 	
 	public void setUpPaintTimer(){
 		//Start the paint timer
-		theBigTimer = new Timer(paintDelay, new mainTimer());
+		paintTimer = new mainTimer();
+		theBigTimer = new Timer(paintDelay, paintTimer);
 		theBigTimer.start();
 	}
 	
@@ -594,11 +596,11 @@ public class GameController {
 			
 			if(p instanceof Rebuild){
 				System.out.println("rebuild");
-				p = new Rebuild(xPos,0);
+				p.updatePos(xPos,0);
 			}
 			else{
 				System.out.println("remove");
-				p = new Remove(xPos,0);
+				p.updatePos(xPos,0);
 			}
 			p.setVertex(xPos);
 			
@@ -639,6 +641,8 @@ public class GameController {
 			resetTimer();
 		}
 		
+
+		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
@@ -648,17 +652,6 @@ public class GameController {
 					move(p);
 				}
 				else if(p.getState()==eFloaterState.INITIATED){
-					/**if(p instanceof Rebuild){	
-						((Rebuild) p).power(items.getAllBarriers());
-						items.getHealthBar().update(eHealthChanges.CoastRebuilt.getDelta());
-					}
-					else{
-						//Removes all Debris from coast
-						//TODO: remove up to a certain amount of debris
-						items.removeAllRestingDebris();
-						items.getHealthBar().update(eHealthChanges.CoastDebrisRemoved.getDelta());
-						
-					}**/
 					p.power(items);
 					ScoreController.scorePower();
 				}
@@ -684,43 +677,6 @@ public class GameController {
 		}
 
 	}
-	
-/**	//At (slightly) random intervals erode stuff
-
-	//there should be one for each coast line, probably also gabions, independent erosion patterns
-	public class erosion implements ActionListener{
-		public int timePassed;
-		public int erosionTime;
-		public int aveTime;
-		final public int rTime = 500;
-		
-		public erosion(Coast c){
-			Random r = new Random();
-			//assumes erosion rate in Coast is in milliseconds
-			aveTime = (int) c.getErosionRate();
-			erosionTime = r.nextInt(rTime) + aveTime - rTime/2;
-		}
-		
-		public erosion(Barriers b){
-			Random r = new Random();
-			//assumes decay rate in Barriers is in milliseconds
-			aveTime = b.getDecayTime();
-			erosionTime = r.nextInt(rTime) + aveTime - rTime/2;
-		}
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if(timePassed >= erosionTime){
-				//erode some stuff
-				
-				timePassed = 0;
-			}
-			
-			timePassed+=erodeDelay;
-		}
-		
-	}
-*/
 	
 	public class coastErosion implements ActionListener{
 		private Coast coast;
@@ -931,80 +887,6 @@ public class GameController {
 		this.mainPlayer = mainPlayer;
 	}
 
-	public class MouseController extends JPanel implements MouseListener, MouseMotionListener {
-
-		boolean dragging = false;
-		Rectangle temp; //the thing being dragged
-		private eBarrierType type; 
-
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			System.out.println(type + " clicked");
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			/*
-			Point p = new Point(e.getX(), e.getY());
-			if (wallSpawn.contains(p)) {
-				type = eBarrierType.Wall;
-			} else if (gabionsSpawn.contains(p)) {
-				type = eBarrierType.Gabion;
-			}
-			temp = new Rectangle(e.getX(), e.getY(), bWidth, bHeight); 
-			//the temp rectangle made here for dragging
-
-			dragging = true;
-			repaint();*/
-			System.out.println(e.getClickCount());
-			System.out.println(type + " pressed");
-
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			if (dragging == false)
-				return;
-			dragging = false;
-			Barriers b = collision(temp);
-			if (b != null) {  //there was a collision, the temp rectangle selected a barrier space 
-								//(do we want it so a new barrier can only be made if the space is empty?)
-				if (type == eBarrierType.Wall) {
-					setBarrierType(b, eBarrierType.Wall); //set barrier at the coords type to wall 
-				}
-				else if (type == eBarrierType.Gabion) {
-					setBarrierType(b, eBarrierType.Gabion);
-				}
-			}
-			temp = null; //we no longer need this temp rectangle
-			repaint();
-			// TODO Auto-generated method stub
-
-		}
-		
-		@Override
-		public void mouseEntered(MouseEvent e) {}
-
-		@Override
-		public void mouseExited(MouseEvent e) {}
-
-		@Override
-		public void mouseDragged(MouseEvent e) {
-			if (dragging == false)
-				return;
-			//update coords of temp rectangle-barrier
-			//idea: use barriers for spawns and temp, convert to Rectangle when needed to compare intersections etc.
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mouseMoved(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-	}
 	
 	public class endGameAction extends AbstractAction{
 
