@@ -66,5 +66,11 @@ public class HealthBarTest {
 		assertEquals(gc.getItems().getHealthBar().getHealth(), initialHealth2 + eHealthChanges.WallBuilt.getDelta());
 	}
 	
+	@Test
+	public void getHeightandWidth(){
+		assertEquals(healthBar.getHeight(),25);
+		assertEquals(healthBar.getWidth(),160);
+	}
+	
 
 }

@@ -69,5 +69,15 @@ public class ScreenTimerTest {
 		assertTrue(gc.getItems().getScreenTimer().getState() == eScreenTimerState.ON);
 	
 	}
+	
+	@Test
+	public void testSetandGetDoublePositionXandY(){
+		timer.setDoublePosX(100);
+		assertTrue(timer.getDoublePosX() == 100);
+		timer.setDoublePosY(500);
+		assertTrue(timer.getDoublePosY() == 500);
+		
+	}
+	
 
 }

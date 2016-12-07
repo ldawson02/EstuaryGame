@@ -42,12 +42,6 @@ public class ScreenTimer extends Item implements Serializable {
 		return timeRemaining;
 	}
 
-	/**
-	 * @param timeRemaining the timeRemaining to set
-	 */
-	public void setTimeRemaining(int timeRemaining) {
-		this.timeRemaining = timeRemaining;
-	}
 
 	/**
 	 * @return the maxTime
