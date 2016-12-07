@@ -17,6 +17,8 @@ public class HealthBar extends Item {
 	private final int minHealth = 0;
 	private final int height = 25;
 	private final int width = 160;
+	private final int xPos = 320;
+	private final int yPos = 515;
 	private int health;
 	
 	/**
@@ -25,7 +27,8 @@ public class HealthBar extends Item {
 	 * @param health
 	 */
 	public HealthBar(){
-		super(320, 515);
+		super();
+		super.updatePos(xPos, yPos);
 		health = 80;
 	};
 	

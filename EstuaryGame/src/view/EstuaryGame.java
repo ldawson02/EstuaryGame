@@ -530,18 +530,6 @@ public class EstuaryGame extends JComponent{
 		return screenY;
 	}
 
-	public void throwChoice(Debris d){
-    	Object[] options = {"Trash", "Recycling"};
-    	int n = JOptionPane.showOptionDialog(mainFrame, "Where does this belong?", "Estuary Game",
-    		    JOptionPane.YES_NO_CANCEL_OPTION,
-    		    JOptionPane.QUESTION_MESSAGE,
-    		    null,
-    		    options,
-    		    options[0]);
-    	
-    	d.throwDebris(n == d.getType().getType());
-    	d.setController(gc);
-    }
     
     private Image scalePlayer(BufferedImage img, Player p) {
     	return img.getScaledInstance(p.getWidth(), p.getHeight(), 50);

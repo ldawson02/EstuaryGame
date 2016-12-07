@@ -36,7 +36,7 @@ public abstract class Floater extends Item {
 		setHeight(40);
 		this.state = eFloaterState.MOVING;
 	};
-	public abstract void floating();
+
 	public abstract void catching();
 	
 	/**
@@ -58,12 +58,6 @@ public abstract class Floater extends Item {
 	 * @param e
 	 */
 	public void setState(eFloaterState e){
-		//TODO: make sure you cant set illegal instances
-		/*
-		if (this instanceof Powers && e.getState()>2){
-			throw IllegalStateException;
-		}
-		*/
 		this.state = e;
 	}
 	

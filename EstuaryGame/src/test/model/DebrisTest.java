@@ -115,6 +115,7 @@ public class DebrisTest {
 	
 	@Test
 	public void testCaughtandThrownCorrectRecycling() throws InterruptedException{
+		Thread.sleep(5000);
 		ArrayList<Debris> debris = gc.getItems().getAllDebris();
 		Collisions collision = new Collisions();
 		Debris d = debris.get(0);
@@ -227,22 +228,6 @@ public class DebrisTest {
 		
 	}
 	
-	@Test
-	public void testThrowTrashCorrect() {
-		trash.catching();
-		trash.setCorrectBin(eDebrisType.TRASH);
-		trash.throwDebris(trash.getCorrectBin());	
-		assertEquals(trash.getState(), eFloaterState.THROWING);
-		assertEquals(eThrowDirection.RIGHT.getDirection(), eDebrisType.TRASH.getType());
-		
-		recyc.catching();
-		recyc.setCorrectBin(eDebrisType.RECYCLING);
-		recyc.throwDebris(recyc.getCorrectBin());	
-		assertEquals(recyc.getState(), eFloaterState.THROWING);
-		assertEquals(eThrowDirection.LEFT.getDirection(), eDebrisType.RECYCLING.getType());
-		
-		
-	}
 	
 	@Test
 	public void testSetType(){

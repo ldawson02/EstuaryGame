@@ -45,8 +45,6 @@ public class ActiveItems {
 	private ArrayList<Barriers> barriers;
 	private ArrayList<Debris> debris;
 	private ArrayList<Coast> coast;
-	private CoastL coastL;
-	private CoastR coastR;
 	private ArrayList<Powers> powerups;
 	private Bin TrashBin;
 	private Bin RecycleBin;
@@ -56,8 +54,6 @@ public class ActiveItems {
 		barriers = new ArrayList<Barriers>();
 		debris = new ArrayList<Debris>();
 		coast = new ArrayList<Coast>();
-		coastL = new CoastL();
-		coastR = new CoastR();
 		powerups = new ArrayList<Powers>();
 		TrashBin = new Bin(eDebrisType.TRASH);
 		RecycleBin = new Bin(eDebrisType.RECYCLING);
@@ -114,19 +110,7 @@ public class ActiveItems {
 	public void addCoast(Coast c){
 		coast.add(c);
 	}
-	/**
-	 * @return the coastL
-	 */
-	public CoastL getCoastL() {
-		return coastL;
-	}
 
-	/**
-	 * @return the coastR
-	 */
-	public CoastR getCoastR() {
-		return coastR;
-	}
 
 	public boolean removeDebris(Debris d){
 		return debris.remove(d);

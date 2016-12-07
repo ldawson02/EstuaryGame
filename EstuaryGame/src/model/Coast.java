@@ -239,4 +239,5 @@ public class Coast extends Item{
 	public void setCoastID(int coastID) {
 		this.coastID = coastID;
 	}
+
 }

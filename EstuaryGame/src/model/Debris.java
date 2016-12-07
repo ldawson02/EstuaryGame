@@ -87,10 +87,6 @@ public class Debris extends Floater{
  * @return true or false
  */
 	public boolean getCorrectBin() {
-		/**
-		 * I don't understand how whether it was the correct bin was working before
-		 * so I'm rewriting it here
-		 */
 		
 		if (this.throwDir.getDirection() == this.type.getType()) {
 			return true;
@@ -99,20 +95,10 @@ public class Debris extends Floater{
 			return false;
 		}
 		
-		//return this.correctBin;
 	}
-	/**
-	 * set the correct bin
-	 * @param correctBin
-	 */
-	public void setCorrectBin(eDebrisType correctBin) {
-		if (getType() == correctBin) 
-			this.correctBin = true;
-		else 
-			this.correctBin = false;
-	}
+
 /**
- * getter for bin,Put recycle in first, then trash,if they throw Left return Left-most bin,else return right bin
+ * Get the bin in the throw direction
  * @return
  */
 	public Bin getBin(){
@@ -152,36 +138,6 @@ public class Debris extends Floater{
 		return throwDir;
 	}
 	
-	/**
-	 * Throws debris that is trash to the left and recyclable debris to the right
-	 * @return
-	 */
-	
-	public void throwDebris(boolean cBin) {
-		correctBin = cBin;
-		if(getType() == eDebrisType.TRASH){
-			setThrowDirection(eThrowDirection.LEFT);
-		}else{
-			setThrowDirection(eThrowDirection.RIGHT);
-		}
-		
-		if(!correctBin){
-			setThrowDirection(this.getThrowDirection().opposite());
-		}
-		
-		this.setState(eFloaterState.THROWING);
-	}
-	
-
-	public void wrongBinAction(){
-		
-	}
-
-	@Override
-	public void floating() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void catching() {

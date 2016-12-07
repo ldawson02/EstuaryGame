@@ -19,29 +19,11 @@ public class Rebuild extends Powers {
 	public Rebuild(){
 		super();
 	}
-	@Override
-	public void floating() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void catching() {
 		this.setState(eFloaterState.LIFTED);
 		
-	}
-
-	@Override
-	public void appear() {
-		// TODO Auto-generated method stub
-		//ActiveItems.powerups.add(this);
-		
-	}
-
-	@Override
-	public void disappear() {
-		// TODO Auto-generated method stub
-		//ActiveItems.powerups.remove(this);
 	}
 
 
@@ -54,10 +36,13 @@ public class Rebuild extends Powers {
 		this.vertex = vertex;
 	}
 	
-	public void power(ArrayList<Barriers> barriers){
+	@Override
+	public void power(ActiveItems items){
+		ArrayList<Barriers> barriers = items.getAllBarriers();
 		int empty = 0;
 		ArrayList<Barriers> bEmpty = new ArrayList<Barriers>();
-		for(Barriers b : barriers){
+		for(Item i : barriers){
+			Barriers b = (Barriers)i; 
 			if(b.getType()==eBarrierType.EMPTY){
 				bEmpty.add(b);
 				empty++;

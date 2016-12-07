@@ -8,7 +8,7 @@ import eNums.eDebrisType;
  */
 public class Bin extends Item{
 
-	public eDebrisType trashType;
+	public eDebrisType debrisType;
 	
 	private Bin(){};
 	
@@ -17,20 +17,17 @@ public class Bin extends Item{
 	 * @param t
 	 */
 	public Bin(eDebrisType t){
-		this.trashType = t;
+		this.debrisType = t;
 		this.setHeight(50);
 		this.setWidth(50);
 	}
 	
 	/**
 	 * getter for debris type
-	 * @return trashtype;
+	 * @return debristype;
 	 */
 	public eDebrisType getDebrisType(){
-		return trashType;
+		return debrisType;
 	}
 	
-	public void correctBinAction(){};
-	
-	public void wrongBinAction(){};
 }
