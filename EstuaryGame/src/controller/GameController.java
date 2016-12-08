@@ -348,31 +348,31 @@ public class GameController implements Serializable {
 		switch(difficulty){
 		case VERYEASY:
 			for(Coast c: items.getCoast()){
-				c.setErosionRate(20000);
+				c.setErosionRate(30000);
 			}
 			this.getSpawnDebris().updateAveTime(15000);
 			break;
 		case EASY:
 			for(Coast c: items.getCoast()){
-				c.setErosionRate(15000);
+				c.setErosionRate(20000);
 			}
 			this.getSpawnDebris().updateAveTime(10000);
 			break;
 		case MEDIUM:
 			for(Coast c: items.getCoast()){
-				c.setErosionRate(10000);
+				c.setErosionRate(15000);
 			}
 			this.getSpawnDebris().updateAveTime(8000);
 			break;
 		case HARD:
 			for(Coast c: items.getCoast()){
-				c.setErosionRate(8000);
+				c.setErosionRate(10000);
 			}
 			this.getSpawnDebris().updateAveTime(5000);
 			break;
 		case IMPOSSIBLE:
 			for(Coast c: items.getCoast()){
-				c.setErosionRate(5000);
+				c.setErosionRate(6000);
 			}
 			this.getSpawnDebris().updateAveTime(1000);
 			break;
