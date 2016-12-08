@@ -7,6 +7,7 @@ import java.awt.CardLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -52,14 +53,6 @@ public class GameController implements Serializable {
 	private static EstuaryGame mainGame;
 	private Player mainPlayer;
 	private ActiveItems items = new ActiveItems();
-	Action leftAct;
-	Action rightAct;
-	Action upAct;
-	Action downAct;
-	Action quitAct;
-	Action caughtLeftAct;
-	Action caughtRightAct;
-	Action throwAct;
 	
 	public final static int dimX = 800;
 	public final static int dimY = 600;
@@ -125,15 +118,15 @@ public class GameController implements Serializable {
 	}
 
 	public void normalKeyBind(){
-		mainGame.bindKeyWith("x.left", KeyStroke.getKeyStroke("LEFT"), leftAct);
-		mainGame.bindKeyWith("x.right", KeyStroke.getKeyStroke("RIGHT"), rightAct);
-		mainGame.bindKeyWith("x.up", KeyStroke.getKeyStroke("UP"), upAct);
-		mainGame.bindKeyWith("x.down", KeyStroke.getKeyStroke("DOWN"), downAct);
-		mainGame.bindKeyWith("quit", KeyStroke.getKeyStroke("Q"), quitAct);
+		mainGame.bindKeyWith("left", KeyStroke.getKeyStroke("LEFT"), new HAction(-1 * getMainPlayer().getSpeed()));
+		mainGame.bindKeyWith("right", KeyStroke.getKeyStroke("RIGHT"), new HAction(1 * getMainPlayer().getSpeed()));
+		mainGame.bindKeyWith("up", KeyStroke.getKeyStroke("UP"), new VAction(-1 * getMainPlayer().getSpeed()));
+		mainGame.bindKeyWith("down", KeyStroke.getKeyStroke("DOWN"), new VAction(1 * getMainPlayer().getSpeed()));
+		mainGame.bindKeyWith("quit", KeyStroke.getKeyStroke(KeyEvent.VK_Q, KeyEvent.CTRL_DOWN_MASK), new quitAction());
+		mainGame.bindKeyWith("save", KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_DOWN_MASK), new SerializeAction());
 	}
 	
 	public void serializationKeyBind() {
-		mainGame.bindKeyWith("serialize", KeyStroke.getKeyStroke('1'), new SerializeAction());
 		mainGame.bindKeyWith("readserialized", KeyStroke.getKeyStroke('2'), new ReadSerializeAction());
 		mainGame.bindKeyWith("cleanupserialized", KeyStroke.getKeyStroke('3'), new CleanUpSerializeAction());
 	}
@@ -155,11 +148,6 @@ public class GameController implements Serializable {
 		collision.setPlayer(getMainPlayer());
 		
 		//bind the keys
-		leftAct = new HAction(-1 * getMainPlayer().getSpeed());
-		rightAct = new HAction(1 * getMainPlayer().getSpeed());
-		upAct = new VAction(-1 * getMainPlayer().getSpeed());
-		downAct = new VAction(1 * getMainPlayer().getSpeed());
-		quitAct = new quitAction();
 		normalKeyBind();
 		
 		serializationKeyBind();
@@ -278,14 +266,11 @@ public class GameController implements Serializable {
 	public void caughtSetup(Debris d){
 		this.choosingThrow = true;
 		items.mainPlayer.setState(ePlayerState.Lifting);
-		Action caughtLeftAct = new ThrowChoice(eThrowDirection.LEFT,d);
-		Action caughtRightAct = new ThrowChoice(eThrowDirection.RIGHT,d);
-		Action throwAct = new ThrowChosen(d);
 		
 		//Change the function of the keys
-		mainGame.bindKeyWith("x.leftArrow", KeyStroke.getKeyStroke("LEFT"), caughtLeftAct);
-		mainGame.bindKeyWith("x.rightArrow", KeyStroke.getKeyStroke("RIGHT"), caughtRightAct);
-		mainGame.bindKeyWith("throwDebris", KeyStroke.getKeyStroke("ENTER"), throwAct);
+		mainGame.bindKeyWith("leftArrow", KeyStroke.getKeyStroke("LEFT"), new ThrowChoice(eThrowDirection.LEFT,d));
+		mainGame.bindKeyWith("rightArrow", KeyStroke.getKeyStroke("RIGHT"), new ThrowChoice(eThrowDirection.RIGHT,d));
+		mainGame.bindKeyWith("throwDebris", KeyStroke.getKeyStroke("ENTER"), new ThrowChosen(d));
 		
 		//Don't let the player move!
 		mainGame.unbindKeyWith("x.up", KeyStroke.getKeyStroke("UP"));
@@ -302,10 +287,10 @@ public class GameController implements Serializable {
 	}
 	
 	public void freezeMotion(){
-		mainGame.unbindKeyWith("x.up", KeyStroke.getKeyStroke("UP"));
-		mainGame.unbindKeyWith("x.down", KeyStroke.getKeyStroke("DOWN"));
-		mainGame.unbindKeyWith("x.left", KeyStroke.getKeyStroke("LEFT"));
-		mainGame.unbindKeyWith("x.right", KeyStroke.getKeyStroke("RIGHT"));
+		mainGame.unbindKeyWith("up", KeyStroke.getKeyStroke("UP"));
+		mainGame.unbindKeyWith("down", KeyStroke.getKeyStroke("DOWN"));
+		mainGame.unbindKeyWith("left", KeyStroke.getKeyStroke("LEFT"));
+		mainGame.unbindKeyWith("right", KeyStroke.getKeyStroke("RIGHT"));
 	}
 	
 	public void thrownSetup(){
@@ -907,11 +892,12 @@ public class GameController implements Serializable {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int next = getMainPlayer().getPosX() + moveSize;
+			int edge = dimX-getMainPlayer().getWidth();
 			if (next <= 0) {
 				getMainPlayer().updatePosX(0);
 			}
-			else if (next >= dimX) {
-				getMainPlayer().updatePosX(dimX);
+			else if (next >= edge) {
+				getMainPlayer().updatePosX(edge);
 			}
 			else {
 				getMainPlayer().updatePosX(getMainPlayer().getPosX() + moveSize);
@@ -936,11 +922,12 @@ public class GameController implements Serializable {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int next = getMainPlayer().getPosY() + moveSize;
+			int edge = dimY - getMainPlayer().getHeight(); 
 			if (next <= 0) {
 				getMainPlayer().updatePosY(0);
 			}
-			else if (next >= dimY) {
-				getMainPlayer().updatePosY(dimY);
+			else if (next >= edge) {
+				getMainPlayer().updatePosY(edge);
 			}
 			else {
 				getMainPlayer().updatePosY(getMainPlayer().getPosY()+moveSize);
