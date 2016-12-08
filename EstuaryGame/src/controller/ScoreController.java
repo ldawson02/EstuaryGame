@@ -43,5 +43,7 @@ public class ScoreController {
 	}
 	
 	//add more complex scoring w/ difficulty, etc.
-
+	public static void scoreDifficulty(int diff){
+		score = score + 2*diff;
+	}
 }
