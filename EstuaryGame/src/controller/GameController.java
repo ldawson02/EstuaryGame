@@ -892,7 +892,7 @@ public class GameController implements Serializable {
 			else if(timePassed >= erosionTime){
 				barrier.erode();
 				timePassed = 0;
-				items.getHealthBar().update(eHealthChanges.BarrierFallen.getDelta());
+				//items.getHealthBar().update(eHealthChanges.BarrierFallen.getDelta());
 			}
 			else if(barrier.getState()==eBarrierState.NO_HIT && timePassed >= (0.5)*erosionTime){
 				System.out.println("Eroding half at: " + timePassed);
@@ -1069,7 +1069,7 @@ public class GameController implements Serializable {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			CardLayout c1 = (CardLayout) (EstuaryGame.getCards().getLayout());
-			c1.last(EstuaryGame.getCards());
+			c1.show(EstuaryGame.getCards(), "EndScreen");
 		}
 		
 	}

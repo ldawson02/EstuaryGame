@@ -95,7 +95,11 @@ public class EndScreen extends JPanel implements ActionListener{
 			EstuaryGame.cards.remove(EstuaryGame.mainGame);
 			EstuaryGame.mainGame = new EstuaryGame();
 			EstuaryGame.cards.add(EstuaryGame.mainGame, 1);
-			c1.first(EstuaryGame.getCards());
+			
+			EstuaryGame.cards.remove(EstuaryGame.tutorial);
+			EstuaryGame.tutorial = new Tutorial();
+			EstuaryGame.cards.add(EstuaryGame.tutorial, 2);
+			c1.show(EstuaryGame.getCards(), "TitleScreen");
 		}
 	}
 	
