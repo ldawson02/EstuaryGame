@@ -18,6 +18,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import controller.GameController;
 import controller.MouseController;
@@ -29,6 +30,12 @@ public class TitleScreen extends JPanel implements ActionListener{
     EstuaryGame game;
     Tutorial tutorial;
     Image background;
+    Timer titleTimer;
+    int time = 30;
+    double scaleFactor = 1.0;
+    
+    public static final int defaultScreenX = 800;
+    public static final int defaultScreenY = 600;
     
     public TitleScreen(EstuaryGame g, Tutorial t) {
     	game = g;
@@ -98,6 +105,36 @@ public class TitleScreen extends JPanel implements ActionListener{
 	        return (new Dimension(800, 600));
 	    }
 
+	 private void checkWindowDimensionChange() {
+	    	if ((this.getWidth() != TitleScreen.defaultScreenX) || (this.getHeight() != TitleScreen.defaultScreenY)) {
+	    		
+	    		System.out.println("Window size changed!");
+	    		System.out.println("From " + this.getWidth() + "x" + this.getHeight());
+	    		double scaleX = (double)(this.getWidth()) / (double)(TitleScreen.defaultScreenX);
+	    		double scaleY = (double)(this.getHeight()) / (double)(TitleScreen.defaultScreenY);
+	    		
+	    		
+	    		//Scale according to the smaller (maintains overall 3:4 ratio)
+	    		if (scaleX > scaleY) {
+	    			scaleFactor = scaleY;
+	    		}
+	    		else {
+	    			scaleFactor = scaleX;
+	    		}
+	    		
+	    	}
+	    }
+	 
+	 public class TitleTimer implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+		 
+	 }
+	 
 	 private BufferedImage createImage(String filename){
 			BufferedImage bufferedImage;
 			try {
