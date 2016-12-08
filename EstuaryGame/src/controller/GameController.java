@@ -1027,13 +1027,10 @@ public class GameController implements Serializable {
 	public void setBarrierType(Barriers barr, eBarrierType t) {
 		//goes through list of barriers and changes the one with the matching coords to type t
 		for (Barriers b : this.items.getAllBarriers()) {
-			if((barr.getPosX()>=b.getPosX() && barr.getPosX()<=b.getPosX()+b.getWidth()) && (barr.getPosY()>=b.getPosY() && barr.getPosY()<=b.getPosY()+b.getHeight())){
+			if((barr.getPosX()>=b.getPosX() && barr.getPosX()<=b.getPosX()+b.getWidth()) 
+					&& (barr.getPosY()>=b.getPosY() && barr.getPosY()<=b.getPosY()+b.getHeight())){ //"match"
+				b.setType(t);
 				System.out.println("inside space");
-				b.setType(t);
-			}
-			if (barr.getPosX() == b.getPosX()) { //"match" 
-				System.out.println("set barrier type");
-				b.setType(t);
 			}
 		}
 	}
@@ -1045,9 +1042,12 @@ public class GameController implements Serializable {
 	 */
 	public Barriers emptyBarrierCollision(Barriers barr) {
 		//checks if barr collided with any of the barriers and if it is empty
+		int counter = 0;
 		for (Barriers b : this.items.getAllBarriers()) {
+			counter++;
 			if ((Collisions.checkCollision(b, barr) && (b.getType() == eBarrierType.EMPTY))) {
 				System.out.println("empty barrier collide");
+				System.out.println("barrier num: " + counter);
 				return b;
 			}
 		}

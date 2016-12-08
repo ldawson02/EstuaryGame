@@ -34,8 +34,25 @@ public class StormTest {
 	
 	@Test
 	public void stormEffectsTest() {
-		destroyBarriersTest();
-		addDebrisTest();
+		EstuaryGame eg = new EstuaryGame();
+		GameController gc = new GameController(eg);
+		gc.startGame();
+		gc.getItems().addBarrier(new Barriers(1, 2, eBarrierType.Gabion));
+		gc.getItems().addBarrier(new Barriers(2, 2, eBarrierType.Gabion));
+		gc.getItems().addBarrier(new Barriers(3, 2, eBarrierType.Wall));
+		gc.getItems().addBarrier(new Barriers(4, 2, eBarrierType.EMPTY));
+		gc.getItems().addBarrier(new Barriers(5, 2, eBarrierType.Gabion));
+		gc.getItems().addBarrier(new Barriers(1, 2, eBarrierType.EMPTY));
+
+		int currDebris = gc.getItems().getAllDebris().size();
+		assertEquals(currDebris, 2);
+		
+		Storm.stormEffects(gc.getItems(), gc.getSpawnDebris());
+		//has 6 total barriers, 4 that are active, should destroy half of that -> 2 active leftover
+		assertEquals(gc.getItems().numActiveBarriers(), 2);
+		int afterStorm = gc.getItems().getAllDebris().size();
+		//current # debris = 2, after storm should be 7-12
+		assertTrue((afterStorm >= 7) && (afterStorm <= 12));
 	}
 	
 	@Test
