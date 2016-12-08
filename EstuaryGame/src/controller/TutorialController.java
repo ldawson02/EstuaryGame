@@ -172,7 +172,7 @@ public class TutorialController extends GameController {
 		focusCoast.getErosionTimer().start();
 		
 		DrawableItem arrow = new DrawableItem(EstuaryGame.mc.getGabionsSpawnR().getPosX(), EstuaryGame.mc.getGabionsSpawnR().getPosY(), 32, 50);
-		arrow.setStartandEnd(EstuaryGame.mc.getGabionsSpawnR().getPosX(), EstuaryGame.mc.getGabionsSpawnR().getPosY(), focusBarrierSpot.getPosX(), focusBarrierSpot.getPosY());
+		arrow.setStartandEnd(EstuaryGame.mc.getGabionsSpawnR().getPosX()+10, EstuaryGame.mc.getGabionsSpawnR().getPosY()+10, focusBarrierSpot.getPosX()+10, focusBarrierSpot.getPosY()+10);
 		t.setArrow(arrow);
 		
 		erosionTimers.add(focusBarrierSpot.getErosionTimer());
@@ -191,8 +191,8 @@ public class TutorialController extends GameController {
 		focusBarrierSpot.setErosionTimer(new Timer(erodeCallDelay, new erosion(focusBarrierSpot,focusCoast, 2000)));
 		focusBarrierSpot.getErosionTimer().start();
 		
-		DrawableItem arrow = new DrawableItem(EstuaryGame.mc.getWallSpawnR().getPosX(), EstuaryGame.mc.getGabionsSpawnR().getPosY(), 32, 50);
-		arrow.setStartandEnd(EstuaryGame.mc.getGabionsSpawnR().getPosX(), EstuaryGame.mc.getGabionsSpawnR().getPosY(), focusBarrierSpot.getPosX(), focusBarrierSpot.getPosY());
+		DrawableItem arrow = new DrawableItem(EstuaryGame.mc.getWallSpawnR().getPosX(), EstuaryGame.mc.getWallSpawnR().getPosY(), 32, 50);
+		arrow.setStartandEnd(EstuaryGame.mc.getWallSpawnR().getPosX()+10, EstuaryGame.mc.getWallSpawnR().getPosY()+10, focusBarrierSpot.getPosX()+10, focusBarrierSpot.getPosY()+10);
 		t.setArrow(arrow);
 		
 		erosionTimers.add(focusBarrierSpot.getErosionTimer());
