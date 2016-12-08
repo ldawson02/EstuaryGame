@@ -665,6 +665,9 @@ public class GameController implements Serializable {
 		public void removeAction(){
 			MovementController.walkMove(removeHelper);
 			removeHelper.addTime(floatDelay);
+			if(removeHelper.getState() == eHelperState.WALKING_OFF && removeHelper.getTimeInStage()==0){
+				removeHelper.getPower().power(items);
+			}
 			if(removeHelper.getState()==eHelperState.VOID){
 				items.deleteRemoveHelper();
 			}
