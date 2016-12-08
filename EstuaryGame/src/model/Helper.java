@@ -12,6 +12,7 @@ public class Helper extends Item {
 	private Debris toLift;
 	private int finalY;
 	private int timeInStage = 0;
+	private boolean right = true;
 	
 	public static final int defaultWidth = 67;
 	public static final int defaultHeight = 80;
@@ -23,6 +24,10 @@ public class Helper extends Item {
 		removeInstance = r;
 	}
 	
+	public boolean isRight(){
+		return right;
+	}
+	
 	public void setFinalY(ArrayList<Debris> debris){
 		int point = 600;
 		for(Debris d: debris){
@@ -30,11 +35,13 @@ public class Helper extends Item {
 				if(d.getPosY() < point){
 					point = d.getPosY();
 					toLift = d;
-					System.out.println("new minY = " + d.getPosY());
 				}
 			}
 		}
-		
+		if(toLift.getPosX()<=GameController.dimX/2){
+			right = false;
+			this.updatePosX(0);
+		}
 		this.finalY = point;
 	}
 	
@@ -72,7 +79,6 @@ public class Helper extends Item {
 	}
 	
 	public void walkCheck(){
-		System.out.println("walk checking, finalY = " + getFinalY());
 		if(this.getPosY()>this.getFinalY()){
 			nextState();
 		}

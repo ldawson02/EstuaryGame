@@ -132,6 +132,9 @@ public class MovementController {
 			h.updatePosY(h.getPosY()+move);
 		}
 		if(h.getState()==eHelperState.WALKING_OFF){
+			if(!h.isRight()){
+				move*=-1;
+			}
 			h.updatePosX(h.getPosX()+move);
 		}
 		
