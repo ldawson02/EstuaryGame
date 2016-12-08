@@ -56,6 +56,7 @@ public class GameController implements Serializable {
 	Action rightAct;
 	Action upAct;
 	Action downAct;
+	Action quitAct;
 	Action caughtLeftAct;
 	Action caughtRightAct;
 	Action throwAct;
@@ -128,6 +129,7 @@ public class GameController implements Serializable {
 		mainGame.bindKeyWith("x.right", KeyStroke.getKeyStroke("RIGHT"), rightAct);
 		mainGame.bindKeyWith("x.up", KeyStroke.getKeyStroke("UP"), upAct);
 		mainGame.bindKeyWith("x.down", KeyStroke.getKeyStroke("DOWN"), downAct);
+		mainGame.bindKeyWith("quit", KeyStroke.getKeyStroke("Q"), quitAct);
 	}
 	
 	public void serializationKeyBind() {
@@ -157,6 +159,7 @@ public class GameController implements Serializable {
 		rightAct = new HAction(1 * getMainPlayer().getSpeed());
 		upAct = new VAction(-1 * getMainPlayer().getSpeed());
 		downAct = new VAction(1 * getMainPlayer().getSpeed());
+		quitAct = new quitAction();
 		normalKeyBind();
 		
 		serializationKeyBind();
@@ -880,7 +883,16 @@ public class GameController implements Serializable {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			getMainPlayer().updatePosX(getMainPlayer().getPosX() + moveSize);
+			int next = getMainPlayer().getPosX() + moveSize;
+			if (next <= 0) {
+				getMainPlayer().updatePosX(0);
+			}
+			else if (next >= dimX) {
+				getMainPlayer().updatePosX(dimX);
+			}
+			else {
+				getMainPlayer().updatePosX(getMainPlayer().getPosX() + moveSize);
+			}
 		}
 		
 	}
@@ -900,9 +912,26 @@ public class GameController implements Serializable {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			getMainPlayer().updatePosY(getMainPlayer().getPosY()+moveSize);
+			int next = getMainPlayer().getPosY() + moveSize;
+			if (next <= 0) {
+				getMainPlayer().updatePosY(0);
+			}
+			else if (next >= dimY) {
+				getMainPlayer().updatePosY(dimY);
+			}
+			else {
+				getMainPlayer().updatePosY(getMainPlayer().getPosY()+moveSize);
+			}
 		}
 		
+	}
+	
+	public class quitAction extends AbstractAction {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.exit(0);
+		}
 	}
 	
 	//When the player catches Debris, left and right keys bind with this action
@@ -951,21 +980,6 @@ public class GameController implements Serializable {
 			items.getPlayer().setState(ePlayerState.Idle);
 		}
 		
-	}
-	
-	public Barriers collision(Rectangle r) {
-		/*
-		if ( ((x2 <= (x1+w1)) && (x2 >= x1)) //checking x left edge collisions
-				|| (((x2+w2) <= (x1+w1)) && ((x2+w2) >= x1)) //checking x right edge collisions
-				|| ((y2 <= (y1+h1)) && (y2 >= y1)) //checking y top edge collisions
-				|| (((y2+h2) <= (y1+h1)) && ((y2+h2) >= y1)) ) //checking y bottom edge collisions*/
-		for (Barriers b : this.items.getAllBarriers()) {
-			Rectangle barrier = new Rectangle(b.getPosX(), b.getPosY(), b.getWidth(), b.getHeight());
-			if (barrier.intersects(r))
-				return b;
-		}
-
-		return null;
 	}
 	
 	public void setBarrierType(Barriers barr, eBarrierType t) {
