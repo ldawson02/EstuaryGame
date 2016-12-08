@@ -1,10 +1,12 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.swing.Timer;
 
 import controller.GameController;
+import eNums.eBarrierState;
 import eNums.eBarrierType;
 
 /**
@@ -19,18 +21,39 @@ import eNums.eBarrierType;
  * 
  *
  */
-public class Barriers extends Item implements Interactable, HealthChangers{
+public class Barriers extends Item implements Serializable, Comparable<Barriers>{
 	private boolean protector = false;
-	private int decayTime = 7000;
 	//overall state of the barrier
-	private int health;
 	private eBarrierType type;
+	private eBarrierState state = eBarrierState.NO_HIT;
 	private Timer erosionTimer;
+	private static int barrierY = 525;
+	private static int leftEdge = 0;
+	private static int rightEdge = 750;
+	private static int spawnY = 390;
+	public static final int defaultHeight = 37;
+	public static final int defaultWidth = 45;
+	private static int offset = 50;
+
 	
-	private static int barrierY = 500;
 	
-	private static int leftEdge = 20;
-	private static int rightEdge = 740;
+	/**
+	 * Constructor for Barrier
+	 */
+	public Barriers(int x, int y){
+		super(x,y);
+		setWidth(defaultWidth);
+		setHeight(defaultHeight);
+		type = eBarrierType.EMPTY;
+	};
+	
+	public Barriers(int x, int y, eBarrierType t){
+		super(x,y);
+		setWidth(defaultWidth);
+		setHeight(defaultHeight);
+		type = t;
+	}
+	
 	
 	/**the getter for leftedge
 	 * 
@@ -47,35 +70,30 @@ public class Barriers extends Item implements Interactable, HealthChangers{
 	public static int getRightEdge() {
 		return rightEdge;
 	}
+	
+	public static int getSpawnY() {
+		return spawnY;
+	}
+	
 	/**
-	 * the getter for barrier
+	 * the getter the y value for all barriers
 	 * @return barriery
 	 */
 	public static int getBarrierY(){
 		return barrierY;
 	}
-	/**
-	 * Constructor for Barrier
-	 */
-	public Barriers(int x, int y){
-		super(x,y);
-		setWidth(40);
-		setHeight(20);
-		type = eBarrierType.EMPTY;
-	};
-	
-	public void build() {
-	}
-	public void decay(int time) {
-	}
-	public void crumble() {
-	}
-	
+
+
 	/**
 	 * the barrier will erode and then the barrier type will be empty.
 	 */
 	public void erode(){
 		this.setType(eBarrierType.EMPTY);
+		this.setState(eBarrierState.NO_HIT);
+	}
+	
+	public void erodeHalf(){
+		this.setState(eBarrierState.ONE_HIT);
 	}
 
 	/**
@@ -83,25 +101,9 @@ public class Barriers extends Item implements Interactable, HealthChangers{
 	 * @return decaytime;
 	 */
 	public int getDecayTime() {
-		return decayTime;
+		return this.getType().getDecay();
 	}
-
-	public void setDecayTime(int decayTime) {
-		this.decayTime = decayTime;
-	}
-
-	/**
-	 * the getter and setter for health
-	 * @return health
-	 */
-	public int getHealth() {
-		return health;
-	}
-
-	public void setHealth(int health) {
-		this.health = health;
-	}
-
+	
 	/**
 	 * the getter and setter for type
 	 * @return type
@@ -112,19 +114,17 @@ public class Barriers extends Item implements Interactable, HealthChangers{
 
 	public void setType(eBarrierType type) {
 		this.type = type;
+		this.setState(eBarrierState.NO_HIT);
 	}
 
-	@Override
-	public void updateHealthBar() {
-		// TODO Auto-generated method stub
-		
+	public eBarrierState getState(){
+		return state;
+	}
+	
+	public void setState(eBarrierState s){
+		state = s;
 	}
 
-	@Override
-	public void PlayerCollision(Item item) {
-		// TODO Auto-generated method stub
-		
-	}
 	/**
 	 * we set up the left coast, when the loop less than 5, the space will add barrier in left
 	 * @return spaces.
@@ -133,7 +133,7 @@ public class Barriers extends Item implements Interactable, HealthChangers{
 		ArrayList<Barriers> spaces = new ArrayList<Barriers>();
 		
 		for (int i = 0; i < 5; i++) {
-			spaces.add(new Barriers(leftEdge+50*i, barrierY));
+			spaces.add(new Barriers(leftEdge+offset*i, barrierY));
 		}
 		
 		return spaces;
@@ -145,23 +145,12 @@ public class Barriers extends Item implements Interactable, HealthChangers{
 	public static ArrayList<Barriers> setUpRightCoast() {
 		ArrayList<Barriers> spaces = new ArrayList<Barriers>();
 		
+		int leftestRightCoast = rightEdge - (offset * 4);
 		for (int i = 0; i < 5; i++) {
-			spaces.add(new Barriers(rightEdge-50*i, barrierY));
+			spaces.add(new Barriers(leftestRightCoast + offset*i, barrierY));
 		}
 		
 		return spaces;
-	}
-	/**
-	 * set up the barrier type, we goes through list of barriers and changes the one with the matching coords to type t, if matches, set the type to t
-	 * @param barr
-	 * @param t
-	 */
-	public static void setBarrierType(Barriers barr, eBarrierType t) {
-		//goes through list of barriers and changes the one with the matching coords to type t
-		for (Barriers b : GameController.getItems().getAllBarriers()) {
-			if (barr.getPosX() == b.getPosX()) //"match"
-				b.setType(t);
-		}
 	}
 
 	public boolean isProtector() {
@@ -179,16 +168,24 @@ public class Barriers extends Item implements Interactable, HealthChangers{
  * get the erosion timer
  * @return erosiontimer;
  */
-	public Timer geterosionTimer() {
+	public Timer getErosionTimer() {
 		return erosionTimer;
 	}
 
 	/** 
-	 * set the btimer
+	 * set the erosion timer
 	 * @param bTimer
 	 */
-	public void setbTimer(Timer bTimer) {
+	public void setErosionTimer(Timer bTimer) {
 		this.erosionTimer = bTimer;
 	}
 
+	
+	/**
+	 * Custom comparator to sort Barriers from left to right
+	 */
+	@Override
+	public int compareTo(Barriers b) {
+		return this.getPosX() - b.getPosX();
+	}
 }

@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.swing.Timer;
@@ -20,34 +21,22 @@ import eNums.eCoastState;
  * @author megan
  *
  */
-public class Coast extends Item implements HealthChangers{
+public class Coast extends Item implements Serializable{
 
-	/**
-	 * The current size of the coast
-	 */
-	private int size;
-	
-	/**
-	 * The minimum size of the coast
-	 */
-	private int minsize;
-	
+	private int coastID;
 	/**
 	 * The maximum size of the coast
 	 */
-	private int maxsize;
-	private int height = 30;
+	private int height = 150;
 	private int width = 50;
 	/**
 	 * The rate at which it erodes
 	 */
-	private double erosionRate = 10000;
+	private int erosionRate = 10000;
 	
 	private Barriers barrier;
 	private Timer erosionTimer;
-	/**
-	 * The Debris items on the coast
-	 */
+	
 	private ArrayList<Barriers> barriers;
 	private eCoastState state = eCoastState.NO_HIT;
 	
@@ -94,47 +83,9 @@ public class Coast extends Item implements HealthChangers{
 	public void setBarrier(Barriers b){
 		this.barrier = b;
 	}
-	/**
-	 * @return the size
-	 */
-	public int getSize() {
-		return size;
-	}
+	
 
-	/**
-	 * @param size the size to set
-	 */
-	public void setSize(int size) {
-		this.size = size;
-	}
 
-	/**
-	 * @return the minsize
-	 */
-	public int getMinsize() {
-		return minsize;
-	}
-
-	/**
-	 * @param minsize the minsize to set
-	 */
-	public void setMinsize(int minsize) {
-		this.minsize = minsize;
-	}
-
-	/**
-	 * @return the maxsize
-	 */
-	public int getMaxsize() {
-		return maxsize;
-	}
-
-	/**
-	 * @param maxsize the maxsize to set
-	 */
-	public void setMaxsize(int maxsize) {
-		this.maxsize = maxsize;
-	}
 
 	/**
 	 * @return the erosionRate
@@ -146,13 +97,9 @@ public class Coast extends Item implements HealthChangers{
 	/**
 	 * @param erosionRate the erosionRate to set
 	 */
-	public void setErosionRate(double erosionRate) {
+	public void setErosionRate(int erosionRate) {
 		this.erosionRate = erosionRate;
 	}
-
-	/**
-	 * @return the buildUp
-	 */
 	
 	/**
 	 * @return the barrierSpaces
@@ -161,19 +108,6 @@ public class Coast extends Item implements HealthChangers{
 		return barriers;
 	}
 
-	/**
-	 * @param barrierSpaces the barrierSpaces to set
-	 */
-	public void setBarrierSpaces(ArrayList<Barriers> barriers) {
-		this.barriers = barriers;
-	}
-	
-	/*
-	 * for CoastL and CoastR, get all the debris items
-	public ArrayList<Debris> getBuildUp() {
-		return ArrayList<Debris>();
-	}
-	*/
 
 	/**
 	 * Decreases the size of the coast by one, if possible
@@ -193,7 +127,8 @@ public class Coast extends Item implements HealthChangers{
 	 * Changes the erosion rate by the specified amount
 	 * @param amount
 	 */
-	public void changeErosionRate(double amount) {
+	public void changeErosionRate(int amount) {
+		this.erosionRate = this.erosionRate + amount;
 		
 	}
 	/**
@@ -218,13 +153,17 @@ public class Coast extends Item implements HealthChangers{
 	public static ArrayList<Coast> setUpLeftCoast(ArrayList<Barriers> barriers) {
 		ArrayList<Coast> spaces = new ArrayList<Coast>();
 		
+		int ID = 1;
 		for (Barriers b : barriers) {
-			Coast c  =new Coast(b.getPosX(), Barriers.getBarrierY()-30);
+			Coast c  =new Coast(b.getPosX(), Barriers.getBarrierY()-75);
 			c.setBarrier(b);
+			c.setCoastID(ID);
 			spaces.add(c);
+			ID++;
 		}
 		
 		return spaces;
+		
 	}
 	/**
 	 * set up the right coast, add the coast to the space
@@ -234,20 +173,19 @@ public class Coast extends Item implements HealthChangers{
 	public static ArrayList<Coast> setUpRightCoast(ArrayList<Barriers> barriers) {
 		ArrayList<Coast> spaces = new ArrayList<Coast>();
 		
+		int ID = 6;
 		for (Barriers b : barriers) {
-			Coast c = new Coast(b.getPosX(), Barriers.getBarrierY()-30);
+			Coast c = new Coast(b.getPosX(), Barriers.getBarrierY()-75);
 			c.setBarrier(b);
+			c.setCoastID(ID);
 			spaces.add(c);
+			ID++;
 		}
 		
 		return spaces;
 	}
 
-	@Override
-	public void updateHealthBar() {
-		// TODO Auto-generated method stub
-		
-	}
+
 /** 
  * get and set the state
  * @return state;
@@ -270,4 +208,19 @@ public class Coast extends Item implements HealthChangers{
 	public void setErosionTimer(Timer erosionTimer) {
 		this.erosionTimer = erosionTimer;
 	}
+
+	/**
+	 * @return the coastID
+	 */
+	public int getCoastID() {
+		return coastID;
+	}
+
+	/**
+	 * @param coastID the coastID to set
+	 */
+	public void setCoastID(int coastID) {
+		this.coastID = coastID;
+	}
+
 }

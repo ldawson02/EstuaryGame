@@ -2,37 +2,30 @@ package test.model;
 
 import static org.junit.Assert.*;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import controller.GameController;
 import eNums.eScreenTimerState;
 import model.ScreenTimer;
+import view.EstuaryGame;
 
 public class ScreenTimerTest {
 
-	ScreenTimer timer;
+	static ScreenTimer timer;
+	static GameController gc;
 	
 	@BeforeClass
-	public void setUpBeforeClass() throws Exception {
+	public static void setUpBeforeClass() throws Exception {
 		timer = new ScreenTimer();
-	}
-
-	@AfterClass
-	public void tearDownAfterClass() throws Exception {
+		gc = new GameController(new EstuaryGame());
 	}
 
 	@Before
 	public void setUp() throws Exception {
 		timer.setState(eScreenTimerState.OFF);
 	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
-
 	@Test
 	public void testFreeze() {
 		assertEquals(timer.getState(), eScreenTimerState.OFF);
@@ -54,4 +47,37 @@ public class ScreenTimerTest {
 		timer.endGame();
 		assertEquals(timer.getState(), eScreenTimerState.OFF);
 	}
+	
+	@Test
+	public void testUpdateRemaining() {
+		timer.setElapsedTime(10000);
+		timer.updateRemaining();
+		assertEquals(timer.getTimeRemaining(), timer.getMaxTime() - timer.getElapsedTime());
+		timer.setElapsedTime(timer.getMaxTime()+1000);
+		timer.updateRemaining();
+		assertTrue(timer.getState() == eScreenTimerState.OFF);
+		timer.start();
+		timer.setElapsedTime(timer.getMaxTime());
+		timer.updateRemaining();
+		assertTrue(timer.getState() == eScreenTimerState.OFF);
+		
+	}
+	
+	@Test
+	public void testGameTimer(){
+		assertNotNull(gc.getItems().getScreenTimer());
+		assertTrue(gc.getItems().getScreenTimer().getState() == eScreenTimerState.ON);
+	
+	}
+	
+	@Test
+	public void testSetandGetDoublePositionXandY(){
+		timer.setDoublePosX(100);
+		assertTrue(timer.getDoublePosX() == 100);
+		timer.setDoublePosY(500);
+		assertTrue(timer.getDoublePosY() == 500);
+		
+	}
+	
+
 }

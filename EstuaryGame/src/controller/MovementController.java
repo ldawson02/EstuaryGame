@@ -4,15 +4,23 @@ import java.util.Random;
 
 import eNums.eDebrisType;
 import eNums.eFloaterState;
+import eNums.eHelperState;
 import model.Bin;
 import model.Floater;
+import model.Helper;
 import model.Rebuild;
 import model.Remove;
 
 public class MovementController {
 	static int windowHeight = 600;
 	static int windowWidth = 800;
-	static int sizeofDebrisCoast = 50; 
+	static int sizeofDebrisCoast = 50;
+	
+	/**
+	 * get a start position
+	 * @param shift
+	 * @return
+	 */
 	public static int getStart(int shift){
 		int xstart = 0;
 		if(shift <= windowWidth/2){
@@ -23,7 +31,10 @@ public class MovementController {
 		}
 		return xstart;	
 	}
-	
+	/**
+	 * update the move position 
+	 * @param floater
+	 */
 	public static void move(Floater floater){
 		if(floater.getState()==eFloaterState.RESTING){
 			return;
@@ -68,7 +79,11 @@ public class MovementController {
 		
 	}
 	
-
+/**
+ * when the trash or things has to go to the bin, the position set up s
+ * @param f
+ * @param b
+ */
 	
 	public static void Throw(Floater f, Bin b){
 			//System.out.println("bin" + b.getPosX());
@@ -86,7 +101,10 @@ public class MovementController {
 			
 		
 	}
-	
+	/**
+	 * When things has a wrong bin move, reset the position
+	 * @param f
+	 */
 	public static void wrongBinMove(Floater f){
 		double deltaX;
 		if(f.getPosX() < windowWidth/2){
@@ -107,4 +125,19 @@ public class MovementController {
 			f.setState(eFloaterState.RESTING);
 		}
 	}
+	
+	public static void walkMove(Helper h){
+		int move = 8;
+		if(h.getState()==eHelperState.WALKING){
+			h.updatePosY(h.getPosY()+move);
+		}
+		if(h.getState()==eHelperState.WALKING_OFF){
+			if(!h.isRight()){
+				move*=-1;
+			}
+			h.updatePosX(h.getPosX()+move);
+		}
+		
+	}
+		
 }

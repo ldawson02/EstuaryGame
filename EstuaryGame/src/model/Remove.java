@@ -1,74 +1,53 @@
 package model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+
 import controller.ActiveItems;
+import eNums.eBarrierType;
 import eNums.eFloaterState;
 
-public class Remove extends Powers {
+public class Remove extends Powers implements Serializable{
 	
 	private int vertex;
 	
-	/**
-	 * construct a remove function
-	 * @param x
-	 * @param y
-	 */
 	public Remove(int x, int y){
 		super(x,y);
 	};
 	
-
-	@Override
-	public void floating() {
-		// TODO Auto-generated method stub
-		
+	public Remove(){
+		super();
 	}
 
-	/**
-	 * 
-	 * set the state to lifted
-	 */
+
 	@Override
 	public void catching() {
 		this.setState(eFloaterState.LIFTED);
-		/*
-		// TODO Auto-generated method stub
-		for (Debris d : ActiveItems.debris){
-			ActiveItems.debris.remove(d);	
-		}
-		*/
 	}
 
-	@Override
-	public void appear() {
-		// TODO Auto-generated method stub
-		//ActiveItems.powerups.add(this);
-		
-	}
-
-	@Override
-	public void disappear() {
-		// TODO Auto-generated method stub
-		//ActiveItems.powerups.remove(this);
-	}
-
-
-	@Override
-	public void PlayerCollision(Item item) {
-		// TODO Auto-generated method stub
-		
-	}
-
-/**
- * get and set the vertex
- */
-	@Override
-	public int getVertex() {
-		return vertex;
-	}
 	
-	@Override
-	public void setVertex(int vertex) {
-		this.vertex = vertex;
+
+	public static void power(ActiveItems items){
+		//ArrayList<Debris> debris = items.getAllDebris();
+
+		items.removeAllRestingDebris();
+		
+		/**int empty = 0;
+		ArrayList<Debris> dEmpty = new ArrayList<Debris>();
+		for(Item i : debris){
+			Debris d = (Debris)i; 
+			if(d.getState()==eFloaterState.RESTING){
+				dEmpty.add(d);
+				empty++;
+			}
+		}
+		int add =empty;
+		Collections.shuffle(dEmpty);
+		for(int i = 0; i < add; i++){
+			dEmpty.remove(i);
+		}**/
 	}
+
 
 }

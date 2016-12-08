@@ -14,6 +14,10 @@ public class ScoreController {
 		return score;
 	}
 	
+	public static void setScore(int s) {
+		score = s;
+	}
+	
 	public static void scoreStorm() {
 		score = score + livedStorm;
 	}
@@ -34,8 +38,12 @@ public class ScoreController {
 		score = score + gotPower;
 	}
 	
-	
+	public static void scoreHealth(int currHealth){
+		score = score + currHealth;
+	}
 	
 	//add more complex scoring w/ difficulty, etc.
-
+	public static void scoreDifficulty(int diff){
+		score = score + 2*diff;
+	}
 }

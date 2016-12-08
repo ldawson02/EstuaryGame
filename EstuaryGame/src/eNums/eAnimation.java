@@ -2,6 +2,7 @@ package eNums;
 
 /**
  * Mapping out all the different animations and images used.
+ * Instead of an int, the String is the file path.
  * Must be mapped here to be loaded into ImageLibrary.
  * 
  * @author Ian
@@ -9,6 +10,7 @@ package eNums;
  * @since 11/16/2016
  *
  */
+
 public enum eAnimation {
 	background("background"),
 	clockback("clockback"),
@@ -25,7 +27,19 @@ public enum eAnimation {
 	remove("remove"),
 	removeLift("removelift"),
 	rebuild("rebuild"),
+	fullGabion("fullgab"),
+	halfGabion("halfgab"),
+	fullWall("fullwall"),
+	halfWall("halfwall"),
+	helperWalk("helperwalk"),
+	helperPickUp("helperpickup"),
+	helperLift("helperlift"),
+	helperWalkRight("helperwalkright"),
 	gameOver("gameOver"),
+	clockArrow("clockarrow"),
+	healthArrow("healtharrow"),
+	spotlight("spotlight"),
+	hammer("hammer"),
 	error("error");
 	
 	private String folderName;
@@ -34,6 +48,10 @@ public enum eAnimation {
 		this.folderName = folder;
 	}
 	
+	/**
+	 * get the path
+	 * @return foldername;
+	 */
 	public String getPath() {
 		return folderName;
 	}

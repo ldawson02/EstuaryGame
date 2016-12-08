@@ -2,6 +2,7 @@ package model;
 
 import eNums.eFloaterState;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -17,13 +18,13 @@ import eNums.eThrowDirection;
  * @since 10/25/16
  */
 
-public class Debris extends Floater{
+public class Debris extends Floater implements Serializable {
 
 	private eDebrisType type;
 	private eFloaterState state;
 	private boolean correctBin;
 	private eThrowDirection throwDir = eThrowDirection.LEFT;
-	private GameController gc;
+	ArrayList<Bin> LR;
 	
 	/**
 	 * Private no-arg constructor to prevent creating a debris item without
@@ -31,24 +32,18 @@ public class Debris extends Floater{
 	 */
 	private Debris() {
 		super();
+		this.state = eFloaterState.MOVING;
 	}
 	public Debris(int x, int y){
 		super(x,y);
+		this.state = eFloaterState.MOVING;
 		
 	};
 	public Debris(eDebrisType etype) {
 		super();
 		this.type = etype;
 		this.state = eFloaterState.MOVING; // Moving by default on creation
-	}
-	
-	//This is only connected when the Debris has been caught
-	/**
-	 * set the controller
-	 * @param game
-	 */
-	public void setController(GameController game){
-		this.gc = game;
+		LR = new ArrayList<Bin>();
 	}
 	
 	/**
@@ -87,10 +82,6 @@ public class Debris extends Floater{
  * @return true or false
  */
 	public boolean getCorrectBin() {
-		/**
-		 * I don't understand how whether it was the correct bin was working before
-		 * so I'm rewriting it here
-		 */
 		
 		if (this.throwDir.getDirection() == this.type.getType()) {
 			return true;
@@ -99,33 +90,21 @@ public class Debris extends Floater{
 			return false;
 		}
 		
-		//return this.correctBin;
 	}
-	/**
-	 * set the correct bin
-	 * @param correctBin
-	 */
-	public void setCorrectBin(eDebrisType correctBin) {
-		if (getType() == correctBin) 
-			this.correctBin = true;
-		else 
-			this.correctBin = false;
-	}
+
 /**
- * getter for bin,Put recycle in first, then trash,if they throw Left return Left-most bin,else return right bin
+ * Get the bin in the throw direction
  * @return
  */
-	public Bin getBin(){
-		ArrayList<Bin> LR = new ArrayList<Bin>();
-		//Put recycle in first, then trash
-		LR.add(gc.getItems().getRecycleBin());
-		LR.add(gc.getItems().getTrashBin());
-		
+	public void setBins(Bin recyc, Bin trash) {
+		LR.add(recyc);
+		LR.add(trash);
 		if(LR.get(0).getPosX() > LR.get(1).getPosX()){
 			Collections.reverse(LR);
 		}
-
-		
+	}
+	
+	public Bin getBin(){
 		//if they throw Left return Left-most bin
 		if(throwDir==eThrowDirection.LEFT){
 			return LR.get(0);
@@ -152,36 +131,6 @@ public class Debris extends Floater{
 		return throwDir;
 	}
 	
-	/**
-	 * Throws debris that is trash to the left and recyclable debris to the right
-	 * @return
-	 */
-	
-	public void throwDebris(boolean cBin) {
-		correctBin = cBin;
-		if(getType() == eDebrisType.TRASH){
-			setThrowDirection(eThrowDirection.LEFT);
-		}else{
-			setThrowDirection(eThrowDirection.RIGHT);
-		}
-		
-		if(!correctBin){
-			setThrowDirection(this.getThrowDirection().opposite());
-		}
-		
-		this.setState(eFloaterState.THROWING);
-	}
-	
-
-	public void wrongBinAction(){
-		
-	}
-
-	@Override
-	public void floating() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void catching() {

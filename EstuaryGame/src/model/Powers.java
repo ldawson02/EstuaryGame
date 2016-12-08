@@ -1,5 +1,9 @@
 package model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+
+import controller.ActiveItems;
 import controller.GameController;
 
 /**
@@ -9,7 +13,7 @@ import controller.GameController;
  * @since 10/26/16
  */
 
-public abstract class Powers extends Floater implements Interactable {
+public abstract class Powers extends Floater implements Serializable{
 	
 	/**
 	 * construct powers
@@ -19,7 +23,9 @@ public abstract class Powers extends Floater implements Interactable {
 	public Powers(int x, int y){
 		super(x,y);
 	};
+	public Powers(){
+		super();
+	}
 	
-	public abstract void appear();
-	public abstract void disappear();
+	//public abstract void power(ActiveItems items);
 }

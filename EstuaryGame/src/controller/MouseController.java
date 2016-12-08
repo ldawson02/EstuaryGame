@@ -9,48 +9,106 @@ import javax.swing.JPanel;
 
 import eNums.eBarrierType;
 import model.Barriers;
-import model.Gabions;
-import model.Wall;
+
 
 	public class MouseController extends JPanel implements MouseListener, MouseMotionListener {
 		
 		private GameController gc;
 
-		boolean dragging = false;
-		private Wall wallSpawn = new Wall(Barriers.getLeftEdge(), 390);
-		private Gabions gabionsSpawn = new Gabions(Barriers.getRightEdge(), 390);
+		boolean dragging = false; 
+		private Barriers wallSpawnL = new Barriers(Barriers.getLeftEdge(), Barriers.getSpawnY(), eBarrierType.Wall);
+		private Barriers wallSpawnR = new Barriers(Barriers.getRightEdge(), Barriers.getSpawnY(), eBarrierType.Wall);
+		private Barriers gabionsSpawnL = new Barriers(Barriers.getLeftEdge(), 
+				Barriers.getSpawnY()+Barriers.defaultHeight, eBarrierType.Gabion);
+		private Barriers gabionsSpawnR = new Barriers(Barriers.getRightEdge(), 
+				Barriers.getSpawnY()+Barriers.defaultHeight, eBarrierType.Gabion);
 		private Barriers dragged = null;
 		private Barriers dropSpot = null;
+		private boolean wallSpawnable = true;
+		private boolean gabionSpawnable = true;
 				
-		public Barriers getWallSpawn() {
-			return wallSpawn;
+		/**
+		 * left wall spawn getter
+		 * @return wallSpawnL
+		 */
+		public Barriers getWallSpawnL() {
+			return wallSpawnL;
 		}
 		
-		public Barriers getGabionsSpawn() {
-			return gabionsSpawn;
+		/**
+		 * right wall spawn getter
+		 * @return wallSpawnR
+		 */
+		public Barriers getWallSpawnR() {
+			return wallSpawnR;
 		}
 		
+		/**
+		 * left gabion spawn getter
+		 * @return gabionsSpawnL
+		 */
+		public Barriers getGabionsSpawnL() {
+			return gabionsSpawnL;
+		}
+		
+		/**
+		 * right gabion spawn getter
+		 * @return gabionsSpawnR
+		 */
+		public Barriers getGabionsSpawnR() {
+			return gabionsSpawnR;
+		}
+		/**
+		 * getter for barrier that is getting dragged
+		 * @return dragged
+		 */
 		public Barriers getDragged() {
 			return dragged;
 		}
 		
+		/**
+		 * GAME CONTROLLER SETTER
+		 * @param g
+		 */
 		public void setGC(GameController g) {
 			this.gc = g;
 		}
 		
+		/**
+		 * sets whether the wall spawn can spawn
+		 * @param b
+		 */
+		public void setWallSpawnable(boolean b){
+			wallSpawnable = b;
+		}
+		
+		/**
+		 * sets whether the gabion spawn can spawn
+		 * @param b
+		 */
+		public void setGabionSpawnable(boolean b){
+			gabionSpawnable = b;
+		}
+		
+		/**
+		 * this method is to see after the mouse pressed, if is within the bounds of a spawn
+		 * if so, it will set the mouse to dragging
+		 */
 		@Override
 		public void mousePressed(MouseEvent e) {
 			Point mouseCoords = new Point(e.getX(), e.getY());
 			
 			if (dragged == null) {	//the dragged "barrier" is not set yet
 				System.out.println("Mouse: " + mouseCoords.x + " " + mouseCoords.y);
-				if (Collisions.pointInside(wallSpawn, mouseCoords)) {
+				if (wallSpawnable && ((Collisions.pointInside(wallSpawnL, mouseCoords))
+						|| (Collisions.pointInside(wallSpawnR, mouseCoords)))) {
 					dragged = new Barriers(e.getX(), e.getY()); //set it to the same coords as mouse click
 					dragged.setType(eBarrierType.Wall);  //set type to wall
 					//System.out.println("inside wallspawn: " + dragged.getPosX() + " "+ dragged.getPosY());
 
 				}
-				else if (Collisions.pointInside(gabionsSpawn, mouseCoords)) {
+				else if (gabionSpawnable && ((Collisions.pointInside(gabionsSpawnL, mouseCoords))
+						|| (Collisions.pointInside(gabionsSpawnR, mouseCoords)))) {
 					dragged = new Barriers(e.getX(), e.getY()); //set it to the same coords as mouse click
 					dragged.setType(eBarrierType.Gabion);  //set type to gabion
 					//System.out.println("inside gabionspawn: " + dragged.getPosX() + " "+ dragged.getPosY());
@@ -59,64 +117,54 @@ import model.Wall;
 				dragging = true; //mouse is being dragged now
 			}
 			repaint();
-			System.out.println("pressed");
+			//System.out.println("pressed");
 
 		}
 
+		/**
+		 * once the mouse is released, if it was dragging a barrier and is placed in an empty
+		 * barrier spot, the spot will change to the correct type
+		 */
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			
-			
-			if (dragging == false)
+			if(dragged == null){
 				return;
+			}
+			if (dragging == false) {
+				return;
+			}
 			dragging = false;
 			dropSpot = gc.emptyBarrierCollision(dragged);
+			System.out.println("dragged: " + dragged.getPosX());
+			if (dropSpot != null)
+				System.out.println("dropspot: " + dropSpot.getPosX());
+			System.out.println("mouse coord: " + e.getX());
 			if ((dragged != null) && (dropSpot!=null)) {  //dragged temp to any of the barrier spaces that was empty
 				System.out.println("new barrier");
 				if (dragged.getType() == eBarrierType.Wall) {
 					gc.setBarrierType(dragged, eBarrierType.Wall); 
 					dropSpot.setType(eBarrierType.Wall);
-					dropSpot.geterosionTimer().start();
+					dropSpot.getErosionTimer().start();
 					ScoreController.scoreWall();
 					//set barrier with same coords as temp to Wall
 				}
 				else if (dragged.getType() == eBarrierType.Gabion) {
 					gc.setBarrierType(dragged, eBarrierType.Gabion);
 					dropSpot.setType(eBarrierType.Gabion);
-					dropSpot.geterosionTimer().start();
+					dropSpot.getErosionTimer().start();
 					ScoreController.scoreGabion();
 				}
 			}
 			dragged = null; //done dragging, don't need dragging shape
-			repaint();
-			// TODO Auto-generated method stub
-			
-			
-			/*
-			Point mouseCoords = new Point(e.getX(), e.getY());
-			
-			if (dragging == false)
-				return;
-			dragging = false;
-			
-			if (dragged != null) {
-				System.out.println(mouseCoords);
-				if ((dragged.getType() == eBarrierType.Wall) && (Collisions.pointInside(wallSpawn, mouseCoords))) {
-					gc.setBarrierType(dragged, eBarrierType.Wall);
-				}
-				else if ((dragged.getType() == eBarrierType.Gabion) && (Collisions.pointInside(gabionsSpawn, mouseCoords))) {
-					gc.setBarrierType(dragged, eBarrierType.Gabion);
-				}
-			}
-			dragged = null; //done dragging, don't need dragging shape
-			repaint();
-			// TODO Auto-generated method stub*/
-
 		}
 		
 
 
 		@Override
+		/**
+		 * If mouse dragged, the position of the dragged barrier is updated.
+		 */
 		public void mouseDragged(MouseEvent e) {
 			if (dragging == false)
 				return;
@@ -124,7 +172,6 @@ import model.Wall;
 			if (dragged != null) {
 				dragged.updatePos(e.getX() - dragged.getWidth()/2, e.getY() - dragged.getHeight()/2);
 			}
-			repaint();
 		}
 		
 		//methods not needed to implement

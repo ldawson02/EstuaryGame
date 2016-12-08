@@ -11,12 +11,18 @@ public class DebrisWrapper {
 	
 	private DebrisWrapper(){};
 	
+	/**
+	 * construct the debris wrapper
+	 * @param item
+	 * @param shape
+	 */
 	DebrisWrapper(Debris item, Ellipse2D.Double shape) {
 		debrisItem = item;
 		hitBox = shape;
 	}
 	
 	/**
+	 * get the hit box
 	 * @return the hitBox
 	 */
 	public Ellipse2D.Double getHitBox() {
@@ -44,6 +50,9 @@ public class DebrisWrapper {
 		this.debrisItem = debrisItem;
 	}
 
+	/**
+	 * update the hitbox's coordinates
+	 */
 	public void updateCoords() {
 		hitBox.x = debrisItem.getPosX();
 		hitBox.y = debrisItem.getPosY();

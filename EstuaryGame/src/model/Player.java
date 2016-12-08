@@ -1,18 +1,24 @@
 package model;
 
+import java.io.Serializable;
+
 import eNums.ePlayerState;
 
-public class Player extends Item implements Movers {
+public class Player extends Item implements Serializable{
 
 	public int speed = 10;
 	public ePlayerState state;
+	public static final int idleHeight = 60;
+	public static final int defaultWidth = 120;
+	public static final int liftingHeight = 72;
 	
 	/**
 	 * construct a player in specific height, width and state.
 	 */
 	public Player(){
-		this.setHeight(60);
-		this.setWidth(120);
+		super();
+		super.setHeight(idleHeight);
+		super.setWidth(defaultWidth);
 		this.setState(ePlayerState.Idle);
 	}
 	
@@ -45,24 +51,15 @@ public class Player extends Item implements Movers {
 		this.state = state;
 		
 		if (state == ePlayerState.Idle) {
-			this.setHeight(60);
-			this.setWidth(120);
+			this.setHeight(idleHeight);
+			this.setWidth(defaultWidth);
 		}
 		else if (state == ePlayerState.Lifting) {
-			this.setHeight(72);
-			this.setWidth(120);
+			this.setHeight(liftingHeight);
+			this.setWidth(defaultWidth);
 		}
 		
 	}
 
-	@Override
-	public void move() {
-		// TODO Auto-generated method stub
 
-	}
-		
-	public void buildGabion(){};
-	public void buildWall(){};
-	public void pickUpDebris(){};
-	public void throwDebris(Debris d){};
 }

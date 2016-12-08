@@ -1,5 +1,7 @@
 package model;
 
+import java.io.Serializable;
+
 import eNums.eFloaterState;
 
 /**
@@ -14,15 +16,18 @@ import eNums.eFloaterState;
  * @author Pu
  *
  */
-public abstract class Floater extends Item {
-	private int speed = 3;
+public abstract class Floater extends Item implements Serializable {
+	private int speed = 1;
 	private int vertex;
 	private eFloaterState state = eFloaterState.MOVING;
 	
+	public static final int defaultWidth = 40;
+	public static final int defaultHeight = 40;
+	
 	public Floater(){
 		super();
-		setWidth(40);
-		setHeight(40);
+		setWidth(defaultWidth);
+		setHeight(defaultHeight);
 		this.state = eFloaterState.MOVING;
 	}
 	/**
@@ -36,7 +41,7 @@ public abstract class Floater extends Item {
 		setHeight(40);
 		this.state = eFloaterState.MOVING;
 	};
-	public abstract void floating();
+
 	public abstract void catching();
 	
 	/**
@@ -58,12 +63,6 @@ public abstract class Floater extends Item {
 	 * @param e
 	 */
 	public void setState(eFloaterState e){
-		//TODO: make sure you cant set illegal instances
-		/*
-		if (this instanceof Powers && e.getState()>2){
-			throw IllegalStateException;
-		}
-		*/
 		this.state = e;
 	}
 	

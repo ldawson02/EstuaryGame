@@ -7,14 +7,25 @@ import java.awt.CardLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 import javax.swing.Timer;
+
+import Serialization.Controller.CleanUpSerializeAction;
+import Serialization.Controller.ReadSerializeAction;
+import Serialization.Controller.SerializeAction;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -24,28 +35,28 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
 import controller.*;
+import eNums.eBarrierState;
 import eNums.eBarrierType;
 import eNums.eDebrisType;
+import eNums.eDifficulty;
 import eNums.eFloaterState;
 import eNums.eHealthChanges;
+import eNums.eHelperState;
 import eNums.ePlayerState;
 import eNums.eScreenTimerState;
 import eNums.eThrowDirection;
+import eNums.eTutorialState;
 
-public class GameController {
+public class GameController implements Serializable {
 
 	//the big shebang
-	private EstuaryGame mainGame;
-	Player mainPlayer;
-	private static ActiveItems items = new ActiveItems();
-	private ImageLibrary library;
-	Action leftAct;
-	Action rightAct;
-	Action upAct;
-	Action downAct;
-	Action caughtLeftAct;
-	Action caughtRightAct;
-	Action throwAct;
+	private static EstuaryGame mainGame;
+	private Player mainPlayer;
+	private ActiveItems items = new ActiveItems();
+	
+	public final static int dimX = 800;
+	public final static int dimY = 600;
+	
 	//Makes sure you can only catch one Floater at a time
 	private boolean choosingThrow = false;
 	private boolean initiatingPowerUp = false;
@@ -54,22 +65,23 @@ public class GameController {
 	Timer powersFloating;
 	final private int erodeDelay = 100;//TODO
 	
-	Timer coastRErosion;
-	Timer coastLErosion;
-	private GameController thisGame = this;
+	GameController thisGame = this;
 	private ArrayList<Timer> allTimers = new ArrayList<Timer>();
+	private ArrayList<Timer> tutorialTimers = new ArrayList<Timer>();
 	
-	final private int paintDelay = 30;
+	protected final int paintDelay = 30;
 	Timer theBigTimer;
+	mainTimer paintTimer;
 	private int timeElapsed = 0;
 	
 	spawnDebris debrisMover;
 	spawnPowers powerMover;
-	erosion RcoastMover;
-	erosion LcoastMover;
+	
+	eDifficulty difficulty = eDifficulty.MEDIUM;
+	//erosion RcoastMover;
+	//erosion LcoastMover;
 	
 	private boolean gameEnd;
-	
 	Collisions collision = new Collisions();
 		
 	public GameController(EstuaryGame mainGame){
@@ -85,7 +97,7 @@ public class GameController {
 		this.mainGame = mainGame;
 	}
 
-	public static ActiveItems getItems() {
+	public ActiveItems getItems() {
 		return items;
 	}
 
@@ -101,34 +113,48 @@ public class GameController {
 		return timeElapsed;
 	}
 	
+	public spawnDebris getSpawnDebris() {
+		return debrisMover;
+	}
 
 	public void normalKeyBind(){
-		mainGame.bindKeyWith("x.left", KeyStroke.getKeyStroke("LEFT"), leftAct);
-		mainGame.bindKeyWith("x.right", KeyStroke.getKeyStroke("RIGHT"), rightAct);
-		mainGame.bindKeyWith("x.up", KeyStroke.getKeyStroke("UP"), upAct);
-		mainGame.bindKeyWith("x.down", KeyStroke.getKeyStroke("DOWN"), downAct);
+		mainGame.bindKeyWith("left", KeyStroke.getKeyStroke("LEFT"), new HAction(-1 * getMainPlayer().getSpeed()));
+		mainGame.bindKeyWith("right", KeyStroke.getKeyStroke("RIGHT"), new HAction(1 * getMainPlayer().getSpeed()));
+		mainGame.bindKeyWith("up", KeyStroke.getKeyStroke("UP"), new VAction(-1 * getMainPlayer().getSpeed()));
+		mainGame.bindKeyWith("down", KeyStroke.getKeyStroke("DOWN"), new VAction(1 * getMainPlayer().getSpeed()));
+		mainGame.bindKeyWith("quit", KeyStroke.getKeyStroke(KeyEvent.VK_Q, KeyEvent.CTRL_DOWN_MASK), new quitAction());
+		mainGame.bindKeyWith("save", KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_DOWN_MASK), new SerializeAction());
 	}
+	
+	public void serializationKeyBind() {
+		mainGame.bindKeyWith("readserialized", KeyStroke.getKeyStroke('2'), new ReadSerializeAction());
+		mainGame.bindKeyWith("cleanupserialized", KeyStroke.getKeyStroke('3'), new CleanUpSerializeAction());
+	}
+
+	
 	public void setup(){
-		//Start the paint timer
-		theBigTimer = new Timer(paintDelay, new mainTimer());
-		theBigTimer.start();
-		allTimers.add(theBigTimer);
+		//Add health bar!!
+		items.addHealthBar(new HealthBar());
+		
+		//Add the screen Timer
+		items.addScreenTimer(new ScreenTimer());
 		
 		//Create the player
-		mainPlayer = new Player();
-		items.setMainPlayer(mainPlayer);
-		mainPlayer.updatePos(380, 280); //These are hard coded
+		setMainPlayer(new Player());
+		items.setMainPlayer(getMainPlayer());
+		getMainPlayer().updatePos(380, 280); //These are hard coded
 		
 		//Connect the Collision controller w the Player
-		collision.setPlayer(mainPlayer);
+		collision.setPlayer(getMainPlayer());
 		
 		//bind the keys
-		leftAct = new HAction(-1 * mainPlayer.speed);
-		rightAct = new HAction(1 * mainPlayer.speed);
-		upAct = new VAction(-1 * mainPlayer.speed);
-		downAct = new VAction(1 * mainPlayer.speed);
 		normalKeyBind();
 		
+		serializationKeyBind();
+		
+		//Reset stuff from last game
+		ScoreController.setScore(0);
+		Storm.setAppeared(false);
 		items.removeAllDebris();
 		items.setAllBarriers();
 		items.removeAllPowers();
@@ -155,22 +181,49 @@ public class GameController {
 		items.getAllBarriers().get(1).setType(eBarrierType.Wall);
 		items.getAllBarriers().get(2).setType(eBarrierType.Wall);
 		items.getAllBarriers().get(3).setType(eBarrierType.Wall);
-		items.getAllBarriers().get(4).setType(eBarrierType.Wall);
+		items.getAllBarriers().get(4).setType(eBarrierType.Gabion);
 		items.getAllBarriers().get(6).setType(eBarrierType.Wall);
 		items.getAllBarriers().get(7).setType(eBarrierType.Gabion);
 		
-		//Add health bar!!
-		items.addHealthBar(new HealthBar());
-		
+		setupDebrisOnCoast();
 		//Create the bins
 		items.getTrashBin().updatePos(50, 150);
 		items.getRecycleBin().updatePos(700, 150);
 		
+
+		setUpPaintTimer();
+		allTimers.add(theBigTimer);
 		
-		
-		//mainGame.imageLoad();
 		//mainGame.initTitleScreen();
 		startGame();
+	}
+	
+	public void setupDebrisOnCoast(){
+		//need to add trash to walls first so that they can be deleted
+		ArrayList<Debris> toAdd = new ArrayList<Debris>();
+		toAdd.add(new Debris(36, 290));
+		toAdd.add(new Debris(45, 230));
+		toAdd.add(new Debris(46, 320));
+		toAdd.add(new Debris(738, 243));
+		toAdd.add(new Debris(741, 285));
+		int i = 0;
+		for(Debris d:toAdd){
+			d.setState(eFloaterState.RESTING);
+			if(i%2==0){
+				d.setType(eDebrisType.TRASH);
+			}else{
+				d.setType(eDebrisType.RECYCLING);
+			}
+			getItems().addDebris(d);
+			i++;
+		}
+	}
+	
+	public void setUpPaintTimer(){
+		//Start the paint timer
+		paintTimer = new mainTimer();
+		theBigTimer = new Timer(paintDelay, paintTimer);
+		theBigTimer.start();
 	}
 	
 	public void tearDown(){
@@ -181,13 +234,10 @@ public class GameController {
 		//set up automatic movements!
 		//	->create timer for debris
 		//Turn on the screen timer!
-		items.addScreenTimer(new ScreenTimer());
 		items.getScreenTimer().start();
 		
 		debrisMover = new spawnDebris();
 		powerMover = new spawnPowers();
-		RcoastMover = new erosion(items.getCoastR());
-		LcoastMover = new erosion(items.getCoastL());
 		
 		debrisFloating = new Timer(floatDelay, debrisMover);
 		debrisFloating.start();
@@ -197,13 +247,20 @@ public class GameController {
 		powersFloating.start();
 		allTimers.add(powersFloating);
 		
-		barrierErosion bErode;
+		erosionSetup();
+
+	}
+	
+	public void erosionSetup(){
+		barrierErosion bErode; int i = 0;
 		for(Barriers b: items.getAllBarriers()){
 			bErode = new barrierErosion(b);
-			b.setbTimer(new Timer(this.erodeDelay, bErode));
-			b.geterosionTimer().start();
-			allTimers.add(b.geterosionTimer());
+			b.setErosionTimer(new Timer(this.erodeDelay, bErode));
+			b.getErosionTimer().start();
+			allTimers.add(b.getErosionTimer());
+			i++;
 		}
+		System.out.println("NUMBER OF EROSION TIMERS: " + i);
 		
 		coastErosion cErode;
 		for(Coast c : items.getCoast()){
@@ -212,10 +269,6 @@ public class GameController {
 			c.getErosionTimer().start();
 			allTimers.add(c.getErosionTimer());
 		}
-		coastRErosion = new Timer(erodeDelay, RcoastMover);
-		coastLErosion = new Timer(erodeDelay, LcoastMover);
-		coastRErosion.start();
-		coastLErosion.start();
 	}
 	
 	public void gameOver(){
@@ -230,22 +283,15 @@ public class GameController {
 			t.stop();
 		}
 	}
-	public void imageLoad(){
-		//TODO: that method currently returns a completely empty instance
-		library = ImageLibrary.loadLibrary();
-	}
 	
 	public void caughtSetup(Debris d){
 		this.choosingThrow = true;
 		items.mainPlayer.setState(ePlayerState.Lifting);
-		Action caughtLeftAct = new ThrowChoice(eThrowDirection.LEFT,d);
-		Action caughtRightAct = new ThrowChoice(eThrowDirection.RIGHT,d);
-		Action throwAct = new ThrowChosen(d);
 		
 		//Change the function of the keys
-		mainGame.bindKeyWith("x.leftArrow", KeyStroke.getKeyStroke("LEFT"), caughtLeftAct);
-		mainGame.bindKeyWith("x.rightArrow", KeyStroke.getKeyStroke("RIGHT"), caughtRightAct);
-		mainGame.bindKeyWith("throwDebris", KeyStroke.getKeyStroke("ENTER"), throwAct);
+		mainGame.bindKeyWith("leftArrow", KeyStroke.getKeyStroke("LEFT"), new ThrowChoice(eThrowDirection.LEFT,d));
+		mainGame.bindKeyWith("rightArrow", KeyStroke.getKeyStroke("RIGHT"), new ThrowChoice(eThrowDirection.RIGHT,d));
+		mainGame.bindKeyWith("throwDebris", KeyStroke.getKeyStroke("ENTER"), new ThrowChosen(d));
 		
 		//Don't let the player move!
 		mainGame.unbindKeyWith("x.up", KeyStroke.getKeyStroke("UP"));
@@ -257,12 +303,15 @@ public class GameController {
 		Action powerAction = new PowerInitiate(p);
 		items.getPlayer().setState(ePlayerState.Lifting);
 		mainGame.bindKeyWith("initiatePowerUp", KeyStroke.getKeyStroke("ENTER"), powerAction);
-		mainGame.unbindKeyWith("x.up", KeyStroke.getKeyStroke("UP"));
-		mainGame.unbindKeyWith("x.down", KeyStroke.getKeyStroke("DOWN"));
-		mainGame.unbindKeyWith("x.left", KeyStroke.getKeyStroke("LEFT"));
-		mainGame.unbindKeyWith("x.right", KeyStroke.getKeyStroke("RIGHT"));
+		freezeMotion();
 		
-		
+	}
+	
+	public void freezeMotion(){
+		mainGame.unbindKeyWith("up", KeyStroke.getKeyStroke("UP"));
+		mainGame.unbindKeyWith("down", KeyStroke.getKeyStroke("DOWN"));
+		mainGame.unbindKeyWith("left", KeyStroke.getKeyStroke("LEFT"));
+		mainGame.unbindKeyWith("right", KeyStroke.getKeyStroke("RIGHT"));
 	}
 	
 	public void thrownSetup(){
@@ -285,6 +334,50 @@ public class GameController {
 	//Increase difficulty based on health and timer
 	public void checkDifficulty(){
 		//TODO: let's have 5 different difficulty levels where the speed of erosion and debris spawn changes
+		if(items.getHealthBar().getHealth()>75 && items.getScreenTimer().getElapsedTime() > items.getScreenTimer().getMaxTime()/5){
+			this.setDifficulty(difficulty.getNextDifficulty());
+			System.out.println("Increasing Difficulty!!");
+		}
+		else if (items.getHealthBar().getHealth()<25 && items.getScreenTimer().getElapsedTime() > items.getScreenTimer().getMaxTime()/5){
+			this.setDifficulty(difficulty.getPreviousDifficulty());
+			System.out.println("decreasing Difficulty!!");
+		}
+		
+		//System.out.println("Current Difficulty" + difficulty);
+		
+		switch(difficulty){
+		case VERYEASY:
+			for(Coast c: items.getCoast()){
+				c.setErosionRate(20000);
+			}
+			this.getSpawnDebris().updateAveTime(15000);
+			break;
+		case EASY:
+			for(Coast c: items.getCoast()){
+				c.setErosionRate(15000);
+			}
+			this.getSpawnDebris().updateAveTime(10000);
+			break;
+		case MEDIUM:
+			for(Coast c: items.getCoast()){
+				c.setErosionRate(10000);
+			}
+			this.getSpawnDebris().updateAveTime(8000);
+			break;
+		case HARD:
+			for(Coast c: items.getCoast()){
+				c.setErosionRate(8000);
+			}
+			this.getSpawnDebris().updateAveTime(5000);
+			break;
+		case IMPOSSIBLE:
+			for(Coast c: items.getCoast()){
+				c.setErosionRate(5000);
+			}
+			this.getSpawnDebris().updateAveTime(1000);
+			break;
+		}
+		
 	}
 	
 	/**
@@ -297,10 +390,26 @@ public class GameController {
 	 *        will be called continuously throughout the entire lifecycle of the
 	 *        game
 	 */
-	public class spawnDebris implements ActionListener{
+	public class spawnDebris implements ActionListener, Serializable {
 		public int timePassed = 0;
 		//The time after which debris should spawn again (changes every time respawned)
-		public int spawnTimeDebris;
+		public int spawnTimeDebris = 3000;
+		public int getTimePassed() {
+			return timePassed;
+		}
+
+		public void setTimePassed(int timePassed) {
+			this.timePassed = timePassed;
+		}
+
+		public int getSpawnTimeDebris() {
+			return spawnTimeDebris;
+		}
+
+		public void setSpawnTimeDebris(int spawnTimeDebris) {
+			this.spawnTimeDebris = spawnTimeDebris;
+		}
+
 		//The average length of time based on difficulty
 		public int aveTime = 3000;
 		//The limit to the random distributions range in milliseconds (AKA +- rTime/2)
@@ -308,6 +417,12 @@ public class GameController {
 	
 		
 		public spawnDebris(){
+			items.addDebris(newDebris());
+			System.out.println("spawnDebris() called");
+			resetTimer();
+		}
+		
+		public spawnDebris(boolean t){
 			items.addDebris(newDebris());
 			resetTimer();
 		}
@@ -327,7 +442,7 @@ public class GameController {
 			} else {
 				d = new Debris(eDebrisType.RECYCLING);
 			}
-			d.setController(thisGame); //Bin stuff
+			d.setBins(items.getTrashBin(), items.getRecycleBin());
 			d.updatePos(xPos, 0);
 			d.setVertex(xPos);
 			return d;
@@ -338,30 +453,66 @@ public class GameController {
 			Random r = new Random();
 			spawnTimeDebris = r.nextInt(rTime) + aveTime - rTime/2;
 			timePassed = 0;
+			System.out.println("Reset the timer to: " + spawnTimeDebris);
+		}
+		
+		public void checkCatchDebris(Debris d){
+			if(!thisGame.choosingThrow && collision.checkCollision(d) && !thisGame.initiatingPowerUp){
+				//sets the Debris state to Lifted
+				d.catching();
+				//sequence of events for a caught Debris initiated
+				thisGame.caughtSetup(d);
+				//Move the trash to above the Player's head
+				d.updatePos(mainPlayer.getPosX()+mainPlayer.getWidth()/2 - d.getWidth()/2, mainPlayer.getPosY()-d.getHeight());
+			}
+		}
+		
+		public void move(Debris d){
+			MovementController.move(d);
+			checkCatchDebris(d);
+		}
+		
+		public void throwing(Debris d, ArrayList<Debris> toDelete){
+			//This should be a sequence like move()
+			//Function could return true or false to indicate it it's hit the Bin yet, then initiate next sequence
+			MovementController.Throw(d, d.getBin());
+
+			//Update the healthbar if it hit on this round
+			if (d.getState() == eFloaterState.HITBIN) {
+				System.out.print("\nBin hit this round and");
+				if (d.getCorrectBin()) {
+					System.out.print(" bin was correct.\n");
+					d.setState(eFloaterState.RESTING);
+					toDelete.add(d);
+					items.getHealthBar().update(eHealthChanges.CorrectBin.getDelta());
+					ScoreController.scoreBin();
+				}
+				else {
+					System.out.print(" bin was incorrect.\n");
+					MovementController.wrongBinMove(d);
+					d.setState(eFloaterState.RESTING);
+					items.getHealthBar().update(eHealthChanges.IncorrectBin.getDelta());
+				}
+			}
+			//If the debris hit the wrong bin it should go back to the coast
+		
+		}
+		
+		public void spawnTimeReached(){
+			items.addDebris(newDebris());
+			resetTimer();
 		}
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//if the timer goes off then add another piece of debris at the top
-			if(timePassed >= spawnTimeDebris){
-				items.addDebris(newDebris());
-				resetTimer();
-			}
+
 			ArrayList<Debris> toDelete = new ArrayList<Debris>();
 			//might want to put this for loop in its own class in the Controller
 			for(Debris d : items.getAllDebris()){
 				//make each item float
 				if(d.getState()==eFloaterState.MOVING){
-					MovementController.move(d);
-					if(!thisGame.choosingThrow && collision.checkCollision(d) && !thisGame.initiatingPowerUp){
-						//sets the Debris state to Lifted
-						d.catching();
-						//sequence of events for a caught Debris initiated
-						thisGame.caughtSetup(d);
-						//Move the trash to above the Player's head
-						d.updatePos(mainPlayer.getPosX()+mainPlayer.getWidth()/2 - d.getWidth()/2, mainPlayer.getPosY()-d.getHeight());
-					}
-					
+
+					move(d);
 					//If the debris hit the coast this round, decrement health
 					if (d.getState() == eFloaterState.RESTING) {
 						System.out.println("Debris hit coast");
@@ -369,35 +520,23 @@ public class GameController {
 					}
 				}
 				else if(d.getState()==eFloaterState.THROWING){
-					//This should be a sequence like move()
-					//Function could return true or false to indicate it it's hit the Bin yet, then initiate next sequence
-					MovementController.Throw(d, d.getBin());
-
-					//Update the healthbar if it hit on this round
-					if (d.getState() == eFloaterState.HITBIN) {
-						System.out.print("\nBin hit this round and");
-						if (d.getCorrectBin()) {
-							System.out.print(" bin was correct.\n");
-							d.setState(eFloaterState.RESTING);
-							toDelete.add(d);
-							items.getHealthBar().update(eHealthChanges.CorrectBin.getDelta());
-							ScoreController.scoreBin();
-						}
-						else {
-							System.out.print(" bin was incorrect.\n");
-							MovementController.wrongBinMove(d);
-							d.setState(eFloaterState.RESTING);
-							items.getHealthBar().update(eHealthChanges.IncorrectBin.getDelta());
-						}
-					}
-					//If the debris hit the wrong bin it should go back to the coast
+					throwing(d, toDelete);
 				}
-				
+				else if(d.getState()==eFloaterState.RESTING) {
+					checkCatchDebris(d);
+				}
 			}
+			
 			//Now delete any debris that hit
 			for(Debris del : toDelete){
 				items.removeDebris(del);
 			}
+				
+			//if the timer goes off then add another piece of debris at the top
+			if(timePassed >= spawnTimeDebris){
+				spawnTimeReached();
+			}
+			
 			timePassed+=floatDelay;
 		}
 		
@@ -408,15 +547,43 @@ public class GameController {
 	}
 	
 	//The point of this class is to create a timer that calls paint
-	public class mainTimer implements ActionListener{
+	public class mainTimer implements ActionListener, Serializable {
+		int maxTime = items.getScreenTimer().getMaxTime();
+		
+		public int scoringTime = 0;
+		public int difficultyTime = 0;
+		final public int scoreCheck = maxTime/500;
+		final public int difficultyCheck = maxTime/20;
+		public int healthTime = 0;
 
+		final public int healthCheck = maxTime/18;
+		final public int delaySpotlight = 1000;
+		
+		public int stormTime = 0;
+		public int realStormTime = 0;
+		boolean stormChecked = false;
+		final public int stormCheck = maxTime*3/4; //storm check 3/4th into the game
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			mainGame.repaint();
+
+			checkItems();
+		}
+		
+		public void checkItems(){
 			if(items.getScreenTimer().getState() == eScreenTimerState.ON){
 				timeElapsed+=paintDelay;
+				scoringTime+=paintDelay;
+				difficultyTime+=paintDelay;
+				healthTime+=paintDelay;
+				stormTime+=paintDelay;
 				items.getScreenTimer().setElapsedTime(timeElapsed);
+				
+				checkStormTime();
+				checkScoreTime();
+				checkDifficultyTime();
+				checkOverallHealth();
 				if(items.getScreenTimer().getState()==eScreenTimerState.OFF){
 					gameOver();
 				}
@@ -426,18 +593,67 @@ public class GameController {
 			}
 		}
 		
+		public void checkStormTime() {
+			if (stormTime >= 10000){  //later change this to stormCheck
+				HealthBar hb = items.getHealthBar();
+				if (!Storm.getAppeared() && (hb.getHealth() >= hb.getMaxHealth()*.75)) {
+					if (!stormChecked) {
+						realStormTime = stormTime + delaySpotlight*3;
+						stormChecked = true;
+						System.out.println("\nStorm incoming in 3 seconds!!");
+					}
+					//storm appears only when it hasn't appeared yet, and current health is 75% or more
+					callStorm(stormTime);
+				}
+			}
+
+		}
+		
+		public void callStorm(int time){
+			if (stormTime >= realStormTime) {
+				Storm.stormEffects(items, debrisMover);
+				Storm.setAppeared(true);
+			}
+		}
+		
+		public void checkScoreTime(){
+			if(scoringTime >= scoreCheck){
+				ScoreController.scoreHealth(items.getHealthBar().getHealth());
+				scoringTime = 0;
+			}
+		}
+		
+		public void checkDifficultyTime(){
+			if(difficultyTime >= difficultyCheck){
+				checkDifficulty();
+				difficultyTime = 0;
+			}
+		}
+		
+		public void checkOverallHealth(){
+			if(healthTime >= healthCheck){
+				items.getHealthBar().update(eHealthChanges.RestingDebrisGradual.getDelta());
+				healthTime = 0;
+			}
+		}
 		
 		public int getTimeElapsed(){
 			return timeElapsed;
 		}
+		
+
 	}
 	
 	//At (slightly) random intervals spawn powers, only should be initialized once!!
-	public class spawnPowers implements ActionListener{
+	public class spawnPowers implements ActionListener, Serializable {
 		public int timePassed = 0;
 		public int spawnTimePowers;
 		public int aveTime = 10000;
 		final public int rTime = 500;
+		private boolean rebuildMode= false;
+		private boolean removeMode = false;
+		private Helper removeHelper;
+		private Tool rebuildTool;
 
 		public spawnPowers(){
 			resetTimer();
@@ -445,25 +661,35 @@ public class GameController {
 
 		public Powers newPower(){
 			Random r = new Random();
+			Powers p;
+			if(r.nextInt()%2==0){
+				p = newPower(new Rebuild());
+			}
+			else{
+				p = newPower(new Remove());
+			}
+			
+			return p;
+		}
+		
+		public Powers newPower(Powers p){
+			Random r = new Random();
 			//generate initial position;
 			int randomx = r.nextInt(500)+150;
 			System.out.println("power:" + randomx);
 			int xPos = MovementController.getStart(randomx);
 			
-			int ptype = r.nextInt() % 2;
-			Powers p;
-			if(ptype==0){
+			if(p instanceof Rebuild){
 				System.out.println("rebuild");
-				p = new Rebuild(xPos,0);
+				p.updatePos(xPos,0);
 			}
 			else{
 				System.out.println("remove");
-				p = new Remove(xPos,0);
+				p.updatePos(xPos,0);
 			}
 			p.setVertex(xPos);
 			
 			return p;
-
 		}
 		
 		
@@ -473,44 +699,89 @@ public class GameController {
 			timePassed = 0;
 		}
 		
-		//Unimplemented methods
 		public void quickSpawn(){
 			items.addPower(newPower());
 		}
-		public void quickSpawnRebuild(){}
-		public void quickSpawnRemove(){}
+		public void quickSpawnRebuild(){
+			items.addPower(newPower(new Rebuild()));
+		}
+		public void quickSpawnRemove(){
+			items.addPower(newPower(new Remove()));
+		}
 
+		public void move(Powers p){
+			MovementController.move(p);
+			
+			if(collision.checkCollision(p) && !thisGame.choosingThrow && !thisGame.initiatingPowerUp){
+				p.catching();
+				thisGame.caughtSetup(p);
+				p.updatePos(mainPlayer.getPosX()+mainPlayer.getWidth()/2 - p.getWidth()/2, mainPlayer.getPosY()-p.getHeight());
+			}
+		}
+		
+		public void spawnTimeReached(){
+			System.out.println("new power spawn");
+			if(!items.getRestingDebris().isEmpty()){
+				if( items.emptyBarriers() >=4){	
+					items.addPower(newPower());
+				}
+				else{
+					this.quickSpawnRemove();
+				}
+			}
+			else{
+				if(items.emptyBarriers() >=4){
+					this.quickSpawnRebuild();
+				}
+			}
+			
+			resetTimer();
+		}
+		
+		public void rebuildAction(){
+			rebuildTool.addTime(floatDelay);
+			if(rebuildTool.doneBuilding()){
+				items.deleteRebuildTool();
+				rebuildMode = false;
+			}
+		}
+		
+		public void removeAction(){
+			MovementController.walkMove(removeHelper);
+			removeHelper.addTime(floatDelay);
+			if(removeHelper.getState() == eHelperState.WALKING_OFF && removeHelper.getTimeInStage()==0){
+				removeHelper.getPower().power(items);
+			}
+			if(removeHelper.getState()==eHelperState.VOID){
+				items.deleteRemoveHelper();
+				removeMode = false;
+			}
+		}
+		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//if the timer goes off then add another power at the top
-			if(timePassed >= spawnTimePowers){
-				System.out.println("new power spawn !!!!!!!!!!!!!!!");
-				items.addPower(newPower());
-				resetTimer();
-			}
+
 			for(Powers p : items.getAllPowers()){
 				//make each item float
 				if(p.getState()==eFloaterState.MOVING){
-					MovementController.move(p);
-			
-					if(collision.checkCollision(p) && !thisGame.choosingThrow && !thisGame.initiatingPowerUp){
-						p.catching();
-						thisGame.caughtSetup(p);
-						p.updatePos(mainPlayer.getPosX()+mainPlayer.getWidth()/2 - p.getWidth()/2, mainPlayer.getPosY()-p.getHeight());
-					}
-					
+					move(p);
 				}
 				else if(p.getState()==eFloaterState.INITIATED){
-					if(p instanceof Rebuild){	
-						//TODO:Rebuilding of coast
-						((Rebuild) p).power(items.getAllBarriers());
-						items.getHealthBar().update(eHealthChanges.CoastRebuilt.getDelta());
+					if(p instanceof Rebuild){
+						if(!rebuildMode){
+							rebuildTool = new Tool(Rebuild.getRebuildBarriers(getItems()));
+							items.setRebuildTool(rebuildTool);
+							rebuildMode = true;
+						}
 					}
-					else{
-						//Removes all Debris from coast
-						items.removeAllRestingDebris();
-						items.getHealthBar().update(eHealthChanges.CoastDebrisRemoved.getDelta());
-						
+					else if(p instanceof Remove){
+						if(!removeMode){
+							removeHelper = new Helper((Remove) p);
+							removeHelper.setFinalY(items.getAllDebris());
+							items.setRemoveHelper(removeHelper);
+							removeMode = true;
+						}
+
 					}
 					ScoreController.scorePower();
 				}
@@ -524,6 +795,18 @@ public class GameController {
 					poweritr.remove();
 				}
 			}
+			
+			if(removeMode){
+				removeAction();
+			}
+			
+			if(rebuildMode){
+				rebuildAction();
+			}
+			//if the timer goes off then add another power at the top
+			if(timePassed >= spawnTimePowers){
+				spawnTimeReached();
+			}
 			timePassed+=floatDelay;
 		}
 
@@ -533,42 +816,17 @@ public class GameController {
 
 	}
 	
-	//At (slightly) random intervals erode stuff
-	//there should be one for each coast line, probably also gabions, independent erosion patterns
-	public class erosion implements ActionListener{
-		public int timePassed;
-		public int erosionTime;
-		public int aveTime;
-		final public int rTime = 500;
+	public class walkController implements ActionListener, Serializable {
+		private int timePassed = 0;
 		
-		public erosion(Coast c){
-			Random r = new Random();
-			//assumes erosion rate in Coast is in milliseconds
-			aveTime = (int) c.getErosionRate();
-			erosionTime = r.nextInt(rTime) + aveTime - rTime/2;
-		}
-		
-		public erosion(Barriers b){
-			Random r = new Random();
-			//assumes decay rate in Barriers is in milliseconds
-			aveTime = b.getDecayTime();
-			erosionTime = r.nextInt(rTime) + aveTime - rTime/2;
-		}
 		
 		@Override
-		public void actionPerformed(ActionEvent e) {
-			if(timePassed >= erosionTime){
-				//erode some stuff
-				
-				timePassed = 0;
-			}
+		public void actionPerformed(ActionEvent e){
 			
-			timePassed+=erodeDelay;
 		}
-		
 	}
 	
-	public class coastErosion implements ActionListener{
+	public class coastErosion implements ActionListener, Serializable {
 		private Coast coast;
 		public int timePassed;
 		public int erosionTime;
@@ -581,7 +839,7 @@ public class GameController {
 			//assumes erosion rate in Coast is in milliseconds
 			aveTime = (int) c.getErosionRate();
 			erosionTime = r.nextInt(rTime) + aveTime - rTime/2;
-			timePassed =0;
+			timePassed = 0;
 		}
 		
 		
@@ -595,45 +853,53 @@ public class GameController {
 				if(timePassed >= erosionTime){
 					coast.erode();
 					timePassed = 0;
+					items.getHealthBar().update(eHealthChanges.CoastEroded.getDelta());
 				}
 				else{
 					timePassed+=erodeDelay;
 				}
 			}
-		}
-		
+		}	
 	}
 	
-	public class barrierErosion implements ActionListener{
+	public class barrierErosion implements ActionListener, Serializable {
 		private Barriers barrier;
-		public int timePassed;
+		public int timePassed = 0;
 		public int erosionTime;
 		public int aveTime;
-		final public int rTime = 1000;
+		final public int rTime = 2000;
 		
 		public barrierErosion(Barriers b){
 			barrier = b;
-			Random r = new Random();
-			//assumes decay rate in Barriers is in milliseconds
-			aveTime = b.getDecayTime();
-			erosionTime = r.nextInt(rTime) + aveTime - rTime/2;
+			newTime();
 		}
 		public void newTime(){
 			Random r = new Random();
-			aveTime = barrier.getType().getDecay();
+			aveTime = barrier.getDecayTime();
 			erosionTime = r.nextInt(rTime) + aveTime - rTime/2;
 			System.out.println("new erosion: " + erosionTime);
 			
 		}
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			if(barrier.getType()==eBarrierType.EMPTY){
+				return;
+			}
+
 			if(timePassed == 0){
 				newTime();
+				timePassed+=erodeDelay;
 			}
-			if(timePassed >= erosionTime){
+			else if(timePassed >= erosionTime){
 				barrier.erode();
 				timePassed = 0;
-				barrier.geterosionTimer().stop();
+				items.getHealthBar().update(eHealthChanges.BarrierFallen.getDelta());
+			}
+			else if(barrier.getState()==eBarrierState.NO_HIT && timePassed >= (0.5)*erosionTime){
+				System.out.println("Eroding half at: " + timePassed);
+				barrier.erodeHalf();
+				timePassed+=erodeDelay;
 			}
 			else{
 				timePassed+=erodeDelay;
@@ -657,7 +923,17 @@ public class GameController {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			mainPlayer.updatePosX(mainPlayer.getPosX() + moveSize);
+			int next = getMainPlayer().getPosX() + moveSize;
+			int edge = dimX-getMainPlayer().getWidth();
+			if (next <= 0) {
+				getMainPlayer().updatePosX(0);
+			}
+			else if (next >= edge) {
+				getMainPlayer().updatePosX(edge);
+			}
+			else {
+				getMainPlayer().updatePosX(getMainPlayer().getPosX() + moveSize);
+			}
 		}
 		
 	}
@@ -677,9 +953,27 @@ public class GameController {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			mainPlayer.updatePosY(mainPlayer.getPosY()+moveSize);
+			int next = getMainPlayer().getPosY() + moveSize;
+			int edge = dimY - getMainPlayer().getHeight(); 
+			if (next <= 0) {
+				getMainPlayer().updatePosY(0);
+			}
+			else if (next >= edge) {
+				getMainPlayer().updatePosY(edge);
+			}
+			else {
+				getMainPlayer().updatePosY(getMainPlayer().getPosY()+moveSize);
+			}
 		}
 		
+	}
+	
+	public class quitAction extends AbstractAction {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.exit(0);
+		}
 	}
 	
 	//When the player catches Debris, left and right keys bind with this action
@@ -730,120 +1024,49 @@ public class GameController {
 		
 	}
 	
-	public Barriers collision(Rectangle r) {
-		/*
-		if ( ((x2 <= (x1+w1)) && (x2 >= x1)) //checking x left edge collisions
-				|| (((x2+w2) <= (x1+w1)) && ((x2+w2) >= x1)) //checking x right edge collisions
-				|| ((y2 <= (y1+h1)) && (y2 >= y1)) //checking y top edge collisions
-				|| (((y2+h2) <= (y1+h1)) && ((y2+h2) >= y1)) ) //checking y bottom edge collisions*/
-		for (Barriers b : this.items.getAllBarriers()) {
-			Rectangle barrier = new Rectangle(b.getPosX(), b.getPosY(), b.getWidth(), b.getHeight());
-			if (barrier.intersects(r))
-				return b;
-		}
-
-		return null;
-	}
-	
 	public void setBarrierType(Barriers barr, eBarrierType t) {
 		//goes through list of barriers and changes the one with the matching coords to type t
 		for (Barriers b : this.items.getAllBarriers()) {
-			if((barr.getPosX()>=b.getPosX() && barr.getPosX()<=b.getPosX()+b.getWidth()) && (barr.getPosY()>=b.getPosY() && barr.getPosY()<=b.getPosY()+b.getHeight())){
+			if((barr.getPosX()>=b.getPosX() && barr.getPosX()<=b.getPosX()+b.getWidth()) 
+					&& (barr.getPosY()>=b.getPosY() && barr.getPosY()<=b.getPosY()+b.getHeight())){ //"match"
+				b.setType(t);
 				System.out.println("inside space");
-				b.setType(t);
-			}
-			if (barr.getPosX() == b.getPosX()) { //"match" 
-				System.out.println("set barrier type");
-				b.setType(t);
 			}
 		}
 	}
 	
+	/**
+	 * Returns whether a Barrier barr has collided with any other Barrier on the screen
+	 * @param barr
+	 * @return
+	 */
 	public Barriers emptyBarrierCollision(Barriers barr) {
 		//checks if barr collided with any of the barriers and if it is empty
+		int counter = 0;
 		for (Barriers b : this.items.getAllBarriers()) {
+			counter++;
 			if ((Collisions.checkCollision(b, barr) && (b.getType() == eBarrierType.EMPTY))) {
 				System.out.println("empty barrier collide");
+				System.out.println("barrier num: " + counter);
 				return b;
 			}
 		}
 		return null;
 	}
 
-	public class MouseController extends JPanel implements MouseListener, MouseMotionListener {
-
-		boolean dragging = false;
-		Rectangle temp; //the thing being dragged
-		private eBarrierType type; 
-
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			System.out.println(type + " clicked");
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			/*
-			Point p = new Point(e.getX(), e.getY());
-			if (wallSpawn.contains(p)) {
-				type = eBarrierType.Wall;
-			} else if (gabionsSpawn.contains(p)) {
-				type = eBarrierType.Gabion;
-			}
-			temp = new Rectangle(e.getX(), e.getY(), bWidth, bHeight); 
-			//the temp rectangle made here for dragging
-
-			dragging = true;
-			repaint();*/
-			System.out.println(e.getClickCount());
-			System.out.println(type + " pressed");
-
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			if (dragging == false)
-				return;
-			dragging = false;
-			Barriers b = collision(temp);
-			if (b != null) {  //there was a collision, the temp rectangle selected a barrier space 
-								//(do we want it so a new barrier can only be made if the space is empty?)
-				if (type == eBarrierType.Wall) {
-					setBarrierType(b, eBarrierType.Wall); //set barrier at the coords type to wall 
-				}
-				else if (type == eBarrierType.Gabion) {
-					setBarrierType(b, eBarrierType.Gabion);
-				}
-			}
-			temp = null; //we no longer need this temp rectangle
-			repaint();
-			// TODO Auto-generated method stub
-
-		}
-		
-		@Override
-		public void mouseEntered(MouseEvent e) {}
-
-		@Override
-		public void mouseExited(MouseEvent e) {}
-
-		@Override
-		public void mouseDragged(MouseEvent e) {
-			if (dragging == false)
-				return;
-			//update coords of temp rectangle-barrier
-			//idea: use barriers for spawns and temp, convert to Rectangle when needed to compare intersections etc.
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mouseMoved(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
+	public Player getMainPlayer() {
+		return mainPlayer;
 	}
+
+
+	public void setMainPlayer(Player mainPlayer) {
+		this.mainPlayer = mainPlayer;
+	}
+	
+	public void setDifficulty(eDifficulty diff){
+		difficulty = diff;
+	}
+	
 	
 	public class endGameAction extends AbstractAction{
 
@@ -854,6 +1077,110 @@ public class GameController {
 			c1.last(EstuaryGame.getCards());
 		}
 		
+	}
+	
+	public class SerializeAction extends AbstractAction {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			//Serialize to file
+			try
+			{
+				System.out.print("writing");
+				FileOutputStream fos = new FileOutputStream("testSerialize.ser");
+				ObjectOutputStream oos = new ObjectOutputStream(fos);
+				//TODO
+				
+				//oos.writeObject(items);
+				//Write the player
+				oos.writeObject(mainPlayer);
+				//Write the ActiveItems
+				oos.writeObject(items);
+				//Write the rest
+				oos.writeObject(debrisFloating);
+				oos.writeObject(powersFloating);
+				oos.writeObject(choosingThrow);
+				oos.writeObject(initiatingPowerUp);
+				oos.writeObject(allTimers);
+				oos.writeObject(theBigTimer);
+				oos.writeObject(paintTimer);
+				oos.writeObject(timeElapsed);
+				oos.writeObject(debrisMover);
+				oos.writeObject(powerMover);
+				
+				oos.close();
+			}
+			catch (Exception ex)
+			{
+				System.out.println("Exception thrown during test: " + ex.toString());
+				ex.printStackTrace();
+			}
+
+		}
+
+
+	}
+
+	public class ReadSerializeAction extends AbstractAction {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			//Serialize to file
+			try
+			{
+				System.out.print("reading");
+				FileInputStream fis = new FileInputStream("testSerialize.ser");
+				ObjectInputStream ois = new ObjectInputStream(fis);
+
+				//TODO: ois.readObject()
+				//Write the player
+				mainPlayer = (Player) ois.readObject();
+				//Write the ActiveItems
+				items = (ActiveItems) ois.readObject();
+				//Write the rest
+				debrisFloating = (Timer) ois.readObject();
+				powersFloating = (Timer) ois.readObject();
+				
+				choosingThrow = (boolean) ois.readObject();
+				initiatingPowerUp = (boolean) ois.readObject();
+				
+				ArrayList<Timer> readObject = (ArrayList<Timer>) ois.readObject();
+				allTimers = readObject;
+				
+				theBigTimer = (Timer) ois.readObject();
+				paintTimer = (mainTimer) ois.readObject();
+				
+				timeElapsed = (int) ois.readObject();
+				
+				debrisMover = (spawnDebris) ois.readObject();
+				powerMover = (spawnPowers) ois.readObject();			
+
+				ois.close();
+			}
+			catch (Exception ex)
+			{
+				System.out.println("Exception thrown during test: " + ex.toString());
+			}
+		}
+	}
+	
+	public class CleanUpSerializeAction extends AbstractAction {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			//Serialize to file
+			try
+			{
+				//Clean up the file
+				new File("testSerialize.ser").delete();
+			}
+			catch (Exception ex)
+			{
+				System.out.println("Exception thrown during test: " + ex.toString());
+			}
+		}
+
+
 	}
 
 

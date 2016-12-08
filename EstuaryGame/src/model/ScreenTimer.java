@@ -2,6 +2,7 @@ package model;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 
 import eNums.eScreenTimerState;
 
@@ -16,7 +17,7 @@ import eNums.eScreenTimerState;
  * @since 10/25/16
  */
 
-public class ScreenTimer extends Item {
+public class ScreenTimer extends Item implements Serializable {
 
 	final int MAX_TIME = 50000; //ms
 	
@@ -33,6 +34,7 @@ public class ScreenTimer extends Item {
      * construct a screen timer
      */
 	public ScreenTimer() {
+		super(400, 20);
 		state = eScreenTimerState.OFF;
 		maxTime = MAX_TIME;
 	}
@@ -44,12 +46,6 @@ public class ScreenTimer extends Item {
 		return timeRemaining;
 	}
 
-	/**
-	 * @param timeRemaining the timeRemaining to set
-	 */
-	public void setTimeRemaining(int timeRemaining) {
-		this.timeRemaining = timeRemaining;
-	}
 
 	/**
 	 * @return the maxTime

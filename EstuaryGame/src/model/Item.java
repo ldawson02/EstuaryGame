@@ -1,5 +1,7 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  * Item is an abstract class that holds the position of an item in x-y coordinates
  * 
@@ -12,7 +14,7 @@ package model;
  * @author Pu
  *
  */
-public abstract class Item {
+public abstract class Item implements Serializable{
 
 	private int posX;
 	private int posY;

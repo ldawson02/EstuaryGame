@@ -1,14 +1,19 @@
 package model;
 
+import java.io.Serializable;
+
 import eNums.eDebrisType;
 /**
  * 
  * the Bin has a trashType
  *
  */
-public class Bin extends Item{
+public class Bin extends Item implements Serializable{
 
-	public eDebrisType trashType;
+	public eDebrisType debrisType;
+	
+	public static final int defaultHeight = 50;
+	public static final int defaultWidth = 50;
 	
 	private Bin(){};
 	
@@ -17,20 +22,17 @@ public class Bin extends Item{
 	 * @param t
 	 */
 	public Bin(eDebrisType t){
-		this.trashType = t;
-		this.setHeight(50);
-		this.setWidth(50);
+		this.debrisType = t;
+		this.setHeight(defaultHeight);
+		this.setWidth(defaultWidth);
 	}
 	
 	/**
 	 * getter for debris type
-	 * @return trashtype;
+	 * @return debristype;
 	 */
 	public eDebrisType getDebrisType(){
-		return trashType;
+		return debrisType;
 	}
 	
-	public void correctBinAction(){};
-	
-	public void wrongBinAction(){};
 }
