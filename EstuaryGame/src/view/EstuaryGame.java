@@ -381,7 +381,12 @@ public class EstuaryGame extends JComponent{
 	private void paintHelper(Graphics g) {
 		if (gc.getItems().getRemoveHelper() != null) {
 			Helper h = gc.getItems().getRemoveHelper();
-			g.drawImage(lib.draw(h), h.getPosX(), h.getPosY(), this);
+			if (h.isRight()) {
+				g.drawImage(lib.draw(h), h.getPosX(), h.getPosY(), this);
+			}
+			else {
+				g.drawImage(lib.draw(h), h.getPosX() + h.getWidth(), h.getPosY(), -h.getWidth(), h.getHeight(), this);
+			}
 		}
 	}
 	
