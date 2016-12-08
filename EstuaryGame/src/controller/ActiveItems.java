@@ -77,6 +77,15 @@ public class ActiveItems implements Serializable {
 		return barriers;
 	}
 	
+	public int emptyBarriers(){
+		int i = 0;
+		for(Barriers b : barriers){
+			if(b.getType()==eBarrierType.EMPTY){
+				i++;
+			}
+		}
+		return i;
+	}
 	public void setAllBarriers(){
 		for(Barriers b: barriers){
 			b.setType(eBarrierType.EMPTY);
@@ -105,6 +114,15 @@ public class ActiveItems implements Serializable {
 		return debris;
 	}
 	
+	public ArrayList<Debris> getRestingDebris(){
+		ArrayList<Debris> resting = new ArrayList<Debris>();
+		for(Debris d : debris){
+			if(d.getState() == eFloaterState.RESTING){
+				resting.add(d);
+			}
+		}
+		return resting;
+	}
 	public ArrayList<Coast> getCoast(){
 		return coast;
 	}
@@ -193,5 +211,9 @@ public class ActiveItems implements Serializable {
 
 	public void setRebuildTool(Tool rebuildTool) {
 		this.rebuildTool = rebuildTool;
+	}
+	
+	public void deleteRebuildTool(){
+		this.rebuildTool = null;
 	}
 }

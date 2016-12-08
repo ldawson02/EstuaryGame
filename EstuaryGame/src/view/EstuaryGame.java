@@ -145,7 +145,6 @@ public class EstuaryGame extends JComponent{
 				frame.setFocusable(true);
 				frame.setVisible(true);
 
-
 			}
 		});
 	}
@@ -222,7 +221,10 @@ public class EstuaryGame extends JComponent{
 		//Paint player
 		paintPlayer(g);
 
+		//Paint power effects if relevant
 		paintHelper(g);
+		//
+		paintTool(g);
 
 		//Paint health bar
 		paintHealthBar(g);
@@ -380,6 +382,15 @@ public class EstuaryGame extends JComponent{
 		if (gc.getItems().getRemoveHelper() != null) {
 			Helper h = gc.getItems().getRemoveHelper();
 			g.drawImage(lib.draw(h), h.getPosX(), h.getPosY(), this);
+		}
+	}
+	
+	private void paintTool(Graphics g) {
+		if (gc.getItems().getRebuildTool() != null) {
+			Tool t = gc.getItems().getRebuildTool();
+			int toolX = t.getPosX() - (t.getWidth()/2) + 4 + (Barriers.defaultWidth/2);
+			g.drawImage(lib.draw(eAnimation.hammer), toolX, t.getPosY() - 10, this);
+			
 		}
 	}
 
