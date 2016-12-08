@@ -15,6 +15,7 @@ import controller.GameController;
 import controller.MouseController;
 import controller.TutorialController;
 import eNums.eTutorialState;
+import model.DrawableItem;
 import model.Item;
 
 public class Tutorial extends EstuaryGame implements ActionListener{
@@ -28,6 +29,7 @@ public class Tutorial extends EstuaryGame implements ActionListener{
 	public boolean wrongThrow = false;
 	private Item spotlightItem;
 	public TutorialController tc; 
+	public DrawableItem arrow;
 
 	public boolean getSpotlightSwitched(){
 		return spotlightSwitched;
@@ -88,6 +90,10 @@ public class Tutorial extends EstuaryGame implements ActionListener{
 		spotlight = false;
 	}
 
+	public void setArrow(DrawableItem a){
+		arrow = a;
+	}
+	
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
@@ -138,11 +144,13 @@ public class Tutorial extends EstuaryGame implements ActionListener{
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("TimesRoman", Font.BOLD, 18));
 	    g.drawString("Place a gabion.",getScreenX()/3, getScreenY()/2);
+	    paintMouseArrow(g, arrow);
 	}
 	public void paintWall(Graphics g){
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("TimesRoman", Font.BOLD, 18));
 	    g.drawString("Place a seawall.", getScreenX()/3, getScreenY()/2);
+	    paintMouseArrow(g, arrow);
 	}
 	public void paintErosionChoice(Graphics g){
 		g.setColor(Color.WHITE);
@@ -231,6 +239,10 @@ public class Tutorial extends EstuaryGame implements ActionListener{
     	g.drawImage(spotlightImage, paintX, paintY, this);
     }
     
+	public void paintMouseArrow(Graphics g, DrawableItem i) {
+		g.drawImage(tutMouseArrow, i.getPosX(), i.getPosY(), this);
+		i.move();
+	}
     
 	@Override
 	public void actionPerformed(ActionEvent e) {

@@ -161,6 +161,7 @@ public class TutorialController extends GameController {
 		
 		freezeMotion();
 		
+		
 		Coast focusCoast = getItems().getCoast().get(5); //Barrier above should be empty
 		t.setSpotlightItem(focusCoast);
 		Barriers focusBarrierSpot = focusCoast.getBarrier();
@@ -169,6 +170,10 @@ public class TutorialController extends GameController {
 		
 		focusCoast.setErosionTimer(new Timer(erodeCallDelay, new erosion(focusCoast)));
 		focusCoast.getErosionTimer().start();
+		
+		DrawableItem arrow = new DrawableItem(focusBarrierSpot.getPosX(), focusBarrierSpot.getPosY(), 32, 50);
+		arrow.setStartandEnd(focusBarrierSpot.getPosX(), focusBarrierSpot.getPosY(), focusCoast.getPosX(), focusCoast.getPosY());
+		t.setArrow(arrow);
 		
 		erosionTimers.add(focusBarrierSpot.getErosionTimer());
 		erosionTimers.add(focusCoast.getErosionTimer());
@@ -185,6 +190,10 @@ public class TutorialController extends GameController {
 		focusCoast.setErosionTimer(new Timer(erodeCallDelay, new erosion(focusCoast)));
 		focusBarrierSpot.setErosionTimer(new Timer(erodeCallDelay, new erosion(focusBarrierSpot,focusCoast, 2000)));
 		focusBarrierSpot.getErosionTimer().start();
+		
+		DrawableItem arrow = new DrawableItem(focusBarrierSpot.getPosX(), focusBarrierSpot.getPosY(), 32, 50);
+		arrow.setStartandEnd(focusBarrierSpot.getPosX(), focusBarrierSpot.getPosY(), focusCoast.getPosX(), focusCoast.getPosY());
+		t.setArrow(arrow);
 		
 		erosionTimers.add(focusBarrierSpot.getErosionTimer());
 		erosionTimers.add(focusCoast.getErosionTimer());
