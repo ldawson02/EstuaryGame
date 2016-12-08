@@ -39,6 +39,7 @@ import eNums.eBarrierType;
 import eNums.eDebrisType;
 import eNums.eFloaterState;
 import eNums.eHealthChanges;
+import eNums.eHelperState;
 import eNums.ePlayerState;
 import eNums.eScreenTimerState;
 import eNums.eThrowDirection;
@@ -57,6 +58,10 @@ public class GameController implements Serializable {
 	Action caughtLeftAct;
 	Action caughtRightAct;
 	Action throwAct;
+	
+	public final static int dimX = 800;
+	public final static int dimY = 600;
+	
 	//Makes sure you can only catch one Floater at a time
 	private boolean choosingThrow = false;
 	private boolean initiatingPowerUp = false;
@@ -80,30 +85,13 @@ public class GameController implements Serializable {
 	//erosion LcoastMover;
 	
 	private boolean gameEnd;
-	/**public boolean tutorialMode = false;
-	public Tutorial tutorial;*/
-	
 	Collisions collision = new Collisions();
 		
 	public GameController(EstuaryGame mainGame){
 		setMainGame(mainGame);
 		setup();
 	}
-	/**
-	public void setTutorial(Tutorial t){
-		tutorial = t;
-		tutorialMode = true;
-		setup();
-	}
-
 	
-	public void tutorialOff(){
-		tutorialMode = false;
-		for(Timer t : tutorialTimers){
-			t.stop();
-		}
-		setup();
-	}*/
 	public EstuaryGame getMainGame() {
 		return mainGame;
 	}
@@ -594,6 +582,10 @@ public class GameController implements Serializable {
 		public int spawnTimePowers;
 		public int aveTime = 10000;
 		final public int rTime = 500;
+		private boolean rebuildMode= false;
+		private boolean removeMode = false;
+		private Helper removeHelper;
+		private Tool rebuildTool;
 
 		public spawnPowers(){
 			resetTimer();
@@ -666,7 +658,17 @@ public class GameController implements Serializable {
 			resetTimer();
 		}
 		
-
+		public void rebuildAction(){
+			
+		}
+		
+		public void removeAction(){
+			MovementController.walkMove(removeHelper);
+			removeHelper.addTime(floatDelay);
+			if(removeHelper.getState()==eHelperState.VOID){
+				items.deleteRemoveHelper();
+			}
+		}
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -677,6 +679,17 @@ public class GameController implements Serializable {
 					move(p);
 				}
 				else if(p.getState()==eFloaterState.INITIATED){
+					if(p instanceof Rebuild){
+						p.power(getItems());
+						rebuildTool = new Tool(((Rebuild) p).getBarriersToRebuild());
+						items.setRebuildTool(rebuildTool);
+						rebuildMode = true;
+					}
+					else if(p instanceof Remove){
+						removeHelper = new Helper((Remove) p);
+						items.setRemoveHelper(removeHelper);
+						removeMode = true;
+					}
 					p.power(items);
 					ScoreController.scorePower();
 				}
@@ -690,6 +703,14 @@ public class GameController implements Serializable {
 					poweritr.remove();
 				}
 			}
+			
+			if(removeMode){
+				removeAction();
+			}
+			
+			if(rebuildMode){
+				rebuildAction();
+			}
 			//if the timer goes off then add another power at the top
 			if(timePassed >= spawnTimePowers){
 				spawnTimeReached();
@@ -701,6 +722,16 @@ public class GameController implements Serializable {
 			aveTime = newTime;
 		}
 
+	}
+	
+	public class walkController implements ActionListener, Serializable {
+		private int timePassed = 0;
+		
+		
+		@Override
+		public void actionPerformed(ActionEvent e){
+			
+		}
 	}
 	
 	public class coastErosion implements ActionListener, Serializable {

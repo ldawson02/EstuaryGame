@@ -21,7 +21,7 @@ import eNums.eBarrierType;
  * 
  *
  */
-public class Barriers extends Item implements Serializable{
+public class Barriers extends Item implements Serializable, Comparable<Barriers>{
 	private boolean protector = false;
 	//overall state of the barrier
 	private eBarrierType type;
@@ -170,4 +170,12 @@ public class Barriers extends Item implements Serializable{
 		this.erosionTimer = bTimer;
 	}
 
+	
+	/**
+	 * Custom comparator to sort Barriers from left to right
+	 */
+	@Override
+	public int compareTo(Barriers b) {
+		return b.getPosX() - this.getPosX();
+	}
 }
