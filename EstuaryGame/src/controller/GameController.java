@@ -350,25 +350,25 @@ public class GameController implements Serializable {
 		switch(difficulty){
 		case VERYEASY:
 			for(Coast c: items.getCoast()){
-				c.setErosionRate(30000);
+				c.setErosionRate(35000);
 			}
 			this.getSpawnDebris().updateAveTime(15000);
 			break;
 		case EASY:
 			for(Coast c: items.getCoast()){
-				c.setErosionRate(20000);
+				c.setErosionRate(25000);
 			}
 			this.getSpawnDebris().updateAveTime(10000);
 			break;
 		case MEDIUM:
 			for(Coast c: items.getCoast()){
-				c.setErosionRate(15000);
+				c.setErosionRate(20000);
 			}
 			this.getSpawnDebris().updateAveTime(8000);
 			break;
 		case HARD:
 			for(Coast c: items.getCoast()){
-				c.setErosionRate(10000);
+				c.setErosionRate(15000);
 			}
 			this.getSpawnDebris().updateAveTime(5000);
 			break;
@@ -554,7 +554,7 @@ public class GameController implements Serializable {
 		public int scoringTime = 0;
 		public int difficultyTime = 0;
 		final public int scoreCheck = maxTime/500;
-		final public int difficultyCheck = maxTime/20;
+		final public int difficultyCheck = maxTime/10;
 		public int healthTime = 0;
 
 		final public int healthCheck = maxTime/18;
@@ -597,7 +597,7 @@ public class GameController implements Serializable {
 		public void checkStormTime() {
 			if (stormTime >= stormCheck){  //later change this to stormCheck
 				HealthBar hb = items.getHealthBar();
-				if (!Storm.getAppeared() && (hb.getHealth() >= hb.getMaxHealth()*.75)) {
+				if (!Storm.getAppeared() && (hb.getHealth() >= hb.getMaxHealth()*.5)) {
 					if (!stormChecked) {
 						realStormTime = stormTime + delaySpotlight*3;
 						stormChecked = true;
