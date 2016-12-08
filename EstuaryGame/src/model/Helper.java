@@ -9,22 +9,28 @@ import eNums.eHelperState;
 public class Helper extends Item {
 	private eHelperState state = eHelperState.WALKING;
 	private Remove removeInstance;
+	private Debris toLift;
 	private int finalY;
 	private int timeInStage = 0;
 	
+	public static final int defaultWidth = 67;
+	public static final int defaultHeight = 80;
+	
 	public Helper(Remove r){
 		super(740,0);
-		this.setHeight(80);
-		this.setWidth(67);
+		this.setHeight(defaultWidth);
+		this.setWidth(defaultHeight);
 		removeInstance = r;
 	}
 	
 	public void setFinalY(ArrayList<Debris> debris){
 		int point = 600;
 		for(Debris d: debris){
-			if(d.getState() == eFloaterState.RESTING){
+			if(d.getState() == eFloaterState.RESTING) {
 				if(d.getPosY() < point){
 					point = d.getPosY();
+					toLift = d;
+					System.out.println("new minY = " + d.getPosY());
 				}
 			}
 		}
@@ -66,6 +72,7 @@ public class Helper extends Item {
 	}
 	
 	public void walkCheck(){
+		System.out.println("walk checking, finalY = " + getFinalY());
 		if(this.getPosY()>this.getFinalY()){
 			nextState();
 		}

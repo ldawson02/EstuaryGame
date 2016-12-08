@@ -222,8 +222,12 @@ public class EstuaryGame extends JComponent{
 		//Paint player
 		paintPlayer(g);
 
+		paintHelper(g);
+
 		//Paint health bar
 		paintHealthBar(g);
+
+
 
 		//Paint ScreenTimer
 		if (!gameFinished)
@@ -293,14 +297,14 @@ public class EstuaryGame extends JComponent{
 				prevCoast = c;
 				break;
 			case 5:
-				default:
+			default:
 				prevCoast = c;
 				coast = lib.drawCoast(c.getState().getHits(), 0);
 				break;
 			}
 			g.drawImage(coast, c.getPosX() + c.getWidth(), c.getPosY(), -c.getWidth(), c.getHeight(), this);
 		}
-			
+
 
 		//right coast
 		for (int i = 5; i < 10; i++) {
@@ -321,13 +325,13 @@ public class EstuaryGame extends JComponent{
 
 
 			case 10:
-				default:
+			default:
 				prevCoastState = prevCoast.getState().getHits();
 				coast = lib.drawCoast(c.getState().getHits(), prevCoastState);
 				prevCoast = c;
 				break;
 			}
-			
+
 			g.drawImage(coast, c.getPosX(), c.getPosY(), this);
 		}
 	}
@@ -367,6 +371,13 @@ public class EstuaryGame extends JComponent{
 
 			Image debrisImg = lib.draw(d);
 			g.drawImage(debrisImg, d.getPosX(), d.getPosY(), this);
+		}
+	}
+
+	private void paintHelper(Graphics g) {
+		if (gc.getItems().getRemoveHelper() != null) {
+			Helper h = gc.getItems().getRemoveHelper();
+			g.drawImage(lib.draw(h), h.getPosX(), h.getPosY(), this);
 		}
 	}
 

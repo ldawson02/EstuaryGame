@@ -690,6 +690,7 @@ public class GameController implements Serializable {
 					}
 					else if(p instanceof Remove){
 						removeHelper = new Helper((Remove) p);
+						removeHelper.setFinalY(items.getAllDebris());
 						items.setRemoveHelper(removeHelper);
 						removeMode = true;
 					}
