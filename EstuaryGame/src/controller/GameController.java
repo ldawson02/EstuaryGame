@@ -873,13 +873,14 @@ public class GameController implements Serializable {
 
 			if(timePassed == 0){
 				newTime();
+				return;
 			}
 			if(timePassed >= erosionTime){
 				barrier.erode();
 				timePassed = 0;
 				items.getHealthBar().update(eHealthChanges.BarrierFallen.getDelta());
 			}
-			else if(barrier.getState()!=eBarrierState.ONE_HIT & timePassed >= (1/2)*erosionTime){
+			else if(barrier.getState()!=eBarrierState.ONE_HIT && timePassed >= (1/2)*erosionTime){
 				barrier.erodeHalf();
 				timePassed+=erodeDelay;
 			}
