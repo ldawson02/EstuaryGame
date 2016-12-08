@@ -16,11 +16,13 @@ import eNums.eAnimation;
 import eNums.eBarrierType;
 import eNums.eDebrisType;
 import eNums.eFloaterState;
+import eNums.eHelperState;
 import eNums.ePlayerState;
 import model.Barriers;
 import model.Bin;
 import model.Debris;
 import model.Floater;
+import model.Helper;
 import model.Player;
 import model.Powers;
 import model.Rebuild;
@@ -172,27 +174,51 @@ public class ImageLibrary {
 		
 		ArrayList<Image> scaled14 = new ArrayList<Image>();
 		for (Image fullgab : library.get(eAnimation.fullGabion).getSeq()) {
-			scaled14.add(fullgab.getScaledInstance(Floater.defaultWidth, Floater.defaultHeight, Image.SCALE_SMOOTH));
+			scaled14.add(fullgab.getScaledInstance(Barriers.defaultWidth, Barriers.defaultHeight, Image.SCALE_SMOOTH));
 		}
 		library.get(eAnimation.fullGabion).setSeq(scaled14);
 		
 		ArrayList<Image> scaled15 = new ArrayList<Image>();
 		for (Image halfgab : library.get(eAnimation.halfGabion).getSeq()) {
-			scaled15.add(halfgab.getScaledInstance(Floater.defaultWidth, Floater.defaultHeight, Image.SCALE_SMOOTH));
+			scaled15.add(halfgab.getScaledInstance(Barriers.defaultWidth, Barriers.defaultHeight, Image.SCALE_SMOOTH));
 		}
 		library.get(eAnimation.halfGabion).setSeq(scaled15);
 		
 		ArrayList<Image> scaled16 = new ArrayList<Image>();
 		for (Image fullwall : library.get(eAnimation.fullWall).getSeq()) {
-			scaled16.add(fullwall.getScaledInstance(Floater.defaultWidth, Floater.defaultHeight, Image.SCALE_SMOOTH));
+			scaled16.add(fullwall.getScaledInstance(Barriers.defaultWidth, Barriers.defaultHeight, Image.SCALE_SMOOTH));
 		}
 		library.get(eAnimation.fullWall).setSeq(scaled16);
 		
 		ArrayList<Image> scaled17 = new ArrayList<Image>();
 		for (Image halfwall : library.get(eAnimation.halfWall).getSeq()) {
-			scaled17.add(halfwall.getScaledInstance(Floater.defaultWidth, Floater.defaultHeight, Image.SCALE_SMOOTH));
+			scaled17.add(halfwall.getScaledInstance(Barriers.defaultWidth, Barriers.defaultHeight, Image.SCALE_SMOOTH));
 		}
 		library.get(eAnimation.halfWall).setSeq(scaled17);
+		
+		ArrayList<Image> scaled18 = new ArrayList<Image>();
+		for (Image helplift : library.get(eAnimation.helperLift).getSeq()) {
+			scaled18.add(helplift.getScaledInstance(Helper.defaultWidth, Helper.defaultHeight, Image.SCALE_SMOOTH));
+		}
+		library.get(eAnimation.helperLift).setSeq(scaled18);
+
+		ArrayList<Image> scaled19 = new ArrayList<Image>();
+		for (Image helppick : library.get(eAnimation.helperPickUp).getSeq()) {
+			scaled19.add(helppick.getScaledInstance(Helper.defaultWidth, Helper.defaultHeight, Image.SCALE_SMOOTH));
+		}
+		library.get(eAnimation.helperPickUp).setSeq(scaled19);
+
+		ArrayList<Image> scaled20 = new ArrayList<Image>();
+		for (Image helpwalk : library.get(eAnimation.helperWalk).getSeq()) {
+			scaled20.add(helpwalk.getScaledInstance(Helper.defaultWidth, Helper.defaultHeight, Image.SCALE_SMOOTH));
+		}
+		library.get(eAnimation.helperWalk).setSeq(scaled20);
+		
+		ArrayList<Image> scaled21 = new ArrayList<Image>();
+		for (Image helpwalkr : library.get(eAnimation.helperWalkRight).getSeq()) {
+			scaled21.add(helpwalkr.getScaledInstance(Helper.defaultWidth, Helper.defaultHeight, Image.SCALE_SMOOTH));
+		}
+		library.get(eAnimation.helperWalkRight).setSeq(scaled21);
 	}
 	
 	public void scaleLibrary(double scaleFactor) {
@@ -254,6 +280,21 @@ public class ImageLibrary {
 		
 		//Implied else
 		return draw(eAnimation.error);
+	}
+	
+	public Image draw(Helper h) {
+		if (h.getState() == eHelperState.WALKING) {
+			return draw(eAnimation.helperWalk);
+		}
+		else if (h.getState() == eHelperState.PICKING_UP) {
+			return draw(eAnimation.helperPickUp);
+		}
+		else if (h.getState() == eHelperState.HOLDING) {
+			return draw(eAnimation.helperLift);
+		}
+		else {
+			return draw(eAnimation.helperWalkRight);
+		}
 	}
 	
 	public Image draw(Barriers b) {

@@ -32,9 +32,11 @@ public class Debris extends Floater implements Serializable {
 	 */
 	private Debris() {
 		super();
+		this.state = eFloaterState.MOVING;
 	}
 	public Debris(int x, int y){
 		super(x,y);
+		this.state = eFloaterState.MOVING;
 		
 	};
 	public Debris(eDebrisType etype) {
