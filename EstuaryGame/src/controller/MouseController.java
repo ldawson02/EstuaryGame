@@ -143,6 +143,7 @@ import model.Barriers;
 			if ((dragged != null) && (dropSpot!=null)) {  //dragged temp to any of the barrier spaces that was empty
 				System.out.println("new barrier");
 				if (dragged.getType() == eBarrierType.Wall) {
+					dragged = new Barriers(dragged.getPosX()+dragged.getWidth()/2, dragged.getPosY()+dragged.getHeight()/2, eBarrierType.Wall);
 					gc.setBarrierType(dragged, eBarrierType.Wall); 
 					dropSpot.setType(eBarrierType.Wall);
 					dropSpot.getErosionTimer().start();
@@ -150,6 +151,7 @@ import model.Barriers;
 					//set barrier with same coords as temp to Wall
 				}
 				else if (dragged.getType() == eBarrierType.Gabion) {
+					dragged = new Barriers(dragged.getPosX()+dragged.getWidth()/2, dragged.getPosY()+dragged.getHeight()/2, eBarrierType.Gabion);
 					gc.setBarrierType(dragged, eBarrierType.Gabion);
 					dropSpot.setType(eBarrierType.Gabion);
 					dropSpot.getErosionTimer().start();
@@ -163,7 +165,8 @@ import model.Barriers;
 
 		@Override
 		/**
-		 * If mouse dragged, the position of the dragged barrier is updated.
+		 * If mouse dragged, the position of the dragged barrier is updated, with the 
+		 * middle of the barrier at the mouse cursor
 		 */
 		public void mouseDragged(MouseEvent e) {
 			if (dragging == false)
