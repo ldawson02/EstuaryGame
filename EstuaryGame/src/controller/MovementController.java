@@ -4,8 +4,10 @@ import java.util.Random;
 
 import eNums.eDebrisType;
 import eNums.eFloaterState;
+import eNums.eHelperState;
 import model.Bin;
 import model.Floater;
+import model.Helper;
 import model.Rebuild;
 import model.Remove;
 
@@ -123,4 +125,16 @@ public class MovementController {
 			f.setState(eFloaterState.RESTING);
 		}
 	}
+	
+	public static void walkMove(Helper h){
+		int move = 8;
+		if(h.getState()==eHelperState.WALKING){
+			h.updatePosY(h.getPosY()+move);
+		}
+		if(h.getState()==eHelperState.WALKING_OFF){
+			h.updatePosX(h.getPosX()+move);
+		}
+		
+	}
+		
 }

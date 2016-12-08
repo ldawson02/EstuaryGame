@@ -21,6 +21,8 @@ public class ActiveItems implements Serializable {
 	private ArrayList<Powers> powerups;
 	private Bin TrashBin;
 	private Bin RecycleBin;
+	private Helper removeHelper;
+	private Tool rebuildTool;
 	
 	/**
 	 * @return the mainPlayer
@@ -171,5 +173,25 @@ public class ActiveItems implements Serializable {
 	
 	public Bin getRecycleBin(){
 		return RecycleBin;
+	}
+
+	public Helper getRemoveHelper() {
+		return removeHelper;
+	}
+
+	public void setRemoveHelper(Helper removeHelper) {
+		this.removeHelper = removeHelper;
+	}
+	
+	public void deleteRemoveHelper(){
+		this.removeHelper = null;
+	}
+
+	public Tool getRebuildTool() {
+		return rebuildTool;
+	}
+
+	public void setRebuildTool(Tool rebuildTool) {
+		this.rebuildTool = rebuildTool;
 	}
 }

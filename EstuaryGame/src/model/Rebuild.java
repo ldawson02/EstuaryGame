@@ -13,6 +13,7 @@ public class Rebuild extends Powers implements Serializable{
 
 	private int vertex;
 	private eFloaterState state;
+	private ArrayList<Barriers> toRebuild = new ArrayList<Barriers>();
 		
 	public Rebuild(int x, int y){
 		super(x,y);
@@ -27,7 +28,9 @@ public class Rebuild extends Powers implements Serializable{
 		
 	}
 
-
+	public ArrayList<Barriers> getBarriersToRebuild(){
+		return toRebuild;
+	}
 	
 	@Override
 	public void power(ActiveItems items){
@@ -44,7 +47,8 @@ public class Rebuild extends Powers implements Serializable{
 		int add = empty/2;
 		Collections.shuffle(bEmpty);
 		for(int i = 0; i < add; i++){
-			bEmpty.get(i).setType(eBarrierType.Gabion);
+			toRebuild.add(bEmpty.get(i));
+			//bEmpty.get(i).setType(eBarrierType.Gabion);
 		}
 	}
 
