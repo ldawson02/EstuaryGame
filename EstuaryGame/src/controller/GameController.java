@@ -232,6 +232,7 @@ public class GameController implements Serializable {
 	}
 	
 	public void startGame(){
+		System.out.print("in super startGame");
 		//set up automatic movements!
 		//	->create timer for debris
 		//Turn on the screen timer!
