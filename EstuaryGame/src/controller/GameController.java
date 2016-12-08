@@ -654,12 +654,29 @@ public class GameController implements Serializable {
 		
 		public void spawnTimeReached(){
 			System.out.println("new power spawn");
-			items.addPower(newPower());
+			if(!items.getRestingDebris().isEmpty()){
+				if( items.emptyBarriers() >=4){	
+					items.addPower(newPower());
+				}
+				else{
+					this.quickSpawnRemove();
+				}
+			}
+			else{
+				if(items.emptyBarriers() >=4){
+					this.quickSpawnRebuild();
+				}
+			}
+			
 			resetTimer();
 		}
 		
 		public void rebuildAction(){
-			
+			rebuildTool.addTime(floatDelay);
+			if(rebuildTool.doneBuilding()){
+				items.deleteRebuildTool();
+				rebuildMode = false;
+			}
 		}
 		
 		public void removeAction(){
@@ -670,6 +687,7 @@ public class GameController implements Serializable {
 			}
 			if(removeHelper.getState()==eHelperState.VOID){
 				items.deleteRemoveHelper();
+				removeMode = false;
 			}
 		}
 		
@@ -683,17 +701,20 @@ public class GameController implements Serializable {
 				}
 				else if(p.getState()==eFloaterState.INITIATED){
 					if(p instanceof Rebuild){
-						p.power(getItems());
-						rebuildTool = new Tool(((Rebuild) p).getBarriersToRebuild());
-						items.setRebuildTool(rebuildTool);
-						rebuildMode = true;
+						if(!rebuildMode){
+							p.power(getItems());
+							rebuildTool = new Tool(((Rebuild) p).getBarriersToRebuild());
+							items.setRebuildTool(rebuildTool);
+							rebuildMode = true;
+						}
 					}
 					else if(p instanceof Remove){
-						removeHelper = new Helper((Remove) p);
-						items.setRemoveHelper(removeHelper);
-						removeMode = true;
+						if(!removeMode){
+							removeHelper = new Helper((Remove) p);
+							items.setRemoveHelper(removeHelper);
+							removeMode = true;
+						}
 					}
-					p.power(items);
 					ScoreController.scorePower();
 				}
 				
