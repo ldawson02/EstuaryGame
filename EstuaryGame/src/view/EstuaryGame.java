@@ -341,8 +341,10 @@ public class EstuaryGame extends JComponent{
 		for (Barriers b : barriers) {
 			paintOneBarrier(g, b);
 		}
-		paintOneBarrier(g, mc.getWallSpawn());
-		paintOneBarrier(g, mc.getGabionsSpawn());
+		paintOneBarrier(g, mc.getWallSpawnL());
+		paintOneBarrier(g, mc.getWallSpawnR());
+		paintOneBarrier(g, mc.getGabionsSpawnL());
+		paintOneBarrier(g, mc.getGabionsSpawnR());
 
 		Barriers tempDragged = mc.getDragged();
 		if (tempDragged != null) {
