@@ -34,7 +34,7 @@ public enum eBarrierType {
 		case Wall:
 			return 9000;
 		default:
-			return 1;
+			return 1000000;
 		}
 	}
 	

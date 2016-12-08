@@ -23,5 +23,5 @@ public abstract class Powers extends Floater implements Serializable{
 		super();
 	}
 	
-	public abstract void power(ActiveItems items);
+	//public abstract void power(ActiveItems items);
 }

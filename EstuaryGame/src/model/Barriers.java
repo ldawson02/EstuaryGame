@@ -184,6 +184,6 @@ public class Barriers extends Item implements Serializable, Comparable<Barriers>
 	 */
 	@Override
 	public int compareTo(Barriers b) {
-		return b.getPosX() - this.getPosX();
+		return this.getPosX() - b.getPosX();
 	}
 }

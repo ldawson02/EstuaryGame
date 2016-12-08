@@ -27,8 +27,8 @@ public class Remove extends Powers implements Serializable{
 	}
 
 	
-	@Override
-	public void power(ActiveItems items){
+
+	public static void power(ActiveItems items){
 		//ArrayList<Debris> debris = items.getAllDebris();
 
 		items.removeAllRestingDebris();
