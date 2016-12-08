@@ -32,6 +32,10 @@ public class Helper extends Item {
 		this.finalY = point;
 	}
 	
+	public Remove getPower(){
+		return removeInstance;
+	}
+	
 	public int getTimeInStage(){
 		return timeInStage;
 	}
@@ -43,6 +47,7 @@ public class Helper extends Item {
 	
 	public void nextState(){
 		state = state.nextState();
+		timeInStage = 0;
 	}
 	
 	public void checkState(){
