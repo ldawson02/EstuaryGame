@@ -185,11 +185,11 @@ public class GameController implements Serializable {
 		items.getAllBarriers().get(6).setType(eBarrierType.Wall);
 		items.getAllBarriers().get(7).setType(eBarrierType.Gabion);
 		
-		setupDebrisOnCoast();
 		//Create the bins
 		items.getTrashBin().updatePos(50, 150);
 		items.getRecycleBin().updatePos(700, 150);
 		
+		setupDebrisOnCoast();
 
 		setUpPaintTimer();
 		allTimers.add(theBigTimer);
@@ -215,6 +215,7 @@ public class GameController implements Serializable {
 				d.setType(eDebrisType.RECYCLING);
 			}
 			getItems().addDebris(d);
+			d.setBins(items.getRecycleBin(), items.getTrashBin());
 			i++;
 		}
 	}
@@ -333,7 +334,6 @@ public class GameController implements Serializable {
 	
 	//Increase difficulty based on health and timer
 	public void checkDifficulty(){
-		//TODO: let's have 5 different difficulty levels where the speed of erosion and debris spawn changes
 		if(items.getHealthBar().getHealth()>75 && items.getScreenTimer().getElapsedTime() > items.getScreenTimer().getMaxTime()/5){
 			this.setDifficulty(difficulty.getNextDifficulty());
 			System.out.println("Increasing Difficulty!!");
@@ -417,6 +417,7 @@ public class GameController implements Serializable {
 	
 		
 		public spawnDebris(){
+			spawnTimeDebris = 3000;
 			items.addDebris(newDebris());
 			System.out.println("spawnDebris() called");
 			resetTimer();
@@ -429,6 +430,7 @@ public class GameController implements Serializable {
 		
 		//returns a new randomly generated piece of Debris
 		public Debris newDebris(){
+			timePassed = 0;
 			Random r = new Random();
 			//generate initial position;
 			int randomx = r.nextInt(500)+150;
@@ -505,7 +507,7 @@ public class GameController implements Serializable {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-
+			System.out.println("spawnTimeDebris set at: " + spawnTimeDebris);
 			ArrayList<Debris> toDelete = new ArrayList<Debris>();
 			//might want to put this for loop in its own class in the Controller
 			for(Debris d : items.getAllDebris()){
@@ -534,6 +536,7 @@ public class GameController implements Serializable {
 				
 			//if the timer goes off then add another piece of debris at the top
 			if(timePassed >= spawnTimeDebris){
+				System.out.println("Trying to spawn new Debris");
 				spawnTimeReached();
 			}
 			
@@ -562,7 +565,7 @@ public class GameController implements Serializable {
 		public int stormTime = 0;
 		public int realStormTime = 0;
 		boolean stormChecked = false;
-		final public int stormCheck = maxTime*3/4; //storm check 3/4th into the game
+		final public int stormCheck = maxTime*(3/4); //storm check 3/4th into the game
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {

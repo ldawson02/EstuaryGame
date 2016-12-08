@@ -37,7 +37,7 @@ public class Debris extends Floater implements Serializable {
 	public Debris(int x, int y){
 		super(x,y);
 		this.state = eFloaterState.MOVING;
-		
+		LR = new ArrayList<Bin>();
 	};
 	public Debris(eDebrisType etype) {
 		super();

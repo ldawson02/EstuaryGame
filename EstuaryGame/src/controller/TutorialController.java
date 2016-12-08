@@ -45,6 +45,7 @@ public class TutorialController extends GameController {
 		unpauseAction = new unpause();
 		tutorialSetup();
 		debrisSetup();
+		debrisFloating.start();
 		debrisFloating.setDelay(floatDelay);
 		System.out.println("still in constructor");
 	}
@@ -133,7 +134,6 @@ public class TutorialController extends GameController {
 		this.debrisMover = new spawnDebris();
 		System.out.println("float delay: " + this.getFloatDelay());
 		debrisFloating = new Timer(this.getFloatDelay(), debrisMover);
-		debrisFloating.start();
 	}
 	
 	public void erosion1Setup(){
