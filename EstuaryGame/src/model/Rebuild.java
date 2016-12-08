@@ -32,8 +32,9 @@ public class Rebuild extends Powers implements Serializable{
 		return toRebuild;
 	}
 	
-	@Override
-	public void power(ActiveItems items){
+
+	public static ArrayList<Barriers> getRebuildBarriers(ActiveItems items){
+		ArrayList<Barriers> toRebuild = new ArrayList<Barriers>();
 		ArrayList<Barriers> barriers = items.getAllBarriers();
 		int empty = 0;
 		ArrayList<Barriers> bEmpty = new ArrayList<Barriers>();
@@ -50,6 +51,12 @@ public class Rebuild extends Powers implements Serializable{
 			toRebuild.add(bEmpty.get(i));
 			//bEmpty.get(i).setType(eBarrierType.Gabion);
 		}
+		
+		return toRebuild;
+	}
+	
+	public static void power(Barriers b){
+		b.setType(eBarrierType.Gabion);
 	}
 
 }

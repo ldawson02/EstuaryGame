@@ -322,7 +322,7 @@ public class GameController implements Serializable {
 			System.out.println("decreasing Difficulty!!");
 		}
 		
-		System.out.println("Current Difficulty" + difficulty);
+		//System.out.println("Current Difficulty" + difficulty);
 		
 		switch(difficulty){
 		case VERYEASY:
@@ -667,7 +667,6 @@ public class GameController implements Serializable {
 			timePassed = 0;
 		}
 		
-		//Unimplemented methods
 		public void quickSpawn(){
 			items.addPower(newPower());
 		}
@@ -738,8 +737,7 @@ public class GameController implements Serializable {
 				else if(p.getState()==eFloaterState.INITIATED){
 					if(p instanceof Rebuild){
 						if(!rebuildMode){
-							p.power(getItems());
-							rebuildTool = new Tool(((Rebuild) p).getBarriersToRebuild());
+							rebuildTool = new Tool(Rebuild.getRebuildBarriers(getItems()));
 							items.setRebuildTool(rebuildTool);
 							rebuildMode = true;
 						}
@@ -841,6 +839,7 @@ public class GameController implements Serializable {
 		
 		public barrierErosion(Barriers b){
 			barrier = b;
+			newTime();
 		}
 		public void newTime(){
 			Random r = new Random();
@@ -858,14 +857,15 @@ public class GameController implements Serializable {
 
 			if(timePassed == 0){
 				newTime();
-				return;
+				timePassed+=erodeDelay;
 			}
-			if(timePassed >= erosionTime){
+			else if(timePassed >= erosionTime){
 				barrier.erode();
 				timePassed = 0;
 				items.getHealthBar().update(eHealthChanges.BarrierFallen.getDelta());
 			}
-			else if(barrier.getState()!=eBarrierState.ONE_HIT && timePassed >= (1/2)*erosionTime){
+			else if(barrier.getState()==eBarrierState.NO_HIT && timePassed >= (0.5)*erosionTime){
+				System.out.println("Eroding half at: " + timePassed);
 				barrier.erodeHalf();
 				timePassed+=erodeDelay;
 			}

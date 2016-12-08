@@ -24,6 +24,7 @@ public class Tool extends Item{
 	public void addTime(int delta){
 		timeOnBarrier+=delta;
 		if(timeOnBarrier >= timePerBarrier){
+			Rebuild.power(currBarrier);
 			nextBarrier();
 		}
 	}
