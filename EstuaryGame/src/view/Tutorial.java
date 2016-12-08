@@ -98,10 +98,16 @@ public class Tutorial extends EstuaryGame implements ActionListener{
 			paintDebris(g);
 			break;
 		case EROSION_GABION:
+			paintGabion(g);
+			break;
 		case EROSION_WALL:
+			paintWall(g);
+			break;
+		case EROSION_CHOICE:
+			paintErosionChoice(g);
 			break;
 		case POWERS_REMOVE:
-			//paintRemove(g);
+			paintRemove(g);
 			break;
 		case POWERS_REBUILD:
 			//paintRebuild(g);
@@ -122,16 +128,42 @@ public class Tutorial extends EstuaryGame implements ActionListener{
 	
 	public void paintDebris(Graphics g){
 		if(wrongThrow){
-			g.setColor(Color.BLACK);
+			g.setColor(Color.WHITE);
 			g.setFont(new Font("TimesRoman", Font.BOLD, 18));
-	    	g.drawString("Make sure you throw away trash and recycle cans!", 200, 300);
+	    	g.drawString("Which is the right bin to throw the Debris?",getScreenX()/3, getScreenY()/2);
 		}
 	}
 	
+	public void paintGabion(Graphics g){
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("TimesRoman", Font.BOLD, 18));
+	    g.drawString("Place a gabion.",getScreenX()/3, getScreenY()/2);
+	}
+	public void paintWall(Graphics g){
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("TimesRoman", Font.BOLD, 18));
+	    g.drawString("Place a seawall.", getScreenX()/3, getScreenY()/2);
+	}
+	public void paintErosionChoice(Graphics g){
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("TimesRoman", Font.BOLD, 18));
+    	g.drawString("Notice how fast the barriers erode. Now you pick.", getScreenX()/4, getScreenY()/2);
+	}
+	public void paintRemove(Graphics g){
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("TimesRoman", Font.BOLD, 18));
+    	g.drawString("Here's a powerup!", getScreenX()/4, getScreenY()/2);
+	}
+	public void paintRebuild(Graphics g){
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("TimesRoman", Font.BOLD, 18));
+    	g.drawString("Here's another powerup!", getScreenX()/4, getScreenY()/2);
+	}
+	
 	public void paintHealthTutorial(Graphics g){
-    	g.setColor(Color.RED);
-    	g.setFont(new Font("TimesRoman", Font.PLAIN, 18));
-    	g.drawString("The health bar tells you\n how healthy your estuary is", 150, 450);
+    	g.setColor(Color.WHITE);
+    	g.setFont(new Font("TimesRoman", Font.BOLD, 18));
+    	g.drawString("The health bar tells you how healthy your estuary is", 150, 450);
 	}
 	
 	public void paintTimerTutorial(Graphics g){
