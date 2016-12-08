@@ -297,7 +297,7 @@ public class TutorialController extends GameController {
 		public void spawnTimeReached(){}
 		
 		@Override
-		protected Debris newDebris(){
+		public Debris newDebris(){
 			Debris d = super.newDebris();
 			t.setSpotlightItem(d);
 			return d;

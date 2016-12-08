@@ -77,7 +77,7 @@ public class GameController implements Serializable {
 	spawnDebris debrisMover;
 	spawnPowers powerMover;
 	
-	eDifficulty difficulty = eDifficulty.MEDIUM;
+	eDifficulty difficulty = eDifficulty.EASY;
 	//erosion RcoastMover;
 	//erosion LcoastMover;
 	
@@ -334,6 +334,11 @@ public class GameController implements Serializable {
 	//Increase difficulty based on health and timer
 	public void checkDifficulty(){
 		if(items.getHealthBar().getHealth()>75 && items.getScreenTimer().getElapsedTime() > items.getScreenTimer().getMaxTime()/5){
+			if(difficulty.equals(eDifficulty.HARD)){
+				if(items.getScreenTimer().getElapsedTime() < items.getScreenTimer().getMaxTime()*0.9){
+					return;
+				}
+			}
 			this.setDifficulty(difficulty.getNextDifficulty());
 			System.out.println("Increasing Difficulty!!");
 		}
@@ -341,9 +346,7 @@ public class GameController implements Serializable {
 			this.setDifficulty(difficulty.getPreviousDifficulty());
 			System.out.println("decreasing Difficulty!!");
 		}
-		
-		//System.out.println("Current Difficulty" + difficulty);
-		
+				
 		switch(difficulty){
 		case VERYEASY:
 			for(Coast c: items.getCoast()){
@@ -373,7 +376,7 @@ public class GameController implements Serializable {
 			for(Coast c: items.getCoast()){
 				c.setErosionRate(6000);
 			}
-			this.getSpawnDebris().updateAveTime(1000);
+			this.getSpawnDebris().updateAveTime(2000);
 			break;
 		}
 		
@@ -427,7 +430,7 @@ public class GameController implements Serializable {
 		}
 		
 		//returns a new randomly generated piece of Debris
-		protected Debris newDebris(){
+		public Debris newDebris(){
 			timePassed = 0;
 			Random r = new Random();
 			//generate initial position;
@@ -560,7 +563,7 @@ public class GameController implements Serializable {
 		public int stormTime = 0;
 		public int realStormTime = 0;
 		boolean stormChecked = false;
-		final public int stormCheck = maxTime*(3/4); //storm check 3/4th into the game
+		final public int stormCheck = maxTime*3/4; //storm check 3/4th into the game
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -592,7 +595,7 @@ public class GameController implements Serializable {
 		}
 		
 		public void checkStormTime() {
-			if (stormTime >= 10000){  //later change this to stormCheck
+			if (stormTime >= stormCheck){  //later change this to stormCheck
 				HealthBar hb = items.getHealthBar();
 				if (!Storm.getAppeared() && (hb.getHealth() >= hb.getMaxHealth()*.75)) {
 					if (!stormChecked) {
@@ -868,7 +871,7 @@ public class GameController implements Serializable {
 		public int timePassed = 0;
 		public int erosionTime;
 		public int aveTime;
-		final public int rTime = 2000;
+		final public int rTime = 4000;
 		
 		public barrierErosion(Barriers b){
 			barrier = b;

@@ -18,7 +18,7 @@ import eNums.eScreenTimerState;
 
 public class ScreenTimer extends Item implements Serializable {
 
-	final int MAX_TIME = 50000; //ms
+	final int MAX_TIME = 120000; //ms
 	
 	private int maxTime;
 	private int timeRemaining;
