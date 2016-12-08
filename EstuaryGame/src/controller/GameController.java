@@ -529,7 +529,9 @@ public class GameController implements Serializable {
 		int maxTime = items.getScreenTimer().getMaxTime();
 		
 		public int scoringTime = 0;
+		public int difficultyTime = 0;
 		final public int scoreCheck = maxTime/500;
+		final public int difficultyCheck = maxTime/20;
 		public int healthTime = 0;
 
 		final public int healthCheck = maxTime/18;
@@ -551,12 +553,14 @@ public class GameController implements Serializable {
 			if(items.getScreenTimer().getState() == eScreenTimerState.ON){
 				timeElapsed+=paintDelay;
 				scoringTime+=paintDelay;
+				difficultyTime+=paintDelay;
 				healthTime+=paintDelay;
 				stormTime+=paintDelay;
 				items.getScreenTimer().setElapsedTime(timeElapsed);
 				
 				checkStormTime();
 				checkScoreTime();
+				checkDifficultyTime();
 				checkOverallHealth();
 				if(items.getScreenTimer().getState()==eScreenTimerState.OFF){
 					gameOver();
@@ -593,8 +597,14 @@ public class GameController implements Serializable {
 		public void checkScoreTime(){
 			if(scoringTime >= scoreCheck){
 				ScoreController.scoreHealth(items.getHealthBar().getHealth());
-				checkDifficulty();
 				scoringTime = 0;
+			}
+		}
+		
+		public void checkDifficultyTime(){
+			if(difficultyTime >= difficultyCheck){
+				checkDifficulty();
+				difficultyTime = 0;
 			}
 		}
 		
@@ -1015,7 +1025,7 @@ public class GameController implements Serializable {
 		//checks if barr collided with any of the barriers and if it is empty
 		for (Barriers b : this.items.getAllBarriers()) {
 			if ((Collisions.checkCollision(b, barr) && (b.getType() == eBarrierType.EMPTY))) {
-				//System.out.println("empty barrier collide");
+				System.out.println("empty barrier collide");
 				return b;
 			}
 		}
