@@ -12,9 +12,12 @@ public class Tool extends Item{
 	private int timeOnBarrier = 0;
 	private boolean doneBuilding = false;
 	
-	public Tool(ArrayList<Barriers> barriers){		
-		this.setHeight(height);
-		this.setWidth(width);
+	public static final int defaultWidth = 120;
+	public static final int defaultHeight = 50;
+	
+	public Tool(ArrayList<Barriers> barriers) {		
+		this.setHeight(defaultHeight);
+		this.setWidth(defaultWidth);
 		Collections.sort(barriers);
 		barriersToBuild = barriers;
 		currBarrier = barriers.get(0);

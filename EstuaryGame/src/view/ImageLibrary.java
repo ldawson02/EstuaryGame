@@ -27,6 +27,7 @@ import model.Player;
 import model.Powers;
 import model.Rebuild;
 import model.Remove;
+import model.Tool;
 
 /**
  * The big bad index of images. Essentially a custom-rolled data structure of its own.
@@ -63,6 +64,7 @@ public class ImageLibrary {
 		}
 		
 		lib.loadCoastLibrary();
+		lib.fixFrameDelays();
 		
 		System.out.println("All loaded.");
 		
@@ -82,6 +84,13 @@ public class ImageLibrary {
 				coastLibrary[i][j] = createImage(filepath);
 			}
 		}
+	}
+	
+	/**
+	 * Some animations run at different speeds, this updates those specifically.
+	 */
+	private void fixFrameDelays() {
+		library.get(eAnimation.hammer).setFrameDelay(4);
 	}
 	
 	/*
@@ -219,6 +228,12 @@ public class ImageLibrary {
 			scaled21.add(helpwalkr.getScaledInstance(Helper.defaultWidth, Helper.defaultHeight, Image.SCALE_SMOOTH));
 		}
 		library.get(eAnimation.helperWalkRight).setSeq(scaled21);
+		
+		ArrayList<Image> scaled22 = new ArrayList<Image>();
+		for (Image hammer : library.get(eAnimation.hammer).getSeq()) {
+			scaled22.add(hammer.getScaledInstance(Tool.defaultWidth, Tool.defaultHeight, Image.SCALE_SMOOTH));
+		}
+		library.get(eAnimation.hammer).setSeq(scaled22);
 	}
 	
 	public void scaleLibrary(double scaleFactor) {
