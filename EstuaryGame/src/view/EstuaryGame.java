@@ -76,6 +76,7 @@ public class EstuaryGame extends JComponent{
 	Image recycBin;
 	Image tutClockArrow;
 	Image tutHealthArrow;
+	Image tutMouseArrow;
 	Image spotlightImage;
 
 	int screenX = 800;
@@ -192,6 +193,7 @@ public class EstuaryGame extends JComponent{
 		gameOver = lib.draw(eAnimation.gameOver);
 		tutClockArrow = lib.draw(eAnimation.clockArrow);
 		tutHealthArrow = lib.draw(eAnimation.healthArrow);
+		tutMouseArrow = lib.draw(eAnimation.mouseArrow);
 		spotlightImage = lib.draw(eAnimation.spotlight);
 		recycBin = lib.draw(eAnimation.recycleBin);
 		trashBin = lib.draw(eAnimation.trashBin);
@@ -231,7 +233,7 @@ public class EstuaryGame extends JComponent{
 		//Paint health bar
 		paintHealthBar(g);
 
-
+		paintMouseArrow(g, 5, 5);
 
 		//Paint ScreenTimer
 		if (!gameFinished)
@@ -405,8 +407,11 @@ public class EstuaryGame extends JComponent{
 		if (gc.getItems().getStormv() != null) {
 			StormVisual sv = gc.getItems().getStormv();
 			g.drawImage(lib.draw(eAnimation.storm), sv.getPosX(), sv.getPosY(), this);
-			System.out.println("painting storm at" + sv.getPosX() + ", " + sv.getPosY());
 			sv.move();
+			
+			if (sv.getPosX() > 810) {
+				gc.getItems().deleteStormv();
+			}
 		}
 	}
 	
@@ -521,6 +526,10 @@ public class EstuaryGame extends JComponent{
 		unbindKeyWith("x.down", KeyStroke.getKeyStroke("DOWN"));
 		unbindKeyWith("x.left", KeyStroke.getKeyStroke("LEFT"));
 		unbindKeyWith("x.right", KeyStroke.getKeyStroke("RIGHT"));
+	}
+	
+	public void paintMouseArrow(Graphics g, int x, int y) {
+		g.drawImage(tutMouseArrow, x, y, this);
 	}
 
 	public int getScreenX() {

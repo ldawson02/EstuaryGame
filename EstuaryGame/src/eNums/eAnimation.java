@@ -41,6 +41,7 @@ public enum eAnimation {
 	healthArrow("healtharrow"),
 	spotlight("spotlight"),
 	hammer("hammer"),
+	mouseArrow("mousearrow"),
 	error("error");
 	
 	private String folderName;
