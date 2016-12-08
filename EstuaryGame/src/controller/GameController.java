@@ -185,7 +185,7 @@ public class GameController implements Serializable {
 		items.getAllBarriers().get(6).setType(eBarrierType.Wall);
 		items.getAllBarriers().get(7).setType(eBarrierType.Gabion);
 		
-		
+		setupDebrisOnCoast();
 		//Create the bins
 		items.getTrashBin().updatePos(50, 150);
 		items.getRecycleBin().updatePos(700, 150);
@@ -196,6 +196,27 @@ public class GameController implements Serializable {
 		
 		//mainGame.initTitleScreen();
 		startGame();
+	}
+	
+	public void setupDebrisOnCoast(){
+		//need to add trash to walls first so that they can be deleted
+		ArrayList<Debris> toAdd = new ArrayList<Debris>();
+		toAdd.add(new Debris(36, 290));
+		toAdd.add(new Debris(45, 230));
+		toAdd.add(new Debris(46, 320));
+		toAdd.add(new Debris(738, 243));
+		toAdd.add(new Debris(741, 285));
+		int i = 0;
+		for(Debris d:toAdd){
+			d.setState(eFloaterState.RESTING);
+			if(i%2==0){
+				d.setType(eDebrisType.TRASH);
+			}else{
+				d.setType(eDebrisType.RECYCLING);
+			}
+			getItems().addDebris(d);
+			i++;
+		}
 	}
 	
 	public void setUpPaintTimer(){
