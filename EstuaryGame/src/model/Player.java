@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 import eNums.ePlayerState;
 
+/**
+* The Player class represents the user with a constant speed & state of the player.
+*/
+
 public class Player extends Item implements Serializable{
 
 	public int speed = 10;

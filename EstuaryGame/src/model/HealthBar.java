@@ -9,11 +9,7 @@ import java.io.Serializable;
 * @version 1.0
 * @since 10/25/16
 */
-/**
- * the health bar goes from 0 to 100, and the health bar has a height and width
- * @author Pu
- *
- */
+
 public class HealthBar extends Item implements Serializable {
 	private final int maxHealth = 100;
 	private final int minHealth = 0;
