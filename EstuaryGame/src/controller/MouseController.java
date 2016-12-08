@@ -136,8 +136,12 @@ import model.Barriers;
 			}
 			dragging = false;
 			dropSpot = gc.emptyBarrierCollision(dragged);
+			System.out.println("dragged: " + dragged.getPosX());
+			if (dropSpot != null)
+				System.out.println("dropspot: " + dropSpot.getPosX());
+			System.out.println("mouse coord: " + e.getX());
 			if ((dragged != null) && (dropSpot!=null)) {  //dragged temp to any of the barrier spaces that was empty
-				//System.out.println("new barrier");
+				System.out.println("new barrier");
 				if (dragged.getType() == eBarrierType.Wall) {
 					gc.setBarrierType(dragged, eBarrierType.Wall); 
 					dropSpot.setType(eBarrierType.Wall);

@@ -33,6 +33,8 @@ public class Barriers extends Item implements Serializable, Comparable<Barriers>
 	private static int spawnY = 390;
 	public static final int defaultHeight = 37;
 	public static final int defaultWidth = 45;
+	private static int offset = 50;
+
 	
 	
 	/**
@@ -131,7 +133,7 @@ public class Barriers extends Item implements Serializable, Comparable<Barriers>
 		ArrayList<Barriers> spaces = new ArrayList<Barriers>();
 		
 		for (int i = 0; i < 5; i++) {
-			spaces.add(new Barriers(leftEdge+50*i, barrierY));
+			spaces.add(new Barriers(leftEdge+offset*i, barrierY));
 		}
 		
 		return spaces;
@@ -143,9 +145,9 @@ public class Barriers extends Item implements Serializable, Comparable<Barriers>
 	public static ArrayList<Barriers> setUpRightCoast() {
 		ArrayList<Barriers> spaces = new ArrayList<Barriers>();
 		
-		int leftestRightCoast = rightEdge - (50 * 4);
+		int leftestRightCoast = rightEdge - (offset * 4);
 		for (int i = 0; i < 5; i++) {
-			spaces.add(new Barriers(leftestRightCoast + 50*i, barrierY));
+			spaces.add(new Barriers(leftestRightCoast + offset*i, barrierY));
 		}
 		
 		return spaces;
