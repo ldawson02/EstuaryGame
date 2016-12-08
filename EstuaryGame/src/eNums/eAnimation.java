@@ -35,6 +35,7 @@ public enum eAnimation {
 	helperPickUp("helperpickup"),
 	helperLift("helperlift"),
 	helperWalkRight("helperwalkright"),
+	storm("storm"),
 	gameOver("gameOver"),
 	clockArrow("clockarrow"),
 	healthArrow("healtharrow"),

@@ -30,7 +30,6 @@ public class TitleScreen extends JPanel implements ActionListener{
     EstuaryGame game;
     Tutorial tutorial;
     Image background;
-    Timer titleTimer;
     int time = 30;
     double scaleFactor = 1.0;
     
