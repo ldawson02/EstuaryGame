@@ -5,7 +5,7 @@ package eNums;
  *
  */
 public enum eFloaterState {
-	MOVING(0), RESTING(1), LIFTED(2), THROWING(3), HITBIN(4), INITIATED(5);
+	MOVING(0), RESTING(1), LIFTED(2), THROWING(3), HITBIN(4), INITIATED(5), FROZEN(6);
 	
 	private int state;
 	/**

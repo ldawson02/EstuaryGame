@@ -233,7 +233,6 @@ public class EstuaryGame extends JComponent{
 		//Paint health bar
 		paintHealthBar(g);
 
-		paintMouseArrow(g, 5, 5);
 
 		//Paint ScreenTimer
 		if (!gameFinished)
@@ -528,9 +527,6 @@ public class EstuaryGame extends JComponent{
 		unbindKeyWith("x.right", KeyStroke.getKeyStroke("RIGHT"));
 	}
 	
-	public void paintMouseArrow(Graphics g, int x, int y) {
-		g.drawImage(tutMouseArrow, x, y, this);
-	}
 
 	public int getScreenX() {
 		return screenX;

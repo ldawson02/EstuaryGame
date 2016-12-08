@@ -17,11 +17,10 @@ public class Helper extends Item {
 	public static final int defaultWidth = 67;
 	public static final int defaultHeight = 80;
 	
-	public Helper(Remove r){
+	public Helper(){
 		super(740,0);
 		this.setHeight(defaultWidth);
 		this.setWidth(defaultHeight);
-		removeInstance = r;
 	}
 	
 	public boolean isRight(){

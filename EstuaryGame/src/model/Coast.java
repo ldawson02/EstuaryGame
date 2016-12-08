@@ -37,6 +37,8 @@ public class Coast extends Item implements Serializable{
 	private ArrayList<Barriers> barriers;
 	private eCoastState state = eCoastState.NO_HIT;
 	
+	private boolean tempProtected = false;
+	
 	/**
 	 * Constructor for coast spaces, with the default height and width 
 	 */
@@ -172,6 +174,9 @@ public class Coast extends Item implements Serializable{
 		if(barrier.getType() != eBarrierType.EMPTY){
 			return true;
 		}
+		else if(tempProtected){
+			return true;
+		}
 		else{
 			return false;
 		}
@@ -197,6 +202,11 @@ public class Coast extends Item implements Serializable{
 		return spaces;
 	}
 	
+	public void tempProtect(boolean t){
+		tempProtected = t;
+	}
+	
+
 	/**
 	 * set up the right coast, add the coast to the space
 	 * @param barriers
