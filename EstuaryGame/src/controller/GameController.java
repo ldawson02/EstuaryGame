@@ -992,7 +992,7 @@ public class GameController implements Serializable {
 		//checks if barr collided with any of the barriers and if it is empty
 		for (Barriers b : this.items.getAllBarriers()) {
 			if ((Collisions.checkCollision(b, barr) && (b.getType() == eBarrierType.EMPTY))) {
-				//System.out.println("empty barrier collide");
+				System.out.println("empty barrier collide");
 				return b;
 			}
 		}

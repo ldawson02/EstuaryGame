@@ -30,6 +30,7 @@ public class Barriers extends Item implements Serializable, Comparable<Barriers>
 	private static int barrierY = 525;
 	private static int leftEdge = 0;
 	private static int rightEdge = 750;
+	private static int spawnY = 390;
 	public static final int defaultHeight = 37;
 	public static final int defaultWidth = 45;
 	
@@ -67,6 +68,11 @@ public class Barriers extends Item implements Serializable, Comparable<Barriers>
 	public static int getRightEdge() {
 		return rightEdge;
 	}
+	
+	public static int getSpawnY() {
+		return spawnY;
+	}
+	
 	/**
 	 * the getter the y value for all barriers
 	 * @return barriery
