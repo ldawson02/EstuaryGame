@@ -116,7 +116,7 @@ public class Tutorial extends EstuaryGame implements ActionListener{
 			paintRemove(g);
 			break;
 		case POWERS_REBUILD:
-			//paintRebuild(g);
+			paintRebuild(g);
 			break;
 		case HEALTH:
 			paintHealthTutorial(g);
@@ -160,24 +160,24 @@ public class Tutorial extends EstuaryGame implements ActionListener{
 	public void paintRemove(Graphics g){
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("TimesRoman", Font.BOLD, 18));
-    	g.drawString("Here's a powerup!", getScreenX()/4, getScreenY()/2);
+    	g.drawString("Here's a powerup that helps clean up the coast!", getScreenX()/4, getScreenY()/2);
 	}
 	public void paintRebuild(Graphics g){
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("TimesRoman", Font.BOLD, 18));
-    	g.drawString("Here's another powerup!", getScreenX()/4, getScreenY()/2);
+    	g.drawString("Here's another powerup that helps keep your coast safe!", getScreenX()/4, getScreenY()/2);
 	}
 	
 	public void paintHealthTutorial(Graphics g){
     	g.setColor(Color.WHITE);
     	g.setFont(new Font("TimesRoman", Font.BOLD, 18));
-    	g.drawString("The health bar tells you how healthy your estuary is", 150, 450);
+    	g.drawString("The health bar tells you how healthy your estuary is", getScreenX()/4, getScreenY()/2);
 	}
 	
 	public void paintTimerTutorial(Graphics g){
-		g.setColor(Color.RED);
-		g.setFont(new Font("TimesRoman", Font.PLAIN, 18));
-    	g.drawString("The timer shows you how much time you have left to save the estuary", 150, 450);
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("TimesRoman", Font.BOLD, 18));
+    	g.drawString("The timer shows you how much time you have left to save the estuary",getScreenX()/5, getScreenY()/2);
 	
 	}
 	
@@ -186,7 +186,7 @@ public class Tutorial extends EstuaryGame implements ActionListener{
     	g.fillRect(0, 0, screenX, screenY);
     	
     	g.setColor(Color.BLACK);
-    	g.setFont(new Font("TimesRoman", Font.PLAIN, 35));
+    	g.setFont(new Font("TimesRoman", Font.BOLD, 35));
     	g.drawString("Ready to play?", 300, 290);
 	}
 	
