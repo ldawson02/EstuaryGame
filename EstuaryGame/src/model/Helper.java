@@ -42,6 +42,8 @@ public class Helper extends Item {
 			right = false;
 			this.updatePosX(0);
 		}
+		
+		System.out.println("debris found with finalY of: " + point);
 		this.finalY = point;
 	}
 	
