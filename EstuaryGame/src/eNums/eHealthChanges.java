@@ -11,10 +11,11 @@ public enum eHealthChanges {
 	RestingDebrisGradual(-1),
 	CorrectBin(5),
 	IncorrectBin(-5),
-	WallFallen(-8),
-	WallBuilt(12),
+	BarrierFallen(-2),
 	CoastDebrisRemoved(15),
-	CoastRebuilt(15);
+	Rebuilt(15),
+	CoastEroded(-2);
+
 	
 	
 	private int delta;

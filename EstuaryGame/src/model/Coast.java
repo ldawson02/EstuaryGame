@@ -155,7 +155,7 @@ public class Coast extends Item implements Serializable{
 		
 		int ID = 1;
 		for (Barriers b : barriers) {
-			Coast c  =new Coast(b.getPosX(), Barriers.getBarrierY()-30);
+			Coast c  =new Coast(b.getPosX(), Barriers.getBarrierY()-75);
 			c.setBarrier(b);
 			c.setCoastID(ID);
 			spaces.add(c);
@@ -163,6 +163,7 @@ public class Coast extends Item implements Serializable{
 		}
 		
 		return spaces;
+		
 	}
 	/**
 	 * set up the right coast, add the coast to the space
@@ -174,7 +175,7 @@ public class Coast extends Item implements Serializable{
 		
 		int ID = 6;
 		for (Barriers b : barriers) {
-			Coast c = new Coast(b.getPosX(), Barriers.getBarrierY()-30);
+			Coast c = new Coast(b.getPosX(), Barriers.getBarrierY()-75);
 			c.setBarrier(b);
 			c.setCoastID(ID);
 			spaces.add(c);

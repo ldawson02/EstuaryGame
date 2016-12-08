@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -12,9 +13,11 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 
 import eNums.eAnimation;
+import eNums.eBarrierType;
 import eNums.eDebrisType;
 import eNums.eFloaterState;
 import eNums.ePlayerState;
+import model.Barriers;
 import model.Bin;
 import model.Debris;
 import model.Floater;
@@ -166,6 +169,30 @@ public class ImageLibrary {
 			scaled13.add(remove2.getScaledInstance(Floater.defaultWidth, Floater.defaultHeight, Image.SCALE_SMOOTH));
 		}
 		library.get(eAnimation.removeLift).setSeq(scaled13);
+		
+		ArrayList<Image> scaled14 = new ArrayList<Image>();
+		for (Image fullgab : library.get(eAnimation.fullGabion).getSeq()) {
+			scaled14.add(fullgab.getScaledInstance(Floater.defaultWidth, Floater.defaultHeight, Image.SCALE_SMOOTH));
+		}
+		library.get(eAnimation.fullGabion).setSeq(scaled14);
+		
+		ArrayList<Image> scaled15 = new ArrayList<Image>();
+		for (Image halfgab : library.get(eAnimation.halfGabion).getSeq()) {
+			scaled15.add(halfgab.getScaledInstance(Floater.defaultWidth, Floater.defaultHeight, Image.SCALE_SMOOTH));
+		}
+		library.get(eAnimation.halfGabion).setSeq(scaled15);
+		
+		ArrayList<Image> scaled16 = new ArrayList<Image>();
+		for (Image fullwall : library.get(eAnimation.fullWall).getSeq()) {
+			scaled16.add(fullwall.getScaledInstance(Floater.defaultWidth, Floater.defaultHeight, Image.SCALE_SMOOTH));
+		}
+		library.get(eAnimation.fullWall).setSeq(scaled16);
+		
+		ArrayList<Image> scaled17 = new ArrayList<Image>();
+		for (Image halfwall : library.get(eAnimation.halfWall).getSeq()) {
+			scaled17.add(halfwall.getScaledInstance(Floater.defaultWidth, Floater.defaultHeight, Image.SCALE_SMOOTH));
+		}
+		library.get(eAnimation.halfWall).setSeq(scaled17);
 	}
 	
 	public void scaleLibrary(double scaleFactor) {
@@ -227,6 +254,28 @@ public class ImageLibrary {
 		
 		//Implied else
 		return draw(eAnimation.error);
+	}
+	
+	public Image draw(Barriers b) {
+		if (b.getType() == eBarrierType.Gabion) {
+    		switch (b.getState()) {
+    		case ONE_HIT:
+    			return draw(eAnimation.halfGabion);
+    		case NO_HIT: 
+    		default:
+    			return draw(eAnimation.fullGabion);
+    		}
+    	}
+    	else {
+    		switch (b.getState()) {
+    		case ONE_HIT:
+    			return draw(eAnimation.halfWall);
+    		case NO_HIT: 
+    		default:
+    			return draw(eAnimation.fullWall);
+    		}
+    	}
+		
 	}
 	
 	public Image draw(Powers p) {
