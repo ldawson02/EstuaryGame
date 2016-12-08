@@ -348,31 +348,31 @@ public class GameController implements Serializable {
 		switch(difficulty){
 		case VERYEASY:
 			for(Coast c: items.getCoast()){
-				c.setErosionRate(20000);
+				c.setErosionRate(30000);
 			}
 			this.getSpawnDebris().updateAveTime(15000);
 			break;
 		case EASY:
 			for(Coast c: items.getCoast()){
-				c.setErosionRate(15000);
+				c.setErosionRate(20000);
 			}
 			this.getSpawnDebris().updateAveTime(10000);
 			break;
 		case MEDIUM:
 			for(Coast c: items.getCoast()){
-				c.setErosionRate(10000);
+				c.setErosionRate(15000);
 			}
 			this.getSpawnDebris().updateAveTime(8000);
 			break;
 		case HARD:
 			for(Coast c: items.getCoast()){
-				c.setErosionRate(8000);
+				c.setErosionRate(10000);
 			}
 			this.getSpawnDebris().updateAveTime(5000);
 			break;
 		case IMPOSSIBLE:
 			for(Coast c: items.getCoast()){
-				c.setErosionRate(5000);
+				c.setErosionRate(6000);
 			}
 			this.getSpawnDebris().updateAveTime(1000);
 			break;
@@ -1030,13 +1030,10 @@ public class GameController implements Serializable {
 	public void setBarrierType(Barriers barr, eBarrierType t) {
 		//goes through list of barriers and changes the one with the matching coords to type t
 		for (Barriers b : this.items.getAllBarriers()) {
-			if((barr.getPosX()>=b.getPosX() && barr.getPosX()<=b.getPosX()+b.getWidth()) && (barr.getPosY()>=b.getPosY() && barr.getPosY()<=b.getPosY()+b.getHeight())){
+			if((barr.getPosX()>=b.getPosX() && barr.getPosX()<=b.getPosX()+b.getWidth()) 
+					&& (barr.getPosY()>=b.getPosY() && barr.getPosY()<=b.getPosY()+b.getHeight())){ //"match"
+				b.setType(t);
 				System.out.println("inside space");
-				b.setType(t);
-			}
-			if (barr.getPosX() == b.getPosX()) { //"match" 
-				System.out.println("set barrier type");
-				b.setType(t);
 			}
 		}
 	}
@@ -1048,9 +1045,12 @@ public class GameController implements Serializable {
 	 */
 	public Barriers emptyBarrierCollision(Barriers barr) {
 		//checks if barr collided with any of the barriers and if it is empty
+		int counter = 0;
 		for (Barriers b : this.items.getAllBarriers()) {
+			counter++;
 			if ((Collisions.checkCollision(b, barr) && (b.getType() == eBarrierType.EMPTY))) {
 				System.out.println("empty barrier collide");
+				System.out.println("barrier num: " + counter);
 				return b;
 			}
 		}

@@ -87,7 +87,7 @@ public class CoastTest {
 		assertEquals(leftcoast.size(),5);
 		int i=0;
 		for(Coast c: leftcoast){
-			assertEquals(c.getPosY(),Barriers.getBarrierY()-30);
+			assertEquals(c.getPosY(),Barriers.getBarrierY()-75);
 			assertEquals(c.getPosX(), leftbarriers.get(i).getPosX());
 			assertEquals(c.getBarrier(), leftbarriers.get(i));
 			assertEquals(c.getCoastID(), i+1);
@@ -102,7 +102,7 @@ public class CoastTest {
 		assertEquals(rightcoast.size(),5);
 		int i=0;
 		for(Coast c: rightcoast){
-			assertEquals(c.getPosY(),Barriers.getBarrierY()-30);
+			assertEquals(c.getPosY(),Barriers.getBarrierY()-75);
 			assertEquals(c.getPosX(), rightbarriers.get(i).getPosX());
 			assertEquals(c.getBarrier(), rightbarriers.get(i));
 			assertEquals(c.getCoastID(), i+6);
