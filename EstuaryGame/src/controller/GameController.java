@@ -420,7 +420,6 @@ public class GameController implements Serializable {
 		public spawnDebris(){
 			spawnTimeDebris = 3000;
 			items.addDebris(newDebris());
-			System.out.println("spawnDebris() called");
 			resetTimer();
 		}
 		
@@ -430,7 +429,7 @@ public class GameController implements Serializable {
 		}
 		
 		//returns a new randomly generated piece of Debris
-		public Debris newDebris(){
+		protected Debris newDebris(){
 			timePassed = 0;
 			Random r = new Random();
 			//generate initial position;
@@ -456,7 +455,6 @@ public class GameController implements Serializable {
 			Random r = new Random();
 			spawnTimeDebris = r.nextInt(rTime) + aveTime - rTime/2;
 			timePassed = 0;
-			System.out.println("Reset the timer to: " + spawnTimeDebris);
 		}
 		
 		public void checkCatchDebris(Debris d){
@@ -508,7 +506,6 @@ public class GameController implements Serializable {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("spawnTimeDebris set at: " + spawnTimeDebris);
 			ArrayList<Debris> toDelete = new ArrayList<Debris>();
 			//might want to put this for loop in its own class in the Controller
 			for(Debris d : items.getAllDebris()){
@@ -537,7 +534,6 @@ public class GameController implements Serializable {
 				
 			//if the timer goes off then add another piece of debris at the top
 			if(timePassed >= spawnTimeDebris){
-				System.out.println("Trying to spawn new Debris");
 				spawnTimeReached();
 			}
 			

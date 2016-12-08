@@ -296,7 +296,7 @@ public class TutorialController extends GameController {
 		public void spawnTimeReached(){}
 		
 		@Override
-		public Debris newDebris(){
+		protected Debris newDebris(){
 			Debris d = super.newDebris();
 			t.setSpotlightItem(d);
 			return d;
@@ -330,17 +330,17 @@ public class TutorialController extends GameController {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			super.actionPerformed(e);
-			int distance = 0;
+			int distance = GameController.dimY;
 			for(Debris d : thisGame.getItems().getAllDebris()){
-				if(d.getPosY() > distance && t.getState()==eTutorialState.DEBRIS){
+				if(d.getPosY() < distance && t.getState()==eTutorialState.DEBRIS){
 					distance = d.getPosY();
 				}
 			}
 			
-			if(distance >= t.getScreenY()/4){
+			if(distance >= GameController.dimY/4){
 				thisGame.getItems().addDebris(newDebris());
 			}
+			super.actionPerformed(e);
 		}
 		
 	}
@@ -393,14 +393,14 @@ public class TutorialController extends GameController {
 				stageComplete();
 			}
 			else{
-				int distance = t.getScreenY();
+				int distance = GameController.dimY;
 				for(Powers p : thisGame.getItems().getAllPowers()){
 					if(p.getPosY() < distance){
 						distance = p.getPosY();
 					}
 				}
 				
-				if(distance >= t.getScreenY()/4){
+				if(distance >= GameController.dimY/4){
 					quickSpawn();
 				}
 			}
@@ -414,6 +414,8 @@ public class TutorialController extends GameController {
 		private Barriers erodingBarrier;
 		private int erodeDelay = 3000;
 		private int time = 0;
+		private boolean hold = false;
+		private int spotlightDelay = 500;
 		
 		public erosion(Coast c){
 			erodingCoast = c;
@@ -431,8 +433,9 @@ public class TutorialController extends GameController {
 				erodingCoast.erode();
 				time = 0;
 				erodeDelay = 10000;
-				t.spotlight = false;
-				t.spotlightSwitched = true;
+				hold = true;
+				//t.spotlight = false;
+				//t.spotlightSwitched = true;
 				//TODO: something to point to painting the drag and drop arrow
 			}
 			if(erodingCoast.isProtected()){
@@ -458,6 +461,9 @@ public class TutorialController extends GameController {
 			}else{
 				time+=erodeCallDelay;
 			}
+			if(hold){
+				checkSpotlight();
+			}
 		}
 		
 		public void barrierErosion(){
@@ -474,6 +480,14 @@ public class TutorialController extends GameController {
 				erodingBarrier.erodeHalf();
 			}
 			
+		}
+		
+		public void checkSpotlight(){
+			if(time >= delaySpotlight){
+				t.spotlight = false;
+				t.spotlightSwitched = true;
+				hold = false;
+			}
 		}
 		
 		@Override
