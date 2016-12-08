@@ -35,11 +35,13 @@ public enum eAnimation {
 	helperPickUp("helperpickup"),
 	helperLift("helperlift"),
 	helperWalkRight("helperwalkright"),
+	storm("storm"),
 	gameOver("gameOver"),
 	clockArrow("clockarrow"),
 	healthArrow("healtharrow"),
 	spotlight("spotlight"),
 	hammer("hammer"),
+	mouseArrow("mousearrow"),
 	error("error");
 	
 	private String folderName;

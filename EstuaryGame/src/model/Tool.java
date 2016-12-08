@@ -24,6 +24,14 @@ public class Tool extends Item{
 		this.updatePos();
 	}
 	
+	public void stopErosion(ArrayList<Coast> coastline){
+		for(Coast c : coastline){
+			if(barriersToBuild.contains(c.getBarrier())){
+				c.tempProtect(true);
+			}
+		}
+	}
+	
 	public void addTime(int delta){
 		timeOnBarrier+=delta;
 		if(timeOnBarrier >= timePerBarrier){

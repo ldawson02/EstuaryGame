@@ -10,20 +10,11 @@ import eNums.eBarrierState;
 import eNums.eBarrierType;
 
 /**
- * Barrier interface. Each barrier has build, decay, and crumble methods.
- * 
- * @author: Rachel Muzzelo
- * @version 1.0
- * @since 10/25/16
- */
-/**barrier class has a constant decaytime, and has health which type of barrier erosion time, and constant barriery,leftedge and rightedge
- * 
- * 
- *
+ * the barrier class represents the barriers on the coast with a type, state, erosion countdown, 
+ * x coord, y coord, height, width
  */
 public class Barriers extends Item implements Serializable, Comparable<Barriers>{
-	private boolean protector = false;
-	//overall state of the barrier
+
 	private eBarrierType type;
 	private eBarrierState state = eBarrierState.NO_HIT;
 	private Timer erosionTimer;
@@ -36,9 +27,9 @@ public class Barriers extends Item implements Serializable, Comparable<Barriers>
 	private static int offset = 50;
 
 	
-	
 	/**
-	 * Constructor for Barrier
+	 * Constructor for Barrier, with a default of EMPTY type
+	 * @param x, y
 	 */
 	public Barriers(int x, int y){
 		super(x,y);
@@ -47,6 +38,11 @@ public class Barriers extends Item implements Serializable, Comparable<Barriers>
 		type = eBarrierType.EMPTY;
 	};
 	
+	
+	/**
+	 * Constructor for Barrier, with a chosen type
+	 * @param x, y
+	 */
 	public Barriers(int x, int y, eBarrierType t){
 		super(x,y);
 		setWidth(defaultWidth);
@@ -55,79 +51,110 @@ public class Barriers extends Item implements Serializable, Comparable<Barriers>
 	}
 	
 	
-	/**the getter for leftedge
-	 * 
-	 * @return leftedge;
+	/**
+	 * getter for the x coord of left edge of the right-most barrier
+	 * @return leftEdge;
 	 */
 	public static int getLeftEdge() {
 		return leftEdge;
 	}
 	
 	/**
-	 * the getter for right edge
-	 * @return right edge
+	 * the getter for right-most edge of all barriers
+	 * @return rightEdge
 	 */
 	public static int getRightEdge() {
 		return rightEdge;
 	}
 	
+	/**
+	 * the getter for the upper y coord spawn point
+	 * @return spawnY
+	 */
 	public static int getSpawnY() {
 		return spawnY;
 	}
 	
 	/**
-	 * the getter the y value for all barriers
-	 * @return barriery
+	 * the getter for the y value for all bottom barriers
+	 * @return barrierY
 	 */
 	public static int getBarrierY(){
 		return barrierY;
 	}
 
-
 	/**
-	 * the barrier will erode and then the barrier type will be empty.
-	 */
-	public void erode(){
-		this.setType(eBarrierType.EMPTY);
-		this.setState(eBarrierState.NO_HIT);
-	}
-	
-	public void erodeHalf(){
-		this.setState(eBarrierState.ONE_HIT);
-	}
-
-	/**
-	 * the decaytime getter and setter
-	 * @return decaytime;
+	 * getter for the decayTime of the barrier, dependent on its type
+	 * @return decayTime;
 	 */
 	public int getDecayTime() {
 		return this.getType().getDecay();
 	}
 	
 	/**
-	 * the getter and setter for type
+	 * getter for the barrier's type
 	 * @return type
 	 */
 	public eBarrierType getType() {
 		return type;
 	}
 
+	/**
+	 * setter for the barrier's type, also sets the state to no hits
+	 */
 	public void setType(eBarrierType type) {
 		this.type = type;
 		this.setState(eBarrierState.NO_HIT);
 	}
 
+	/**
+	 * getter for the barrier's state, either no hits or one hit
+	 * @return state
+	 */
 	public eBarrierState getState(){
 		return state;
 	}
 	
+	/**
+	 * setter for the barrier's state
+	 */
 	public void setState(eBarrierState s){
 		state = s;
 	}
+	
+	/**
+	 * get the erosion timer of this barrier
+	 * @return erosionTimer;
+	 */
+	public Timer getErosionTimer() {
+		return erosionTimer;
+	}
+
+	/** 
+	 * set the erosion timer of this barrier
+	 */
+	public void setErosionTimer(Timer t) {
+		this.erosionTimer = t;
+	}
+	
+	/**
+	 * erodes the barrier and sets to EMPTY type, also set to no hits
+	 */
+	public void erode(){
+		this.setType(eBarrierType.EMPTY);
+		this.setState(eBarrierState.NO_HIT);
+	}
+	
+	/**
+	 * erodes the barrier, and sets to only one hit
+	 */
+	public void erodeHalf(){
+		this.setState(eBarrierState.ONE_HIT);
+	}
 
 	/**
-	 * we set up the left coast, when the loop less than 5, the space will add barrier in left
-	 * @return spaces.
+	 * set up the left coast (5 leftmost barriers)
+	 * @return array list of set up default barriers (set to empty)
 	 */
 	public static ArrayList<Barriers> setUpLeftCoast() {
 		ArrayList<Barriers> spaces = new ArrayList<Barriers>();
@@ -138,9 +165,10 @@ public class Barriers extends Item implements Serializable, Comparable<Barriers>
 		
 		return spaces;
 	}
+	
 	/**
-	 * we set up the right coast, when the loop less than 5, the space will add barrier in right
-	 * @return spaces.
+	 * set up the right coast (5 rightmost barriers)
+	 * @return array list of set up default barriers (set to empty)
 	 */
 	public static ArrayList<Barriers> setUpRightCoast() {
 		ArrayList<Barriers> spaces = new ArrayList<Barriers>();
@@ -152,34 +180,6 @@ public class Barriers extends Item implements Serializable, Comparable<Barriers>
 		
 		return spaces;
 	}
-
-	public boolean isProtector() {
-		return protector;
-	}
-
-	/**
-	 * set the protector
-	 * @param protector
-	 */
-	public void setProtector(boolean protector) {
-		this.protector = protector;
-	}
-/**
- * get the erosion timer
- * @return erosiontimer;
- */
-	public Timer getErosionTimer() {
-		return erosionTimer;
-	}
-
-	/** 
-	 * set the erosion timer
-	 * @param bTimer
-	 */
-	public void setErosionTimer(Timer bTimer) {
-		this.erosionTimer = bTimer;
-	}
-
 	
 	/**
 	 * Custom comparator to sort Barriers from left to right

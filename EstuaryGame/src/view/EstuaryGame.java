@@ -76,6 +76,7 @@ public class EstuaryGame extends JComponent{
 	Image recycBin;
 	Image tutClockArrow;
 	Image tutHealthArrow;
+	Image tutMouseArrow;
 	Image spotlightImage;
 
 	int screenX = 800;
@@ -114,7 +115,7 @@ public class EstuaryGame extends JComponent{
 
 				mainGame = new EstuaryGame();
 				tutorial = new Tutorial();
-				titleScreen = new TitleScreen(mainGame, tutorial);
+				titleScreen = new TitleScreen();
 				endScreen = new EndScreen();
 
 				mainGame.addComponentListener ( new ComponentAdapter ()
@@ -192,6 +193,7 @@ public class EstuaryGame extends JComponent{
 		gameOver = lib.draw(eAnimation.gameOver);
 		tutClockArrow = lib.draw(eAnimation.clockArrow);
 		tutHealthArrow = lib.draw(eAnimation.healthArrow);
+		tutMouseArrow = lib.draw(eAnimation.mouseArrow);
 		spotlightImage = lib.draw(eAnimation.spotlight);
 		recycBin = lib.draw(eAnimation.recycleBin);
 		trashBin = lib.draw(eAnimation.trashBin);
@@ -223,12 +225,13 @@ public class EstuaryGame extends JComponent{
 
 		//Paint power effects if relevant
 		paintHelper(g);
-		//
 		paintTool(g);
 
+		//Paint storm when it's hanging out
+		paintStorm(g);
+		
 		//Paint health bar
 		paintHealthBar(g);
-
 
 
 		//Paint ScreenTimer
@@ -381,7 +384,12 @@ public class EstuaryGame extends JComponent{
 	private void paintHelper(Graphics g) {
 		if (gc.getItems().getRemoveHelper() != null) {
 			Helper h = gc.getItems().getRemoveHelper();
-			g.drawImage(lib.draw(h), h.getPosX(), h.getPosY(), this);
+			if (h.isRight()) {
+				g.drawImage(lib.draw(h), h.getPosX(), h.getPosY(), this);
+			}
+			else {
+				g.drawImage(lib.draw(h), h.getPosX() + h.getWidth(), h.getPosY(), -h.getWidth(), h.getHeight(), this);
+			}
 		}
 	}
 	
@@ -394,6 +402,18 @@ public class EstuaryGame extends JComponent{
 		}
 	}
 
+	private void paintStorm(Graphics g) {
+		if (gc.getItems().getStormv() != null) {
+			StormVisual sv = gc.getItems().getStormv();
+			g.drawImage(lib.draw(eAnimation.storm), sv.getPosX(), sv.getPosY(), this);
+			sv.move();
+			
+			if (sv.getPosX() > 810) {
+				gc.getItems().deleteStormv();
+			}
+		}
+	}
+	
 	private void paintPowers(Graphics g) {
 		ArrayList<Powers> powers = gc.getItems().getAllPowers();
 		for (Powers p : powers) {
@@ -506,6 +526,7 @@ public class EstuaryGame extends JComponent{
 		unbindKeyWith("x.left", KeyStroke.getKeyStroke("LEFT"));
 		unbindKeyWith("x.right", KeyStroke.getKeyStroke("RIGHT"));
 	}
+	
 
 	public int getScreenX() {
 		return screenX;

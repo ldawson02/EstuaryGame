@@ -3,6 +3,7 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import javax.swing.AbstractAction;
 import javax.swing.KeyStroke;
@@ -14,6 +15,7 @@ import eNums.eBarrierType;
 import eNums.eDebrisType;
 import eNums.eFloaterState;
 import eNums.eHealthChanges;
+import eNums.eHelperState;
 import eNums.eTutorialState;
 import model.Barriers;
 import model.Coast;
@@ -38,6 +40,7 @@ public class TutorialController extends GameController {
 	private unpause unpauseAction;
 	private Timer erosionTimer;
 	private ArrayList<Timer> erosionTimers = new ArrayList<Timer>();
+	private HashSet<Timer> allTimers = new HashSet<Timer>();
 	
 	public TutorialController(Tutorial mainGame) {
 		super(mainGame);
@@ -45,6 +48,7 @@ public class TutorialController extends GameController {
 		unpauseAction = new unpause();
 		tutorialSetup();
 		debrisSetup();
+		debrisFloating.start();
 		debrisFloating.setDelay(floatDelay);
 		System.out.println("still in constructor");
 	}
@@ -52,6 +56,11 @@ public class TutorialController extends GameController {
 	@Override
 	public void startGame(){
 		System.out.println("POLYMORPHISM");
+	}
+	
+	public void gameOver(){
+		t.setState(eTutorialState.DONE);
+		stopTimers();
 	}
 	
 	public void tutorialSetup(){
@@ -97,6 +106,14 @@ public class TutorialController extends GameController {
 		}
 	}
 	
+	@Override
+	public void stopTimers(){
+		super.stopTimers();
+		for(Timer t : allTimers){
+			t.stop();
+		}
+	}
+	
 	public void startStage(){
 		System.out.println("State is: " + t.getState());
 		switch(t.getState()){
@@ -133,7 +150,7 @@ public class TutorialController extends GameController {
 		this.debrisMover = new spawnDebris();
 		System.out.println("float delay: " + this.getFloatDelay());
 		debrisFloating = new Timer(this.getFloatDelay(), debrisMover);
-		debrisFloating.start();
+		allTimers.add(debrisFloating);
 	}
 	
 	public void erosion1Setup(){
@@ -144,6 +161,7 @@ public class TutorialController extends GameController {
 		
 		freezeMotion();
 		
+		
 		Coast focusCoast = getItems().getCoast().get(5); //Barrier above should be empty
 		t.setSpotlightItem(focusCoast);
 		Barriers focusBarrierSpot = focusCoast.getBarrier();
@@ -153,8 +171,13 @@ public class TutorialController extends GameController {
 		focusCoast.setErosionTimer(new Timer(erodeCallDelay, new erosion(focusCoast)));
 		focusCoast.getErosionTimer().start();
 		
+		DrawableItem arrow = new DrawableItem(EstuaryGame.mc.getGabionsSpawnR().getPosX(), EstuaryGame.mc.getGabionsSpawnR().getPosY(), 32, 50);
+		arrow.setStartandEnd(EstuaryGame.mc.getGabionsSpawnR().getPosX()+10, EstuaryGame.mc.getGabionsSpawnR().getPosY()+10, focusBarrierSpot.getPosX()+10, focusBarrierSpot.getPosY()+10);
+		t.setArrow(arrow);
+		
 		erosionTimers.add(focusBarrierSpot.getErosionTimer());
 		erosionTimers.add(focusCoast.getErosionTimer());
+		allTimers.addAll(erosionTimers);
 	}
 	
 	public void erosion2Setup(){
@@ -168,8 +191,13 @@ public class TutorialController extends GameController {
 		focusBarrierSpot.setErosionTimer(new Timer(erodeCallDelay, new erosion(focusBarrierSpot,focusCoast, 2000)));
 		focusBarrierSpot.getErosionTimer().start();
 		
+		DrawableItem arrow = new DrawableItem(EstuaryGame.mc.getWallSpawnR().getPosX(), EstuaryGame.mc.getWallSpawnR().getPosY(), 32, 50);
+		arrow.setStartandEnd(EstuaryGame.mc.getWallSpawnR().getPosX()+10, EstuaryGame.mc.getWallSpawnR().getPosY()+10, focusBarrierSpot.getPosX()+10, focusBarrierSpot.getPosY()+10);
+		t.setArrow(arrow);
+		
 		erosionTimers.add(focusBarrierSpot.getErosionTimer());
 		erosionTimers.add(focusCoast.getErosionTimer());
+		allTimers.addAll(erosionTimers);
 	}
 	
 	public void erosion3Setup(){
@@ -198,6 +226,8 @@ public class TutorialController extends GameController {
 		erosionTimers.add(focusCoast1.getErosionTimer());
 		erosionTimers.add(focusBarrierSpot2.getErosionTimer());
 		erosionTimers.add(focusCoast2.getErosionTimer());
+		
+		allTimers.addAll(erosionTimers);
 	}
 	
 	public void powerSetup(eTutorialState state){
@@ -210,6 +240,7 @@ public class TutorialController extends GameController {
 		this.powerMover = new spawnPowers(state);
 		powersFloating = new Timer(this.getFloatDelay(), powerMover);
 		powersFloating.start();
+		allTimers.add(powersFloating);
 	}
 	
 	public void removeSetup(){}
@@ -330,17 +361,17 @@ public class TutorialController extends GameController {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			super.actionPerformed(e);
-			int distance = 0;
+			int distance = GameController.dimY;
 			for(Debris d : thisGame.getItems().getAllDebris()){
-				if(d.getPosY() > distance && t.getState()==eTutorialState.DEBRIS){
+				if(d.getPosY() < distance && t.getState()==eTutorialState.DEBRIS){
 					distance = d.getPosY();
 				}
 			}
 			
-			if(distance >= t.getScreenY()/4){
+			if(distance >= GameController.dimY/4){
 				thisGame.getItems().addDebris(newDebris());
 			}
+			super.actionPerformed(e);
 		}
 		
 	}
@@ -348,6 +379,7 @@ public class TutorialController extends GameController {
 	public class spawnPowers extends GameController.spawnPowers implements ActionListener{
 		eTutorialState eState;
 		private int time = 0;
+		public boolean animationStarted = false;
 		
 		public spawnPowers(eTutorialState e){
 			super();
@@ -386,21 +418,47 @@ public class TutorialController extends GameController {
 		@Override
 		public void actionPerformed(ActionEvent e){
 			super.actionPerformed(e);
+
 			if(time!= 0 & !thisGame.getItems().getAllPowers().contains(t.getSpotlightItem())){
-				System.out.println("Stopping power: " + eState);
-				powersFloating.stop();
-				t.setSpotlight(false);
-				stageComplete();
+				if(!animationStarted){
+					animationStarted = true;
+					if(t.getState() == eTutorialState.POWERS_REMOVE){
+						t.setSpotlightItem(removeHelper);
+					}
+					else{
+						t.setSpotlight(false);
+						t.setSpotlightItem(null);
+					}
+				}
+				if(t.getState() == eTutorialState.POWERS_REMOVE){
+					if(removeHelper.getState() == eHelperState.WALKING_OFF){
+						t.setSpotlight(false);
+					}
+					if(!removeMode){
+						System.out.println("Stopping power: " + eState);
+						powersFloating.stop();
+						t.setSpotlight(false);
+						stageComplete();
+					}
+				}else if(t.getState() == eTutorialState.POWERS_REBUILD){
+					if(!rebuildMode){
+						System.out.println("Stopping power: " + eState);
+						powersFloating.stop();
+						t.setSpotlight(false);
+						stageComplete();
+					}
+				}
+
 			}
 			else{
-				int distance = t.getScreenY();
+				int distance = GameController.dimY;
 				for(Powers p : thisGame.getItems().getAllPowers()){
 					if(p.getPosY() < distance){
 						distance = p.getPosY();
 					}
 				}
 				
-				if(distance >= t.getScreenY()/4){
+				if(distance >= GameController.dimY/4 && !this.removeMode && !this.rebuildMode){
 					quickSpawn();
 				}
 			}
@@ -414,6 +472,8 @@ public class TutorialController extends GameController {
 		private Barriers erodingBarrier;
 		private int erodeDelay = 3000;
 		private int time = 0;
+		private boolean hold = false;
+		private int spotlightDelay = 500;
 		
 		public erosion(Coast c){
 			erodingCoast = c;
@@ -431,8 +491,9 @@ public class TutorialController extends GameController {
 				erodingCoast.erode();
 				time = 0;
 				erodeDelay = 10000;
-				t.spotlight = false;
-				t.spotlightSwitched = true;
+				hold = true;
+				//t.spotlight = false;
+				//t.spotlightSwitched = true;
 				//TODO: something to point to painting the drag and drop arrow
 			}
 			if(erodingCoast.isProtected()){
@@ -458,6 +519,9 @@ public class TutorialController extends GameController {
 			}else{
 				time+=erodeCallDelay;
 			}
+			if(hold){
+				checkSpotlight();
+			}
 		}
 		
 		public void barrierErosion(){
@@ -474,6 +538,14 @@ public class TutorialController extends GameController {
 				erodingBarrier.erodeHalf();
 			}
 			
+		}
+		
+		public void checkSpotlight(){
+			if(time >= delaySpotlight){
+				t.spotlight = false;
+				t.spotlightSwitched = true;
+				hold = false;
+			}
 		}
 		
 		@Override

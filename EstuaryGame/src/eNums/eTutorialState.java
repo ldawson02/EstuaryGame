@@ -1,14 +1,23 @@
 package eNums;
 
 public enum eTutorialState {
+	/**
+	 * in tutorial state, there are debris, erosion_gabion, erosion_wall, erosion_choice, powers_remove, rebuild, and health, timer ,done, idle inside
+	 */
 	DEBRIS(0), EROSION_GABION(1), EROSION_WALL(1), EROSION_CHOICE(1), POWERS_REMOVE(2), POWERS_REBUILD(2), HEALTH(3), TIMER(4), DONE(5), IDLE(-1);
 	
 	private int state;
-	
+	/**
+	 * construct a tutorial state
+	 * @param i
+	 */
 	eTutorialState(int i){
 		this.state = i;
 	}
-	
+	/**
+	 * illustrates things' next state
+	 * @return state
+	 */
 	public eTutorialState nextState(){
 		eTutorialState state;
 		switch (this){

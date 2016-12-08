@@ -15,6 +15,7 @@ import controller.GameController;
 import controller.MouseController;
 import controller.TutorialController;
 import eNums.eTutorialState;
+import model.DrawableItem;
 import model.Item;
 
 public class Tutorial extends EstuaryGame implements ActionListener{
@@ -28,6 +29,7 @@ public class Tutorial extends EstuaryGame implements ActionListener{
 	public boolean wrongThrow = false;
 	private Item spotlightItem;
 	public TutorialController tc; 
+	public DrawableItem arrow;
 
 	public boolean getSpotlightSwitched(){
 		return spotlightSwitched;
@@ -66,7 +68,6 @@ public class Tutorial extends EstuaryGame implements ActionListener{
 		this.mc = new MouseController();
 		this.mc.setGC(tc);
 		this.gc = tc;
-		
 	}
 
 	public void wrongBin(){
@@ -89,6 +90,10 @@ public class Tutorial extends EstuaryGame implements ActionListener{
 		spotlight = false;
 	}
 
+	public void setArrow(DrawableItem a){
+		arrow = a;
+	}
+	
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
@@ -99,13 +104,19 @@ public class Tutorial extends EstuaryGame implements ActionListener{
 			paintDebris(g);
 			break;
 		case EROSION_GABION:
+			paintGabion(g);
+			break;
 		case EROSION_WALL:
+			paintWall(g);
+			break;
+		case EROSION_CHOICE:
+			paintErosionChoice(g);
 			break;
 		case POWERS_REMOVE:
-			//paintRemove(g);
+			paintRemove(g);
 			break;
 		case POWERS_REBUILD:
-			//paintRebuild(g);
+			paintRebuild(g);
 			break;
 		case HEALTH:
 			paintHealthTutorial(g);
@@ -123,22 +134,50 @@ public class Tutorial extends EstuaryGame implements ActionListener{
 	
 	public void paintDebris(Graphics g){
 		if(wrongThrow){
-			g.setColor(Color.BLACK);
+			g.setColor(Color.WHITE);
 			g.setFont(new Font("TimesRoman", Font.BOLD, 18));
-	    	g.drawString("Make sure you throw away trash and recycle cans!", 200, 300);
+	    	g.drawString("Which is the right bin to throw the Debris?",getScreenX()/3, getScreenY()/2);
 		}
 	}
 	
+	public void paintGabion(Graphics g){
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("TimesRoman", Font.BOLD, 18));
+	    g.drawString("Place a gabion.",getScreenX()/3, getScreenY()/2);
+	    paintMouseArrow(g, arrow);
+	}
+	public void paintWall(Graphics g){
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("TimesRoman", Font.BOLD, 18));
+	    g.drawString("Place a seawall.", getScreenX()/3, getScreenY()/2);
+	    paintMouseArrow(g, arrow);
+	}
+	public void paintErosionChoice(Graphics g){
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("TimesRoman", Font.BOLD, 18));
+    	g.drawString("Notice how fast the barriers erode. Now you pick.", getScreenX()/4, getScreenY()/2);
+	}
+	public void paintRemove(Graphics g){
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("TimesRoman", Font.BOLD, 18));
+    	g.drawString("Here's a powerup that helps clean up the coast!", getScreenX()/4, getScreenY()/2);
+	}
+	public void paintRebuild(Graphics g){
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("TimesRoman", Font.BOLD, 18));
+    	g.drawString("Here's another powerup that helps keep your coast safe!", getScreenX()/4, getScreenY()/2);
+	}
+	
 	public void paintHealthTutorial(Graphics g){
-    	g.setColor(Color.RED);
-    	g.setFont(new Font("TimesRoman", Font.PLAIN, 18));
-    	g.drawString("The health bar tells you\n how healthy your estuary is", 150, 450);
+    	g.setColor(Color.WHITE);
+    	g.setFont(new Font("TimesRoman", Font.BOLD, 18));
+    	g.drawString("The health bar tells you how healthy your estuary is", getScreenX()/4, getScreenY()/2);
 	}
 	
 	public void paintTimerTutorial(Graphics g){
-		g.setColor(Color.RED);
-		g.setFont(new Font("TimesRoman", Font.PLAIN, 18));
-    	g.drawString("The timer shows you how much time you have left to save the estuary", 150, 450);
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("TimesRoman", Font.BOLD, 18));
+    	g.drawString("The timer shows you how much time you have left to save the estuary",getScreenX()/5, getScreenY()/2);
 	
 	}
 	
@@ -147,7 +186,7 @@ public class Tutorial extends EstuaryGame implements ActionListener{
     	g.fillRect(0, 0, screenX, screenY);
     	
     	g.setColor(Color.BLACK);
-    	g.setFont(new Font("TimesRoman", Font.PLAIN, 35));
+    	g.setFont(new Font("TimesRoman", Font.BOLD, 35));
     	g.drawString("Ready to play?", 300, 290);
 	}
 	
@@ -200,16 +239,19 @@ public class Tutorial extends EstuaryGame implements ActionListener{
     	g.drawImage(spotlightImage, paintX, paintY, this);
     }
     
+	public void paintMouseArrow(Graphics g, DrawableItem i) {
+		g.drawImage(tutMouseArrow, i.getPosX(), i.getPosY(), this);
+		i.move();
+	}
     
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		CardLayout c1 = (CardLayout) (EstuaryGame.getCards().getLayout());
 		String cmd = e.getActionCommand();
 		if(cmd.equals("START GAME")){
+			tc.gameOver();
 			c1.show(EstuaryGame.getCards(), "MainGame");
-			/**
-			EstuaryGame.gc.tutorialOff();
-			*/
+			//EstuaryGame.mainGame = new EstuaryGame();
 			EstuaryGame.gc = new GameController(EstuaryGame.mainGame);
 			EstuaryGame.mc = new MouseController();
 			EstuaryGame.mc.setGC(EstuaryGame.gc);

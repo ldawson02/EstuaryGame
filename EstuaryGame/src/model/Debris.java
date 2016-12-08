@@ -11,7 +11,8 @@ import eNums.eDebrisType;
 import eNums.eThrowDirection;
 
 /**
- * 
+ * The Debris class represents the debris with a type, state, whether it is in the
+ * correct bin, and its current selected throw direction
  * 
  * @author Ian Heffner
  * @version 1.0
@@ -34,11 +35,21 @@ public class Debris extends Floater implements Serializable {
 		super();
 		this.state = eFloaterState.MOVING;
 	}
+	
+	/**
+	 * Constructor for Debris at (x, y), and defaulted to MOVING state
+	 * @param x, y
+	 */
 	public Debris(int x, int y){
 		super(x,y);
 		this.state = eFloaterState.MOVING;
-		
+		LR = new ArrayList<Bin>();
 	};
+	
+	/**
+	 * Constructor for Debris defaulted to MOVING, set to type specified
+	 * @param etype
+	 */
 	public Debris(eDebrisType etype) {
 		super();
 		this.type = etype;
@@ -47,40 +58,69 @@ public class Debris extends Floater implements Serializable {
 	}
 	
 	/**
-	 * getter for type
-	 * @return the type
+	 * getter for the type of the Debris
+	 * @return type
 	 */
 	public eDebrisType getType() {
 		return type;
 	}
 
 	/**
-	 * set the type
-	 * @param type the type to set
+	 * set the type of the Debris
 	 */
 	public void setType(eDebrisType type) {
 		this.type = type;
 	}
 
 	/**
-	 * get the state
+	 * getter for the state of the Debris
 	 * @return the state
 	 */
 	public eFloaterState getState() {
 		return state;
 	}
-
+	
 	/**
-	 * set the state
-	 * @param state the state to set
+	 * set the state of the Debris
 	 */
 	public void setState(eFloaterState state) {
 		this.state = state;
 	}
-/**
- * to check if it gets the correct bin or not
- * @return true or false
- */
+	
+	/**
+	 * sets the selected throw direction of the debris
+	 */
+	public void setThrowDirection(eThrowDirection e){
+		throwDir = e;
+	}
+	
+	/**
+	 * getter for the selected throw direction of the debris
+	 */
+	public eThrowDirection getThrowDirection(){
+		return throwDir;
+	}
+	
+
+	/**
+	 * sets the state of the Debris to RESTING 
+	 */
+	public void rest() {
+		this.setState(eFloaterState.RESTING);
+	}
+	
+	/**
+	 * sets the state of the debris to LIFTED
+	 */
+	@Override
+	public void catching() {
+		this.setState(eFloaterState.LIFTED);
+	}
+	
+	/**
+	 * to check if the chosen throw direction matches the correct bin (according to its type)
+	 * @return true or false
+	 */
 	public boolean getCorrectBin() {
 		
 		if (this.throwDir.getDirection() == this.type.getType()) {
@@ -89,13 +129,11 @@ public class Debris extends Floater implements Serializable {
 		else {
 			return false;
 		}
-		
 	}
 
-/**
- * Get the bin in the throw direction
- * @return
- */
+	/**
+	 * sets the bins in the right order
+	 */
 	public void setBins(Bin recyc, Bin trash) {
 		LR.add(recyc);
 		LR.add(trash);
@@ -104,6 +142,10 @@ public class Debris extends Floater implements Serializable {
 		}
 	}
 	
+	/**
+	 * Getter for the bin corresponding to the debris' throw direction
+	 * @return
+	 */
 	public Bin getBin(){
 		//if they throw Left return Left-most bin
 		if(throwDir==eThrowDirection.LEFT){
@@ -113,29 +155,5 @@ public class Debris extends Floater implements Serializable {
 		else{
 			return LR.get(1);
 		}
-	}
-	
-	public void rest() {
-		this.setState(eFloaterState.RESTING);
-	}
-	
-	/**
-	 * getter and setter for throw direction
-	 * @param e
-	 */
-	public void setThrowDirection(eThrowDirection e){
-		throwDir = e;
-	}
-	
-	public eThrowDirection getThrowDirection(){
-		return throwDir;
-	}
-	
-
-	@Override
-	public void catching() {
-		this.setState(eFloaterState.LIFTED);
-	}
-
-	
+	}	
 }

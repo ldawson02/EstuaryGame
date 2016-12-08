@@ -11,7 +11,6 @@ import eNums.eScreenTimerState;
  * is NOT the actual game timer that handles the tick, just the
  * visual timer.
  * 
- * 
  * @author Ian Heffner
  * @version 1.0
  * @since 10/25/16
@@ -19,7 +18,7 @@ import eNums.eScreenTimerState;
 
 public class ScreenTimer extends Item implements Serializable {
 
-	final int MAX_TIME = 50000; //ms
+	final int MAX_TIME = 120000; //ms
 	
 	private int maxTime;
 	private int timeRemaining;
@@ -30,9 +29,6 @@ public class ScreenTimer extends Item implements Serializable {
 	
     private eScreenTimerState state;
 	
-    /**
-     * construct a screen timer
-     */
 	public ScreenTimer() {
 		super(400, 20);
 		state = eScreenTimerState.OFF;
@@ -126,14 +122,14 @@ public class ScreenTimer extends Item implements Serializable {
 	}
 
 	/**
-	 * when start, the state is on
+	 * sets the timer state to ON when starting the game
 	 */
 	public void start(){
 		this.state = eScreenTimerState.ON;
 	}
 	
 	/**
-	 * when the time does not remain, the game ends
+	 * update the time when the game is about to be over
 	 */
 	public void updateRemaining() {
 		timeRemaining = maxTime - elapsedTime;
@@ -142,22 +138,23 @@ public class ScreenTimer extends Item implements Serializable {
 			System.out.println("Game over!");
 		}
 	}
+	
 	/**
-	 * screen timer freeze, set the state to frozen
+	 * sets timer state to FROZEN
 	 */
 	public void freeze(){
 		setState(eScreenTimerState.FROZEN);
 	}
 	
 	/**
-	 * the timer state on
+	 * sets the timer state to ON (for after it has been FROZEN)
 	 */
 	public void Continue(){
 		setState(eScreenTimerState.ON);
 	}
 	
 	/**
-	 * timer off
+	 * sets the timer state to OFF 
 	 */
 	public void endGame(){
 		setState(eScreenTimerState.OFF);

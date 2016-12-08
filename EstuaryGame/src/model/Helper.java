@@ -17,11 +17,10 @@ public class Helper extends Item {
 	public static final int defaultWidth = 67;
 	public static final int defaultHeight = 80;
 	
-	public Helper(Remove r){
+	public Helper(){
 		super(740,0);
 		this.setHeight(defaultWidth);
 		this.setWidth(defaultHeight);
-		removeInstance = r;
 	}
 	
 	public boolean isRight(){
@@ -42,6 +41,8 @@ public class Helper extends Item {
 			right = false;
 			this.updatePosX(0);
 		}
+		
+		System.out.println("debris found with finalY of: " + point);
 		this.finalY = point;
 	}
 	
@@ -91,7 +92,7 @@ public class Helper extends Item {
 	}
 	
 	public void checkOffScreen(){
-		if(this.getPosX()> GameController.dimX){
+		if(this.getPosX()> GameController.dimX || this.getPosX()<(-1*this.getWidth())){
 			nextState();
 		}
 	}

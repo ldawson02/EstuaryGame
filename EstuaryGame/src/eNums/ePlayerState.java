@@ -2,7 +2,7 @@ package eNums;
 
 /**
  * this class is to write the player state, there are three states for player, idle, moving, and lifting
- * @author Pu
+ * @author megan
  *
  */
 public enum ePlayerState {

@@ -40,8 +40,8 @@ public class BarriersTest {
 		b3.setType(eBarrierType.Gabion);
 		assertEquals(b3.getType(), eBarrierType.Gabion);
 		
-		assertEquals(b1.getHeight(), 20);
-		assertEquals(b1.getWidth(), 40);
+		assertEquals(b1.getHeight(), 37);
+		assertEquals(b1.getWidth(), 45);
 		
 		
 	}

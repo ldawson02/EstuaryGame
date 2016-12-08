@@ -125,7 +125,11 @@ public class MovementController {
 			f.setState(eFloaterState.RESTING);
 		}
 	}
-	
+	/**
+	 * set up the move is 8 if helper's state is Walking, then the postion updated, otherwise if it is walking off
+	 * updated as well.
+	 * @param h
+	 */
 	public static void walkMove(Helper h){
 		int move = 8;
 		if(h.getState()==eHelperState.WALKING){

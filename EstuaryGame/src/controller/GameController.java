@@ -77,7 +77,7 @@ public class GameController implements Serializable {
 	spawnDebris debrisMover;
 	spawnPowers powerMover;
 	
-	eDifficulty difficulty = eDifficulty.MEDIUM;
+	eDifficulty difficulty = eDifficulty.EASY;
 	//erosion RcoastMover;
 	//erosion LcoastMover;
 	
@@ -123,12 +123,12 @@ public class GameController implements Serializable {
 		mainGame.bindKeyWith("up", KeyStroke.getKeyStroke("UP"), new VAction(-1 * getMainPlayer().getSpeed()));
 		mainGame.bindKeyWith("down", KeyStroke.getKeyStroke("DOWN"), new VAction(1 * getMainPlayer().getSpeed()));
 		mainGame.bindKeyWith("quit", KeyStroke.getKeyStroke(KeyEvent.VK_Q, KeyEvent.CTRL_DOWN_MASK), new quitAction());
-		mainGame.bindKeyWith("save", KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_DOWN_MASK), new SerializeAction());
 	}
 	
 	public void serializationKeyBind() {
-		mainGame.bindKeyWith("readserialized", KeyStroke.getKeyStroke('2'), new ReadSerializeAction());
-		mainGame.bindKeyWith("cleanupserialized", KeyStroke.getKeyStroke('3'), new CleanUpSerializeAction());
+		mainGame.bindKeyWith("save", KeyStroke.getKeyStroke('1'), new SerializeAction());
+		mainGame.bindKeyWith("load", KeyStroke.getKeyStroke('2'), new ReadSerializeAction());
+		mainGame.bindKeyWith("delete", KeyStroke.getKeyStroke('3'), new CleanUpSerializeAction());
 	}
 
 	
@@ -163,7 +163,6 @@ public class GameController implements Serializable {
 		ArrayList<Coast> leftCoast = Coast.setUpLeftCoast(left);
 		for (Barriers b : left) {
 			items.addBarrier(b);
-			b.setProtector(true);
 		}
 		for(Coast c : leftCoast){
 			items.addCoast(c);
@@ -172,7 +171,6 @@ public class GameController implements Serializable {
 		ArrayList<Coast> rightCoast = Coast.setUpRightCoast(right);
 		for (Barriers b : right) {
 			items.addBarrier(b);
-			b.setProtector(true);
 		}
 		for(Coast c : rightCoast){
 			items.addCoast(c);
@@ -185,11 +183,11 @@ public class GameController implements Serializable {
 		items.getAllBarriers().get(6).setType(eBarrierType.Wall);
 		items.getAllBarriers().get(7).setType(eBarrierType.Gabion);
 		
-		setupDebrisOnCoast();
 		//Create the bins
 		items.getTrashBin().updatePos(50, 150);
 		items.getRecycleBin().updatePos(700, 150);
 		
+		setupDebrisOnCoast();
 
 		setUpPaintTimer();
 		allTimers.add(theBigTimer);
@@ -215,6 +213,7 @@ public class GameController implements Serializable {
 				d.setType(eDebrisType.RECYCLING);
 			}
 			getItems().addDebris(d);
+			d.setBins(items.getRecycleBin(), items.getTrashBin());
 			i++;
 		}
 	}
@@ -231,6 +230,7 @@ public class GameController implements Serializable {
 	}
 	
 	public void startGame(){
+		System.out.print("in super startGame");
 		//set up automatic movements!
 		//	->create timer for debris
 		//Turn on the screen timer!
@@ -333,8 +333,12 @@ public class GameController implements Serializable {
 	
 	//Increase difficulty based on health and timer
 	public void checkDifficulty(){
-		//TODO: let's have 5 different difficulty levels where the speed of erosion and debris spawn changes
 		if(items.getHealthBar().getHealth()>75 && items.getScreenTimer().getElapsedTime() > items.getScreenTimer().getMaxTime()/5){
+			if(difficulty.equals(eDifficulty.HARD)){
+				if(items.getScreenTimer().getElapsedTime() < items.getScreenTimer().getMaxTime()*0.9){
+					return;
+				}
+			}
 			this.setDifficulty(difficulty.getNextDifficulty());
 			System.out.println("Increasing Difficulty!!");
 		}
@@ -342,39 +346,37 @@ public class GameController implements Serializable {
 			this.setDifficulty(difficulty.getPreviousDifficulty());
 			System.out.println("decreasing Difficulty!!");
 		}
-		
-		//System.out.println("Current Difficulty" + difficulty);
-		
+				
 		switch(difficulty){
 		case VERYEASY:
 			for(Coast c: items.getCoast()){
-				c.setErosionRate(20000);
+				c.setErosionRate(35000);
 			}
 			this.getSpawnDebris().updateAveTime(15000);
 			break;
 		case EASY:
 			for(Coast c: items.getCoast()){
-				c.setErosionRate(15000);
+				c.setErosionRate(25000);
 			}
 			this.getSpawnDebris().updateAveTime(10000);
 			break;
 		case MEDIUM:
 			for(Coast c: items.getCoast()){
-				c.setErosionRate(10000);
+				c.setErosionRate(20000);
 			}
 			this.getSpawnDebris().updateAveTime(8000);
 			break;
 		case HARD:
 			for(Coast c: items.getCoast()){
-				c.setErosionRate(8000);
+				c.setErosionRate(15000);
 			}
 			this.getSpawnDebris().updateAveTime(5000);
 			break;
 		case IMPOSSIBLE:
 			for(Coast c: items.getCoast()){
-				c.setErosionRate(5000);
+				c.setErosionRate(6000);
 			}
-			this.getSpawnDebris().updateAveTime(1000);
+			this.getSpawnDebris().updateAveTime(2000);
 			break;
 		}
 		
@@ -417,8 +419,8 @@ public class GameController implements Serializable {
 	
 		
 		public spawnDebris(){
+			spawnTimeDebris = 3000;
 			items.addDebris(newDebris());
-			System.out.println("spawnDebris() called");
 			resetTimer();
 		}
 		
@@ -429,6 +431,7 @@ public class GameController implements Serializable {
 		
 		//returns a new randomly generated piece of Debris
 		public Debris newDebris(){
+			timePassed = 0;
 			Random r = new Random();
 			//generate initial position;
 			int randomx = r.nextInt(500)+150;
@@ -453,7 +456,6 @@ public class GameController implements Serializable {
 			Random r = new Random();
 			spawnTimeDebris = r.nextInt(rTime) + aveTime - rTime/2;
 			timePassed = 0;
-			System.out.println("Reset the timer to: " + spawnTimeDebris);
 		}
 		
 		public void checkCatchDebris(Debris d){
@@ -505,7 +507,6 @@ public class GameController implements Serializable {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-
 			ArrayList<Debris> toDelete = new ArrayList<Debris>();
 			//might want to put this for loop in its own class in the Controller
 			for(Debris d : items.getAllDebris()){
@@ -553,7 +554,7 @@ public class GameController implements Serializable {
 		public int scoringTime = 0;
 		public int difficultyTime = 0;
 		final public int scoreCheck = maxTime/500;
-		final public int difficultyCheck = maxTime/20;
+		final public int difficultyCheck = maxTime/10;
 		public int healthTime = 0;
 
 		final public int healthCheck = maxTime/18;
@@ -594,12 +595,13 @@ public class GameController implements Serializable {
 		}
 		
 		public void checkStormTime() {
-			if (stormTime >= 10000){  //later change this to stormCheck
+			if (stormTime >= stormCheck){  //later change this to stormCheck
 				HealthBar hb = items.getHealthBar();
-				if (!Storm.getAppeared() && (hb.getHealth() >= hb.getMaxHealth()*.75)) {
+				if (!Storm.getAppeared() && (hb.getHealth() >= hb.getMaxHealth()*.5)) {
 					if (!stormChecked) {
 						realStormTime = stormTime + delaySpotlight*3;
 						stormChecked = true;
+						items.setStormv(new StormVisual(-250, 450));
 						System.out.println("\nStorm incoming in 3 seconds!!");
 					}
 					//storm appears only when it hasn't appeared yet, and current health is 75% or more
@@ -648,12 +650,12 @@ public class GameController implements Serializable {
 	public class spawnPowers implements ActionListener, Serializable {
 		public int timePassed = 0;
 		public int spawnTimePowers;
-		public int aveTime = 10000;
-		final public int rTime = 500;
-		private boolean rebuildMode= false;
-		private boolean removeMode = false;
-		private Helper removeHelper;
-		private Tool rebuildTool;
+		public int aveTime = 15000;
+		final public int rTime = 3000;
+		protected boolean rebuildMode= false;
+		protected boolean removeMode = false;
+		protected Helper removeHelper;
+		protected Tool rebuildTool;
 
 		public spawnPowers(){
 			resetTimer();
@@ -741,7 +743,13 @@ public class GameController implements Serializable {
 		public void rebuildAction(){
 			rebuildTool.addTime(floatDelay);
 			if(rebuildTool.doneBuilding()){
+				System.out.println("Done building");
 				items.deleteRebuildTool();
+				for(Coast c :items.getCoast()){
+					c.tempProtect(false);
+				}
+				EstuaryGame.mc.setWallSpawnable(true);
+				EstuaryGame.mc.setGabionSpawnable(true);
 				rebuildMode = false;
 			}
 		}
@@ -753,6 +761,7 @@ public class GameController implements Serializable {
 				removeHelper.getPower().power(items);
 			}
 			if(removeHelper.getState()==eHelperState.VOID){
+				System.out.println("void! ");
 				items.deleteRemoveHelper();
 				removeMode = false;
 			}
@@ -769,17 +778,24 @@ public class GameController implements Serializable {
 				else if(p.getState()==eFloaterState.INITIATED){
 					if(p instanceof Rebuild){
 						if(!rebuildMode){
-							rebuildTool = new Tool(Rebuild.getRebuildBarriers(getItems()));
-							items.setRebuildTool(rebuildTool);
-							rebuildMode = true;
+							if(getItems().emptyBarriers()!=0){
+								rebuildTool = new Tool(Rebuild.getRebuildBarriers(getItems()));
+								items.setRebuildTool(rebuildTool);
+								rebuildTool.stopErosion(items.getCoast());
+								rebuildMode = true;
+								EstuaryGame.mc.setWallSpawnable(false);
+								EstuaryGame.mc.setGabionSpawnable(false);
+							}
 						}
 					}
 					else if(p instanceof Remove){
 						if(!removeMode){
-							removeHelper = new Helper((Remove) p);
-							removeHelper.setFinalY(items.getAllDebris());
-							items.setRemoveHelper(removeHelper);
-							removeMode = true;
+							if(getItems().getRestingDebris().size()!=0){
+								removeHelper = new Helper();
+								removeHelper.setFinalY(items.getAllDebris());
+								items.setRemoveHelper(removeHelper);
+								removeMode = true;
+							}
 						}
 
 					}
@@ -826,6 +842,8 @@ public class GameController implements Serializable {
 		}
 	}
 	
+	
+	
 	public class coastErosion implements ActionListener, Serializable {
 		private Coast coast;
 		public int timePassed;
@@ -835,11 +853,14 @@ public class GameController implements Serializable {
 		
 		public coastErosion(Coast c){
 			coast = c;
+			updateErosion(coast);
+			timePassed = 0;
+		}
+		public void updateErosion(Coast coast){
 			Random r = new Random();
 			//assumes erosion rate in Coast is in milliseconds
-			aveTime = (int) c.getErosionRate();
+			aveTime = (int) coast.getErosionRate();
 			erosionTime = r.nextInt(rTime) + aveTime - rTime/2;
-			timePassed = 0;
 		}
 		
 		
@@ -853,7 +874,10 @@ public class GameController implements Serializable {
 				if(timePassed >= erosionTime){
 					coast.erode();
 					timePassed = 0;
+					updateErosion(coast);
 					items.getHealthBar().update(eHealthChanges.CoastEroded.getDelta());
+					
+					System.out.println("Updating erosion rate" + coast.getErosionRate());
 				}
 				else{
 					timePassed+=erodeDelay;
@@ -867,7 +891,7 @@ public class GameController implements Serializable {
 		public int timePassed = 0;
 		public int erosionTime;
 		public int aveTime;
-		final public int rTime = 2000;
+		final public int rTime = 4000;
 		
 		public barrierErosion(Barriers b){
 			barrier = b;
@@ -893,8 +917,9 @@ public class GameController implements Serializable {
 			}
 			else if(timePassed >= erosionTime){
 				barrier.erode();
+				newTime();
 				timePassed = 0;
-				items.getHealthBar().update(eHealthChanges.BarrierFallen.getDelta());
+				//items.getHealthBar().update(eHealthChanges.BarrierFallen.getDelta());
 			}
 			else if(barrier.getState()==eBarrierState.NO_HIT && timePassed >= (0.5)*erosionTime){
 				System.out.println("Eroding half at: " + timePassed);
@@ -1041,13 +1066,10 @@ public class GameController implements Serializable {
 	 * @return
 	 */
 	public Barriers emptyBarrierCollision(Barriers barr) {
-		//checks if barr collided with any of the barriers and if it is empty
-		int counter = 0;
+		//checks if barr collided with any of the barriers and if it is empty		
 		for (Barriers b : this.items.getAllBarriers()) {
-			counter++;
 			if ((Collisions.checkCollision(b, barr) && (b.getType() == eBarrierType.EMPTY))) {
 				System.out.println("empty barrier collide");
-				System.out.println("barrier num: " + counter);
 				return b;
 			}
 		}
@@ -1074,7 +1096,7 @@ public class GameController implements Serializable {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			CardLayout c1 = (CardLayout) (EstuaryGame.getCards().getLayout());
-			c1.last(EstuaryGame.getCards());
+			c1.show(EstuaryGame.getCards(), "EndScreen");
 		}
 		
 	}
