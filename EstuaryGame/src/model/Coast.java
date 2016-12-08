@@ -9,18 +9,15 @@ import eNums.eBarrierType;
 import eNums.eCoastState;
 
 /**
-* The Coast class is the Model class for the coast item that is in the game.
+* The Coast class is the Model class for the coast spaces in the game. Each 
+* has an erosion rate and a barrier that in the space, as well has a height and width.
+* It also contains information about its state.
 * 
 * @author Ian Heffner
 * @version 1.0
 * @since 10/25/16
-*/
-/**
- * The coast has a current size for the coast, minumum and maxmum size of the coast, and a constant erosion rate, and coast has a constant
- * height and width
- * @author megan
- *
  */
+
 public class Coast extends Item implements Serializable{
 
 	private int coastID;

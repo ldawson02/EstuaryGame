@@ -11,7 +11,8 @@ import eNums.eDebrisType;
 import eNums.eThrowDirection;
 
 /**
- * 
+ * The Debris class represents the debris with a type, state, whether it is in the
+ * correct bin, and its current selected throw direction
  * 
  * @author Ian Heffner
  * @version 1.0

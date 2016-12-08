@@ -9,9 +9,7 @@ import eNums.eBarrierType;
 import model.*;
 
 /**
- * the collision has a mainplaer
- * 
- *
+ * the collisions class handles interactions between various item objects 
  */
 public class Collisions implements Serializable {
 	private Player mainPlayer;
@@ -23,10 +21,10 @@ public class Collisions implements Serializable {
 	public void setPlayer(Player p){
 		mainPlayer = p;
 	}
+	
 	/**
-	 * check the collison
+	 * checks for a collision with an item object and the player
 	 * @param i
-	 * @return
 	 */
 	public boolean checkCollision(Item i){
 		Rectangle r1 = new Rectangle(i.getPosX(), i.getPosY(), i.getWidth(), i.getHeight());
@@ -35,10 +33,8 @@ public class Collisions implements Serializable {
 	}
 	
 	/**
-	 * when item i1 and item i2 interacts, collection happens.
-	 * @param i1
-	 * @param i2
-	 * @return
+	 * see whether two item objects interact/collide with each other
+	 * @param i1, i2
 	 */
 	public static boolean checkCollision(Item i1, Item i2){		
 		
@@ -66,10 +62,8 @@ public class Collisions implements Serializable {
 
 	}
 	/**
-	 * convert the item into rectangle
-	 * @param i
-	 * @param p
-	 * @return
+	 * see whether a point is inside an item object
+	 * @param i, p
 	 */
 	public static boolean pointInside(Item i, Point p) {
 		//convert item into rectangle

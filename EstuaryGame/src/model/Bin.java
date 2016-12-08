@@ -4,9 +4,8 @@ import java.io.Serializable;
 
 import eNums.eDebrisType;
 /**
- * 
- * the Bin has a trashType
- *
+ * The Bin class represents the two types of selections a debris should be able to be thrown into.
+ * It has a specific debrisType assigned to it and a height and width. 
  */
 public class Bin extends Item implements Serializable{
 

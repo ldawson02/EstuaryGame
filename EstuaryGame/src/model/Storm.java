@@ -12,8 +12,8 @@ import eNums.eDebrisType;
 public class Storm implements Serializable {
 	
 	/**
-	* Storm class- has appear(), destroyBarriers(), and addDebris() methods
-	* just once
+	* Storm class causes effects to happen in the game, it can destroy barriers and add debris.
+	* Also contains information about its appearance in the game.
 	* 
 	* @author Esme Li
 	* @version 1.0
