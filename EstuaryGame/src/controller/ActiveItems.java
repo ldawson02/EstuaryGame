@@ -23,6 +23,7 @@ public class ActiveItems implements Serializable {
 	private Bin RecycleBin;
 	private Helper removeHelper;
 	private Tool rebuildTool;
+	private StormVisual stormv;
 	
 	/**
 	 * @return the mainPlayer
@@ -213,7 +214,19 @@ public class ActiveItems implements Serializable {
 		this.rebuildTool = rebuildTool;
 	}
 	
+	public StormVisual getStormv() {
+		return stormv;
+	}
+
+	public void setStormv(StormVisual stormv) {
+		this.stormv = stormv;
+	}
+
 	public void deleteRebuildTool(){
 		this.rebuildTool = null;
+	}
+	
+	public void deleteStormv(){
+		this.stormv = null;
 	}
 }
