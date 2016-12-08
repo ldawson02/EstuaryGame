@@ -36,9 +36,7 @@ public class TitleScreen extends JPanel implements ActionListener{
     public static final int defaultScreenX = 800;
     public static final int defaultScreenY = 600;
     
-    public TitleScreen(EstuaryGame g, Tutorial t) {
-    	game = g;
-    	tutorial = t;
+    public TitleScreen() {
     	this.setLayout(null);
     	btn1.setActionCommand("START");
     	btn1.addActionListener(this);
@@ -77,7 +75,9 @@ public class TitleScreen extends JPanel implements ActionListener{
         if(cmd.equals("TUTORIAL")){
         	c1.show(EstuaryGame.getCards(), "Tutorial");
         	//Any set up for tutorial to run
-        	tutorial.start();
+        	//tutorial = new Tutorial();
+        	EstuaryGame.tutorial.start();
+        	
         	/**
     		EstuaryGame.gc = new GameController(EstuaryGame.mainGame);
     		EstuaryGame.mc = new MouseController();

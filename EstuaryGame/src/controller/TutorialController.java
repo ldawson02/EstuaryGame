@@ -3,6 +3,7 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import javax.swing.AbstractAction;
 import javax.swing.KeyStroke;
@@ -39,6 +40,7 @@ public class TutorialController extends GameController {
 	private unpause unpauseAction;
 	private Timer erosionTimer;
 	private ArrayList<Timer> erosionTimers = new ArrayList<Timer>();
+	private HashSet<Timer> allTimers = new HashSet<Timer>();
 	
 	public TutorialController(Tutorial mainGame) {
 		super(mainGame);
@@ -54,6 +56,11 @@ public class TutorialController extends GameController {
 	@Override
 	public void startGame(){
 		System.out.println("POLYMORPHISM");
+	}
+	
+	public void gameOver(){
+		t.setState(eTutorialState.DONE);
+		stopTimers();
 	}
 	
 	public void tutorialSetup(){
@@ -99,6 +106,14 @@ public class TutorialController extends GameController {
 		}
 	}
 	
+	@Override
+	public void stopTimers(){
+		super.stopTimers();
+		for(Timer t : allTimers){
+			t.stop();
+		}
+	}
+	
 	public void startStage(){
 		System.out.println("State is: " + t.getState());
 		switch(t.getState()){
@@ -135,6 +150,7 @@ public class TutorialController extends GameController {
 		this.debrisMover = new spawnDebris();
 		System.out.println("float delay: " + this.getFloatDelay());
 		debrisFloating = new Timer(this.getFloatDelay(), debrisMover);
+		allTimers.add(debrisFloating);
 	}
 	
 	public void erosion1Setup(){
@@ -156,6 +172,7 @@ public class TutorialController extends GameController {
 		
 		erosionTimers.add(focusBarrierSpot.getErosionTimer());
 		erosionTimers.add(focusCoast.getErosionTimer());
+		allTimers.addAll(erosionTimers);
 	}
 	
 	public void erosion2Setup(){
@@ -171,6 +188,7 @@ public class TutorialController extends GameController {
 		
 		erosionTimers.add(focusBarrierSpot.getErosionTimer());
 		erosionTimers.add(focusCoast.getErosionTimer());
+		allTimers.addAll(erosionTimers);
 	}
 	
 	public void erosion3Setup(){
@@ -199,6 +217,8 @@ public class TutorialController extends GameController {
 		erosionTimers.add(focusCoast1.getErosionTimer());
 		erosionTimers.add(focusBarrierSpot2.getErosionTimer());
 		erosionTimers.add(focusCoast2.getErosionTimer());
+		
+		allTimers.addAll(erosionTimers);
 	}
 	
 	public void powerSetup(eTutorialState state){
@@ -211,6 +231,7 @@ public class TutorialController extends GameController {
 		this.powerMover = new spawnPowers(state);
 		powersFloating = new Timer(this.getFloatDelay(), powerMover);
 		powersFloating.start();
+		allTimers.add(powersFloating);
 	}
 	
 	public void removeSetup(){}
@@ -297,7 +318,7 @@ public class TutorialController extends GameController {
 		public void spawnTimeReached(){}
 		
 		@Override
-		protected Debris newDebris(){
+		public Debris newDebris(){
 			Debris d = super.newDebris();
 			t.setSpotlightItem(d);
 			return d;

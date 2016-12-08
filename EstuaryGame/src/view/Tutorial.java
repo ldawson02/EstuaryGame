@@ -66,7 +66,6 @@ public class Tutorial extends EstuaryGame implements ActionListener{
 		this.mc = new MouseController();
 		this.mc.setGC(tc);
 		this.gc = tc;
-		
 	}
 
 	public void wrongBin(){
@@ -206,10 +205,9 @@ public class Tutorial extends EstuaryGame implements ActionListener{
 		CardLayout c1 = (CardLayout) (EstuaryGame.getCards().getLayout());
 		String cmd = e.getActionCommand();
 		if(cmd.equals("START GAME")){
+			tc.gameOver();
 			c1.show(EstuaryGame.getCards(), "MainGame");
-			/**
-			EstuaryGame.gc.tutorialOff();
-			*/
+			//EstuaryGame.mainGame = new EstuaryGame();
 			EstuaryGame.gc = new GameController(EstuaryGame.mainGame);
 			EstuaryGame.mc = new MouseController();
 			EstuaryGame.mc.setGC(EstuaryGame.gc);

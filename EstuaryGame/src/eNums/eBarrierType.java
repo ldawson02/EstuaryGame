@@ -30,9 +30,9 @@ public enum eBarrierType {
 	public int getDecay(){
 		switch(this){
 		case Gabion:
-			return 12000;
+			return 15000;
 		case Wall:
-			return 9000;
+			return 12000;
 		default:
 			return 1000000;
 		}
