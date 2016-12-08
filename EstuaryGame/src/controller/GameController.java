@@ -163,7 +163,6 @@ public class GameController implements Serializable {
 		ArrayList<Coast> leftCoast = Coast.setUpLeftCoast(left);
 		for (Barriers b : left) {
 			items.addBarrier(b);
-			b.setProtector(true);
 		}
 		for(Coast c : leftCoast){
 			items.addCoast(c);
@@ -172,7 +171,6 @@ public class GameController implements Serializable {
 		ArrayList<Coast> rightCoast = Coast.setUpRightCoast(right);
 		for (Barriers b : right) {
 			items.addBarrier(b);
-			b.setProtector(true);
 		}
 		for(Coast c : rightCoast){
 			items.addCoast(c);

@@ -404,7 +404,9 @@ public class EstuaryGame extends JComponent{
 	private void paintStorm(Graphics g) {
 		if (gc.getItems().getStormv() != null) {
 			StormVisual sv = gc.getItems().getStormv();
-			
+			g.drawImage(lib.draw(eAnimation.storm), sv.getPosX(), sv.getPosY(), this);
+			System.out.println("painting storm at" + sv.getPosX() + ", " + sv.getPosY());
+			sv.move();
 		}
 	}
 	
