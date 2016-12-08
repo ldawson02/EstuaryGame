@@ -62,8 +62,8 @@ public class HealthBarTest {
 		assertEquals(gc.getItems().getHealthBar().getHealth(), initialHealth1 + eHealthChanges.IncorrectBin.getDelta());
 		
 		int initialHealth2 = gc.getItems().getHealthBar().getHealth();
-		gc.getItems().getHealthBar().update(eHealthChanges.WallBuilt.getDelta());
-		assertEquals(gc.getItems().getHealthBar().getHealth(), initialHealth2 + eHealthChanges.WallBuilt.getDelta());
+		gc.getItems().getHealthBar().update(eHealthChanges.CoastEroded.getDelta());
+		assertEquals(gc.getItems().getHealthBar().getHealth(), initialHealth2 + eHealthChanges.CoastEroded.getDelta());
 	}
 	
 	@Test
