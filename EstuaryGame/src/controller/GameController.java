@@ -123,11 +123,15 @@ public class GameController implements Serializable {
 		mainGame.bindKeyWith("up", KeyStroke.getKeyStroke("UP"), new VAction(-1 * getMainPlayer().getSpeed()));
 		mainGame.bindKeyWith("down", KeyStroke.getKeyStroke("DOWN"), new VAction(1 * getMainPlayer().getSpeed()));
 		mainGame.bindKeyWith("quit", KeyStroke.getKeyStroke(KeyEvent.VK_Q, KeyEvent.CTRL_DOWN_MASK), new quitAction());
-		mainGame.bindKeyWith("save", KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_DOWN_MASK), new SerializeAction());
-		mainGame.bindKeyWith("load", KeyStroke.getKeyStroke(KeyEvent.VK_L, KeyEvent.CTRL_DOWN_MASK), new ReadSerializeAction());
-		mainGame.bindKeyWith("delete", KeyStroke.getKeyStroke(KeyEvent.VK_D, KeyEvent.CTRL_DOWN_MASK), new CleanUpSerializeAction());
 	}
-		
+	
+	public void serializationKeyBind() {
+		mainGame.bindKeyWith("save", KeyStroke.getKeyStroke('1'), new SerializeAction());
+		mainGame.bindKeyWith("load", KeyStroke.getKeyStroke('2'), new ReadSerializeAction());
+		mainGame.bindKeyWith("delete", KeyStroke.getKeyStroke('3'), new CleanUpSerializeAction());
+	}
+
+	
 	public void setup(){
 		//Add health bar!!
 		items.addHealthBar(new HealthBar());
@@ -145,7 +149,9 @@ public class GameController implements Serializable {
 		
 		//bind the keys
 		normalKeyBind();
-				
+		
+		serializationKeyBind();
+		
 		//Reset stuff from last game
 		ScoreController.setScore(0);
 		Storm.setAppeared(false);
