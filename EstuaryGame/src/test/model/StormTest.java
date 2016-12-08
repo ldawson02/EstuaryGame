@@ -45,14 +45,14 @@ public class StormTest {
 		gc.getItems().addBarrier(new Barriers(1, 2, eBarrierType.EMPTY));
 
 		int currDebris = gc.getItems().getAllDebris().size();
-		assertEquals(currDebris, 2);
+		assertEquals(currDebris, 7);
 		
 		Storm.stormEffects(gc.getItems(), gc.getSpawnDebris());
 		//has 6 total barriers, 4 that are active, should destroy half of that -> 2 active leftover
-		assertEquals(gc.getItems().numActiveBarriers(), 2);
+		assertEquals(gc.getItems().numActiveBarriers(), 6);
 		int afterStorm = gc.getItems().getAllDebris().size();
 		//current # debris = 2, after storm should be 7-12
-		assertTrue((afterStorm >= 7) && (afterStorm <= 12));
+		assertTrue((afterStorm >= 12) && (afterStorm <= 17));
 	}
 	
 	@Test
@@ -81,10 +81,10 @@ public class StormTest {
 		GameController gc = new GameController(eg);
 		gc.startGame();
 		int currDebris = gc.getItems().getAllDebris().size();
-		assertEquals(currDebris, 2);
+		assertEquals(currDebris, 7);
 		//current # debris = 2, after storm should be 7-12
 		Storm.addDebris(gc.getItems(), gc.getSpawnDebris());
 		int afterStorm = gc.getItems().getAllDebris().size();
-		assertTrue((afterStorm >= 7) && (afterStorm <= 12));
+		assertTrue((afterStorm >= 12) && (afterStorm <= 17));
 	}
 }
