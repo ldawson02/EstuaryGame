@@ -14,7 +14,7 @@ public enum eHealthChanges {
 	BarrierFallen(-2),
 	CoastDebrisRemoved(15),
 	Rebuilt(15),
-	CoastEroded(-2);
+	CoastEroded(-3);
 
 	
 	

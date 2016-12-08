@@ -842,6 +842,8 @@ public class GameController implements Serializable {
 		}
 	}
 	
+	
+	
 	public class coastErosion implements ActionListener, Serializable {
 		private Coast coast;
 		public int timePassed;
@@ -851,11 +853,14 @@ public class GameController implements Serializable {
 		
 		public coastErosion(Coast c){
 			coast = c;
+			updateErosion(coast);
+			timePassed = 0;
+		}
+		public void updateErosion(Coast coast){
 			Random r = new Random();
 			//assumes erosion rate in Coast is in milliseconds
-			aveTime = (int) c.getErosionRate();
+			aveTime = (int) coast.getErosionRate();
 			erosionTime = r.nextInt(rTime) + aveTime - rTime/2;
-			timePassed = 0;
 		}
 		
 		
@@ -869,7 +874,10 @@ public class GameController implements Serializable {
 				if(timePassed >= erosionTime){
 					coast.erode();
 					timePassed = 0;
+					updateErosion(coast);
 					items.getHealthBar().update(eHealthChanges.CoastEroded.getDelta());
+					
+					System.out.println("Updating erosion rate" + coast.getErosionRate());
 				}
 				else{
 					timePassed+=erodeDelay;
