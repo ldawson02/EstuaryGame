@@ -330,7 +330,6 @@ public class EstuaryGame extends JComponent{
 			
 			g.drawImage(coast, c.getPosX(), c.getPosY(), this);
 		}
-
 	}
 
 	private void paintBarriers(Graphics g) {
