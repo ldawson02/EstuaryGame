@@ -37,6 +37,7 @@ import controller.*;
 import eNums.eBarrierState;
 import eNums.eBarrierType;
 import eNums.eDebrisType;
+import eNums.eDifficulty;
 import eNums.eFloaterState;
 import eNums.eHealthChanges;
 import eNums.eHelperState;
@@ -81,6 +82,8 @@ public class GameController implements Serializable {
 	
 	spawnDebris debrisMover;
 	spawnPowers powerMover;
+	
+	eDifficulty difficulty = eDifficulty.MEDIUM;
 	//erosion RcoastMover;
 	//erosion LcoastMover;
 	
@@ -322,6 +325,50 @@ public class GameController implements Serializable {
 	//Increase difficulty based on health and timer
 	public void checkDifficulty(){
 		//TODO: let's have 5 different difficulty levels where the speed of erosion and debris spawn changes
+		if(items.getHealthBar().getHealth()>75 && items.getScreenTimer().getElapsedTime() > items.getScreenTimer().getMaxTime()/5){
+			this.setDifficulty(difficulty.getNextDifficulty());
+			System.out.println("Increasing Difficulty!!");
+		}
+		else if (items.getHealthBar().getHealth()<25 && items.getScreenTimer().getElapsedTime() > items.getScreenTimer().getMaxTime()/5){
+			this.setDifficulty(difficulty.getPreviousDifficulty());
+			System.out.println("decreasing Difficulty!!");
+		}
+		
+		System.out.println("Current Difficulty" + difficulty);
+		
+		switch(difficulty){
+		case VERYEASY:
+			for(Coast c: items.getCoast()){
+				c.setErosionRate(20000);
+			}
+			this.getSpawnDebris().updateAveTime(15000);
+			break;
+		case EASY:
+			for(Coast c: items.getCoast()){
+				c.setErosionRate(15000);
+			}
+			this.getSpawnDebris().updateAveTime(10000);
+			break;
+		case MEDIUM:
+			for(Coast c: items.getCoast()){
+				c.setErosionRate(10000);
+			}
+			this.getSpawnDebris().updateAveTime(8000);
+			break;
+		case HARD:
+			for(Coast c: items.getCoast()){
+				c.setErosionRate(8000);
+			}
+			this.getSpawnDebris().updateAveTime(5000);
+			break;
+		case IMPOSSIBLE:
+			for(Coast c: items.getCoast()){
+				c.setErosionRate(5000);
+			}
+			this.getSpawnDebris().updateAveTime(1000);
+			break;
+		}
+		
 	}
 	
 	/**
@@ -558,6 +605,7 @@ public class GameController implements Serializable {
 		public void checkScoreTime(){
 			if(scoringTime >= scoreCheck){
 				ScoreController.scoreHealth(items.getHealthBar().getHealth());
+				checkDifficulty();
 				scoringTime = 0;
 			}
 		}
@@ -978,7 +1026,11 @@ public class GameController implements Serializable {
 	public void setMainPlayer(Player mainPlayer) {
 		this.mainPlayer = mainPlayer;
 	}
-
+	
+	public void setDifficulty(eDifficulty diff){
+		difficulty = diff;
+	}
+	
 	
 	public class endGameAction extends AbstractAction{
 
