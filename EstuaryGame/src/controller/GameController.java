@@ -393,7 +393,7 @@ public class GameController implements Serializable {
 	public class spawnDebris implements ActionListener, Serializable {
 		public int timePassed = 0;
 		//The time after which debris should spawn again (changes every time respawned)
-		public int spawnTimeDebris;
+		public int spawnTimeDebris = 3000;
 		public int getTimePassed() {
 			return timePassed;
 		}
@@ -418,6 +418,7 @@ public class GameController implements Serializable {
 		
 		public spawnDebris(){
 			items.addDebris(newDebris());
+			System.out.println("spawnDebris() called");
 			resetTimer();
 		}
 		
@@ -441,7 +442,6 @@ public class GameController implements Serializable {
 			} else {
 				d = new Debris(eDebrisType.RECYCLING);
 			}
-			//d.setController(thisGame); //Bin stuff
 			d.setBins(items.getTrashBin(), items.getRecycleBin());
 			d.updatePos(xPos, 0);
 			d.setVertex(xPos);
@@ -453,6 +453,7 @@ public class GameController implements Serializable {
 			Random r = new Random();
 			spawnTimeDebris = r.nextInt(rTime) + aveTime - rTime/2;
 			timePassed = 0;
+			System.out.println("Reset the timer to: " + spawnTimeDebris);
 		}
 		
 		public void checkCatchDebris(Debris d){

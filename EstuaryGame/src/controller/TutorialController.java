@@ -46,6 +46,7 @@ public class TutorialController extends GameController {
 		tutorialSetup();
 		debrisSetup();
 		debrisFloating.setDelay(floatDelay);
+		System.out.println("still in constructor");
 	}
 
 	@Override
@@ -100,7 +101,6 @@ public class TutorialController extends GameController {
 		System.out.println("State is: " + t.getState());
 		switch(t.getState()){
 		case DEBRIS:
-			debrisSetup();
 			break;
 		case EROSION_GABION:
 			erosion1Setup();
@@ -212,27 +212,7 @@ public class TutorialController extends GameController {
 		powersFloating.start();
 	}
 	
-	public void removeSetup(){
-		//need to add trash to walls first so that they can be deleted
-		ArrayList<Debris> toAdd = new ArrayList<Debris>();
-		toAdd.add(new Debris(36, 290));
-		toAdd.add(new Debris(45, 230));
-		toAdd.add(new Debris(46, 320));
-		toAdd.add(new Debris(738, 243));
-		toAdd.add(new Debris(741, 285));
-		int i = 0;
-		for(Debris d:toAdd){
-			d.setState(eFloaterState.RESTING);
-			if(i%2==0){
-				d.setType(eDebrisType.TRASH);
-			}else{
-				d.setType(eDebrisType.RECYCLING);
-			}
-			getItems().addDebris(d);
-			i++;
-		}
-		
-	}
+	public void removeSetup(){}
 	
 	public void rebuildSetup(){
 		//need to erode some walls
