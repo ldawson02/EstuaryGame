@@ -400,7 +400,6 @@ public class TutorialController extends GameController {
 						t.setSpotlightItem(null);
 					}
 				}
-				System.out.println("we in here");
 				if(t.getState() == eTutorialState.POWERS_REMOVE){
 					if(removeHelper.getState() == eHelperState.WALKING_OFF){
 						t.setSpotlight(false);
