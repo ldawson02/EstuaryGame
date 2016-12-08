@@ -1041,13 +1041,10 @@ public class GameController implements Serializable {
 	 * @return
 	 */
 	public Barriers emptyBarrierCollision(Barriers barr) {
-		//checks if barr collided with any of the barriers and if it is empty
-		int counter = 0;
+		//checks if barr collided with any of the barriers and if it is empty		
 		for (Barriers b : this.items.getAllBarriers()) {
-			counter++;
 			if ((Collisions.checkCollision(b, barr) && (b.getType() == eBarrierType.EMPTY))) {
 				System.out.println("empty barrier collide");
-				System.out.println("barrier num: " + counter);
 				return b;
 			}
 		}
