@@ -391,7 +391,7 @@ public class EstuaryGame extends JComponent{
 	}
 
 	private void paintArrow(Graphics g, Debris d){
-		g.setColor(Color.BLACK);
+		g.setColor(Color.WHITE);
 		int x1 = d.getPosX()+d.getWidth()/2;
 		int y1 = d.getPosY()+d.getHeight()/2;
 		int finalx = d.getBin().getPosX()+d.getBin().getWidth()/2;
