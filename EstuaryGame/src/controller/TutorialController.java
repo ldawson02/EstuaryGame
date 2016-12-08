@@ -14,6 +14,7 @@ import eNums.eBarrierType;
 import eNums.eDebrisType;
 import eNums.eFloaterState;
 import eNums.eHealthChanges;
+import eNums.eHelperState;
 import eNums.eTutorialState;
 import model.Barriers;
 import model.Coast;
@@ -348,6 +349,7 @@ public class TutorialController extends GameController {
 	public class spawnPowers extends GameController.spawnPowers implements ActionListener{
 		eTutorialState eState;
 		private int time = 0;
+		public boolean animationStarted = false;
 		
 		public spawnPowers(eTutorialState e){
 			super();
@@ -386,11 +388,38 @@ public class TutorialController extends GameController {
 		@Override
 		public void actionPerformed(ActionEvent e){
 			super.actionPerformed(e);
+
 			if(time!= 0 & !thisGame.getItems().getAllPowers().contains(t.getSpotlightItem())){
-				System.out.println("Stopping power: " + eState);
-				powersFloating.stop();
-				t.setSpotlight(false);
-				stageComplete();
+				if(!animationStarted){
+					animationStarted = true;
+					if(t.getState() == eTutorialState.POWERS_REMOVE){
+						t.setSpotlightItem(removeHelper);
+					}
+					else{
+						t.setSpotlight(false);
+						t.setSpotlightItem(null);
+					}
+				}
+				System.out.println("we in here");
+				if(t.getState() == eTutorialState.POWERS_REMOVE){
+					if(removeHelper.getState() == eHelperState.WALKING_OFF){
+						t.setSpotlight(false);
+					}
+					if(!removeMode){
+						System.out.println("Stopping power: " + eState);
+						powersFloating.stop();
+						t.setSpotlight(false);
+						stageComplete();
+					}
+				}else if(t.getState() == eTutorialState.POWERS_REBUILD){
+					if(!rebuildMode){
+						System.out.println("Stopping power: " + eState);
+						powersFloating.stop();
+						t.setSpotlight(false);
+						stageComplete();
+					}
+				}
+
 			}
 			else{
 				int distance = GameController.dimY;
@@ -400,7 +429,7 @@ public class TutorialController extends GameController {
 					}
 				}
 				
-				if(distance >= GameController.dimY/4){
+				if(distance >= GameController.dimY/4 && !this.removeMode && !this.rebuildMode){
 					quickSpawn();
 				}
 			}
