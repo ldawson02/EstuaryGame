@@ -27,6 +27,7 @@ import model.Player;
 import model.Powers;
 import model.Rebuild;
 import model.Remove;
+import model.StormVisual;
 import model.Tool;
 
 /**
@@ -234,6 +235,12 @@ public class ImageLibrary {
 			scaled22.add(hammer.getScaledInstance(Tool.defaultWidth, Tool.defaultHeight, Image.SCALE_SMOOTH));
 		}
 		library.get(eAnimation.hammer).setSeq(scaled22);
+		
+		ArrayList<Image> scaled23 = new ArrayList<Image>();
+		for (Image storm : library.get(eAnimation.storm).getSeq()) {
+			scaled23.add(storm.getScaledInstance(StormVisual.defaultWidth, StormVisual.defaultHeight, Image.SCALE_SMOOTH));
+		}
+		library.get(eAnimation.storm).setSeq(scaled23);
 	}
 	
 	public void scaleLibrary(double scaleFactor) {

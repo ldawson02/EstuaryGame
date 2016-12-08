@@ -4,7 +4,7 @@ public class StormVisual extends Item {
 
 	private int speed;
 	
-	public static final int defaultHeight = 200;
+	public static final int defaultHeight = 250;
 	public static final int defaultWidth = 250;
 	
 	public StormVisual(int x, int y) {
