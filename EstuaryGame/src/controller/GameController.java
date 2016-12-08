@@ -650,8 +650,8 @@ public class GameController implements Serializable {
 	public class spawnPowers implements ActionListener, Serializable {
 		public int timePassed = 0;
 		public int spawnTimePowers;
-		public int aveTime = 10000;
-		final public int rTime = 500;
+		public int aveTime = 15000;
+		final public int rTime = 3000;
 		protected boolean rebuildMode= false;
 		protected boolean removeMode = false;
 		protected Helper removeHelper;
@@ -745,6 +745,11 @@ public class GameController implements Serializable {
 			if(rebuildTool.doneBuilding()){
 				System.out.println("Done building");
 				items.deleteRebuildTool();
+				for(Coast c :items.getCoast()){
+					c.tempProtect(false);
+				}
+				EstuaryGame.mc.setWallSpawnable(true);
+				EstuaryGame.mc.setGabionSpawnable(true);
 				rebuildMode = false;
 			}
 		}
@@ -773,17 +778,24 @@ public class GameController implements Serializable {
 				else if(p.getState()==eFloaterState.INITIATED){
 					if(p instanceof Rebuild){
 						if(!rebuildMode){
-							rebuildTool = new Tool(Rebuild.getRebuildBarriers(getItems()));
-							items.setRebuildTool(rebuildTool);
-							rebuildMode = true;
+							if(getItems().emptyBarriers()!=0){
+								rebuildTool = new Tool(Rebuild.getRebuildBarriers(getItems()));
+								items.setRebuildTool(rebuildTool);
+								rebuildTool.stopErosion(items.getCoast());
+								rebuildMode = true;
+								EstuaryGame.mc.setWallSpawnable(false);
+								EstuaryGame.mc.setGabionSpawnable(false);
+							}
 						}
 					}
 					else if(p instanceof Remove){
 						if(!removeMode){
-							removeHelper = new Helper((Remove) p);
-							removeHelper.setFinalY(items.getAllDebris());
-							items.setRemoveHelper(removeHelper);
-							removeMode = true;
+							if(getItems().getRestingDebris().size()!=0){
+								removeHelper = new Helper();
+								removeHelper.setFinalY(items.getAllDebris());
+								items.setRemoveHelper(removeHelper);
+								removeMode = true;
+							}
 						}
 
 					}
