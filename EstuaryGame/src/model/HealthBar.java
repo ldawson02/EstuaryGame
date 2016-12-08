@@ -34,28 +34,17 @@ public class HealthBar extends Item implements Serializable {
 		health = 80;
 	};
 	
-	/**
-	 * Updates the current health of the estuary
-	 * @param points
-	 */
-	public void update(int points) {
-		this.health += points;
-		if (health > maxHealth) {
-			health = 100;
-		}
-		else if (health < minHealth) {
-			health = 0;
-		}
-	};
 	
 	/**
-	 * getter and setter for health
 	 * @return health;
 	 */
 	public int getHealth(){
 		return health;
 	}
 	
+	/**
+	 * sets the health
+	 */
 	public void setHealth(int health){
 		this.health = health;
 	}
@@ -87,5 +76,18 @@ public class HealthBar extends Item implements Serializable {
 	public int getWidth() {
 		return width;
 	}
-
+	
+	/**
+	 * Updates the current health of the estuary
+	 * @param points
+	 */
+	public void update(int points) {
+		this.health += points;
+		if (health > maxHealth) {
+			health = 100;
+		}
+		else if (health < minHealth) {
+			health = 0;
+		}
+	};
 }
