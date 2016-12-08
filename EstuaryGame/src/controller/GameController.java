@@ -649,10 +649,10 @@ public class GameController implements Serializable {
 		public int spawnTimePowers;
 		public int aveTime = 10000;
 		final public int rTime = 500;
-		private boolean rebuildMode= false;
-		private boolean removeMode = false;
-		private Helper removeHelper;
-		private Tool rebuildTool;
+		protected boolean rebuildMode= false;
+		protected boolean removeMode = false;
+		protected Helper removeHelper;
+		protected Tool rebuildTool;
 
 		public spawnPowers(){
 			resetTimer();
@@ -740,6 +740,7 @@ public class GameController implements Serializable {
 		public void rebuildAction(){
 			rebuildTool.addTime(floatDelay);
 			if(rebuildTool.doneBuilding()){
+				System.out.println("Done building");
 				items.deleteRebuildTool();
 				rebuildMode = false;
 			}
@@ -752,6 +753,7 @@ public class GameController implements Serializable {
 				removeHelper.getPower().power(items);
 			}
 			if(removeHelper.getState()==eHelperState.VOID){
+				System.out.println("void! ");
 				items.deleteRemoveHelper();
 				removeMode = false;
 			}

@@ -93,7 +93,7 @@ public class Helper extends Item {
 	}
 	
 	public void checkOffScreen(){
-		if(this.getPosX()> GameController.dimX){
+		if(this.getPosX()> GameController.dimX || this.getPosX()<(-1*this.getWidth())){
 			nextState();
 		}
 	}
