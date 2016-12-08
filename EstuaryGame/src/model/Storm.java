@@ -12,8 +12,8 @@ import eNums.eDebrisType;
 public class Storm implements Serializable {
 	
 	/**
-	* Storm class- has appear(), destroyBarriers(), and addDebris() methods
-	* just once
+	* Storm class causes effects to happen in the game, it can destroy barriers and add debris.
+	* Also contains information about its appearance in the game.
 	* 
 	* @author Esme Li
 	* @version 1.0
@@ -22,14 +22,24 @@ public class Storm implements Serializable {
 	
 	private static boolean appeared = false;
 	
+	/**
+	 * getter for whether the storm has appeared yet
+	 * @param appeared
+	 */
 	public static boolean getAppeared() {
 		return appeared;
 	}
 	
+	/**
+	 * sets whether the storm has appeared
+	 */
 	public static void setAppeared(boolean b) {
 		appeared = b;
 	}
 	
+	/**
+	 * combines the effects of destroying barriers and adding debris 
+	 */
 	public static void stormEffects(ActiveItems ai, spawnDebris sd) {
 		System.out.println("storm commence");
 		destroyBarriers(ai);
@@ -40,6 +50,7 @@ public class Storm implements Serializable {
 	
 	/**
 	 * Destroys the half of the existing barriers
+	 * @param the active items and barriers to destroy
 	 */
 	public static void destroyBarriers(ActiveItems ai) {
 		
@@ -62,6 +73,7 @@ public class Storm implements Serializable {
 	
 	/**
 	 * Adds 5-10 debris to the coast
+	 * @param the active items and debris to add to, the debris creater
 	 */
 	public static void addDebris(ActiveItems ai, spawnDebris sd) {
 		

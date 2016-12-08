@@ -121,10 +121,16 @@ public class ScreenTimer extends Item implements Serializable {
 		this.state = state;
 	}
 
+	/**
+	 * sets the timer state to ON when starting the game
+	 */
 	public void start(){
 		this.state = eScreenTimerState.ON;
 	}
 	
+	/**
+	 * update the time when the game is about to be over
+	 */
 	public void updateRemaining() {
 		timeRemaining = maxTime - elapsedTime;
 		if (timeRemaining <= 0) {
@@ -133,14 +139,23 @@ public class ScreenTimer extends Item implements Serializable {
 		}
 	}
 	
+	/**
+	 * sets timer state to FROZEN
+	 */
 	public void freeze(){
 		setState(eScreenTimerState.FROZEN);
 	}
 	
+	/**
+	 * sets the timer state to ON (for after it has been FROZEN)
+	 */
 	public void Continue(){
 		setState(eScreenTimerState.ON);
 	}
 	
+	/**
+	 * sets the timer state to OFF 
+	 */
 	public void endGame(){
 		setState(eScreenTimerState.OFF);
 	}

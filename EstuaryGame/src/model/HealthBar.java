@@ -9,11 +9,7 @@ import java.io.Serializable;
 * @version 1.0
 * @since 10/25/16
 */
-/**
- * the health bar goes from 0 to 100, and the health bar has a height and width
- * @author Pu
- *
- */
+
 public class HealthBar extends Item implements Serializable {
 	private final int maxHealth = 100;
 	private final int minHealth = 0;
@@ -34,28 +30,17 @@ public class HealthBar extends Item implements Serializable {
 		health = 80;
 	};
 	
-	/**
-	 * Updates the current health of the estuary
-	 * @param points
-	 */
-	public void update(int points) {
-		this.health += points;
-		if (health > maxHealth) {
-			health = 100;
-		}
-		else if (health < minHealth) {
-			health = 0;
-		}
-	};
 	
 	/**
-	 * getter and setter for health
 	 * @return health;
 	 */
 	public int getHealth(){
 		return health;
 	}
 	
+	/**
+	 * sets the health
+	 */
 	public void setHealth(int health){
 		this.health = health;
 	}
@@ -87,5 +72,18 @@ public class HealthBar extends Item implements Serializable {
 	public int getWidth() {
 		return width;
 	}
-
+	
+	/**
+	 * Updates the current health of the estuary
+	 * @param points
+	 */
+	public void update(int points) {
+		this.health += points;
+		if (health > maxHealth) {
+			health = 100;
+		}
+		else if (health < minHealth) {
+			health = 0;
+		}
+	};
 }

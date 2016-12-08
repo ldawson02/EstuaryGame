@@ -10,16 +10,8 @@ import eNums.eBarrierState;
 import eNums.eBarrierType;
 
 /**
- * Barrier interface. Each barrier has build, decay, and crumble methods.
- * 
- * @author: Rachel Muzzelo
- * @version 1.0
- * @since 10/25/16
- */
-/**barrier class has a constant decaytime, and has health which type of barrier erosion time, and constant barriery,leftedge and rightedge
- * 
- * 
- *
+ * the barrier class represents the barriers on the coast with a type, state, erosion countdown, 
+ * x coord, y coord, height, width
  */
 public class Barriers extends Item implements Serializable, Comparable<Barriers>{
 
