@@ -60,6 +60,7 @@ public class EstuaryGame extends JComponent{
 	//Constant images
 	Image bg;
 	Image clockback;
+	Image timesUp;
 	Image gameOver;
 	Image trashBin;
 	Image recycBin;
@@ -190,6 +191,7 @@ public class EstuaryGame extends JComponent{
 		bg = lib.draw(eAnimation.background);
 		clockback = lib.draw(eAnimation.clockback);
 		gameOver = lib.draw(eAnimation.gameOver);
+		timesUp = lib.draw(eAnimation.timesUp);
 		tutClockArrow = lib.draw(eAnimation.clockArrow);
 		tutHealthArrow = lib.draw(eAnimation.healthArrow);
 		tutMouseArrow = lib.draw(eAnimation.mouseArrow);
@@ -288,7 +290,7 @@ public class EstuaryGame extends JComponent{
 		g.drawOval((int)maxX,(int)maxY,(int) size,(int) size);
 
 		if (timeElapsed >= maxTime) {
-			paintGameOver(g);
+			paintTimesUp(g);
 			endGameMotion();
 		}
 	}
@@ -558,7 +560,7 @@ public class EstuaryGame extends JComponent{
 	}
 	
 	/**
-	 * Paints the Game Over graphic if the game has ended
+	 * Paints the Game Over graphic if the game was lost
 	 * @param Graphics g
 	 */
 	private void paintGameOver(Graphics g) {
@@ -569,7 +571,22 @@ public class EstuaryGame extends JComponent{
 
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
-		g.drawString("Press Enter to See Score...", 275, 370);
+		g.drawString("Press Space to See Score...", 245, 370);
+	}
+	
+	/**
+	 * Paints the Game Over graphic if the game has ended
+	 * @param Graphics g
+	 */
+	private void paintTimesUp(Graphics g) {
+		g.setColor(new Color(255, 255, 255, 120));
+		g.fillRect(0, 0, screenX, screenY);
+
+		g.drawImage(timesUp, 230, 200, this);
+
+		g.setColor(Color.BLACK);
+		g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
+		g.drawString("Press Space to See Score...", 245, 370);
 	}
 
 	/**

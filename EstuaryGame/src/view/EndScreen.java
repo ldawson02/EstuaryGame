@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 
 import controller.GameController;
 import controller.MouseController;
+import controller.ScoreController;
 
 /**
  * using JButton to set a button replay and has a image background when end the game 
@@ -56,34 +57,42 @@ public class EndScreen extends JPanel implements ActionListener{
 				if(EndScreen.this.isShowing()){
 					System.out.println ( "Component hidden" );
 					int endHealth = EstuaryGame.gc.getItems().getHealthBar().getHealth();
+					
 					JLabel label1 = new JLabel("Overall Health of Estuary: " + endHealth);
-					label1.setBounds(new Rectangle(200,150,600,30));
+					label1.setBounds(new Rectangle(280,220,600,30));
 					label1.setFont(label1.getFont().deriveFont(20.0f));
+					
+					JLabel label3 = new JLabel("Final Score: " + ScoreController.getScore());
+					label3.setFont(label3.getFont().deriveFont(20.0f));
+					label3.setBounds(new Rectangle(340,250,600,30));
+					
 					JLabel label2 = new JLabel();
-					if(endHealth == 0){
+					label2.setFont(label2.getFont().deriveFont(30.0f));
+					
+					if(endHealth == 0) {
 						String srcpath = "resources" + File.separator + "endBackgroundBad" + File.separator + "badend.png";
 						background = createImage(srcpath).getScaledInstance(defaultScreenX, defaultScreenY, Image.SCALE_SMOOTH);
 						label2.setText("Sorry, the estuary was not saved! Try again next time!");
+						label2.setBounds(new Rectangle(40,100,800,100));
 					}
-					else if(endHealth > 0 && endHealth < 50){
+					else if(endHealth > 0 && endHealth < 50) {
 						String srcpath = "resources" + File.separator + "endBackgroundOkay" + File.separator + "okayend.png";
 						background = createImage(srcpath).getScaledInstance(defaultScreenX, defaultScreenY, Image.SCALE_SMOOTH);
 						label2.setText("Good work! But it looks like the estuary is still at risk.");
+						label2.setBounds(new Rectangle(55,100,800,100));
 					}
-					else if(endHealth > 50){
+					else if(endHealth > 50) {
 						String srcpath = "resources" + File.separator + "endBackgroundGood" + File.separator + "goodend.png";
 						background = createImage(srcpath).getScaledInstance(defaultScreenX, defaultScreenY, Image.SCALE_SMOOTH);
 						label2.setText("Great job! The estuary is safe!");
+						label2.setBounds(new Rectangle(210,100,800,100));
 					}
-
-					label2.setBounds(new Rectangle(50,50,800,100));
-					label2.setFont(label2.getFont().deriveFont(30.0f));
-
 					
 					EndScreen.this.removeAll();
 					EndScreen.this.add(btn3, BorderLayout.CENTER);
 					EndScreen.this.add(label1);
 					EndScreen.this.add(label2);
+					EndScreen.this.add(label3);
 					EndScreen.this.repaint();
 				}
 
