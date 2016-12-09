@@ -24,17 +24,13 @@ public class HelperTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		remove1 = new Remove();
-		helper = new Helper(remove1);
+		helper = new Helper();
 		helper.updatePos(20, 10);
 		debris1 = new Debris(20,30);
 		debris = new ArrayList<Debris>();
 		debris.add(debris1);
 	}
 
-	@Test
-	public void getPowerTest() {
-		assertEquals(helper.getPower(), remove1);
-	}
 	
 	@Test
 	public void getIsRightTest() {
