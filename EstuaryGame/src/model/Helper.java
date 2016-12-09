@@ -83,6 +83,9 @@ public class Helper extends Item {
 	 * the helper's next state 
 	 */
 	public void nextState(){
+		if(state==eHelperState.PICKING_UP){
+			toLift.updatePosY(toLift.getPosY()-10);
+		}
 		state = state.nextState();
 		timeInStage = 0;
 	}

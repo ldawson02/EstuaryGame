@@ -19,9 +19,9 @@ import model.Barriers;
 		private Barriers wallSpawnL = new Barriers(Barriers.getLeftEdge(), Barriers.getSpawnY(), eBarrierType.Wall);
 		private Barriers wallSpawnR = new Barriers(Barriers.getRightEdge(), Barriers.getSpawnY(), eBarrierType.Wall);
 		private Barriers gabionsSpawnL = new Barriers(Barriers.getLeftEdge(), 
-				Barriers.getSpawnY()+Barriers.defaultHeight, eBarrierType.Gabion);
+				Barriers.getSpawnY()+Barriers.defaultHeight+10, eBarrierType.Gabion);
 		private Barriers gabionsSpawnR = new Barriers(Barriers.getRightEdge(), 
-				Barriers.getSpawnY()+Barriers.defaultHeight, eBarrierType.Gabion);
+				Barriers.getSpawnY()+Barriers.defaultHeight+10, eBarrierType.Gabion);
 		private Barriers dragged = null;
 		private Barriers dropSpot = null;
 		private boolean wallSpawnable = true;
@@ -67,7 +67,7 @@ import model.Barriers;
 		}
 		
 		/**
-		 * GAME CONTROLLER SETTER
+		 * Game controller setter
 		 * @param g
 		 */
 		public void setGC(GameController g) {
