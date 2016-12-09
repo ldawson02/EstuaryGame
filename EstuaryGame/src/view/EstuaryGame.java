@@ -3,43 +3,24 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GraphicsConfiguration;
 import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.awt.event.KeyEvent;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.QuadCurve2D;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
 import javax.swing.Action;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
-import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import controller.ActiveItems;
 import controller.GameController;
 import controller.MouseController;
 import controller.ScoreController;
@@ -47,17 +28,26 @@ import eNums.eAnimation;
 import eNums.eBarrierType;
 import eNums.eFloaterState;
 import eNums.ePlayerState;
-import eNums.eDebrisType;
 
 import model.*;
 
 import model.Barriers;
 import model.Bin;
 import model.Debris;
-import model.Floater;
 import model.HealthBar;
 import model.Player;
 
+/**
+ * EstuaryGame is the main class for our project. It contains all of
+ * the logic for painting the bulk of the game, as well as the logic for
+ * handling the different menu screens and the transition to the tutorial.
+ * Running this class begins the game.
+ * 
+ * @author Ian Heffner
+ * @since 12/9/16
+ * @version 2.0
+ * 
+ */
 
 public class EstuaryGame extends JComponent{
 
@@ -84,13 +74,7 @@ public class EstuaryGame extends JComponent{
 
 	int timeElapsed = 0;
 
-	private int bWidth = 40;
-	private int bHeight = 20;
-
 	boolean gameFinished = false;
-
-	//For future collision handling:
-	ArrayList<DebrisWrapper> debrisColliders;
 
 	static JPanel cards = new JPanel(new CardLayout());
 	static TitleScreen titleScreen;
@@ -438,7 +422,6 @@ public class EstuaryGame extends JComponent{
 	}
 
 	private void paintBins(Graphics g){
-		//TODO: These need to be switched!! BUT I can't touch the controller now
 		Bin recycle = gc.getItems().getTrashBin();
 		Bin trash = gc.getItems().getRecycleBin();
 

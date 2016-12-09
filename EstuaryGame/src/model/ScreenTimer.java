@@ -8,8 +8,8 @@ import eNums.eScreenTimerState;
 
 /**
  * This is the class that handles the timer model on screen. This
- * is NOT the actual game timer that handles the tick, just the
- * visual timer.
+ * is NOT the actual game timer that handles the tick, although this
+ * object's attributes are updated by controller Timer.
  * 
  * @author Ian Heffner
  * @version 1.0
