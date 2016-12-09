@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import controller.ActiveItems;
 import controller.Collisions;
 import controller.GameController;
 import controller.GameController.PowerInitiate;
@@ -34,10 +35,18 @@ public class RebuildTest {
 
 	static Rebuild rebuild1;
 	static Rebuild rebuild2;
+	static Rebuild rebuild3;
 	static Coast coast;
 	static GameController gc;
 	static Barriers b1;
-	
+	static Barriers b2;
+	static Barriers b3;
+	static Barriers b4;
+	static Barriers b5;
+	static Barriers b6;
+	static Barriers b7;
+	static ArrayList<Barriers> barriers;
+	static ActiveItems items1;
 	
 	
 	
@@ -45,12 +54,30 @@ public class RebuildTest {
 	public static void setUpBeforeClass() throws Exception {
 		rebuild1 = new Rebuild(5,10);
 		rebuild2 = new Rebuild(2,4);
+		rebuild3 = new Rebuild(200,400);
 		gc = new GameController(new EstuaryGame());
 		rebuild1.setState(eFloaterState.MOVING);
 		rebuild2.setState(eFloaterState.MOVING);
+		rebuild3.setState(eFloaterState.INITIATED);
 		gc.getItems().getAllPowers().add(new Rebuild(40,20));
 		gc.getItems().getAllPowers().add(new Rebuild(30,20));
 		b1 = new Barriers(200,300);
+		
+		b2 = new Barriers(300,300,eBarrierType.Gabion);
+		b3 = new Barriers(400,300, eBarrierType.EMPTY);
+		b4 = new Barriers(500,300, eBarrierType.Wall);
+		b5 = new Barriers(600,300, eBarrierType.EMPTY);
+		b6 = new Barriers(600,300, eBarrierType.EMPTY);
+		b7 = new Barriers(600,300, eBarrierType.EMPTY);
+		
+		items1 = new ActiveItems();
+		items1.addBarrier(b2);
+		items1.addBarrier(b3);
+		items1.addBarrier(b4);
+		items1.addBarrier(b5);
+		items1.addBarrier(b6);
+		items1.addBarrier(b7);
+		
 		
 	}
 
@@ -104,6 +131,16 @@ public class RebuildTest {
 	public void powerTest(){
 		Rebuild.power(b1);
 		assertEquals(b1.getType(), eBarrierType.Gabion);
+	}
+	
+	@Test
+	public void getRebuildBarriersTest(){
+		ArrayList<Barriers> rebuildBarriers = rebuild3.getRebuildBarriers(items1);
+		assertEquals(rebuildBarriers.size(), 2);
+		
+		for(Barriers b: rebuildBarriers){
+			assertEquals(b.getType(), eBarrierType.EMPTY);
+		}
 	}
 	
 	
