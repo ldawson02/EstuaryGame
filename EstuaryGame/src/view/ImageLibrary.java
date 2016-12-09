@@ -284,6 +284,7 @@ public class ImageLibrary {
 			switch (d.getState()) {
 			case RESTING:
 			case THROWING:
+			case HITBIN:
 				return draw(eAnimation.recyclingCoast);
 			case LIFTED: 
 				return draw(eAnimation.recyclingLifted);
@@ -295,6 +296,7 @@ public class ImageLibrary {
 			switch (d.getState()) {
 			case RESTING:
 			case THROWING:
+			case HITBIN:
 				return draw(eAnimation.trashCoast);
 			case LIFTED: 
 				return draw(eAnimation.trashLifted);

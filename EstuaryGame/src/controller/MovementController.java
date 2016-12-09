@@ -91,12 +91,14 @@ public class MovementController {
 			double deltaY = b.getPosY() - f.getPosY();
 			double distance = Math.sqrt(deltaX*deltaX+deltaY*deltaY);
 			double speed = 0.25;
+			if(f.getState()==eFloaterState.HITBIN){
+				return;
+			}
 			if(distance>10){
 				f.updatePos((int)(f.getPosX()+deltaX*speed),(int)(f.getPosY()+deltaY*speed));
 			}
 			else{
 				f.setState(eFloaterState.HITBIN);
-				System.out.println("hit bin");
 			}
 			
 		
@@ -114,12 +116,12 @@ public class MovementController {
 			deltaX = (windowWidth-sizeofDebrisCoast) - f.getPosX();
 		}
 		Random rand = new Random();
-		int randNum = rand.nextInt(100)+650;
+		int randNum = rand.nextInt(100)+250;
 		double deltaY = randNum - f.getPosY();
 		double distance = Math.sqrt(deltaX*deltaX+deltaY*deltaY);
-		double speed = 0.35;
-		if(distance>10){
-			f.updatePos((int)(f.getPosX()+deltaX*speed),(int)(f.getPosY()+deltaY*speed));
+		double speed = 0.1;
+		if(distance>10 && speed*deltaY>0){
+			f.updatePos((int)(f.getPosX()+(deltaX*speed)),(int)(f.getPosY()+(deltaY*speed)));
 		}
 		else{
 			f.setState(eFloaterState.RESTING);

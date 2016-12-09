@@ -47,104 +47,123 @@ import eNums.eScreenTimerState;
 import eNums.eThrowDirection;
 import eNums.eTutorialState;
 
+/**
+ * The main controller for Estuary Game. This class sets up the game logic and
+ * game items, keeps a reference of the game items, and holds the various timers.
+ * 
+ * @author Lia Dawson
+ *
+ */
 public class GameController implements Serializable {
 
-	//the big shebang
 	private static EstuaryGame mainGame;
 	private Player mainPlayer;
 	private ActiveItems items = new ActiveItems();
-	
+
 	public final static int dimX = 800;
 	public final static int dimY = 600;
-	
-	//Makes sure you can only catch one Floater at a time
+
+	// Makes sure you can only catch one Floater at a time
 	private boolean choosingThrow = false;
 	private boolean initiatingPowerUp = false;
-	final private int floatDelay = 100; //TODO
+	final private int floatDelay = 100; // TODO
 	Timer debrisFloating;
 	Timer powersFloating;
-	final private int erodeDelay = 100;//TODO
-	
+	final private int erodeDelay = 100;// TODO
+
 	GameController thisGame = this;
 	private ArrayList<Timer> allTimers = new ArrayList<Timer>();
 	private ArrayList<Timer> tutorialTimers = new ArrayList<Timer>();
-	
+
 	protected final int paintDelay = 30;
 	Timer theBigTimer;
 	mainTimer paintTimer;
 	private int timeElapsed = 0;
-	
+
 	spawnDebris debrisMover;
 	spawnPowers powerMover;
-	
+
 	eDifficulty difficulty = eDifficulty.EASY;
-	//erosion RcoastMover;
-	//erosion LcoastMover;
-	
+	// erosion RcoastMover;
+	// erosion LcoastMover;
+
 	private boolean gameEnd;
 	Collisions collision = new Collisions();
-		
+
 	/**
 	 * construct a game controller
+	 * 
 	 * @param mainGame
 	 */
-	public GameController(EstuaryGame mainGame){
+	public GameController(EstuaryGame mainGame) {
 		setMainGame(mainGame);
 		setup();
 	}
+
 	/**
 	 * get the main game
+	 * 
 	 * @return maingame;
 	 */
 	public EstuaryGame getMainGame() {
 		return mainGame;
 	}
-/**
- * set the main game
- * @param mainGame
- */
+
+	/**
+	 * set the main game
+	 * 
+	 * @param mainGame
+	 */
 	public void setMainGame(EstuaryGame mainGame) {
 		this.mainGame = mainGame;
 	}
+
 	/**
 	 * get the items
+	 * 
 	 * @return items
 	 */
 	public ActiveItems getItems() {
 		return items;
 	}
+
 	/**
 	 * set the items
+	 * 
 	 * @param items
 	 */
 	public void setItems(ActiveItems items) {
 		this.items = items;
 	}
-	
+
 	/**
 	 * @return the theBigTimer
 	 */
 	public int getTheBigTimer() {
-		//TODO
+		// TODO
 		return timeElapsed;
 	}
+
 	/**
 	 * getter for spawn debris
+	 * 
 	 * @return
 	 */
 	public spawnDebris getSpawnDebris() {
 		return debrisMover;
 	}
+
 	/**
 	 * normal key bind for left right up down and quit.
 	 */
-	public void normalKeyBind(){
+	public void normalKeyBind() {
 		mainGame.bindKeyWith("left", KeyStroke.getKeyStroke("LEFT"), new HAction(-1 * getMainPlayer().getSpeed()));
 		mainGame.bindKeyWith("right", KeyStroke.getKeyStroke("RIGHT"), new HAction(1 * getMainPlayer().getSpeed()));
 		mainGame.bindKeyWith("up", KeyStroke.getKeyStroke("UP"), new VAction(-1 * getMainPlayer().getSpeed()));
 		mainGame.bindKeyWith("down", KeyStroke.getKeyStroke("DOWN"), new VAction(1 * getMainPlayer().getSpeed()));
 		mainGame.bindKeyWith("quit", KeyStroke.getKeyStroke(KeyEvent.VK_Q, KeyEvent.CTRL_DOWN_MASK), new quitAction());
 	}
+
 	/**
 	 * get serialization for the key bind
 	 */
@@ -155,42 +174,43 @@ public class GameController implements Serializable {
 	}
 
 	/**
-	 * this function is for the set up the game, we add the health bar, and then screen timer,player,coast
-	 * bins, gabions,walls and everything the game needs
+	 * this function is for the set up the game, we add the health bar, and then
+	 * screen timer,player,coast bins, gabions,walls and everything the game
+	 * needs
 	 */
-	public void setup(){
-		//Add health bar!!
+	public void setup() {
+		// Add health bar!!
 		items.addHealthBar(new HealthBar());
-		
-		//Add the screen Timer
+
+		// Add the screen Timer
 		items.addScreenTimer(new ScreenTimer());
-		
-		//Create the player
+
+		// Create the player
 		setMainPlayer(new Player());
 		items.setMainPlayer(getMainPlayer());
-		getMainPlayer().updatePos(380, 280); //These are hard coded
-		
-		//Connect the Collision controller w the Player
+		getMainPlayer().updatePos(380, 280); // These are hard coded
+
+		// Connect the Collision controller w the Player
 		collision.setPlayer(getMainPlayer());
-		
-		//bind the keys
+
+		// bind the keys
 		normalKeyBind();
-		
+
 		serializationKeyBind();
-		
-		//Reset stuff from last game
+
+		// Reset stuff from last game
 		ScoreController.setScore(0);
 		Storm.setAppeared(false);
 		items.removeAllDebris();
 		items.setAllBarriers();
 		items.removeAllPowers();
-		
+
 		ArrayList<Barriers> left = Barriers.setUpLeftCoast();
 		ArrayList<Coast> leftCoast = Coast.setUpLeftCoast(left);
 		for (Barriers b : left) {
 			items.addBarrier(b);
 		}
-		for(Coast c : leftCoast){
+		for (Coast c : leftCoast) {
 			items.addCoast(c);
 		}
 		ArrayList<Barriers> right = Barriers.setUpRightCoast();
@@ -198,7 +218,7 @@ public class GameController implements Serializable {
 		for (Barriers b : right) {
 			items.addBarrier(b);
 		}
-		for(Coast c : rightCoast){
+		for (Coast c : rightCoast) {
 			items.addCoast(c);
 		}
 		items.getAllBarriers().get(0).setType(eBarrierType.Gabion);
@@ -208,24 +228,26 @@ public class GameController implements Serializable {
 		items.getAllBarriers().get(4).setType(eBarrierType.Gabion);
 		items.getAllBarriers().get(6).setType(eBarrierType.Wall);
 		items.getAllBarriers().get(7).setType(eBarrierType.Gabion);
-		
-		//Create the bins
+
+		// Create the bins
 		items.getTrashBin().updatePos(50, 150);
 		items.getRecycleBin().updatePos(700, 150);
-		
+
 		setupDebrisOnCoast();
 
 		setUpPaintTimer();
 		allTimers.add(theBigTimer);
-		
-		//mainGame.initTitleScreen();
+
+		// mainGame.initTitleScreen();
 		startGame();
 	}
+
 	/**
-	 * set up the debris which is on the coast, and it includes trash and recycling
+	 * set up the debris which is on the coast, and it includes trash and
+	 * recycling
 	 */
-	public void setupDebrisOnCoast(){
-		//need to add trash to walls first so that they can be deleted
+	public void setupDebrisOnCoast() {
+		// need to add trash to walls first so that they can be deleted
 		ArrayList<Debris> toAdd = new ArrayList<Debris>();
 		toAdd.add(new Debris(36, 290));
 		toAdd.add(new Debris(45, 230));
@@ -233,11 +255,11 @@ public class GameController implements Serializable {
 		toAdd.add(new Debris(738, 243));
 		toAdd.add(new Debris(741, 285));
 		int i = 0;
-		for(Debris d:toAdd){
+		for (Debris d : toAdd) {
 			d.setState(eFloaterState.RESTING);
-			if(i%2==0){
+			if (i % 2 == 0) {
 				d.setType(eDebrisType.TRASH);
-			}else{
+			} else {
 				d.setType(eDebrisType.RECYCLING);
 			}
 			getItems().addDebris(d);
@@ -245,50 +267,55 @@ public class GameController implements Serializable {
 			i++;
 		}
 	}
+
 	/**
 	 * start the paint timer
 	 */
-	public void setUpPaintTimer(){
-		//Start the paint timer
+	public void setUpPaintTimer() {
+		// Start the paint timer
 		paintTimer = new mainTimer();
 		theBigTimer = new Timer(paintDelay, paintTimer);
 		theBigTimer.start();
 	}
-	
-	public void tearDown(){
+
+	public void tearDown() {
 		mainGame.unbindKeyWith("GotoEndGame", KeyStroke.getKeyStroke("ENTER"));
 	}
+
 	/**
-	 * start the game, we get the timer started and then move the trash, recycling and power ups, and also 
-	 * erosion begins
+	 * start the game, we get the timer started and then move the trash,
+	 * recycling and power ups, and also erosion begins
 	 */
-	public void startGame(){
+	public void startGame() {
 		System.out.print("in super startGame");
-		//set up automatic movements!
-		//	->create timer for debris
-		//Turn on the screen timer!
+		// set up automatic movements!
+		// ->create timer for debris
+		// Turn on the screen timer!
 		items.getScreenTimer().start();
-		
+
 		debrisMover = new spawnDebris();
 		powerMover = new spawnPowers();
-		
+
 		debrisFloating = new Timer(floatDelay, debrisMover);
 		debrisFloating.start();
 		allTimers.add(debrisFloating);
-		
+
 		powersFloating = new Timer(floatDelay, powerMover);
 		powersFloating.start();
 		allTimers.add(powersFloating);
-		
+
 		erosionSetup();
 
 	}
+
 	/**
-	 * set up the erosion in barriers, if the item is wall or gabions, get the erosion timer and start to erode.
+	 * set up the erosion in barriers, if the item is wall or gabions, get the
+	 * erosion timer and start to erode.
 	 */
-	public void erosionSetup(){
-		barrierErosion bErode; int i = 0;
-		for(Barriers b: items.getAllBarriers()){
+	public void erosionSetup() {
+		barrierErosion bErode;
+		int i = 0;
+		for (Barriers b : items.getAllBarriers()) {
 			bErode = new barrierErosion(b);
 			b.setErosionTimer(new Timer(this.erodeDelay, bErode));
 			b.getErosionTimer().start();
@@ -296,145 +323,154 @@ public class GameController implements Serializable {
 			i++;
 		}
 		System.out.println("NUMBER OF EROSION TIMERS: " + i);
-		
+
 		coastErosion cErode;
-		for(Coast c : items.getCoast()){
+		for (Coast c : items.getCoast()) {
 			cErode = new coastErosion(c);
 			c.setErosionTimer(new Timer(this.erodeDelay, cErode));
 			c.getErosionTimer().start();
 			allTimers.add(c.getErosionTimer());
 		}
 	}
+
 	/**
-	 * the game ends when the timer runs off 
+	 * the game ends when the timer runs off
 	 */
-	public void gameOver(){
+	public void gameOver() {
 		stopTimers();
 		Action endGameAct = new endGameAction();
 		mainGame.bindKeyWith("GotoEndGame", KeyStroke.getKeyStroke("ENTER"), endGameAct);
-		
+
 	}
+
 	/**
 	 * stop the timers
 	 */
-	public void stopTimers(){
-		for(Timer t : allTimers){
+	public void stopTimers() {
+		for (Timer t : allTimers) {
 			t.stop();
 		}
 	}
+
 	/**
 	 * set up the debris set up, the main player's sate will be lifting.
+	 * 
 	 * @param d
 	 */
-	public void caughtSetup(Debris d){
+	public void caughtSetup(Debris d) {
 		this.choosingThrow = true;
 		items.mainPlayer.setState(ePlayerState.Lifting);
-		
-		//Change the function of the keys
-		mainGame.bindKeyWith("leftArrow", KeyStroke.getKeyStroke("LEFT"), new ThrowChoice(eThrowDirection.LEFT,d));
-		mainGame.bindKeyWith("rightArrow", KeyStroke.getKeyStroke("RIGHT"), new ThrowChoice(eThrowDirection.RIGHT,d));
+
+		// Change the function of the keys
+		mainGame.bindKeyWith("leftArrow", KeyStroke.getKeyStroke("LEFT"), new ThrowChoice(eThrowDirection.LEFT, d));
+		mainGame.bindKeyWith("rightArrow", KeyStroke.getKeyStroke("RIGHT"), new ThrowChoice(eThrowDirection.RIGHT, d));
 		mainGame.bindKeyWith("throwDebris", KeyStroke.getKeyStroke("ENTER"), new ThrowChosen(d));
-		
-		//Don't let the player move!
+
+		// Don't let the player move!
 		mainGame.unbindKeyWith("x.up", KeyStroke.getKeyStroke("UP"));
 		mainGame.unbindKeyWith("x.down", KeyStroke.getKeyStroke("DOWN"));
 	}
+
 	/**
 	 * when caught the power up, the state will also be lifting as well.
+	 * 
 	 * @param p
 	 */
-	public void caughtSetup(Powers p){
+	public void caughtSetup(Powers p) {
 		this.initiatingPowerUp = true;
 		Action powerAction = new PowerInitiate(p);
 		items.getPlayer().setState(ePlayerState.Lifting);
 		mainGame.bindKeyWith("initiatePowerUp", KeyStroke.getKeyStroke("ENTER"), powerAction);
 		freezeMotion();
-		
+
 	}
-	
-	public void freezeMotion(){
+
+	public void freezeMotion() {
 		mainGame.unbindKeyWith("up", KeyStroke.getKeyStroke("UP"));
 		mainGame.unbindKeyWith("down", KeyStroke.getKeyStroke("DOWN"));
 		mainGame.unbindKeyWith("left", KeyStroke.getKeyStroke("LEFT"));
 		mainGame.unbindKeyWith("right", KeyStroke.getKeyStroke("RIGHT"));
 	}
+
 	/**
 	 * Return the keys to their original state, allow Player to move
 	 */
 
-	public void thrownSetup(){
-		//Return the keys to their original state, allow Player to move
+	public void thrownSetup() {
+		// Return the keys to their original state, allow Player to move
 		normalKeyBind();
 		mainGame.unbindKeyWith("throwDebris", KeyStroke.getKeyStroke("ENTER"));
 		this.choosingThrow = false;
 	}
+
 	/**
 	 * 
 	 */
-	public void initiatedPowerSetup(){
+	public void initiatedPowerSetup() {
 		normalKeyBind();
 		mainGame.unbindKeyWith("throwDebris", KeyStroke.getKeyStroke("ENTER"));
 		this.initiatingPowerUp = false;
-		
+
 	}
-	
-	public void checkCollisions(){
-		
+
+	public void checkCollisions() {
+
 	}
-	
-	//Increase difficulty based on health and timer
-	public void checkDifficulty(){
-		if(items.getHealthBar().getHealth()>75 && items.getScreenTimer().getElapsedTime() > items.getScreenTimer().getMaxTime()/5){
-			if(difficulty.equals(eDifficulty.HARD)){
-				if(items.getScreenTimer().getElapsedTime() < items.getScreenTimer().getMaxTime()*0.9){
+
+	// Increase difficulty based on health and timer
+	public void checkDifficulty() {
+		if (items.getHealthBar().getHealth() > 75
+				&& items.getScreenTimer().getElapsedTime() > items.getScreenTimer().getMaxTime() / 5) {
+			if (difficulty.equals(eDifficulty.HARD)) {
+				if (items.getScreenTimer().getElapsedTime() < items.getScreenTimer().getMaxTime() * 0.9) {
 					return;
 				}
 			}
 			this.setDifficulty(difficulty.getNextDifficulty());
 			System.out.println("Increasing Difficulty!!");
-		}
-		else if (items.getHealthBar().getHealth()<25 && items.getScreenTimer().getElapsedTime() > items.getScreenTimer().getMaxTime()/5){
+		} else if (items.getHealthBar().getHealth() < 25
+				&& items.getScreenTimer().getElapsedTime() > items.getScreenTimer().getMaxTime() / 5) {
 			this.setDifficulty(difficulty.getPreviousDifficulty());
 			System.out.println("decreasing Difficulty!!");
 		}
-				/**
-				 * for each difficulty, we will set up the erosion rate and timer.
-				 */
-		switch(difficulty){
+		/**
+		 * for each difficulty, we will set up the erosion rate and timer.
+		 */
+		switch (difficulty) {
 		case VERYEASY:
-			for(Coast c: items.getCoast()){
+			for (Coast c : items.getCoast()) {
 				c.setErosionRate(35000);
 			}
 			this.getSpawnDebris().updateAveTime(15000);
 			break;
 		case EASY:
-			for(Coast c: items.getCoast()){
+			for (Coast c : items.getCoast()) {
 				c.setErosionRate(25000);
 			}
 			this.getSpawnDebris().updateAveTime(10000);
 			break;
 		case MEDIUM:
-			for(Coast c: items.getCoast()){
+			for (Coast c : items.getCoast()) {
 				c.setErosionRate(20000);
 			}
 			this.getSpawnDebris().updateAveTime(8000);
 			break;
 		case HARD:
-			for(Coast c: items.getCoast()){
+			for (Coast c : items.getCoast()) {
 				c.setErosionRate(15000);
 			}
 			this.getSpawnDebris().updateAveTime(5000);
 			break;
 		case IMPOSSIBLE:
-			for(Coast c: items.getCoast()){
+			for (Coast c : items.getCoast()) {
 				c.setErosionRate(6000);
 			}
 			this.getSpawnDebris().updateAveTime(2000);
 			break;
 		}
-		
+
 	}
-	
+
 	/**
 	 * @author Lia Dawson
 	 * @version 1.0
@@ -447,68 +483,79 @@ public class GameController implements Serializable {
 	 */
 	public class spawnDebris implements ActionListener, Serializable {
 		public int timePassed = 0;
-		//The time after which debris should spawn again (changes every time respawned)
+		// The time after which debris should spawn again (changes every time
+		// respawned)
 		public int spawnTimeDebris = 3000;
+
 		/**
 		 * get the time passed
+		 * 
 		 * @return timepassed
 		 */
 		public int getTimePassed() {
 			return timePassed;
 		}
+
 		/**
 		 * set the time passed
+		 * 
 		 * @param timePassed
 		 */
 		public void setTimePassed(int timePassed) {
 			this.timePassed = timePassed;
 		}
+
 		/**
 		 * get the spawn time debris
+		 * 
 		 * @return spawntimedebris
 		 */
 		public int getSpawnTimeDebris() {
 			return spawnTimeDebris;
 		}
+
 		/**
 		 * set the spawn time debris
+		 * 
 		 * @param spawnTimeDebris
 		 */
 		public void setSpawnTimeDebris(int spawnTimeDebris) {
 			this.spawnTimeDebris = spawnTimeDebris;
 		}
 
-		//The average length of time based on difficulty
+		// The average length of time based on difficulty
 		public int aveTime = 3000;
-		//The limit to the random distributions range in milliseconds (AKA +- rTime/2)
+		// The limit to the random distributions range in milliseconds (AKA +-
+		// rTime/2)
 		final public int rTime = 500;
-	
+
 		/**
 		 * construct a spawn debris
 		 */
-		public spawnDebris(){
+		public spawnDebris() {
 			spawnTimeDebris = 3000;
 			items.addDebris(newDebris());
 			resetTimer();
 		}
-		
-		public spawnDebris(boolean t){
+
+		public spawnDebris(boolean t) {
 			items.addDebris(newDebris());
 			resetTimer();
 		}
-		
+
 		/**
 		 * returns a new randomly generated piece of Debris
+		 * 
 		 * @return
 		 */
-		public Debris newDebris(){
+		public Debris newDebris() {
 			timePassed = 0;
 			Random r = new Random();
-			//generate initial position;
-			int randomx = r.nextInt(500)+150;
+			// generate initial position;
+			int randomx = r.nextInt(500) + 150;
 			System.out.println(randomx);
 			int xPos = MovementController.getStart(randomx);
-			
+
 			int dtype = r.nextInt() % 2;
 			Debris d;
 			if (dtype == 0) {
@@ -521,50 +568,59 @@ public class GameController implements Serializable {
 			d.setVertex(xPos);
 			return d;
 		}
-		
+
 		/**
-		 * resets the spawnTimeDebris to a new randomly generated number (within range)
+		 * resets the spawnTimeDebris to a new randomly generated number (within
+		 * range)
 		 */
-		public void resetTimer(){
+		public void resetTimer() {
 			Random r = new Random();
-			spawnTimeDebris = r.nextInt(rTime) + aveTime - rTime/2;
+			spawnTimeDebris = r.nextInt(rTime) + aveTime - rTime / 2;
 			timePassed = 0;
 		}
-		
+
 		/**
 		 * check the debris if it catches or not, has to check the collisions
+		 * 
 		 * @param d
 		 */
-		public void checkCatchDebris(Debris d){
-			if(!thisGame.choosingThrow && collision.checkCollision(d) && !thisGame.initiatingPowerUp){
-				//sets the Debris state to Lifted
+		public void checkCatchDebris(Debris d) {
+			if (!thisGame.choosingThrow && collision.checkCollision(d) && !thisGame.initiatingPowerUp) {
+				// sets the Debris state to Lifted
 				d.catching();
-				//sequence of events for a caught Debris initiated
+				// sequence of events for a caught Debris initiated
 				thisGame.caughtSetup(d);
-				//Move the trash to above the Player's head
-				d.updatePos(mainPlayer.getPosX()+mainPlayer.getWidth()/2 - d.getWidth()/2, mainPlayer.getPosY()-d.getHeight());
+				// Move the trash to above the Player's head
+				d.updatePos(mainPlayer.getPosX() + mainPlayer.getWidth() / 2 - d.getWidth() / 2,
+						mainPlayer.getPosY() - d.getHeight());
 			}
 		}
+
 		/**
 		 * move debris
+		 * 
 		 * @param d
 		 */
-		public void move(Debris d){
+		public void move(Debris d) {
 			MovementController.move(d);
 			checkCatchDebris(d);
 		}
+
 		/**
-		 * when we catch the debris, the player will have to pick which bin will throw, if pick a correct bin, then get points,
-		 * else will directly get together
+		 * when we catch the debris, the player will have to pick which bin will
+		 * throw, if pick a correct bin, then get points, else will directly get
+		 * together
+		 * 
 		 * @param d
 		 * @param toDelete
 		 */
-		public void throwing(Debris d, ArrayList<Debris> toDelete){
-			//This should be a sequence like move()
-			//Function could return true or false to indicate it it's hit the Bin yet, then initiate next sequence
+		public void throwing(Debris d, ArrayList<Debris> toDelete) {
+			// This should be a sequence like move()
+			// Function could return true or false to indicate it it's hit the
+			// Bin yet, then initiate next sequence
 			MovementController.Throw(d, d.getBin());
 
-			//Update the healthbar if it hit on this round
+			// Update the healthbar if it hit on this round
 			if (d.getState() == eFloaterState.HITBIN) {
 				System.out.print("\nBin hit this round and");
 				if (d.getCorrectBin()) {
@@ -573,191 +629,208 @@ public class GameController implements Serializable {
 					toDelete.add(d);
 					items.getHealthBar().update(eHealthChanges.CorrectBin.getDelta());
 					ScoreController.scoreBin();
-				}
-				else {
+				} else {
 					System.out.print(" bin was incorrect.\n");
 					MovementController.wrongBinMove(d);
-					d.setState(eFloaterState.RESTING);
-					items.getHealthBar().update(eHealthChanges.IncorrectBin.getDelta());
+					if(d.getState()==eFloaterState.RESTING){
+						items.getHealthBar().update(eHealthChanges.IncorrectBin.getDelta());
+					}
 				}
 			}
-			//If the debris hit the wrong bin it should go back to the coast
-		
+			// If the debris hit the wrong bin it should go back to the coast
+
 		}
-		
-		public void spawnTimeReached(){
+
+		public void spawnTimeReached() {
 			items.addDebris(newDebris());
 			resetTimer();
 		}
+
 		/**
 		 * perform the debris action
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			ArrayList<Debris> toDelete = new ArrayList<Debris>();
-			//might want to put this for loop in its own class in the Controller
-			for(Debris d : items.getAllDebris()){
-				//make each item float
-				if(d.getState()==eFloaterState.MOVING){
+			// might want to put this for loop in its own class in the
+			// Controller
+			for (Debris d : items.getAllDebris()) {
+				// make each item float
+				if (d.getState() == eFloaterState.MOVING) {
 
 					move(d);
-					//If the debris hit the coast this round, decrement health
+					// If the debris hit the coast this round, decrement health
 					if (d.getState() == eFloaterState.RESTING) {
 						System.out.println("Debris hit coast");
 						items.getHealthBar().update(eHealthChanges.DebrisHitCoast.getDelta());
 					}
-				}
-				else if(d.getState()==eFloaterState.THROWING){
+				} else if (d.getState() == eFloaterState.THROWING ||d.getState() == eFloaterState.HITBIN) {
 					throwing(d, toDelete);
-				}
-				else if(d.getState()==eFloaterState.RESTING) {
+					System.out.println("called throwing method, current state of throw is: " + d.getState());
+					System.out.println("called throwing method, current state of throw is: " + d.getType());
+				} else if (d.getState() == eFloaterState.RESTING) {
 					checkCatchDebris(d);
 				}
 			}
-			
-			//Now delete any debris that hit
-			for(Debris del : toDelete){
+
+			// Now delete any debris that hit
+			for (Debris del : toDelete) {
 				items.removeDebris(del);
 			}
-				
-			//if the timer goes off then add another piece of debris at the top
-			if(timePassed >= spawnTimeDebris){
+
+			// if the timer goes off then add another piece of debris at the top
+			if (timePassed >= spawnTimeDebris) {
 				spawnTimeReached();
 			}
-			
-			timePassed+=floatDelay;
+
+			timePassed += floatDelay;
 		}
+
 		/**
 		 * update the average time
+		 * 
 		 * @param newTime
 		 */
-		public void updateAveTime(int newTime){
+		public void updateAveTime(int newTime) {
 			aveTime = newTime;
 		}
-		
+
 	}
-	
+
 	/**
 	 * The point of this class is to create a timer that calls paint
+	 * 
 	 * @author megan
 	 *
 	 */
 	public class mainTimer implements ActionListener, Serializable {
 		int maxTime = items.getScreenTimer().getMaxTime();
-		
+
 		public int scoringTime = 0;
 		public int difficultyTime = 0;
-		final public int scoreCheck = maxTime/500;
-		final public int difficultyCheck = maxTime/10;
+		final public int scoreCheck = maxTime / 500;
+		final public int difficultyCheck = maxTime / 10;
 		public int healthTime = 0;
 
-		final public int healthCheck = maxTime/18;
+		final public int healthCheck = maxTime / 18;
 		final public int delaySpotlight = 1000;
-		
+
 		public int stormTime = 0;
 		public int realStormTime = 0;
 		boolean stormChecked = false;
-		final public int stormCheck = maxTime*3/4; //storm check 3/4th into the game
-		
+		final public int stormCheck = maxTime * 3 / 4; // storm check 3/4th into
+														// the game
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			mainGame.repaint();
 
 			checkItems();
 		}
+
 		/**
-		 * the game ends either the healbar runs out or the time off, and check the storm time, score time, and so on
+		 * the game ends either the healbar runs out or the time off, and check
+		 * the storm time, score time, and so on
 		 */
-		public void checkItems(){
-			if(items.getScreenTimer().getState() == eScreenTimerState.ON){
-				timeElapsed+=paintDelay;
-				scoringTime+=paintDelay;
-				difficultyTime+=paintDelay;
-				healthTime+=paintDelay;
-				stormTime+=paintDelay;
+		public void checkItems() {
+			if (items.getScreenTimer().getState() == eScreenTimerState.ON) {
+				timeElapsed += paintDelay;
+				scoringTime += paintDelay;
+				difficultyTime += paintDelay;
+				healthTime += paintDelay;
+				stormTime += paintDelay;
 				items.getScreenTimer().setElapsedTime(timeElapsed);
-				
+
 				checkStormTime();
 				checkScoreTime();
 				checkDifficultyTime();
 				checkOverallHealth();
-				if(items.getScreenTimer().getState()==eScreenTimerState.OFF){
+				if (items.getScreenTimer().getState() == eScreenTimerState.OFF) {
 					gameOver();
 				}
-				if(items.getHealthBar().getHealth() <= 0){
+				if (items.getHealthBar().getHealth() <= 0) {
 					gameOver();
 				}
 			}
 		}
+
 		/**
 		 * check when the storm comes
 		 */
 		public void checkStormTime() {
-			if (stormTime >= stormCheck){  //later change this to stormCheck
+			if (stormTime >= stormCheck) { // later change this to stormCheck
 				HealthBar hb = items.getHealthBar();
-				if (!Storm.getAppeared() && (hb.getHealth() >= hb.getMaxHealth()*.5)) {
+				if (!Storm.getAppeared() && (hb.getHealth() >= hb.getMaxHealth() * .5)) {
 					if (!stormChecked) {
-						realStormTime = stormTime + delaySpotlight*3;
+						realStormTime = stormTime + delaySpotlight * 3;
 						stormChecked = true;
 						items.setStormv(new StormVisual(-250, 450));
 						System.out.println("\nStorm incoming in 3 seconds!!");
 					}
-					//storm appears only when it hasn't appeared yet, and current health is 75% or more
+					// storm appears only when it hasn't appeared yet, and
+					// current health is 75% or more
 					callStorm(stormTime);
 				}
 			}
 
 		}
+
 		/**
 		 * when it is time, call the storm to come
+		 * 
 		 * @param time
 		 */
-		public void callStorm(int time){
+		public void callStorm(int time) {
 			if (stormTime >= realStormTime) {
 				Storm.stormEffects(items, debrisMover);
 				Storm.setAppeared(true);
 			}
 		}
+
 		/**
 		 * check the score time
 		 */
-		public void checkScoreTime(){
-			if(scoringTime >= scoreCheck){
+		public void checkScoreTime() {
+			if (scoringTime >= scoreCheck) {
 				ScoreController.scoreHealth(items.getHealthBar().getHealth());
 				scoringTime = 0;
 			}
 		}
+
 		/**
 		 * check the difficulty time
 		 */
-		public void checkDifficultyTime(){
-			if(difficultyTime >= difficultyCheck){
+		public void checkDifficultyTime() {
+			if (difficultyTime >= difficultyCheck) {
 				checkDifficulty();
 				difficultyTime = 0;
 			}
 		}
+
 		/**
 		 * check the overall health from the health bar
 		 */
-		public void checkOverallHealth(){
-			if(healthTime >= healthCheck){
+		public void checkOverallHealth() {
+			if (healthTime >= healthCheck) {
 				items.getHealthBar().update(eHealthChanges.RestingDebrisGradual.getDelta());
 				healthTime = 0;
 			}
 		}
+
 		/**
 		 * get the elapsed time
+		 * 
 		 * @return
 		 */
-		public int getTimeElapsed(){
+		public int getTimeElapsed() {
 			return timeElapsed;
 		}
-		
 
 	}
-	
+
 	/**
-	 * At (slightly) random intervals spawn powers, only should be initialized once!!
+	 * At (slightly) random intervals spawn powers, only should be initialized
+	 * once!!
 	 *
 	 */
 	public class spawnPowers implements ActionListener, Serializable {
@@ -765,104 +838,105 @@ public class GameController implements Serializable {
 		public int spawnTimePowers;
 		public int aveTime = 15000;
 		final public int rTime = 3000;
-		protected boolean rebuildMode= false;
+		protected boolean rebuildMode = false;
 		protected boolean removeMode = false;
 		protected Helper removeHelper;
 		protected Tool rebuildTool;
-/**
- * construct a spawn powers
- */
-		public spawnPowers(){
+
+		/**
+		 * construct a spawn powers
+		 */
+		public spawnPowers() {
 			resetTimer();
 		}
 
-		public Powers newPower(){
+		public Powers newPower() {
 			Random r = new Random();
 			Powers p;
-			if(r.nextInt()%2==0){
+			if (r.nextInt() % 2 == 0) {
 				p = newPower(new Rebuild());
-			}
-			else{
+			} else {
 				p = newPower(new Remove());
 			}
-			
+
 			return p;
 		}
-		
-		public Powers newPower(Powers p){
+
+		public Powers newPower(Powers p) {
 			Random r = new Random();
-			//generate initial position;
-			int randomx = r.nextInt(500)+150;
+			// generate initial position;
+			int randomx = r.nextInt(500) + 150;
 			System.out.println("power:" + randomx);
 			int xPos = MovementController.getStart(randomx);
-			
-			if(p instanceof Rebuild){
+
+			if (p instanceof Rebuild) {
 				System.out.println("rebuild");
-				p.updatePos(xPos,0);
-			}
-			else{
+				p.updatePos(xPos, 0);
+			} else {
 				System.out.println("remove");
-				p.updatePos(xPos,0);
+				p.updatePos(xPos, 0);
 			}
 			p.setVertex(xPos);
-			
+
 			return p;
 		}
+
 		/**
 		 * reset the timer in spawn powers
 		 */
-		
-		public void resetTimer(){
+
+		public void resetTimer() {
 			Random r = new Random();
-			spawnTimePowers = r.nextInt(rTime) + aveTime - rTime/2;
+			spawnTimePowers = r.nextInt(rTime) + aveTime - rTime / 2;
 			timePassed = 0;
 		}
-		
-		public void quickSpawn(){
+
+		public void quickSpawn() {
 			items.addPower(newPower());
 		}
-		public void quickSpawnRebuild(){
+
+		public void quickSpawnRebuild() {
 			items.addPower(newPower(new Rebuild()));
 		}
-		public void quickSpawnRemove(){
+
+		public void quickSpawnRemove() {
 			items.addPower(newPower(new Remove()));
 		}
 
-		public void move(Powers p){
+		public void move(Powers p) {
 			MovementController.move(p);
-			
-			if(collision.checkCollision(p) && !thisGame.choosingThrow && !thisGame.initiatingPowerUp){
+
+			if (collision.checkCollision(p) && !thisGame.choosingThrow && !thisGame.initiatingPowerUp) {
 				p.catching();
 				thisGame.caughtSetup(p);
-				p.updatePos(mainPlayer.getPosX()+mainPlayer.getWidth()/2 - p.getWidth()/2, mainPlayer.getPosY()-p.getHeight());
+				p.updatePos(mainPlayer.getPosX() + mainPlayer.getWidth() / 2 - p.getWidth() / 2,
+						mainPlayer.getPosY() - p.getHeight());
 			}
 		}
-		
-		public void spawnTimeReached(){
+
+		public void spawnTimeReached() {
 			System.out.println("new power spawn");
-			if(!items.getRestingDebris().isEmpty()){
-				if( items.emptyBarriers() >=4){	
+			if (!items.getRestingDebris().isEmpty()) {
+				if (items.emptyBarriers() >= 4) {
 					items.addPower(newPower());
-				}
-				else{
+				} else {
 					this.quickSpawnRemove();
 				}
-			}
-			else{
-				if(items.emptyBarriers() >=4){
+			} else {
+				if (items.emptyBarriers() >= 4) {
 					this.quickSpawnRebuild();
 				}
 			}
-			
+
 			resetTimer();
 		}
-		
-		public void rebuildAction(){
+
+		public void rebuildAction() {
 			rebuildTool.addTime(floatDelay);
-			if(rebuildTool.doneBuilding()){
+			if (rebuildTool.doneBuilding()) {
 				System.out.println("Done building");
 				items.deleteRebuildTool();
-				for(Coast c :items.getCoast()){
+				for (Coast c : items.getCoast()) {
 					c.tempProtect(false);
 				}
 				EstuaryGame.mc.setWallSpawnable(true);
@@ -870,32 +944,31 @@ public class GameController implements Serializable {
 				rebuildMode = false;
 			}
 		}
-		
-		public void removeAction(){
+
+		public void removeAction() {
 			MovementController.walkMove(removeHelper);
 			removeHelper.addTime(floatDelay);
-			if(removeHelper.getState() == eHelperState.WALKING_OFF && removeHelper.getTimeInStage()==0){
+			if (removeHelper.getState() == eHelperState.WALKING_OFF && removeHelper.getTimeInStage() == 0) {
 				removeHelper.getPower().power(items);
 			}
-			if(removeHelper.getState()==eHelperState.VOID){
+			if (removeHelper.getState() == eHelperState.VOID) {
 				System.out.println("void! ");
 				items.deleteRemoveHelper();
 				removeMode = false;
 			}
 		}
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			for(Powers p : items.getAllPowers()){
-				//make each item float
-				if(p.getState()==eFloaterState.MOVING){
+			for (Powers p : items.getAllPowers()) {
+				// make each item float
+				if (p.getState() == eFloaterState.MOVING) {
 					move(p);
-				}
-				else if(p.getState()==eFloaterState.INITIATED){
-					if(p instanceof Rebuild){
-						if(!rebuildMode){
-							if(getItems().emptyBarriers()!=0){
+				} else if (p.getState() == eFloaterState.INITIATED) {
+					if (p instanceof Rebuild) {
+						if (!rebuildMode) {
+							if (getItems().emptyBarriers() != 0) {
 								rebuildTool = new Tool(Rebuild.getRebuildBarriers(getItems()));
 								items.setRebuildTool(rebuildTool);
 								rebuildTool.stopErosion(items.getCoast());
@@ -904,10 +977,9 @@ public class GameController implements Serializable {
 								EstuaryGame.mc.setGabionSpawnable(false);
 							}
 						}
-					}
-					else if(p instanceof Remove){
-						if(!removeMode){
-							if(getItems().getRestingDebris().size()!=0){
+					} else if (p instanceof Remove) {
+						if (!removeMode) {
+							if (getItems().getRestingDebris().size() != 0) {
 								removeHelper = new Helper();
 								removeHelper.setFinalY(items.getAllDebris());
 								items.setRemoveHelper(removeHelper);
@@ -918,219 +990,220 @@ public class GameController implements Serializable {
 					}
 					ScoreController.scorePower();
 				}
-				
+
 			}
-			//Removes power up if hits coast or powerup was initiated
+			// Removes power up if hits coast or powerup was initiated
 			Iterator poweritr = items.getAllPowers().iterator();
-			while(poweritr.hasNext()){
-				Powers p = (Powers)poweritr.next();
-				if(p.getState() == eFloaterState.INITIATED || p.getState() == eFloaterState.RESTING){
+			while (poweritr.hasNext()) {
+				Powers p = (Powers) poweritr.next();
+				if (p.getState() == eFloaterState.INITIATED || p.getState() == eFloaterState.RESTING) {
 					poweritr.remove();
 				}
 			}
-			
-			if(removeMode){
+
+			if (removeMode) {
 				removeAction();
 			}
-			
-			if(rebuildMode){
+
+			if (rebuildMode) {
 				rebuildAction();
 			}
-			//if the timer goes off then add another power at the top
-			if(timePassed >= spawnTimePowers){
+			// if the timer goes off then add another power at the top
+			if (timePassed >= spawnTimePowers) {
 				spawnTimeReached();
 			}
-			timePassed+=floatDelay;
+			timePassed += floatDelay;
 		}
-/**
- * update the average time;
- * @param newTime
- */
-		public void updateAveTime(int newTime){
+
+		/**
+		 * update the average time;
+		 * 
+		 * @param newTime
+		 */
+		public void updateAveTime(int newTime) {
 			aveTime = newTime;
 		}
 
 	}
-	
+
 	public class walkController implements ActionListener, Serializable {
 		private int timePassed = 0;
-		
-		
+
 		@Override
-		public void actionPerformed(ActionEvent e){
-			
+		public void actionPerformed(ActionEvent e) {
+
 		}
 	}
-	
-	
-	
+
 	public class coastErosion implements ActionListener, Serializable {
 		private Coast coast;
 		public int timePassed;
 		public int erosionTime;
 		public int aveTime;
 		final public int rTime = 5000;
+
 		/**
 		 * construct a coast erosion
+		 * 
 		 * @param c
 		 */
-		public coastErosion(Coast c){
+		public coastErosion(Coast c) {
 			coast = c;
 			updateErosion(coast);
 			timePassed = 0;
 		}
+
 		/**
 		 * calculate the erosion of the cast
+		 * 
 		 * @param coast
 		 */
-		public void updateErosion(Coast coast){
+		public void updateErosion(Coast coast) {
 			Random r = new Random();
-			//assumes erosion rate in Coast is in milliseconds
+			// assumes erosion rate in Coast is in milliseconds
 			aveTime = (int) coast.getErosionRate();
-			erosionTime = r.nextInt(rTime) + aveTime - rTime/2;
+			erosionTime = r.nextInt(rTime) + aveTime - rTime / 2;
 		}
-		
-		
+
 		@Override
 		/**
-		 * the coast begin to erode 
+		 * the coast begin to erode
 		 */
 		public void actionPerformed(ActionEvent e) {
-			if(coast.isProtected()){
-				//System.out.println("The coast is protected at: " + coast.getPosX());
+			if (coast.isProtected()) {
+				// System.out.println("The coast is protected at: " +
+				// coast.getPosX());
 				return;
-			}
-			else{
-				if(timePassed >= erosionTime){
+			} else {
+				if (timePassed >= erosionTime) {
 					coast.erode();
 					timePassed = 0;
 					updateErosion(coast);
 					items.getHealthBar().update(eHealthChanges.CoastEroded.getDelta());
-					
+
 					System.out.println("Updating erosion rate" + coast.getErosionRate());
-				}
-				else{
-					timePassed+=erodeDelay;
+				} else {
+					timePassed += erodeDelay;
 				}
 			}
-		}	
+		}
 	}
-	
+
 	public class barrierErosion implements ActionListener, Serializable {
 		private Barriers barrier;
 		public int timePassed = 0;
 		public int erosionTime;
 		public int aveTime;
 		final public int rTime = 4000;
+
 		/**
 		 * construct a barrier erosion
+		 * 
 		 * @param b
 		 */
-		public barrierErosion(Barriers b){
+		public barrierErosion(Barriers b) {
 			barrier = b;
 			newTime();
 		}
+
 		/**
 		 * new erosion time for the barrier
 		 */
-		public void newTime(){
+		public void newTime() {
 			Random r = new Random();
 			aveTime = barrier.getDecayTime();
-			erosionTime = r.nextInt(rTime) + aveTime - rTime/2;
+			erosionTime = r.nextInt(rTime) + aveTime - rTime / 2;
 			System.out.println("new erosion: " + erosionTime);
-			
+
 		}
-/**
- * when the barrier is empty, then do nothing, else it begin to erode as 
- * it has a new time and calculate when it can be erode
- */
+
+		/**
+		 * when the barrier is empty, then do nothing, else it begin to erode as
+		 * it has a new time and calculate when it can be erode
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if(barrier.getType()==eBarrierType.EMPTY){
+			if (barrier.getType() == eBarrierType.EMPTY) {
 				return;
 			}
 
-			if(timePassed == 0){
+			if (timePassed == 0) {
 				newTime();
-				timePassed+=erodeDelay;
-			}
-			else if(timePassed >= erosionTime){
+				timePassed += erodeDelay;
+			} else if (timePassed >= erosionTime) {
 				barrier.erode();
 				newTime();
 				timePassed = 0;
-				//items.getHealthBar().update(eHealthChanges.BarrierFallen.getDelta());
-			}
-			else if(barrier.getState()==eBarrierState.NO_HIT && timePassed >= (0.5)*erosionTime){
+				// items.getHealthBar().update(eHealthChanges.BarrierFallen.getDelta());
+			} else if (barrier.getState() == eBarrierState.NO_HIT && timePassed >= (0.5) * erosionTime) {
 				System.out.println("Eroding half at: " + timePassed);
 				barrier.erodeHalf();
-				timePassed+=erodeDelay;
-			}
-			else{
-				timePassed+=erodeDelay;
+				timePassed += erodeDelay;
+			} else {
+				timePassed += erodeDelay;
 			}
 		}
-		
+
 	}
-	//TODO
-	public class HAction extends AbstractAction{
-		
-		//the amount the player moves when you press the key
+
+	// TODO
+	public class HAction extends AbstractAction {
+
+		// the amount the player moves when you press the key
 		private int moveSize;
-		
-		public HAction(int jump){
+
+		public HAction(int jump) {
 			this.moveSize = jump;
 		}
-		
-		public void updateSpeed(int jump){
+
+		public void updateSpeed(int jump) {
 			this.moveSize = jump;
 		}
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int next = getMainPlayer().getPosX() + moveSize;
-			int edge = dimX-getMainPlayer().getWidth();
+			int edge = dimX - getMainPlayer().getWidth();
 			if (next <= 0) {
 				getMainPlayer().updatePosX(0);
-			}
-			else if (next >= edge) {
+			} else if (next >= edge) {
 				getMainPlayer().updatePosX(edge);
-			}
-			else {
+			} else {
 				getMainPlayer().updatePosX(getMainPlayer().getPosX() + moveSize);
 			}
 		}
-		
-	}
-	//TODO
-	public class VAction extends AbstractAction{
 
-		//the amount the player moves when you press the key
+	}
+
+	// TODO
+	public class VAction extends AbstractAction {
+
+		// the amount the player moves when you press the key
 		private int moveSize;
-		
-		public VAction(int jump){
+
+		public VAction(int jump) {
 			this.moveSize = jump;
 		}
-		
-		public void updateSpeed(int jump){
+
+		public void updateSpeed(int jump) {
 			this.moveSize = jump;
 		}
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int next = getMainPlayer().getPosY() + moveSize;
-			int edge = dimY - getMainPlayer().getHeight(); 
+			int edge = dimY - getMainPlayer().getHeight();
 			if (next <= 0) {
 				getMainPlayer().updatePosY(0);
-			}
-			else if (next >= edge) {
+			} else if (next >= edge) {
 				getMainPlayer().updatePosY(edge);
-			}
-			else {
-				getMainPlayer().updatePosY(getMainPlayer().getPosY()+moveSize);
+			} else {
+				getMainPlayer().updatePosY(getMainPlayer().getPosY() + moveSize);
 			}
 		}
-		
+
 	}
+
 	/**
 	 * quit
 	 *
@@ -1142,52 +1215,58 @@ public class GameController implements Serializable {
 			System.exit(0);
 		}
 	}
-	
+
 	/**
 	 * When the player catches Debris, left and right keys bind with this action
 	 *
 	 */
-	public class ThrowChoice extends AbstractAction{
+	public class ThrowChoice extends AbstractAction {
 		private eThrowDirection dir;
 		private Debris caughtDebris;
-		
-		public ThrowChoice(eThrowDirection dir, Debris d){
+
+		public ThrowChoice(eThrowDirection dir, Debris d) {
 			this.dir = dir;
 			this.caughtDebris = d;
 		}
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("Change throw dir" + dir.name());
 			caughtDebris.setThrowDirection(dir);
 		}
-		
+
 	}
-	
+
 	/**
-	 * Action to be bound with the enter key when a piece of Debris is caught. Pressing enter releases the Debris
+	 * Action to be bound with the enter key when a piece of Debris is caught.
+	 * Pressing enter releases the Debris
 	 *
 	 */
-	public class ThrowChosen extends AbstractAction{
+	public class ThrowChosen extends AbstractAction {
 
 		private Debris caughtDebris;
-		public ThrowChosen(Debris d){
+
+		public ThrowChosen(Debris d) {
 			this.caughtDebris = d;
 		}
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			caughtDebris.setState(eFloaterState.THROWING);
 			items.getPlayer().setState(ePlayerState.Idle);
 			thisGame.thrownSetup();
 		}
-		
+
 	}
-	public class PowerInitiate extends AbstractAction{
+
+	public class PowerInitiate extends AbstractAction {
 
 		private Powers caughtPower;
-		public PowerInitiate(Powers p){
+
+		public PowerInitiate(Powers p) {
 			this.caughtPower = p;
 		}
+
 		@Override
 		/**
 		 * perform the power up initial action
@@ -1197,31 +1276,36 @@ public class GameController implements Serializable {
 			thisGame.initiatedPowerSetup();
 			items.getPlayer().setState(ePlayerState.Idle);
 		}
-		
+
 	}
+
 	/**
-	 * goes through list of barriers and changes the one with the matching coords to type t
+	 * goes through list of barriers and changes the one with the matching
+	 * coords to type t
+	 * 
 	 * @param barr
 	 * @param t
 	 */
 	public void setBarrierType(Barriers barr, eBarrierType t) {
-	
+
 		for (Barriers b : this.items.getAllBarriers()) {
-			if((barr.getPosX()>=b.getPosX() && barr.getPosX()<=b.getPosX()+b.getWidth()) 
-					&& (barr.getPosY()>=b.getPosY() && barr.getPosY()<=b.getPosY()+b.getHeight())){ //"match"
+			if ((barr.getPosX() >= b.getPosX() && barr.getPosX() <= b.getPosX() + b.getWidth())
+					&& (barr.getPosY() >= b.getPosY() && barr.getPosY() <= b.getPosY() + b.getHeight())) { // "match"
 				b.setType(t);
 				System.out.println("inside space");
 			}
 		}
 	}
-	
+
 	/**
-	 * Returns whether a Barrier barr has collided with any other Barrier on the screen
+	 * Returns whether a Barrier barr has collided with any other Barrier on the
+	 * screen
+	 * 
 	 * @param barr
 	 * @return
-	*/
+	 */
 	public Barriers emptyBarrierCollision(Barriers barr) {
-		//checks if barr collided with any of the barriers and if it is empty		
+		// checks if barr collided with any of the barriers and if it is empty
 		for (Barriers b : this.items.getAllBarriers()) {
 			if ((Collisions.checkCollision(b, barr) && (b.getType() == eBarrierType.EMPTY))) {
 				System.out.println("empty barrier collide");
@@ -1230,64 +1314,67 @@ public class GameController implements Serializable {
 		}
 		return null;
 	}
-	
-/**
- * get the main player
- * @return
- */
+
+	/**
+	 * get the main player
+	 * 
+	 * @return
+	 */
 	public Player getMainPlayer() {
 		return mainPlayer;
 	}
 
-/**
- * set the main player
- * @param mainPlayer
- */
+	/**
+	 * set the main player
+	 * 
+	 * @param mainPlayer
+	 */
 	public void setMainPlayer(Player mainPlayer) {
 		this.mainPlayer = mainPlayer;
 	}
+
 	/**
 	 * set the difficulty
+	 * 
 	 * @param diff
 	 */
-	public void setDifficulty(eDifficulty diff){
+	public void setDifficulty(eDifficulty diff) {
 		difficulty = diff;
 	}
-	
+
 	/**
 	 * when end the game, then end screen will show up
+	 * 
 	 * @author Pu
 	 *
 	 */
-	public class endGameAction extends AbstractAction{
+	public class endGameAction extends AbstractAction {
 
-		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			CardLayout c1 = (CardLayout) (EstuaryGame.getCards().getLayout());
 			c1.show(EstuaryGame.getCards(), "EndScreen");
 		}
-		
+
 	}
-	
+
 	public class SerializeAction extends AbstractAction {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//Serialize to file
-			try
-			{
+			// Serialize to file
+			try {
 				System.out.print("writing");
 				FileOutputStream fos = new FileOutputStream("testSerialize.ser");
 				ObjectOutputStream oos = new ObjectOutputStream(fos);
-				//TODO
-				
-				//oos.writeObject(items);
-				//Write the player
+				// TODO
+
+				// oos.writeObject(items);
+				// Write the player
 				oos.writeObject(mainPlayer);
-				//Write the ActiveItems
+				// Write the ActiveItems
 				oos.writeObject(items);
-				//Write the rest
+				// Write the rest
 				oos.writeObject(debrisFloating);
 				oos.writeObject(powersFloating);
 				oos.writeObject(choosingThrow);
@@ -1298,81 +1385,71 @@ public class GameController implements Serializable {
 				oos.writeObject(timeElapsed);
 				oos.writeObject(debrisMover);
 				oos.writeObject(powerMover);
-				
+
 				oos.close();
-			}
-			catch (Exception ex)
-			{
+			} catch (Exception ex) {
 				System.out.println("Exception thrown during test: " + ex.toString());
 				ex.printStackTrace();
 			}
 
 		}
 
-
 	}
-//TODO
+
+	// TODO
 	public class ReadSerializeAction extends AbstractAction {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//Serialize to file
-			try
-			{
+			// Serialize to file
+			try {
 				System.out.print("reading");
 				FileInputStream fis = new FileInputStream("testSerialize.ser");
 				ObjectInputStream ois = new ObjectInputStream(fis);
 
-				//TODO: ois.readObject()
-				//Write the player
+				// TODO: ois.readObject()
+				// Write the player
 				mainPlayer = (Player) ois.readObject();
-				//Write the ActiveItems
+				// Write the ActiveItems
 				items = (ActiveItems) ois.readObject();
-				//Write the rest
+				// Write the rest
 				debrisFloating = (Timer) ois.readObject();
 				powersFloating = (Timer) ois.readObject();
-				
+
 				choosingThrow = (boolean) ois.readObject();
 				initiatingPowerUp = (boolean) ois.readObject();
-				
+
 				ArrayList<Timer> readObject = (ArrayList<Timer>) ois.readObject();
 				allTimers = readObject;
-				
+
 				theBigTimer = (Timer) ois.readObject();
 				paintTimer = (mainTimer) ois.readObject();
-				
+
 				timeElapsed = (int) ois.readObject();
-				
+
 				debrisMover = (spawnDebris) ois.readObject();
-				powerMover = (spawnPowers) ois.readObject();			
+				powerMover = (spawnPowers) ois.readObject();
 
 				ois.close();
-			}
-			catch (Exception ex)
-			{
+			} catch (Exception ex) {
 				System.out.println("Exception thrown during test: " + ex.toString());
 			}
 		}
 	}
-	
+
 	public class CleanUpSerializeAction extends AbstractAction {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//Serialize to file
-			try
-			{
-				//Clean up the file
+			// Serialize to file
+			try {
+				// Clean up the file
 				new File("testSerialize.ser").delete();
-			}
-			catch (Exception ex)
-			{
+			} catch (Exception ex) {
 				System.out.println("Exception thrown during test: " + ex.toString());
 			}
 		}
 
-
 	}
-
 
 }
