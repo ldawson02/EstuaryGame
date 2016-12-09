@@ -25,8 +25,11 @@ import model.Item;
 import model.Powers;
 import view.EstuaryGame;
 import view.Tutorial;
-
-public class TutorialController extends GameController {
+/**
+ * this class is used for the controlling the tutorial
+ */
+  public class TutorialController extends GameController {
+ 
 
 	Tutorial t;
 	private int floatDelay = 100;
@@ -41,7 +44,10 @@ public class TutorialController extends GameController {
 	private Timer erosionTimer;
 	private ArrayList<Timer> erosionTimers = new ArrayList<Timer>();
 	private HashSet<Timer> allTimers = new HashSet<Timer>();
-	
+	/**
+	 * construct a tutorial controller
+	 * @param mainGame
+	 */
 	public TutorialController(Tutorial mainGame) {
 		super(mainGame);
 		t = mainGame;
@@ -54,15 +60,22 @@ public class TutorialController extends GameController {
 	}
 
 	@Override
+	/**
+	 * start a game
+	 */
 	public void startGame(){
 		System.out.println("POLYMORPHISM");
 	}
-	
+	/**
+	 * when the game overs, then it is done
+	 */
 	public void gameOver(){
 		t.setState(eTutorialState.DONE);
 		stopTimers();
 	}
-	
+	/**
+	 * set the barrier's type
+	 */
 	public void tutorialSetup(){
 		getItems().getAllBarriers().get(8).setType(eBarrierType.Wall);
 		getItems().getAllBarriers().get(9).setType(eBarrierType.Gabion);
@@ -73,6 +86,9 @@ public class TutorialController extends GameController {
 	}
 	
 	@Override
+	/**
+	 * set up the paint timer
+	 */
 	public void setUpPaintTimer(){
 		//Start the paint timer
 		System.out.println("Paint timer setup in subclass");
@@ -80,11 +96,17 @@ public class TutorialController extends GameController {
 		theBigTimer = new Timer(paintDelay, paintTimer);
 		theBigTimer.start();
 	}
+	/**
+	 * get the float delay
+	 * @return
+	 */
 	
 	public int getFloatDelay() {
 		return floatDelay;
 	}
-
+/**
+ * if stage complete, then goes to the next state.
+ */
 	public void stageComplete(){
 		t.spotlightSwitched = false;
 		t.spotlight = false;

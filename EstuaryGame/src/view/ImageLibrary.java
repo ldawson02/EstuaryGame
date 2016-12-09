@@ -258,7 +258,11 @@ public class ImageLibrary {
 		}
 		
 	}
-	
+	/**
+	 * image draw for the animation
+	 * @param eAnim
+	 * @return
+	 */
 	public Image draw(eAnimation eAnim) {
 		ImageSequence seq = library.get(eAnim);
 		return (seq.draw());
@@ -275,7 +279,11 @@ public class ImageLibrary {
 			return draw(eAnimation.error);
 		}
 	}
-	
+	/**
+	 * draw the image for debris
+	 * @param d
+	 * @return
+	 */
 	public Image draw(Debris d) {
 		if (d.getType() == eDebrisType.RECYCLING) {
 			switch (d.getState()) {
@@ -304,6 +312,11 @@ public class ImageLibrary {
 		return draw(eAnimation.error);
 	}
 	
+	/**
+	 * draw the image for the helper
+	 * @param h
+	 * @return
+	 */
 	public Image draw(Helper h) {
 		if (h.getState() == eHelperState.WALKING) {
 			return draw(eAnimation.helperWalk);
@@ -318,7 +331,11 @@ public class ImageLibrary {
 			return draw(eAnimation.helperWalkRight);
 		}
 	}
-	
+	/**
+	 * draw the barrier
+	 * @param b
+	 * @return
+	 */
 	public Image draw(Barriers b) {
 		if (b.getType() == eBarrierType.Gabion) {
     		switch (b.getState()) {
@@ -340,7 +357,11 @@ public class ImageLibrary {
     	}
 		
 	}
-	
+	/**
+	 * draw powers
+	 * @param p
+	 * @return
+	 */
 	public Image draw(Powers p) {
 		if (p instanceof Remove) {
 			switch (p.getState()) {
@@ -367,7 +388,12 @@ public class ImageLibrary {
 		//Implied else
 		return draw(eAnimation.error);
 	}
-	
+	/**
+	 * draw the coast
+	 * @param thisState
+	 * @param leftState
+	 * @return
+	 */
 	public Image drawCoast(int thisState, int leftState) {
 		try {
 			return coastLibrary[thisState][leftState];

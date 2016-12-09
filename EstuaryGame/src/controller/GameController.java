@@ -84,23 +84,39 @@ public class GameController implements Serializable {
 	private boolean gameEnd;
 	Collisions collision = new Collisions();
 		
+	/**
+	 * construct a game controller
+	 * @param mainGame
+	 */
 	public GameController(EstuaryGame mainGame){
 		setMainGame(mainGame);
 		setup();
 	}
-	
+	/**
+	 * get the main game
+	 * @return maingame;
+	 */
 	public EstuaryGame getMainGame() {
 		return mainGame;
 	}
-
+/**
+ * set the main game
+ * @param mainGame
+ */
 	public void setMainGame(EstuaryGame mainGame) {
 		this.mainGame = mainGame;
 	}
-
+	/**
+	 * get the items
+	 * @return items
+	 */
 	public ActiveItems getItems() {
 		return items;
 	}
-
+	/**
+	 * set the items
+	 * @param items
+	 */
 	public void setItems(ActiveItems items) {
 		this.items = items;
 	}
@@ -112,11 +128,16 @@ public class GameController implements Serializable {
 		//TODO
 		return timeElapsed;
 	}
-	
+	/**
+	 * getter for spawn debris
+	 * @return
+	 */
 	public spawnDebris getSpawnDebris() {
 		return debrisMover;
 	}
-
+	/**
+	 * normal key bind for left right up down and quit.
+	 */
 	public void normalKeyBind(){
 		mainGame.bindKeyWith("left", KeyStroke.getKeyStroke("LEFT"), new HAction(-1 * getMainPlayer().getSpeed()));
 		mainGame.bindKeyWith("right", KeyStroke.getKeyStroke("RIGHT"), new HAction(1 * getMainPlayer().getSpeed()));
@@ -124,14 +145,19 @@ public class GameController implements Serializable {
 		mainGame.bindKeyWith("down", KeyStroke.getKeyStroke("DOWN"), new VAction(1 * getMainPlayer().getSpeed()));
 		mainGame.bindKeyWith("quit", KeyStroke.getKeyStroke(KeyEvent.VK_Q, KeyEvent.CTRL_DOWN_MASK), new quitAction());
 	}
-	
+	/**
+	 * get serialization for the key bind
+	 */
 	public void serializationKeyBind() {
 		mainGame.bindKeyWith("save", KeyStroke.getKeyStroke('1'), new SerializeAction());
 		mainGame.bindKeyWith("load", KeyStroke.getKeyStroke('2'), new ReadSerializeAction());
 		mainGame.bindKeyWith("delete", KeyStroke.getKeyStroke('3'), new CleanUpSerializeAction());
 	}
 
-	
+	/**
+	 * this function is for the set up the game, we add the health bar, and then screen timer,player,coast
+	 * bins, gabions,walls and everything the game needs
+	 */
 	public void setup(){
 		//Add health bar!!
 		items.addHealthBar(new HealthBar());
@@ -195,7 +221,9 @@ public class GameController implements Serializable {
 		//mainGame.initTitleScreen();
 		startGame();
 	}
-	
+	/**
+	 * set up the debris which is on the coast, and it includes trash and recycling
+	 */
 	public void setupDebrisOnCoast(){
 		//need to add trash to walls first so that they can be deleted
 		ArrayList<Debris> toAdd = new ArrayList<Debris>();
@@ -217,7 +245,9 @@ public class GameController implements Serializable {
 			i++;
 		}
 	}
-	
+	/**
+	 * start the paint timer
+	 */
 	public void setUpPaintTimer(){
 		//Start the paint timer
 		paintTimer = new mainTimer();
@@ -228,7 +258,10 @@ public class GameController implements Serializable {
 	public void tearDown(){
 		mainGame.unbindKeyWith("GotoEndGame", KeyStroke.getKeyStroke("ENTER"));
 	}
-	
+	/**
+	 * start the game, we get the timer started and then move the trash, recycling and power ups, and also 
+	 * erosion begins
+	 */
 	public void startGame(){
 		System.out.print("in super startGame");
 		//set up automatic movements!
@@ -250,7 +283,9 @@ public class GameController implements Serializable {
 		erosionSetup();
 
 	}
-	
+	/**
+	 * set up the erosion in barriers, if the item is wall or gabions, get the erosion timer and start to erode.
+	 */
 	public void erosionSetup(){
 		barrierErosion bErode; int i = 0;
 		for(Barriers b: items.getAllBarriers()){
@@ -270,20 +305,27 @@ public class GameController implements Serializable {
 			allTimers.add(c.getErosionTimer());
 		}
 	}
-	
+	/**
+	 * the game ends when the timer runs off 
+	 */
 	public void gameOver(){
 		stopTimers();
 		Action endGameAct = new endGameAction();
 		mainGame.bindKeyWith("GotoEndGame", KeyStroke.getKeyStroke("ENTER"), endGameAct);
 		
 	}
-	
+	/**
+	 * stop the timers
+	 */
 	public void stopTimers(){
 		for(Timer t : allTimers){
 			t.stop();
 		}
 	}
-	
+	/**
+	 * set up the debris set up, the main player's sate will be lifting.
+	 * @param d
+	 */
 	public void caughtSetup(Debris d){
 		this.choosingThrow = true;
 		items.mainPlayer.setState(ePlayerState.Lifting);
@@ -297,7 +339,10 @@ public class GameController implements Serializable {
 		mainGame.unbindKeyWith("x.up", KeyStroke.getKeyStroke("UP"));
 		mainGame.unbindKeyWith("x.down", KeyStroke.getKeyStroke("DOWN"));
 	}
-	
+	/**
+	 * when caught the power up, the state will also be lifting as well.
+	 * @param p
+	 */
 	public void caughtSetup(Powers p){
 		this.initiatingPowerUp = true;
 		Action powerAction = new PowerInitiate(p);
@@ -313,13 +358,19 @@ public class GameController implements Serializable {
 		mainGame.unbindKeyWith("left", KeyStroke.getKeyStroke("LEFT"));
 		mainGame.unbindKeyWith("right", KeyStroke.getKeyStroke("RIGHT"));
 	}
-	
+	/**
+	 * Return the keys to their original state, allow Player to move
+	 */
+
 	public void thrownSetup(){
 		//Return the keys to their original state, allow Player to move
 		normalKeyBind();
 		mainGame.unbindKeyWith("throwDebris", KeyStroke.getKeyStroke("ENTER"));
 		this.choosingThrow = false;
 	}
+	/**
+	 * 
+	 */
 	public void initiatedPowerSetup(){
 		normalKeyBind();
 		mainGame.unbindKeyWith("throwDebris", KeyStroke.getKeyStroke("ENTER"));
@@ -346,7 +397,9 @@ public class GameController implements Serializable {
 			this.setDifficulty(difficulty.getPreviousDifficulty());
 			System.out.println("decreasing Difficulty!!");
 		}
-				
+				/**
+				 * for each difficulty, we will set up the erosion rate and timer.
+				 */
 		switch(difficulty){
 		case VERYEASY:
 			for(Coast c: items.getCoast()){
@@ -396,18 +449,31 @@ public class GameController implements Serializable {
 		public int timePassed = 0;
 		//The time after which debris should spawn again (changes every time respawned)
 		public int spawnTimeDebris = 3000;
+		/**
+		 * get the time passed
+		 * @return timepassed
+		 */
 		public int getTimePassed() {
 			return timePassed;
 		}
-
+		/**
+		 * set the time passed
+		 * @param timePassed
+		 */
 		public void setTimePassed(int timePassed) {
 			this.timePassed = timePassed;
 		}
-
+		/**
+		 * get the spawn time debris
+		 * @return spawntimedebris
+		 */
 		public int getSpawnTimeDebris() {
 			return spawnTimeDebris;
 		}
-
+		/**
+		 * set the spawn time debris
+		 * @param spawnTimeDebris
+		 */
 		public void setSpawnTimeDebris(int spawnTimeDebris) {
 			this.spawnTimeDebris = spawnTimeDebris;
 		}
@@ -417,7 +483,9 @@ public class GameController implements Serializable {
 		//The limit to the random distributions range in milliseconds (AKA +- rTime/2)
 		final public int rTime = 500;
 	
-		
+		/**
+		 * construct a spawn debris
+		 */
 		public spawnDebris(){
 			spawnTimeDebris = 3000;
 			items.addDebris(newDebris());
@@ -429,7 +497,10 @@ public class GameController implements Serializable {
 			resetTimer();
 		}
 		
-		//returns a new randomly generated piece of Debris
+		/**
+		 * returns a new randomly generated piece of Debris
+		 * @return
+		 */
 		public Debris newDebris(){
 			timePassed = 0;
 			Random r = new Random();
@@ -451,13 +522,19 @@ public class GameController implements Serializable {
 			return d;
 		}
 		
-		//resets the spawnTimeDebris to a new randomly generated number (within range)
+		/**
+		 * resets the spawnTimeDebris to a new randomly generated number (within range)
+		 */
 		public void resetTimer(){
 			Random r = new Random();
 			spawnTimeDebris = r.nextInt(rTime) + aveTime - rTime/2;
 			timePassed = 0;
 		}
 		
+		/**
+		 * check the debris if it catches or not, has to check the collisions
+		 * @param d
+		 */
 		public void checkCatchDebris(Debris d){
 			if(!thisGame.choosingThrow && collision.checkCollision(d) && !thisGame.initiatingPowerUp){
 				//sets the Debris state to Lifted
@@ -468,12 +545,20 @@ public class GameController implements Serializable {
 				d.updatePos(mainPlayer.getPosX()+mainPlayer.getWidth()/2 - d.getWidth()/2, mainPlayer.getPosY()-d.getHeight());
 			}
 		}
-		
+		/**
+		 * move debris
+		 * @param d
+		 */
 		public void move(Debris d){
 			MovementController.move(d);
 			checkCatchDebris(d);
 		}
-		
+		/**
+		 * when we catch the debris, the player will have to pick which bin will throw, if pick a correct bin, then get points,
+		 * else will directly get together
+		 * @param d
+		 * @param toDelete
+		 */
 		public void throwing(Debris d, ArrayList<Debris> toDelete){
 			//This should be a sequence like move()
 			//Function could return true or false to indicate it it's hit the Bin yet, then initiate next sequence
@@ -504,7 +589,9 @@ public class GameController implements Serializable {
 			items.addDebris(newDebris());
 			resetTimer();
 		}
-		
+		/**
+		 * perform the debris action
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			ArrayList<Debris> toDelete = new ArrayList<Debris>();
@@ -540,14 +627,21 @@ public class GameController implements Serializable {
 			
 			timePassed+=floatDelay;
 		}
-		
+		/**
+		 * update the average time
+		 * @param newTime
+		 */
 		public void updateAveTime(int newTime){
 			aveTime = newTime;
 		}
 		
 	}
 	
-	//The point of this class is to create a timer that calls paint
+	/**
+	 * The point of this class is to create a timer that calls paint
+	 * @author megan
+	 *
+	 */
 	public class mainTimer implements ActionListener, Serializable {
 		int maxTime = items.getScreenTimer().getMaxTime();
 		
@@ -571,7 +665,9 @@ public class GameController implements Serializable {
 
 			checkItems();
 		}
-		
+		/**
+		 * the game ends either the healbar runs out or the time off, and check the storm time, score time, and so on
+		 */
 		public void checkItems(){
 			if(items.getScreenTimer().getState() == eScreenTimerState.ON){
 				timeElapsed+=paintDelay;
@@ -593,7 +689,9 @@ public class GameController implements Serializable {
 				}
 			}
 		}
-		
+		/**
+		 * check when the storm comes
+		 */
 		public void checkStormTime() {
 			if (stormTime >= stormCheck){  //later change this to stormCheck
 				HealthBar hb = items.getHealthBar();
@@ -610,35 +708,47 @@ public class GameController implements Serializable {
 			}
 
 		}
-		
+		/**
+		 * when it is time, call the storm to come
+		 * @param time
+		 */
 		public void callStorm(int time){
 			if (stormTime >= realStormTime) {
 				Storm.stormEffects(items, debrisMover);
 				Storm.setAppeared(true);
 			}
 		}
-		
+		/**
+		 * check the score time
+		 */
 		public void checkScoreTime(){
 			if(scoringTime >= scoreCheck){
 				ScoreController.scoreHealth(items.getHealthBar().getHealth());
 				scoringTime = 0;
 			}
 		}
-		
+		/**
+		 * check the difficulty time
+		 */
 		public void checkDifficultyTime(){
 			if(difficultyTime >= difficultyCheck){
 				checkDifficulty();
 				difficultyTime = 0;
 			}
 		}
-		
+		/**
+		 * check the overall health from the health bar
+		 */
 		public void checkOverallHealth(){
 			if(healthTime >= healthCheck){
 				items.getHealthBar().update(eHealthChanges.RestingDebrisGradual.getDelta());
 				healthTime = 0;
 			}
 		}
-		
+		/**
+		 * get the elapsed time
+		 * @return
+		 */
 		public int getTimeElapsed(){
 			return timeElapsed;
 		}
@@ -646,7 +756,10 @@ public class GameController implements Serializable {
 
 	}
 	
-	//At (slightly) random intervals spawn powers, only should be initialized once!!
+	/**
+	 * At (slightly) random intervals spawn powers, only should be initialized once!!
+	 *
+	 */
 	public class spawnPowers implements ActionListener, Serializable {
 		public int timePassed = 0;
 		public int spawnTimePowers;
@@ -656,7 +769,9 @@ public class GameController implements Serializable {
 		protected boolean removeMode = false;
 		protected Helper removeHelper;
 		protected Tool rebuildTool;
-
+/**
+ * construct a spawn powers
+ */
 		public spawnPowers(){
 			resetTimer();
 		}
@@ -693,7 +808,9 @@ public class GameController implements Serializable {
 			
 			return p;
 		}
-		
+		/**
+		 * reset the timer in spawn powers
+		 */
 		
 		public void resetTimer(){
 			Random r = new Random();
@@ -825,7 +942,10 @@ public class GameController implements Serializable {
 			}
 			timePassed+=floatDelay;
 		}
-
+/**
+ * update the average time;
+ * @param newTime
+ */
 		public void updateAveTime(int newTime){
 			aveTime = newTime;
 		}
@@ -850,12 +970,19 @@ public class GameController implements Serializable {
 		public int erosionTime;
 		public int aveTime;
 		final public int rTime = 5000;
-		
+		/**
+		 * construct a coast erosion
+		 * @param c
+		 */
 		public coastErosion(Coast c){
 			coast = c;
 			updateErosion(coast);
 			timePassed = 0;
 		}
+		/**
+		 * calculate the erosion of the cast
+		 * @param coast
+		 */
 		public void updateErosion(Coast coast){
 			Random r = new Random();
 			//assumes erosion rate in Coast is in milliseconds
@@ -865,6 +992,9 @@ public class GameController implements Serializable {
 		
 		
 		@Override
+		/**
+		 * the coast begin to erode 
+		 */
 		public void actionPerformed(ActionEvent e) {
 			if(coast.isProtected()){
 				//System.out.println("The coast is protected at: " + coast.getPosX());
@@ -892,11 +1022,17 @@ public class GameController implements Serializable {
 		public int erosionTime;
 		public int aveTime;
 		final public int rTime = 4000;
-		
+		/**
+		 * construct a barrier erosion
+		 * @param b
+		 */
 		public barrierErosion(Barriers b){
 			barrier = b;
 			newTime();
 		}
+		/**
+		 * new erosion time for the barrier
+		 */
 		public void newTime(){
 			Random r = new Random();
 			aveTime = barrier.getDecayTime();
@@ -904,7 +1040,10 @@ public class GameController implements Serializable {
 			System.out.println("new erosion: " + erosionTime);
 			
 		}
-
+/**
+ * when the barrier is empty, then do nothing, else it begin to erode as 
+ * it has a new time and calculate when it can be erode
+ */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(barrier.getType()==eBarrierType.EMPTY){
@@ -932,7 +1071,7 @@ public class GameController implements Serializable {
 		}
 		
 	}
-	
+	//TODO
 	public class HAction extends AbstractAction{
 		
 		//the amount the player moves when you press the key
@@ -962,7 +1101,7 @@ public class GameController implements Serializable {
 		}
 		
 	}
-	
+	//TODO
 	public class VAction extends AbstractAction{
 
 		//the amount the player moves when you press the key
@@ -992,7 +1131,10 @@ public class GameController implements Serializable {
 		}
 		
 	}
-	
+	/**
+	 * quit
+	 *
+	 */
 	public class quitAction extends AbstractAction {
 
 		@Override
@@ -1001,7 +1143,10 @@ public class GameController implements Serializable {
 		}
 	}
 	
-	//When the player catches Debris, left and right keys bind with this action
+	/**
+	 * When the player catches Debris, left and right keys bind with this action
+	 *
+	 */
 	public class ThrowChoice extends AbstractAction{
 		private eThrowDirection dir;
 		private Debris caughtDebris;
@@ -1019,7 +1164,10 @@ public class GameController implements Serializable {
 		
 	}
 	
-	//Action to be bound with the enter key when a piece of Debris is caught. Pressing enter releases the Debris
+	/**
+	 * Action to be bound with the enter key when a piece of Debris is caught. Pressing enter releases the Debris
+	 *
+	 */
 	public class ThrowChosen extends AbstractAction{
 
 		private Debris caughtDebris;
@@ -1041,6 +1189,9 @@ public class GameController implements Serializable {
 			this.caughtPower = p;
 		}
 		@Override
+		/**
+		 * perform the power up initial action
+		 */
 		public void actionPerformed(ActionEvent e) {
 			caughtPower.setState(eFloaterState.INITIATED);
 			thisGame.initiatedPowerSetup();
@@ -1048,9 +1199,13 @@ public class GameController implements Serializable {
 		}
 		
 	}
-	
+	/**
+	 * goes through list of barriers and changes the one with the matching coords to type t
+	 * @param barr
+	 * @param t
+	 */
 	public void setBarrierType(Barriers barr, eBarrierType t) {
-		//goes through list of barriers and changes the one with the matching coords to type t
+	
 		for (Barriers b : this.items.getAllBarriers()) {
 			if((barr.getPosX()>=b.getPosX() && barr.getPosX()<=b.getPosX()+b.getWidth()) 
 					&& (barr.getPosY()>=b.getPosY() && barr.getPosY()<=b.getPosY()+b.getHeight())){ //"match"
@@ -1064,7 +1219,7 @@ public class GameController implements Serializable {
 	 * Returns whether a Barrier barr has collided with any other Barrier on the screen
 	 * @param barr
 	 * @return
-	 */
+	
 	public Barriers emptyBarrierCollision(Barriers barr) {
 		//checks if barr collided with any of the barriers and if it is empty		
 		for (Barriers b : this.items.getAllBarriers()) {
@@ -1075,21 +1230,34 @@ public class GameController implements Serializable {
 		}
 		return null;
 	}
-
+/**
+ * get the main player
+ * @return
+ */
 	public Player getMainPlayer() {
 		return mainPlayer;
 	}
 
-
+/**
+ * set the main player
+ * @param mainPlayer
+ */
 	public void setMainPlayer(Player mainPlayer) {
 		this.mainPlayer = mainPlayer;
 	}
-	
+	/**
+	 * set the difficulty
+	 * @param diff
+	 */
 	public void setDifficulty(eDifficulty diff){
 		difficulty = diff;
 	}
 	
-	
+	/**
+	 * when end the game, then end screen will show up
+	 * @author Pu
+	 *
+	 */
 	public class endGameAction extends AbstractAction{
 
 		
@@ -1142,7 +1310,7 @@ public class GameController implements Serializable {
 
 
 	}
-
+//TODO
 	public class ReadSerializeAction extends AbstractAction {
 
 		@Override

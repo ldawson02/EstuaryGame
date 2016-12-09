@@ -12,6 +12,11 @@ public class Remove extends Powers implements Serializable{
 	
 	private int vertex;
 	
+	/**
+	 * construct a remove
+	 * @param x
+	 * @param y
+	 */
 	public Remove(int x, int y){
 		super(x,y);
 	};
@@ -20,7 +25,9 @@ public class Remove extends Powers implements Serializable{
 		super();
 	}
 
-
+	/**
+	 * set the state to lifted if catching
+	 */
 	@Override
 	public void catching() {
 		this.setState(eFloaterState.LIFTED);

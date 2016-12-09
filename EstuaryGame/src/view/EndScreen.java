@@ -23,6 +23,11 @@ import javax.swing.JPanel;
 import controller.GameController;
 import controller.MouseController;
 
+/**
+ * using JButton to set a button replay and has a image background when end the game 
+ * @author megan
+ *
+ */
 public class EndScreen extends JPanel implements ActionListener{
 	JButton btn3 = new JButton("Replay");
     
@@ -31,6 +36,10 @@ public class EndScreen extends JPanel implements ActionListener{
     public static final int defaultScreenX = 800;
     public static final int defaultScreenY = 600;
 	
+    /**
+     * construct an end screen, set the bound, set a action listener, when the game end, it shows the overall health of estuary, and 
+     * depending on the point you get, you could get the feedback on how you play the game.
+     */
 	public EndScreen(){
 		this.setLayout(null);
 		btn3.setActionCommand("REPLAY");
@@ -88,7 +97,9 @@ public class EndScreen extends JPanel implements ActionListener{
 			}
 		} );
 	}
-
+/**
+ * using cardlay out, when click the replay, everything should go back to the original state
+ */
 	public void actionPerformed(ActionEvent e){
 		CardLayout c1 = (CardLayout) (EstuaryGame.getCards().getLayout());
 		String cmd = e.getActionCommand();
@@ -105,12 +116,19 @@ public class EndScreen extends JPanel implements ActionListener{
 	}
 	
 	@Override
+	/**
+	 * paint the component 
+	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
 		g.drawImage(background, 0, 0, this);
 	}
-
+/**
+ * create a image
+ * @param filename
+ * @return
+ */
 	 private BufferedImage createImage(String filename){
 			BufferedImage bufferedImage;
 			try {

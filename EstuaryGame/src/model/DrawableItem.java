@@ -22,7 +22,13 @@ public class DrawableItem extends Item {
 		super.setWidth(width);
 		super.setHeight(height);
 	}
-	
+	/**
+	 * set the start and end drawable item
+	 * @param x
+	 * @param y
+	 * @param a
+	 * @param b
+	 */
 	public void setStartandEnd(int x, int y, int a, int b){
 		startx = x;
 		starty = y;
@@ -32,7 +38,9 @@ public class DrawableItem extends Item {
 		deltaY = finaly-starty;
 	}
 	
-	
+	/**
+	 * update the postion, delay on
+	 */
 	public void move(){
 		if(delayOn){
 			count++;

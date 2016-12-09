@@ -15,24 +15,40 @@ public class Rebuild extends Powers implements Serializable{
 	private eFloaterState state;
 	private ArrayList<Barriers> toRebuild = new ArrayList<Barriers>();
 		
+	/**
+	 * construct a rebuild using x and y
+	 * @param x
+	 * @param y
+	 */
 	public Rebuild(int x, int y){
 		super(x,y);
 	};
+	
 	public Rebuild(){
 		super();
 	}
 
+	/**
+	 * if catching, then set the state is lifted
+	 */
 	@Override
 	public void catching() {
 		this.setState(eFloaterState.LIFTED);
 		
 	}
-
+/**
+ * get barriers to rebuild
+ * @return torubild
+ */
 	public ArrayList<Barriers> getBarriersToRebuild(){
 		return toRebuild;
 	}
 	
-
+/**
+ * get rebuild barriers if the barrier type is empty
+ * @param items
+ * @return toRebuild
+ */
 	public static ArrayList<Barriers> getRebuildBarriers(ActiveItems items){
 		ArrayList<Barriers> toRebuild = new ArrayList<Barriers>();
 		ArrayList<Barriers> barriers = items.getAllBarriers();

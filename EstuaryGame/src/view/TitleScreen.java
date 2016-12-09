@@ -22,7 +22,10 @@ import javax.swing.Timer;
 
 import controller.GameController;
 import controller.MouseController;
-
+/**
+ * when goes to the titale scree, we will have a start game and tutorial option
+ *
+ */
 public class TitleScreen extends JPanel implements ActionListener{
 
     JButton btn1 = new JButton("Start");
@@ -36,6 +39,9 @@ public class TitleScreen extends JPanel implements ActionListener{
     public static final int defaultScreenX = 800;
     public static final int defaultScreenY = 600;
     
+    /**
+     * construct a title screen using action listener
+     */
     public TitleScreen() {
     	this.setLayout(null);
     	btn1.setActionCommand("START");
@@ -52,12 +58,18 @@ public class TitleScreen extends JPanel implements ActionListener{
     	loadTitleBG();
     	repaint();
     }
-
+/**
+ * load the background pic
+ */
 	public void loadTitleBG() {
 		String srcpath = "resources" + File.separator + "titleBackground" + File.separator + "titlebackground.png";
 		background = createImage(srcpath).getScaledInstance(800, 600, Image.SCALE_SMOOTH);
 	}
     
+	/**
+	 * when click the start button, it goes to the game controller and main game,
+	 *  if goes to tutorial, goes to tutorial screen
+	 */
 	public void actionPerformed(ActionEvent e){
 		CardLayout c1 = (CardLayout) (EstuaryGame.getCards().getLayout());
 		String cmd = e.getActionCommand();
@@ -90,6 +102,9 @@ public class TitleScreen extends JPanel implements ActionListener{
         }
     }
 	
+	/**
+	 * paint the component in title screen
+	 */
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -99,6 +114,9 @@ public class TitleScreen extends JPanel implements ActionListener{
 	}
 	
 	 @Override
+	 /**
+	  * get the dimension preferred size
+	  */
 	    public Dimension getPreferredSize()
 	    {
 	        return (new Dimension(800, 600));

@@ -14,7 +14,10 @@ public class Tool extends Item{
 	
 	public static final int defaultWidth = 120;
 	public static final int defaultHeight = 50;
-	
+	/**
+	 * construct a tool
+	 * @param barriers
+	 */
 	public Tool(ArrayList<Barriers> barriers) {		
 		this.setHeight(defaultHeight);
 		this.setWidth(defaultWidth);
@@ -54,7 +57,9 @@ public class Tool extends Item{
 			doneBuilding = true;
 		}
 	}
-	
+	/**
+	 * update the barrier's postion
+	 */
 	public void updatePos(){ 
 		this.updatePos(currBarrier.getPosX(), currBarrier.getPosY());
 	}
