@@ -601,7 +601,7 @@ public class GameController implements Serializable {
 					if (!stormChecked) {
 						realStormTime = stormTime + delaySpotlight*3;
 						stormChecked = true;
-						items.setStormv(new StormVisual(-250, 450));
+						items.setStormv(new StormVisual());
 						System.out.println("\nStorm incoming in 3 seconds!!");
 					}
 					//storm appears only when it hasn't appeared yet, and current health is 75% or more

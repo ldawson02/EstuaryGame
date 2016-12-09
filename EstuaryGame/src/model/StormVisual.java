@@ -8,7 +8,7 @@ public class StormVisual extends Item {
 	public static final int defaultHeight = 250;
 	public static final int defaultWidth = 250;
 	
-	public StormVisual(int x, int y) {
+	public StormVisual() {
 		this.updatePos(-250, 600);
 	}
 	
@@ -16,4 +16,11 @@ public class StormVisual extends Item {
 		updatePos(this.getPosX() + speedx, this.getPosY() - speedy);
 	}
 	
+	public int getSpeedX(){
+		return speedx;
+	}
+	
+	public int getSpeedY(){
+		return speedy;
+	}
 }
