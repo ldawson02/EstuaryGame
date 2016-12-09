@@ -8,7 +8,7 @@ public class StormVisual extends Item {
 	public static final int defaultHeight = 250;
 	public static final int defaultWidth = 250;
 	
-	public StormVisual() {
+	public StormVisual(int x, int y) {
 		this.updatePos(-250, 600);
 	}
 	
