@@ -44,17 +44,24 @@ import model.Tool;
  * @version 1.3
  * @since 11/16/16
  */
-
 public class ImageLibrary {
 
 	private HashMap<eAnimation, ImageSequence> library;
 	private BufferedImage[][] coastLibrary;
 	
+	/**
+	 * Private constructor to force the use of the factor method
+	 */
 	private ImageLibrary() {
 		library = new HashMap<eAnimation, ImageSequence>();
 		coastLibrary = new BufferedImage[4][4];
 	}
 	
+	/**
+	 * Factory method to load up the whole library. Handles initialization
+	 * and scaling.
+	 * @return ImageLibrary
+	 */
 	public static ImageLibrary loadLibrary() {
 		ImageLibrary lib = new ImageLibrary();
 
@@ -72,6 +79,10 @@ public class ImageLibrary {
 		return lib;
 	}
 	
+	/**
+	 * Because the coast library is handled most efficiently through a 2D array,
+	 * it is loaded separately.
+	 */
 	private void loadCoastLibrary() {
 		String srcpath = "resources" + File.separator + "erosion" + File.separator;
 		for (int i = 0; i < 4; i++) {
@@ -89,10 +100,9 @@ public class ImageLibrary {
 		library.get(eAnimation.hammer).setFrameDelay(4);
 	}
 	
-	/*
-	 * This initializes the scaling on ALL the Images.
-	 * THIS IS HARD-CODED FOR A 600x800 RESOLUTION.
-	 * This is the worst method ever, but improved efficiency considerably.
+	/**
+	 * This initializes the scaling on ALL the Images, hard-coded for a
+	 * 800x600 resolution. Not efficient.
 	 */
 	private void initScaleLibrary() {
 		//TODO: this has to scale the images initially
@@ -238,31 +248,22 @@ public class ImageLibrary {
 		library.get(eAnimation.storm).setSeq(scaled23);
 	}
 	
-	public void scaleLibrary(double scaleFactor) {
-		//TODO: this has to be able to update every image by a factor
-
-		eAnimation[] allAnims = eAnimation.values();
-		
-		for (eAnimation eAnim: allAnims) {
-			ImageSequence sq = this.getLibrary().get(eAnim);
-			Image exFrame = sq.getSeq().get(0);
-			//Get old dimensions
-			//TODO
-			//Produce new dimensions
-			//TODO
-		}
-		
-	}
 	/**
-	 * image draw for the animation
+	 * Reaches into the ImageSequence for the specified animation and returns
+	 * the next frame.
 	 * @param eAnim
-	 * @return
+	 * @return Image
 	 */
 	public Image draw(eAnimation eAnim) {
 		ImageSequence seq = library.get(eAnim);
 		return (seq.draw());
 	}
 
+	/**
+	 * Returns the next frame of the Player's animation based on its state
+	 * @param Player p
+	 * @return Image
+	 */
 	public Image draw(Player p) {
 		if (p.getState() == ePlayerState.Idle) {
 			return draw(eAnimation.playerIdle);
@@ -274,10 +275,11 @@ public class ImageLibrary {
 			return draw(eAnimation.error);
 		}
 	}
+	
 	/**
-	 * draw the image for debris
-	 * @param d
-	 * @return
+	 * Returns the next frame of the Debris's animation based on its state
+	 * @param Debris d
+	 * @return Image
 	 */
 	public Image draw(Debris d) {
 		if (d.getType() == eDebrisType.RECYCLING) {
@@ -310,9 +312,9 @@ public class ImageLibrary {
 	}
 	
 	/**
-	 * draw the image for the helper
-	 * @param h
-	 * @return
+	 * Returns the next frame of the Helper's animation
+	 * @param Helper h
+	 * @return Image
 	 */
 	public Image draw(Helper h) {
 		if (h.getState() == eHelperState.WALKING) {
@@ -328,10 +330,11 @@ public class ImageLibrary {
 			return draw(eAnimation.helperWalkRight);
 		}
 	}
+	
 	/**
-	 * draw the barrier
-	 * @param b
-	 * @return
+	 * Returns the next frame for the Barriers' animation
+	 * @param Barriers b
+	 * @return Image
 	 */
 	public Image draw(Barriers b) {
 		if (b.getType() == eBarrierType.Gabion) {
@@ -354,10 +357,11 @@ public class ImageLibrary {
     	}
 		
 	}
+	
 	/**
-	 * draw powers
-	 * @param p
-	 * @return
+	 * Returns the next frame of the Powers' animation
+	 * @param Powers p
+	 * @return Image
 	 */
 	public Image draw(Powers p) {
 		if (p instanceof Remove) {
@@ -385,11 +389,13 @@ public class ImageLibrary {
 		//Implied else
 		return draw(eAnimation.error);
 	}
+	
 	/**
-	 * draw the coast
+	 * Returns the correct Coast image based on the state of the current
+	 * coast item and the state of the adjacent coast item.
 	 * @param thisState
 	 * @param leftState
-	 * @return
+	 * @return Image
 	 */
 	public Image drawCoast(int thisState, int leftState) {
 		try {
@@ -402,20 +408,28 @@ public class ImageLibrary {
 	}
 	
 	/**
-	 * @return the library
+	 * Gets the underlying HashMap
+	 * Only for testing
+	 * @return HashMap
 	 */
 	public HashMap<eAnimation, ImageSequence> getLibrary() {
 		return library;
 	}
 	
 	/**
-	 * @return the coastLibrary
+	 * Gets the 2D array 
 	 * Only used for testing
+	 * @return the coastLibrary
 	 */
 	public BufferedImage[][] getCoastLibrary() {
 		return coastLibrary;
 	}
 
+	/**
+	 * Method for safely instantiating an Image.
+	 * @param filename
+	 * @return Image
+	 */
 	private BufferedImage createImage(String filename){
 		BufferedImage bufferedImage;
 		try {

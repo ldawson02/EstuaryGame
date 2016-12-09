@@ -226,4 +226,6 @@ public class Coast extends Item implements Serializable{
 		
 		return spaces;
 	}
+	
+	
 }

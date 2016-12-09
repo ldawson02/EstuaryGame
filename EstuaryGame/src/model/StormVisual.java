@@ -15,7 +15,7 @@ public class StormVisual extends Item {
 	 * @param x
 	 * @param y
 	 */
-	public StormVisual(int x, int y) {
+	public StormVisual() {
 		this.updatePos(-250, 600);
 	}
 	/**
@@ -25,4 +25,11 @@ public class StormVisual extends Item {
 		updatePos(this.getPosX() + speedx, this.getPosY() - speedy);
 	}
 	
+	public int getSpeedX(){
+		return speedx;
+	}
+	
+	public int getSpeedY(){
+		return speedy;
+	}
 }
