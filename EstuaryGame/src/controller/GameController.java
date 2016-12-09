@@ -139,10 +139,10 @@ public class GameController implements Serializable {
 	 * normal key bind for left right up down and quit.
 	 */
 	public void normalKeyBind(){
-		mainGame.bindKeyWith("left", KeyStroke.getKeyStroke("LEFT"), new HAction(-1 * getMainPlayer().getSpeed()));
-		mainGame.bindKeyWith("right", KeyStroke.getKeyStroke("RIGHT"), new HAction(1 * getMainPlayer().getSpeed()));
-		mainGame.bindKeyWith("up", KeyStroke.getKeyStroke("UP"), new VAction(-1 * getMainPlayer().getSpeed()));
-		mainGame.bindKeyWith("down", KeyStroke.getKeyStroke("DOWN"), new VAction(1 * getMainPlayer().getSpeed()));
+		mainGame.bindKeyWith("left", KeyStroke.getKeyStroke("A"), new HAction(-1 * getMainPlayer().getSpeed()));
+		mainGame.bindKeyWith("right", KeyStroke.getKeyStroke("D"), new HAction(1 * getMainPlayer().getSpeed()));
+		mainGame.bindKeyWith("up", KeyStroke.getKeyStroke("W"), new VAction(-1 * getMainPlayer().getSpeed()));
+		mainGame.bindKeyWith("down", KeyStroke.getKeyStroke("S"), new VAction(1 * getMainPlayer().getSpeed()));
 		mainGame.bindKeyWith("quit", KeyStroke.getKeyStroke(KeyEvent.VK_Q, KeyEvent.CTRL_DOWN_MASK), new quitAction());
 	}
 	/**
@@ -256,7 +256,7 @@ public class GameController implements Serializable {
 	}
 	
 	public void tearDown(){
-		mainGame.unbindKeyWith("GotoEndGame", KeyStroke.getKeyStroke("ENTER"));
+		mainGame.unbindKeyWith("GotoEndGame", KeyStroke.getKeyStroke("SPACE"));
 	}
 	/**
 	 * start the game, we get the timer started and then move the trash, recycling and power ups, and also 
@@ -311,7 +311,7 @@ public class GameController implements Serializable {
 	public void gameOver(){
 		stopTimers();
 		Action endGameAct = new endGameAction();
-		mainGame.bindKeyWith("GotoEndGame", KeyStroke.getKeyStroke("ENTER"), endGameAct);
+		mainGame.bindKeyWith("GotoEndGame", KeyStroke.getKeyStroke("SPACE"), endGameAct);
 		
 	}
 	/**
@@ -331,13 +331,13 @@ public class GameController implements Serializable {
 		items.mainPlayer.setState(ePlayerState.Lifting);
 		
 		//Change the function of the keys
-		mainGame.bindKeyWith("leftArrow", KeyStroke.getKeyStroke("LEFT"), new ThrowChoice(eThrowDirection.LEFT,d));
-		mainGame.bindKeyWith("rightArrow", KeyStroke.getKeyStroke("RIGHT"), new ThrowChoice(eThrowDirection.RIGHT,d));
-		mainGame.bindKeyWith("throwDebris", KeyStroke.getKeyStroke("ENTER"), new ThrowChosen(d));
+		mainGame.bindKeyWith("leftArrow", KeyStroke.getKeyStroke("A"), new ThrowChoice(eThrowDirection.LEFT,d));
+		mainGame.bindKeyWith("rightArrow", KeyStroke.getKeyStroke("D"), new ThrowChoice(eThrowDirection.RIGHT,d));
+		mainGame.bindKeyWith("throwDebris", KeyStroke.getKeyStroke("SPACE"), new ThrowChosen(d));
 		
 		//Don't let the player move!
-		mainGame.unbindKeyWith("x.up", KeyStroke.getKeyStroke("UP"));
-		mainGame.unbindKeyWith("x.down", KeyStroke.getKeyStroke("DOWN"));
+		mainGame.unbindKeyWith("x.up", KeyStroke.getKeyStroke("W"));
+		mainGame.unbindKeyWith("x.down", KeyStroke.getKeyStroke("S"));
 	}
 	/**
 	 * when caught the power up, the state will also be lifting as well.
@@ -347,7 +347,7 @@ public class GameController implements Serializable {
 		this.initiatingPowerUp = true;
 		Action powerAction = new PowerInitiate(p);
 		items.getPlayer().setState(ePlayerState.Lifting);
-		mainGame.bindKeyWith("initiatePowerUp", KeyStroke.getKeyStroke("ENTER"), powerAction);
+		mainGame.bindKeyWith("initiatePowerUp", KeyStroke.getKeyStroke("SPACE"), powerAction);
 		freezeMotion();
 		
 	}
@@ -365,7 +365,7 @@ public class GameController implements Serializable {
 	public void thrownSetup(){
 		//Return the keys to their original state, allow Player to move
 		normalKeyBind();
-		mainGame.unbindKeyWith("throwDebris", KeyStroke.getKeyStroke("ENTER"));
+		mainGame.unbindKeyWith("throwDebris", KeyStroke.getKeyStroke("SPACE"));
 		this.choosingThrow = false;
 	}
 	/**
@@ -373,7 +373,7 @@ public class GameController implements Serializable {
 	 */
 	public void initiatedPowerSetup(){
 		normalKeyBind();
-		mainGame.unbindKeyWith("throwDebris", KeyStroke.getKeyStroke("ENTER"));
+		mainGame.unbindKeyWith("throwDebris", KeyStroke.getKeyStroke("SPACE"));
 		this.initiatingPowerUp = false;
 		
 	}
@@ -1165,7 +1165,7 @@ public class GameController implements Serializable {
 	}
 	
 	/**
-	 * Action to be bound with the enter key when a piece of Debris is caught. Pressing enter releases the Debris
+	 * Action to be bound with the space key when a piece of Debris is caught. Pressing space releases the Debris
 	 *
 	 */
 	public class ThrowChosen extends AbstractAction{
