@@ -22,9 +22,13 @@ import javax.swing.Timer;
 
 import controller.GameController;
 import controller.MouseController;
+
 /**
- * when goes to the titale scree, we will have a start game and tutorial option
- *
+ * This class holds the TitleScreen to be displayed on the game's launch.
+ * There is a button to lead to the tutorial, and a button to begin the game.
+ * 
+ * @version 1.1
+ * @since 12/9/16
  */
 public class TitleScreen extends JPanel implements ActionListener{
 
