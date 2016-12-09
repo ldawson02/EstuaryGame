@@ -15,7 +15,7 @@ public class StormVisual extends Item {
 	 * @param x
 	 * @param y
 	 */
-	public StormVisual(int x, int y) {
+	public StormVisual() {
 		this.updatePos(-250, 600);
 	}
 	/**
