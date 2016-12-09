@@ -25,29 +25,31 @@ import controller.MouseController;
 import controller.ScoreController;
 
 /**
- * using JButton to set a button replay and has a image background when end the game 
- * @author megan
- *
+ * This class holds the EndScreen that displays the score and allows the replaying 
+ * of the game.
+ * 
+ * @version 1.1
+ * @since 12/9/16
  */
 public class EndScreen extends JPanel implements ActionListener{
 	JButton btn3 = new JButton("Replay");
-    
-    Image background;
-	
-    public static final int defaultScreenX = 800;
-    public static final int defaultScreenY = 600;
-	
-    /**
-     * construct an end screen, set the bound, set a action listener, when the game end, it shows the overall health of estuary, and 
-     * depending on the point you get, you could get the feedback on how you play the game.
-     */
+
+	Image background;
+
+	public static final int defaultScreenX = 800;
+	public static final int defaultScreenY = 600;
+
+	/**
+	 * Construct an end screen, set the bound, set a action listener, when the game end, it shows the overall health of estuary, and 
+	 * depending on the point you get, you could get the feedback on how you play the game.
+	 */
 	public EndScreen(){
 		this.setLayout(null);
 		btn3.setActionCommand("REPLAY");
 		btn3.addActionListener(this);
 		btn3.setBounds(new Rectangle(310,300,200,50));
 
-		
+
 
 		this.addComponentListener ( new ComponentAdapter ()
 		{
@@ -57,18 +59,18 @@ public class EndScreen extends JPanel implements ActionListener{
 				if(EndScreen.this.isShowing()){
 					System.out.println ( "Component hidden" );
 					int endHealth = EstuaryGame.gc.getItems().getHealthBar().getHealth();
-					
+
 					JLabel label1 = new JLabel("Overall Health of Estuary: " + endHealth);
 					label1.setBounds(new Rectangle(280,220,600,30));
 					label1.setFont(label1.getFont().deriveFont(20.0f));
-					
+
 					JLabel label3 = new JLabel("Final Score: " + ScoreController.getScore());
 					label3.setFont(label3.getFont().deriveFont(20.0f));
 					label3.setBounds(new Rectangle(340,250,600,30));
-					
+
 					JLabel label2 = new JLabel();
 					label2.setFont(label2.getFont().deriveFont(30.0f));
-					
+
 					if(endHealth == 0) {
 						String srcpath = "resources" + File.separator + "endBackgroundBad" + File.separator + "badend.png";
 						background = createImage(srcpath).getScaledInstance(defaultScreenX, defaultScreenY, Image.SCALE_SMOOTH);
@@ -87,7 +89,7 @@ public class EndScreen extends JPanel implements ActionListener{
 						label2.setText("Great job! The estuary is safe!");
 						label2.setBounds(new Rectangle(210,100,800,100));
 					}
-					
+
 					EndScreen.this.removeAll();
 					EndScreen.this.add(btn3, BorderLayout.CENTER);
 					EndScreen.this.add(label1);
@@ -106,9 +108,10 @@ public class EndScreen extends JPanel implements ActionListener{
 			}
 		} );
 	}
-/**
- * using cardlay out, when click the replay, everything should go back to the original state
- */
+
+	/**
+	 * Returns to the main menu when the Replay button is pressed.
+	 */
 	public void actionPerformed(ActionEvent e){
 		CardLayout c1 = (CardLayout) (EstuaryGame.getCards().getLayout());
 		String cmd = e.getActionCommand();
@@ -116,38 +119,39 @@ public class EndScreen extends JPanel implements ActionListener{
 			EstuaryGame.cards.remove(EstuaryGame.mainGame);
 			EstuaryGame.mainGame = new EstuaryGame();
 			EstuaryGame.cards.add(EstuaryGame.mainGame, 1);
-			
+
 			EstuaryGame.cards.remove(EstuaryGame.tutorial);
 			EstuaryGame.tutorial = new Tutorial();
 			EstuaryGame.cards.add(EstuaryGame.tutorial, 2);
 			c1.show(EstuaryGame.getCards(), "TitleScreen");
 		}
 	}
-	
+
 	@Override
 	/**
-	 * paint the component 
+	 * Paint the background
 	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		
+
 		g.drawImage(background, 0, 0, this);
 	}
-/**
- * create a image
- * @param filename
- * @return
- */
-	 private BufferedImage createImage(String filename){
-			BufferedImage bufferedImage;
-			try {
-				bufferedImage = ImageIO.read(new File(filename));
-				return bufferedImage;
-			} catch (IOException e) {
-				System.out.println("Couldn't create image from " + filename);
-				e.printStackTrace();
-			}
-			return null;
+
+	/**
+	 * Method for safely instantiating an image
+	 * @param filename
+	 * @return
+	 */
+	private BufferedImage createImage(String filename){
+		BufferedImage bufferedImage;
+		try {
+			bufferedImage = ImageIO.read(new File(filename));
+			return bufferedImage;
+		} catch (IOException e) {
+			System.out.println("Couldn't create image from " + filename);
+			e.printStackTrace();
 		}
+		return null;
+	}
 
 }

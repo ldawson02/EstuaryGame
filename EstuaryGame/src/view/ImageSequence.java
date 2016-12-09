@@ -50,7 +50,7 @@ public class ImageSequence {
 
 		String srcpath = "resources" + File.separator;
 		String fullpath = srcpath + filepath;
-		System.out.println("Loading: " + fullpath);
+		//System.out.println("Loading: " + fullpath);
 		numFrames = 0;
 		
 		try {
