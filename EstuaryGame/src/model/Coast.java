@@ -49,8 +49,9 @@ public class Coast extends Item implements Serializable{
 	}
 	
 	/**
-	 * Constructs a Coast with position (x, y) and default height and width
-	 * @param x, y
+	 * Constructs a Coast piece with position (x, y) and default height and width
+	 * @param x x-coord of coast piece
+	 * @param y y-coord of coast piece
 	 */
 	public Coast(int x, int y) {
 		super(x, y);
@@ -59,9 +60,11 @@ public class Coast extends Item implements Serializable{
 	}
 	
 	/**
-	 * Constructs a Coast with position (x, y) and default height and width
-	 * also sets the barrier in the space to Barriers b
-	 * @param x, y, barrier
+	 * Constructs a Coast with position (x, y) and default height and width and 
+	 * sets the barrier in the space
+	 * @param x x-coord of coast piece
+	 * @param y y-coord of coast piece
+	 * @param b barrier at that coast piece
 	 */
 	public Coast(int x, int y, Barriers b){
 		super(x, y);
@@ -71,7 +74,7 @@ public class Coast extends Item implements Serializable{
 	}
 	
 	/**
-	 * getter for the barrier at the coast space
+	 * Getter for the barrier at the coast space
 	 * @return barrier
 	 */
 	public Barriers getBarrier(){
@@ -79,14 +82,14 @@ public class Coast extends Item implements Serializable{
 	}
 	
 	/**
-	 * sets barrier at the coast space to Barriers b
+	 * Sets barrier at the coast space to barrier b
 	 */
 	public void setBarrier(Barriers b){
 		this.barrier = b;
 	}
 	
 	/** 
-	 * getter for the state of the coast space
+	 * Getter for the state of the coast space
 	 * @return state;
 	 */
 	public eCoastState getState() {
@@ -94,22 +97,22 @@ public class Coast extends Item implements Serializable{
 	}
 
 	/**
-	 * set coast state to eCoastState
+	 * Sets the state of the coast
 	 */
 	public void setState(eCoastState state) {
 		this.state = state;
 	}
 	
 	/**
-	 * getter for the erosion timer of the coast space
-	 * @return erosionTimer;
+	 * Getter for the erosion timer of the coast space
+	 * @return erosionTimer
 	 */
 	public Timer getErosionTimer() {
 		return erosionTimer;
 	}
 
 	/**
-	 * sets the erosion timer of the coast to Timer
+	 * Gets the erosion timer of the coast space
 	 */
 	public void setErosionTimer(Timer erosionTimer) {
 		this.erosionTimer = erosionTimer;
@@ -123,14 +126,14 @@ public class Coast extends Item implements Serializable{
 	}
 
 	/**
-	 * sets the coast ID to int coastID
+	 * Sets the coastID 
 	 */
 	public void setCoastID(int coastID) {
 		this.coastID = coastID;
 	}
 	
 	/**
-	 * getter for the erosion rate of the coast space
+	 * Getter for the erosion rate of the coast space
 	 * @return erosionRate
 	 */
 	public double getErosionRate() {
@@ -138,24 +141,17 @@ public class Coast extends Item implements Serializable{
 	}
 
 	/**
-	 * sets the erosion rate of the coast space to int erosionRate
+	 * Sets the erosion rate of the coast space
 	 */
 	public void setErosionRate(int erosionRate) {
 		this.erosionRate = erosionRate;
 	}
 
 	/**
-	 * Decreases the size of the coast by one, if possible (goes to next hit state)
+	 * Decreases the size of the coast by one (goes to next hit state), if possible 
 	 */
 	public void erode() {
 		this.setState(this.getState().getNextState());
-	}
-	
-	/**
-	 * Increases the size of the coast by one, if possible
-	 */
-	public void rebuild() {
-		
 	}
 	
 	/**
@@ -167,8 +163,11 @@ public class Coast extends Item implements Serializable{
 	}
 	
 	/**
-	 * see if the barrier's type matches the ebarrier's type.
-	 * @return true or false.
+	 * See if the barrier is protecting the coast (has gabion or wall
+	 * of is being rebuilt by powerup)
+	 * @return true	if coast is protected
+	 * @return false if coast is not protected
+	 *
 	 */
 	public boolean isProtected(){
 		if(barrier.getType() != eBarrierType.EMPTY){
@@ -183,7 +182,7 @@ public class Coast extends Item implements Serializable{
 	}
 	
 	/**
-	 * set up the left coast, add the coast to the space.
+	 * Set up the left coast spaces and adds barriers to coast spaces
 	 * @param barriers
 	 * @return spaces
 	 */

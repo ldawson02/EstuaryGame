@@ -29,7 +29,8 @@ public class Barriers extends Item implements Serializable, Comparable<Barriers>
 	
 	/**
 	 * Constructor for Barrier, with a default of EMPTY type
-	 * @param x, y
+	 * @param x x-coord of barrier
+	 * @param y y-coord of barrier
 	 */
 	public Barriers(int x, int y){
 		super(x,y);
@@ -41,7 +42,9 @@ public class Barriers extends Item implements Serializable, Comparable<Barriers>
 	
 	/**
 	 * Constructor for Barrier, with a chosen type
-	 * @param x, y
+	 * @param x x-coord of barrier
+	 * @param y y-coord of barrier
+	 * @param t barrier type
 	 */
 	public Barriers(int x, int y, eBarrierType t){
 		super(x,y);
@@ -52,15 +55,15 @@ public class Barriers extends Item implements Serializable, Comparable<Barriers>
 	
 	
 	/**
-	 * getter for the x coord of left edge of the right-most barrier
-	 * @return leftEdge;
+	 * Getter for the x coordinate of left-most edge of all the barriers
+	 * @return leftEdge
 	 */
 	public static int getLeftEdge() {
 		return leftEdge;
 	}
 	
 	/**
-	 * the getter for right-most edge of all barriers
+	 * Getter for the x coordinate of right-most edge of all barriers
 	 * @return rightEdge
 	 */
 	public static int getRightEdge() {
@@ -68,7 +71,7 @@ public class Barriers extends Item implements Serializable, Comparable<Barriers>
 	}
 	
 	/**
-	 * the getter for the upper y coord spawn point
+	 * The getter for the upper y coordinate spawn point
 	 * @return spawnY
 	 */
 	public static int getSpawnY() {
@@ -76,7 +79,7 @@ public class Barriers extends Item implements Serializable, Comparable<Barriers>
 	}
 	
 	/**
-	 * the getter for the y value for all bottom barriers
+	 * The getter for the y value for all barriers
 	 * @return barrierY
 	 */
 	public static int getBarrierY(){
@@ -84,7 +87,7 @@ public class Barriers extends Item implements Serializable, Comparable<Barriers>
 	}
 
 	/**
-	 * getter for the decayTime of the barrier, dependent on its type
+	 * Getter for the decayTime of the barrier, dependent on its type
 	 * @return decayTime;
 	 */
 	public int getDecayTime() {
@@ -92,7 +95,7 @@ public class Barriers extends Item implements Serializable, Comparable<Barriers>
 	}
 	
 	/**
-	 * getter for the barrier's type
+	 * Getter for the barrier's type
 	 * @return type
 	 */
 	public eBarrierType getType() {
@@ -100,7 +103,7 @@ public class Barriers extends Item implements Serializable, Comparable<Barriers>
 	}
 
 	/**
-	 * setter for the barrier's type, also sets the state to no hits
+	 * Setter for the barrier's type and also sets the state to no hits
 	 */
 	public void setType(eBarrierType type) {
 		this.type = type;
@@ -108,7 +111,7 @@ public class Barriers extends Item implements Serializable, Comparable<Barriers>
 	}
 
 	/**
-	 * getter for the barrier's state, either no hits or one hit
+	 * Getter for the barrier's state, either no hits or one hit
 	 * @return state
 	 */
 	public eBarrierState getState(){
@@ -116,14 +119,14 @@ public class Barriers extends Item implements Serializable, Comparable<Barriers>
 	}
 	
 	/**
-	 * setter for the barrier's state
+	 * Setter for the barrier's state
 	 */
 	public void setState(eBarrierState s){
 		state = s;
 	}
 	
 	/**
-	 * get the erosion timer of this barrier
+	 * Gets the erosion timer of this barrier
 	 * @return erosionTimer;
 	 */
 	public Timer getErosionTimer() {
@@ -131,14 +134,14 @@ public class Barriers extends Item implements Serializable, Comparable<Barriers>
 	}
 
 	/** 
-	 * set the erosion timer of this barrier
+	 * Set the erosion timer of this barrier
 	 */
 	public void setErosionTimer(Timer t) {
 		this.erosionTimer = t;
 	}
 	
 	/**
-	 * erodes the barrier and sets to EMPTY type, also set to no hits
+	 * Erodes the barrier by settin to its type to EMPTY and its state to no hits
 	 */
 	public void erode(){
 		this.setType(eBarrierType.EMPTY);
@@ -146,15 +149,15 @@ public class Barriers extends Item implements Serializable, Comparable<Barriers>
 	}
 	
 	/**
-	 * erodes the barrier, and sets to only one hit
+	 * Erodes half the barrier, and sets its state to only one hit
 	 */
 	public void erodeHalf(){
 		this.setState(eBarrierState.ONE_HIT);
 	}
 
 	/**
-	 * set up the left coast (5 leftmost barriers)
-	 * @return array list of set up default barriers (set to empty)
+	 * Set up the left coast (5 leftmost barriers)
+	 * @return spaces arraylist of default spaces for barriers(set to empty)
 	 */
 	public static ArrayList<Barriers> setUpLeftCoast() {
 		ArrayList<Barriers> spaces = new ArrayList<Barriers>();
@@ -167,8 +170,8 @@ public class Barriers extends Item implements Serializable, Comparable<Barriers>
 	}
 	
 	/**
-	 * set up the right coast (5 rightmost barriers)
-	 * @return array list of set up default barriers (set to empty)
+	 * Set up the right coast (5 rightmost barriers)
+	 * @return spaces arraylist of default spaces for barriers (set to empty)
 	 */
 	public static ArrayList<Barriers> setUpRightCoast() {
 		ArrayList<Barriers> spaces = new ArrayList<Barriers>();
