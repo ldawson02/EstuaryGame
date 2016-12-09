@@ -8,8 +8,8 @@ import eNums.eScreenTimerState;
 
 /**
  * This is the class that handles the timer model on screen. This
- * is NOT the actual game timer that handles the tick, just the
- * visual timer.
+ * is NOT the actual game timer that handles the tick, although this
+ * object's attributes are updated by controller Timer.
  * 
  * @author Ian Heffner
  * @version 1.0
@@ -18,7 +18,7 @@ import eNums.eScreenTimerState;
 
 public class ScreenTimer extends Item implements Serializable {
 
-	final int MAX_TIME = 120000; //ms
+	final int MAX_TIME = 60000; //ms
 	
 	private int maxTime;
 	private int timeRemaining;

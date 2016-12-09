@@ -1219,7 +1219,7 @@ public class GameController implements Serializable {
 	 * Returns whether a Barrier barr has collided with any other Barrier on the screen
 	 * @param barr
 	 * @return
-	
+	*/
 	public Barriers emptyBarrierCollision(Barriers barr) {
 		//checks if barr collided with any of the barriers and if it is empty		
 		for (Barriers b : this.items.getAllBarriers()) {
@@ -1230,6 +1230,7 @@ public class GameController implements Serializable {
 		}
 		return null;
 	}
+	
 /**
  * get the main player
  * @return
