@@ -25,4 +25,11 @@ public class StormVisual extends Item {
 		updatePos(this.getPosX() + speedx, this.getPosY() - speedy);
 	}
 	
+	public int getSpeedX(){
+		return speedx;
+	}
+	
+	public int getSpeedY(){
+		return speedy;
+	}
 }

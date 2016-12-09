@@ -152,4 +152,8 @@ public class Helper extends Item {
 		timeInStage = 0;
 	}
 	
+	public void setTimeInStage(int time){
+		this.timeInStage = time;
+	}
+	
 }

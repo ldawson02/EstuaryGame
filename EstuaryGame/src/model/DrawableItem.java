@@ -60,4 +60,8 @@ public class DrawableItem extends Item {
 		}
 
 	}
+	
+	public void setDelayOff(){
+		delayOn = false;
+	}
 }
