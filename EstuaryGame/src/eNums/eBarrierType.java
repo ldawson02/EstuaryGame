@@ -1,7 +1,7 @@
 package eNums;
 
 /**
- * the barrier has gabion, wall or empty.
+ * This documents the type of Barrier: Gabion, Wall, or Empty
  *
  */
 public enum eBarrierType {
@@ -10,21 +10,20 @@ public enum eBarrierType {
 	
 	private int type;
 	
-	/**
-	 * constract a ebarrier type
-	 */
 	eBarrierType(int val) {
 		this.type = val;
 	}
+	
 	/**
-	 * get the barrier type
+	 * Get the barrier type
 	 * @return type
 	 */
 	public int getType() {
 		return type;
 	}
+	
 	/**
-	 * get the decay for barrier
+	 * Get the decay for barrier type
 	 * @return decay speed
 	 */
 	public int getDecay(){

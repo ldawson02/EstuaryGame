@@ -1,6 +1,6 @@
 package eNums;
 /**
- * there are few coast state listed below, see how many hits the coast will be encountered
+ * This documents the erosion state of the coast
  *
  */
 public enum eCoastState {
@@ -13,7 +13,7 @@ public enum eCoastState {
 	}
 	
 	/**
-	 * get the hits
+	 * Get the number of hits
 	 * @return hits
 	 */
 	public int getHits(){
@@ -21,7 +21,7 @@ public enum eCoastState {
 	}
 	
 	/**
-	 * get the next state, if no hits the state goes to one hit, one hit will goes to the two hit,so on, and return the state in the end
+	 * Get the next state. If no hits the state goes to one hit, one hit will goes to the two hit,so on, and return the state in the end
 	 * @return state
 	 */
 	public eCoastState getNextState(){

@@ -1,6 +1,6 @@
 package eNums;
 /**
- * there are two kinds of deris, one is trash, one is recycling
+ * Documents the type of Debris: Trash or Recycling
  *
  */
 public enum eDebrisType {
@@ -9,14 +9,14 @@ public enum eDebrisType {
 	private int type;
 	
 	/**
-	 * construct a edebris type
+	 * Construct a edebris type
 	 * @param etype
 	 */
 	eDebrisType(int etype) {
 		type = etype;
 	}
 	/**
-	 * get the type
+	 * Get the type
 	 * @return type
 	 */
 	public int getType() {
