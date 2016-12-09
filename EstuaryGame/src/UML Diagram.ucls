@@ -1,343 +1,1257 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class-diagram version="1.1.10" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+<class-diagram version="1.1.13" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
-  <class id="1" language="java" name="model.Debris" project="EstuaryGame" file="/EstuaryGame/src/model/Debris.java" 
+  <class id="1" language="java" name="view.EstuaryGame" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/view/EstuaryGame.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="873" width="232" x="3053" y="-218"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="controller.GameController.HAction" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/controller/GameController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="194" x="466" y="2055"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="model.Friend" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/model/Friend.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="113" x="4275" y="4290"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="model.Debris" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/model/Debris.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="387" width="226" x="4074" y="4879"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="controller.GameController.ThrowChoice" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/controller/GameController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="117" width="213" x="4067" y="2055"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="controller.TutorialController.erosion" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/controller/TutorialController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="243" width="194" x="3332" y="3521"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="model.Powers" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/model/Powers.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="97" x="2746" y="4879"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="controller.GameController.CleanUpSerializeAction" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/controller/GameController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="194" x="700" y="2055"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="view.ImageSequence" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/view/ImageSequence.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="477" width="195" x="-146" y="1150"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="controller.ScoreController" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/controller/ScoreController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="351" width="138" x="322" y="-218"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="model.Barriers" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/model/Barriers.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="567" width="213" x="2581" y="5553"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="controller.GameController.ReadSerializeAction" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/controller/GameController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="194" x="934" y="2055"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="controller.GameController.spawnPowers" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/controller/GameController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="405" width="194" x="3568" y="2055"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="controller.GameController.spawnDebris" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/controller/GameController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="387" width="222" x="3306" y="2055"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="controller.GameController.walkController" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/controller/GameController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="117" width="194" x="1168" y="2055"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="view.ImageLibrary" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/view/ImageLibrary.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="369" width="276" x="-146" y="705"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="controller.MovementController" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/controller/MovementController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="225" width="163" x="968" y="-218"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" name="controller.TutorialController.spawnPowers" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/controller/TutorialController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="207" width="194" x="3587" y="2716"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="19" language="java" name="model.Player" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/model/Player.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="243" width="158" x="2383" y="4290"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="20" language="java" name="view.EndScreen" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/view/EndScreen.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="207" width="195" x="170" y="705"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="21" language="java" name="controller.GameController.VAction" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/controller/GameController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="194" x="1402" y="2055"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="22" language="java" name="controller.Collisions" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/controller/Collisions.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="153" width="184" x="2572" y="2055"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="23" language="java" name="controller.GameController.ThrowChosen" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/controller/GameController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="194" x="4320" y="2055"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="24" language="java" name="model.Storm" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/model/Storm.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="189" width="243" x="1640" y="-218"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="25" language="java" name="view.Tutorial" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/view/Tutorial.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="765" width="257" x="4535" y="2716"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="26" language="java" name="controller.GameController.endGameAction" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/controller/GameController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="194" x="1636" y="2055"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="27" language="java" name="controller.ActiveItems" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/controller/ActiveItems.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="729" width="207" x="2946" y="3521"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="28" language="java" name="controller.TutorialController.unpause" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/controller/TutorialController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="194" x="3863" y="2716"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="29" language="java" name="controller.TutorialController" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/controller/TutorialController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="621" width="183" x="3802" y="2055"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="30" language="java" name="controller.TutorialController.mainTimer" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/controller/TutorialController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="207" width="194" x="3823" y="3521"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="31" language="java" name="controller.GameController.barrierErosion" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/controller/GameController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="189" width="194" x="2338" y="2055"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="32" language="java" name="model.DrawableItem" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/model/DrawableItem.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="279" width="184" x="4535" y="4290"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="33" language="java" name="model.Rebuild" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/model/Rebuild.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="207" width="278" x="2733" y="5306"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="34" language="java" name="model.ScreenTimer" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/model/ScreenTimer.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="531" width="189" x="3103" y="4290"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="35" language="java" name="controller.GameController.mainTimer" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/controller/GameController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="441" width="194" x="4097" y="2716"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="36" language="java" name="controller.GameController.quitAction" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/controller/GameController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="194" x="1870" y="2055"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="37" language="java" name="model.Floater" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/model/Floater.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="315" width="161" x="4074" y="4290"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="38" language="java" name="model.Item" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/model/Item.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="333" width="133" x="4074" y="3521"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="39" language="java" name="model.Tool" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/model/Tool.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="297" width="199" x="2602" y="4290"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="40" language="java" name="controller.GameController.PowerInitiate" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/controller/GameController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="194" x="2817" y="2055"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="41" language="java" name="controller.GameController.SerializeAction" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/controller/GameController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="194" x="2104" y="2055"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="42" language="java" name="controller.GameController" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/controller/GameController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="855" width="232" x="3032" y="1150"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="43" language="java" name="view.TitleScreen" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/view/TitleScreen.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="315" width="212" x="3794" y="705"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="44" language="java" name="model.Remove" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/model/Remove.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="153" width="145" x="3844" y="5306"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="45" language="java" name="view.ResourceException" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/view/ResourceException.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="149" x="2393" y="-218"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="46" language="java" name="model.Helper" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/model/Helper.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="423" width="190" x="3844" y="4290"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="47" language="java" name="model.HealthBar" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/model/HealthBar.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="333" width="113" x="3670" y="4290"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="48" language="java" name="controller.GameController.coastErosion" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/controller/GameController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="189" width="194" x="3072" y="2055"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="49" language="java" name="model.StormVisual" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/model/StormVisual.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="171" width="117" x="2946" y="4290"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="50" language="java" name="controller.MouseController" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/controller/MouseController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="405" width="199" x="405" y="705"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="51" language="java" name="controller.TutorialController.spawnDebris" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/controller/TutorialController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="171" width="222" x="3304" y="2716"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="52" language="java" name="model.Coast" project="EstuaryGame_TEST" 
+    file="/EstuaryGame_TEST/src/model/Coast.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="549" width="298" x="3332" y="4290"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="53" language="java" name="model.Bin" project="EstuaryGame_TEST" file="/EstuaryGame_TEST/src/model/Bin.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="368" width="227" x="1169" y="685"/>    
+    <position height="171" width="166" x="4029" y="5306"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="model.Remove" project="EstuaryGame" file="/EstuaryGame/src/model/Remove.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="170" width="166" x="2119" y="421"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="3" language="java" name="model.ScreenTimer" project="EstuaryGame" 
-    file="/EstuaryGame/src/model/ScreenTimer.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="260" width="209" x="154" y="-41"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="4" language="java" name="model.Friend" project="EstuaryGame" file="/EstuaryGame/src/model/Friend.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="134" width="127" x="403" y="-41"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="5" language="java" name="model.Coast" project="EstuaryGame" file="/EstuaryGame/src/model/Coast.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="422" width="207" x="1268" y="-41"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="6" language="java" name="model.Gabions" project="EstuaryGame" file="/EstuaryGame/src/model/Gabions.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="170" width="166" x="2552" y="421"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="7" language="java" name="model.HealthBar" project="EstuaryGame" 
-    file="/EstuaryGame/src/model/HealthBar.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="170" width="125" x="570" y="-41"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="8" language="java" name="model.AllDebris" project="EstuaryGame" 
-    file="/EstuaryGame/src/model/AllDebris.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="188" width="173" x="1169" y="421"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="9" language="java" name="model.Wall" project="EstuaryGame" file="/EstuaryGame/src/model/Wall.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="170" width="166" x="2758" y="421"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <interface id="10" language="java" name="model.Floater" project="EstuaryGame" 
-    file="/EstuaryGame/src/model/Floater.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="98" width="114" x="1873" y="1093"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </interface>  
-  <class id="11" language="java" name="model.Item" project="EstuaryGame" file="/EstuaryGame/src/model/Item.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="206" width="148" x="1129" y="-287"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <interface id="12" language="java" name="model.HealthChangers" project="EstuaryGame" 
-    file="/EstuaryGame/src/model/HealthChangers.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="80" width="153" x="2512" y="685"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </interface>  
-  <interface id="13" language="java" name="model.Movers" project="EstuaryGame" file="/EstuaryGame/src/model/Movers.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="80" width="114" x="1738" y="421"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </interface>  
-  <class id="14" language="java" name="model.Oyster" project="EstuaryGame" file="/EstuaryGame/src/model/Oyster.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="224" width="115" x="326" y="421"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="15" language="java" name="model.Player" project="EstuaryGame" file="/EstuaryGame/src/model/Player.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="206" width="162" x="1515" y="-41"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="16" language="java" name="model.Powers" project="EstuaryGame" file="/EstuaryGame/src/model/Powers.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="116" width="115" x="1873" y="-41"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="17" language="java" name="model.Rebuild" project="EstuaryGame" file="/EstuaryGame/src/model/Rebuild.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="188" width="166" x="1913" y="421"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="18" language="java" name="model.Barriers" project="EstuaryGame" file="/EstuaryGame/src/model/Barriers.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="242" width="151" x="2512" y="-41"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="19" language="java" name="model.Bin" project="EstuaryGame" file="/EstuaryGame/src/model/Bin.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="170" width="187" x="735" y="-41"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="20" language="java" name="model.CoastR" project="EstuaryGame" file="/EstuaryGame/src/model/CoastR.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="98" width="138" x="1382" y="421"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="21" language="java" name="model.HorseshoeCrab" project="EstuaryGame" 
-    file="/EstuaryGame/src/model/HorseshoeCrab.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="224" width="150" x="481" y="421"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <interface id="22" language="java" name="model.Interactable" project="EstuaryGame" 
-    file="/EstuaryGame/src/model/Interactable.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="80" width="166" x="2325" y="421"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </interface>  
-  <class id="23" language="java" name="model.Storm" project="EstuaryGame" file="/EstuaryGame/src/model/Storm.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="206" width="146" x="962" y="-41"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="24" language="java" name="model.CoastL" project="EstuaryGame" file="/EstuaryGame/src/model/CoastL.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="98" width="138" x="1560" y="421"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <generalization id="25">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="18"/>  
+  <generalization id="54">    
+    <end type="SOURCE" refId="33"/>    
+    <end type="TARGET" refId="7"/>  
   </generalization>  
-  <generalization id="26">    
-    <end type="SOURCE" refId="19"/>    
-    <end type="TARGET" refId="11"/>  
-  </generalization>  
-  <association id="27">    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="28" name="buildUp"/>      
-      <multiplicity id="29" minimum="0" maximum="1"/>    
+  <association id="55">    
+    <bendpoint x="2674" y="2716"/>    
+    <bendpoint x="2674" y="3521"/>    
+    <bendpoint x="2571" y="4290"/>    
+    <end type="SOURCE" refId="40" navigable="false">      
+      <attribute id="56" name="caughtPower"/>      
+      <multiplicity id="57" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="8" navigable="true"/>    
+    <end type="TARGET" refId="7" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="30">    
-    <end type="SOURCE" refId="21"/>    
-    <end type="TARGET" refId="4"/>  
+  <nesting id="58">    
+    <bendpoint x="4036" y="2055"/>    
+    <end type="SOURCE" refId="42"/>    
+    <end type="TARGET" refId="35"/>  
+  </nesting>  
+  <association id="59">    
+    <bendpoint x="414" y="1150"/>    
+    <bendpoint x="414" y="2055"/>    
+    <bendpoint x="414" y="2716"/>    
+    <bendpoint x="414" y="3521"/>    
+    <bendpoint x="414" y="4290"/>    
+    <bendpoint x="414" y="4879"/>    
+    <bendpoint x="414" y="5306"/>    
+    <end type="SOURCE" refId="50" navigable="false">      
+      <attribute id="60" name="gabionsSpawnR"/>      
+      <multiplicity id="61" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="62">    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="38"/>  
   </generalization>  
-  <realization id="31">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="10"/>  
-  </realization>  
-  <realization id="32">    
-    <bendpoint x="1882" y="421"/>    
-    <bendpoint x="1882" y="685"/>    
-    <end type="SOURCE" refId="16"/>    
-    <end type="TARGET" refId="10"/>  
-  </realization>  
-  <generalization id="33">    
-    <end type="SOURCE" refId="20"/>    
+  <association id="63">    
+    <end type="SOURCE" refId="25" navigable="false">      
+      <attribute id="64" name="tc"/>      
+      <multiplicity id="65" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="29" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="66">    
+    <end type="SOURCE" refId="47"/>    
+    <end type="TARGET" refId="38"/>  
+  </generalization>  
+  <generalization id="67">    
+    <end type="SOURCE" refId="30"/>    
+    <end type="TARGET" refId="35"/>  
+  </generalization>  
+  <generalization id="68">    
+    <bendpoint x="4460" y="5306"/>    
+    <bendpoint x="4460" y="4879"/>    
+    <bendpoint x="4460" y="4290"/>    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="38"/>  
+  </generalization>  
+  <nesting id="69">    
+    <end type="SOURCE" refId="42"/>    
+    <end type="TARGET" refId="36"/>  
+  </nesting>  
+  <generalization id="70">    
+    <end type="SOURCE" refId="49"/>    
+    <end type="TARGET" refId="38"/>  
+  </generalization>  
+  <association id="71">    
+    <bendpoint x="3047" y="2716"/>    
+    <bendpoint x="2915" y="3521"/>    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="72" name="rebuildTool"/>      
+      <multiplicity id="73" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="39" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="74">    
+    <end type="SOURCE" refId="42"/>    
     <end type="TARGET" refId="5"/>  
+  </nesting>  
+  <association id="75">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="76" name="lib"/>      
+      <multiplicity id="77" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="78">    
+    <bendpoint x="435" y="1150"/>    
+    <bendpoint x="435" y="2055"/>    
+    <bendpoint x="435" y="2716"/>    
+    <bendpoint x="435" y="3521"/>    
+    <bendpoint x="435" y="4290"/>    
+    <bendpoint x="435" y="4879"/>    
+    <bendpoint x="435" y="5306"/>    
+    <end type="SOURCE" refId="50" navigable="false">      
+      <attribute id="79" name="dropSpot"/>      
+      <multiplicity id="80" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="81">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="38"/>  
   </generalization>  
-  <generalization id="34">    
-    <end type="SOURCE" refId="15"/>    
-    <end type="TARGET" refId="11"/>  
-  </generalization>  
-  <generalization id="35">    
-    <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="16"/>  
-  </generalization>  
-  <realization id="36">    
-    <end type="SOURCE" refId="16"/>    
-    <end type="TARGET" refId="22"/>  
-  </realization>  
-  <realization id="37">    
-    <end type="SOURCE" refId="17"/>    
+  <nesting id="82">    
+    <end type="SOURCE" refId="42"/>    
     <end type="TARGET" refId="12"/>  
-  </realization>  
-  <generalization id="38">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="11"/>  
-  </generalization>  
-  <generalization id="39">    
+  </nesting>  
+  <association id="83">    
+    <end type="SOURCE" refId="42" navigable="false">      
+      <attribute id="84" name="powerMover"/>      
+      <multiplicity id="85" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="86">    
+    <bendpoint x="2873" y="4290"/>    
+    <bendpoint x="2873" y="4879"/>    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="87" name="TrashBin"/>      
+      <multiplicity id="88" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="53" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="89">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="90" name="erodingCoast"/>      
+      <multiplicity id="91" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="52" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="92">    
+    <end type="SOURCE" refId="42"/>    
+    <end type="TARGET" refId="40"/>  
+  </nesting>  
+  <association id="93">    
+    <bendpoint x="2852" y="4290"/>    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="94" name="powerups"/>      
+      <multiplicity id="95" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="96">    
+    <end type="SOURCE" refId="42"/>    
+    <end type="TARGET" refId="48"/>  
+  </nesting>  
+  <association id="97">    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="98" name="rebuildTool"/>      
+      <multiplicity id="99" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="39" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="100">    
+    <bendpoint x="372" y="1150"/>    
+    <bendpoint x="372" y="2055"/>    
+    <bendpoint x="372" y="2716"/>    
+    <bendpoint x="372" y="3521"/>    
+    <bendpoint x="372" y="4290"/>    
+    <bendpoint x="372" y="4879"/>    
+    <bendpoint x="372" y="5306"/>    
+    <end type="SOURCE" refId="50" navigable="false">      
+      <attribute id="101" name="dragged"/>      
+      <multiplicity id="102" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="103">    
+    <end type="SOURCE" refId="29" navigable="false">      
+      <attribute id="104" name="tutorialPaintTimer"/>      
+      <multiplicity id="105" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="35" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="106">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="107" name="mc"/>      
+      <multiplicity id="108" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="50" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="109">    
+    <end type="SOURCE" refId="42"/>    
+    <end type="TARGET" refId="15"/>  
+  </nesting>  
+  <generalization id="110">    
     <end type="SOURCE" refId="18"/>    
-    <end type="TARGET" refId="11"/>  
+    <end type="TARGET" refId="13"/>  
   </generalization>  
-  <association id="40">    
-    <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="41" name="debris"/>      
-      <multiplicity id="42" minimum="0" maximum="2147483647"/>    
+  <association id="111">    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="112" name="screenTimer"/>      
+      <multiplicity id="113" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="34" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="114">    
+    <bendpoint x="3556" y="2716"/>    
+    <bendpoint x="3556" y="3521"/>    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="115" name="removeHelper"/>      
+      <multiplicity id="116" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="46" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="117">    
+    <bendpoint x="393" y="1150"/>    
+    <bendpoint x="393" y="2055"/>    
+    <bendpoint x="393" y="2716"/>    
+    <bendpoint x="393" y="3521"/>    
+    <bendpoint x="393" y="4290"/>    
+    <bendpoint x="393" y="4879"/>    
+    <bendpoint x="393" y="5306"/>    
+    <end type="SOURCE" refId="50" navigable="false">      
+      <attribute id="118" name="wallSpawnR"/>      
+      <multiplicity id="119" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="120">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="121" name="titleScreen"/>      
+      <multiplicity id="122" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="43" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="123">    
+    <end type="SOURCE" refId="51"/>    
+    <end type="TARGET" refId="14"/>  
+  </generalization>  
+  <association id="124">    
+    <bendpoint x="4439" y="2716"/>    
+    <bendpoint x="4439" y="3521"/>    
+    <bendpoint x="4439" y="4290"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="125" name="caughtDebris"/>      
+      <multiplicity id="126" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="127">    
+    <bendpoint x="3041" y="2055"/>    
+    <bendpoint x="3026" y="2716"/>    
+    <end type="SOURCE" refId="42" navigable="false">      
+      <attribute id="128" name="items"/>      
+      <multiplicity id="129" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="130">    
+    <bendpoint x="3813" y="4290"/>    
+    <bendpoint x="3813" y="4879"/>    
+    <bendpoint x="3813" y="5306"/>    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="131" name="erodingBarrier"/>      
+      <multiplicity id="132" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="133">    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="18"/>  
+  </nesting>  
+  <association id="134">    
+    <end type="SOURCE" refId="46" navigable="false">      
+      <attribute id="135" name="toLift"/>      
+      <multiplicity id="136" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="137">    
+    <end type="SOURCE" refId="42"/>    
+    <end type="TARGET" refId="23"/>  
+  </nesting>  
+  <association id="138">    
+    <end type="SOURCE" refId="42" navigable="false">      
+      <attribute id="139" name="thisGame"/>      
+      <multiplicity id="140" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="42" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="141">    
+    <bendpoint x="3083" y="4879"/>    
+    <bendpoint x="3083" y="5306"/>    
+    <end type="SOURCE" refId="52" navigable="false">      
+      <attribute id="142" name="barrier"/>      
+      <multiplicity id="143" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="144">    
+    <bendpoint x="4544" y="1150"/>    
+    <bendpoint x="4544" y="2055"/>    
+    <end type="SOURCE" refId="43" navigable="false">      
+      <attribute id="145" name="tutorial"/>      
+      <multiplicity id="146" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="25" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="147">    
+    <end type="SOURCE" refId="42"/>    
+    <end type="TARGET" refId="8"/>  
+  </nesting>  
+  <association id="148">    
+    <end type="SOURCE" refId="25" navigable="false">      
+      <attribute id="149" name="spotlightItem"/>      
+      <multiplicity id="150" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="38" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="151">    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="152" name="library"/>      
+      <multiplicity id="153" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="154">    
+    <bendpoint x="2831" y="4290"/>    
+    <bendpoint x="2767" y="4879"/>    
+    <bendpoint x="2702" y="5306"/>    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="155" name="barriers"/>      
+      <multiplicity id="156" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="157">    
+    <end type="SOURCE" refId="29" navigable="false">      
+      <attribute id="158" name="t"/>      
+      <multiplicity id="159" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="25" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="160">    
+    <bendpoint x="2915" y="4290"/>    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="161" name="debris"/>      
+      <multiplicity id="162" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="163">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="164" name="LR"/>      
+      <multiplicity id="165" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="53" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="166">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="37"/>  
+  </generalization>  
+  <association id="167">    
+    <bendpoint x="3041" y="4879"/>    
+    <bendpoint x="3041" y="5306"/>    
+    <end type="SOURCE" refId="52" navigable="false">      
+      <attribute id="168" name="barriers"/>      
+      <multiplicity id="169" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="170">    
+    <bendpoint x="2786" y="2055"/>    
+    <bendpoint x="2653" y="2716"/>    
+    <bendpoint x="2653" y="3521"/>    
+    <end type="SOURCE" refId="42" navigable="false">      
+      <attribute id="171" name="mainPlayer"/>      
+      <multiplicity id="172" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="173">    
+    <end type="SOURCE" refId="43" navigable="false">      
+      <attribute id="174" name="game"/>      
+      <multiplicity id="175" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="43">    
-    <end type="SOURCE" refId="23"/>    
-    <end type="TARGET" refId="11"/>  
+  <nesting id="176">    
+    <end type="SOURCE" refId="42"/>    
+    <end type="TARGET" refId="41"/>  
+  </nesting>  
+  <association id="177">    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="178" name="stormv"/>      
+      <multiplicity id="179" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="49" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="180">    
+    <bendpoint x="4544" y="3521"/>    
+    <end type="SOURCE" refId="25" navigable="false">      
+      <attribute id="181" name="arrow"/>      
+      <multiplicity id="182" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="32" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="183">    
+    <end type="SOURCE" refId="52"/>    
+    <end type="TARGET" refId="38"/>  
   </generalization>  
-  <generalization id="44">    
-    <end type="SOURCE" refId="24"/>    
-    <end type="TARGET" refId="5"/>  
-  </generalization>  
-  <generalization id="45">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="18"/>  
-  </generalization>  
-  <generalization id="46">    
-    <end type="SOURCE" refId="14"/>    
-    <end type="TARGET" refId="4"/>  
-  </generalization>  
-  <generalization id="47">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="11"/>  
-  </generalization>  
-  <generalization id="48">    
-    <end type="SOURCE" refId="17"/>    
-    <end type="TARGET" refId="16"/>  
-  </generalization>  
-  <generalization id="49">    
-    <end type="SOURCE" refId="16"/>    
-    <end type="TARGET" refId="11"/>  
-  </generalization>  
-  <realization id="50">    
-    <end type="SOURCE" refId="15"/>    
+  <association id="184">    
+    <bendpoint x="3853" y="4879"/>    
+    <end type="SOURCE" refId="46" navigable="false">      
+      <attribute id="185" name="removeInstance"/>      
+      <multiplicity id="186" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="44" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="187">    
+    <bendpoint x="4565" y="705"/>    
+    <bendpoint x="4565" y="1150"/>    
+    <bendpoint x="4565" y="2055"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="188" name="tutorial"/>      
+      <multiplicity id="189" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="25" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="190">    
+    <end type="SOURCE" refId="42"/>    
+    <end type="TARGET" refId="21"/>  
+  </nesting>  
+  <nesting id="191">    
+    <end type="SOURCE" refId="42"/>    
+    <end type="TARGET" refId="14"/>  
+  </nesting>  
+  <association id="192">    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="193" name="mainPlayer"/>      
+      <multiplicity id="194" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="195">    
+    <bendpoint x="3832" y="2716"/>    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="30"/>  
+  </nesting>  
+  <nesting id="196">    
+    <end type="SOURCE" refId="42"/>    
     <end type="TARGET" refId="13"/>  
-  </realization>  
-  <realization id="51">    
-    <bendpoint x="2521" y="421"/>    
-    <end type="SOURCE" refId="18"/>    
-    <end type="TARGET" refId="12"/>  
-  </realization>  
-  <generalization id="52">    
-    <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="11"/>  
+  </nesting>  
+  <generalization id="197">    
+    <end type="SOURCE" refId="32"/>    
+    <end type="TARGET" refId="38"/>  
   </generalization>  
-  <generalization id="53">    
-    <bendpoint x="1138" y="421"/>    
-    <bendpoint x="1138" y="-41"/>    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="11"/>  
-  </generalization>  
-  <generalization id="54">    
+  <nesting id="198">    
+    <end type="SOURCE" refId="42"/>    
+    <end type="TARGET" refId="2"/>  
+  </nesting>  
+  <association id="199">    
+    <bendpoint x="3062" y="705"/>    
+    <end type="SOURCE" refId="42" navigable="false">      
+      <attribute id="200" name="mainGame"/>      
+      <multiplicity id="201" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="202">    
     <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="11"/>  
+    <end type="TARGET" refId="37"/>  
   </generalization>  
-  <realization id="55">    
-    <end type="SOURCE" refId="18"/>    
-    <end type="TARGET" refId="22"/>  
-  </realization>  
+  <association id="203">    
+    <end type="SOURCE" refId="42" navigable="false">      
+      <attribute id="204" name="debrisMover"/>      
+      <multiplicity id="205" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="206">    
+    <end type="SOURCE" refId="29" navigable="false">      
+      <attribute id="207" name="unpauseAction"/>      
+      <multiplicity id="208" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="28" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="209">    
+    <end type="SOURCE" refId="42"/>    
+    <end type="TARGET" refId="26"/>  
+  </nesting>  
+  <association id="210">    
+    <bendpoint x="2894" y="4290"/>    
+    <bendpoint x="3062" y="4879"/>    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="211" name="RecycleBin"/>      
+      <multiplicity id="212" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="53" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="213">    
+    <end type="SOURCE" refId="50" navigable="false">      
+      <attribute id="214" name="gc"/>      
+      <multiplicity id="215" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="42" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="216">    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="28"/>  
+  </nesting>  
+  <association id="217">    
+    <bendpoint x="2590" y="4879"/>    
+    <bendpoint x="2590" y="5306"/>    
+    <end type="SOURCE" refId="39" navigable="false">      
+      <attribute id="218" name="currBarrier"/>      
+      <multiplicity id="219" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="220">    
+    <bendpoint x="4586" y="2055"/>    
+    <bendpoint x="4586" y="1150"/>    
+    <bendpoint x="4586" y="705"/>    
+    <end type="SOURCE" refId="25"/>    
+    <end type="TARGET" refId="1"/>  
+  </generalization>  
+  <association id="221">    
+    <end type="SOURCE" refId="42" navigable="false">      
+      <attribute id="222" name="collision"/>      
+      <multiplicity id="223" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="22" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="224">    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="42"/>  
+  </generalization>  
+  <generalization id="225">    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="38"/>  
+  </generalization>  
+  <generalization id="226">    
+    <end type="SOURCE" refId="44"/>    
+    <end type="TARGET" refId="7"/>  
+  </generalization>  
+  <association id="227">    
+    <bendpoint x="2611" y="4879"/>    
+    <bendpoint x="2611" y="5306"/>    
+    <end type="SOURCE" refId="39" navigable="false">      
+      <attribute id="228" name="barriersToBuild"/>      
+      <multiplicity id="229" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="230">    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="51"/>  
+  </nesting>  
+  <association id="231">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="232" name="endScreen"/>      
+      <multiplicity id="233" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="234">    
+    <bendpoint x="4481" y="2716"/>    
+    <bendpoint x="4481" y="3521"/>    
+    <bendpoint x="4481" y="4290"/>    
+    <end type="SOURCE" refId="23" navigable="false">      
+      <attribute id="235" name="caughtDebris"/>      
+      <multiplicity id="236" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="237">    
+    <end type="SOURCE" refId="33" navigable="false">      
+      <attribute id="238" name="toRebuild"/>      
+      <multiplicity id="239" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="240">    
+    <bendpoint x="3811" y="2716"/>    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="6"/>  
+  </nesting>  
+  <association id="241">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="242" name="protectedCoast"/>      
+      <multiplicity id="243" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="52" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="244">    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="245" name="hBar"/>      
+      <multiplicity id="246" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="47" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="247">    
+    <bendpoint x="330" y="1150"/>    
+    <bendpoint x="330" y="2055"/>    
+    <bendpoint x="330" y="2716"/>    
+    <bendpoint x="330" y="3521"/>    
+    <bendpoint x="330" y="4290"/>    
+    <bendpoint x="330" y="4879"/>    
+    <bendpoint x="330" y="5306"/>    
+    <end type="SOURCE" refId="50" navigable="false">      
+      <attribute id="248" name="wallSpawnL"/>      
+      <multiplicity id="249" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="250">    
+    <end type="SOURCE" refId="37"/>    
+    <end type="TARGET" refId="38"/>  
+  </generalization>  
+  <generalization id="251">    
+    <bendpoint x="4418" y="4879"/>    
+    <bendpoint x="4418" y="4290"/>    
+    <end type="SOURCE" refId="53"/>    
+    <end type="TARGET" refId="38"/>  
+  </generalization>  
+  <association id="252">    
+    <bendpoint x="3041" y="705"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="253" name="gc"/>      
+      <multiplicity id="254" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="42" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="255">    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="256" name="removeHelper"/>      
+      <multiplicity id="257" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="46" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="258">    
+    <end type="SOURCE" refId="46"/>    
+    <end type="TARGET" refId="38"/>  
+  </generalization>  
+  <association id="259">    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="260" name="coast"/>      
+      <multiplicity id="261" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="52" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="262">    
+    <bendpoint x="4015" y="2055"/>    
+    <end type="SOURCE" refId="42" navigable="false">      
+      <attribute id="263" name="paintTimer"/>      
+      <multiplicity id="264" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="35" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="265">    
+    <end type="SOURCE" refId="39"/>    
+    <end type="TARGET" refId="38"/>  
+  </generalization>  
+  <association id="266">    
+    <bendpoint x="351" y="1150"/>    
+    <bendpoint x="351" y="2055"/>    
+    <bendpoint x="351" y="2716"/>    
+    <bendpoint x="351" y="3521"/>    
+    <bendpoint x="351" y="4290"/>    
+    <bendpoint x="351" y="4879"/>    
+    <bendpoint x="351" y="5306"/>    
+    <end type="SOURCE" refId="50" navigable="false">      
+      <attribute id="267" name="gabionsSpawnL"/>      
+      <multiplicity id="268" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="269">    
+    <bendpoint x="2467" y="2716"/>    
+    <bendpoint x="2467" y="3521"/>    
+    <bendpoint x="2467" y="4290"/>    
+    <bendpoint x="2467" y="4879"/>    
+    <bendpoint x="2467" y="5306"/>    
+    <end type="SOURCE" refId="31" navigable="false">      
+      <attribute id="270" name="barrier"/>      
+      <multiplicity id="271" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="272">    
+    <bendpoint x="3211" y="2716"/>    
+    <bendpoint x="3211" y="3521"/>    
+    <end type="SOURCE" refId="48" navigable="false">      
+      <attribute id="273" name="coast"/>      
+      <multiplicity id="274" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="52" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="275">    
+    <bendpoint x="2488" y="2716"/>    
+    <bendpoint x="2488" y="3521"/>    
+    <end type="SOURCE" refId="22" navigable="false">      
+      <attribute id="276" name="mainPlayer"/>      
+      <multiplicity id="277" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="278">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="279" name="mainGame"/>      
+      <multiplicity id="280" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="281">    
+    <end type="SOURCE" refId="42"/>    
+    <end type="TARGET" refId="31"/>  
+  </nesting>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true" static="true"/>    

@@ -25,37 +25,55 @@ public class Tutorial extends EstuaryGame implements ActionListener{
 	private eTutorialState lastState = eTutorialState.DEBRIS;
 	public boolean spotlight = false;
 	public boolean spotlightSwitched = false; //true when spotlight is forced off for round
-	public boolean exclamation = false;
 	public boolean wrongThrow = false;
 	private Item spotlightItem;
 	public TutorialController tc; 
 	public DrawableItem arrow;
 
+	/**
+	 * Get spotlight switched 
+	 * @return boolean
+	 */
 	public boolean getSpotlightSwitched(){
 		return spotlightSwitched;
 	}
 
+	/**
+	 * Set spotlight
+	 * @param boolean t
+	 */
 	public void setSpotlight(boolean t){
 		spotlight = t;
 		spotlightSwitched = true;
 	}
 	
+	/**
+	 * Set spotlight item
+	 * @param Item i
+	 */
 	public void setSpotlightItem(Item i){
 		spotlightItem = i;
 	}
 	
+	/**
+	 * Get spotlight item
+	 * @return Item i
+	 */
 	public Item getSpotlightItem(){
 		return spotlightItem;
 	}
-
-	public void setExclamation(boolean t){
-		exclamation = t;
-	}
 	
+	/**
+	 * Get eTutorialState
+	 * @return eTutorialState
+	 */
 	public eTutorialState getLastState(){
 		return lastState;
 	}
 	
+	/**
+	 * Constructs the Tutorial, adds the progression button
+	 */
 	public Tutorial(){
 		super();
 		btn1.setActionCommand("START GAME");
@@ -64,6 +82,9 @@ public class Tutorial extends EstuaryGame implements ActionListener{
 		this.add(btn1);
 	}
 	
+	/**
+	 * Begins the tutorial process
+	 */
 	public void start(){
 		tc = new TutorialController(this);
 		this.mc = new MouseController();
@@ -71,31 +92,56 @@ public class Tutorial extends EstuaryGame implements ActionListener{
 		this.gc = tc;
 	}
 
+	/**
+	 * Sets wrongThrow to true, so as to display the next instruction
+	 */
 	public void wrongBin(){
-		//TODO: create animation, words on screen, something like that if they try to throw to wrong bin
 		wrongThrow = true;
 	}
 	
+	/**
+	 * Get state
+	 * @return eTutorialState
+	 */
 	public eTutorialState getState(){
 		return state;
 	}
+	
+	/**
+	 * Set State
+	 * @param eTutorialState s
+	 */
 	public void setState(eTutorialState s){
 		state = s;
 	}
+	
+	/**
+	 * Update the state
+	 */
 	public void nextState(){
 		lastState = state;
 		state = state.nextState();
 	}
 
+	/**
+	 * Run if the debris is caught
+	 */
 	public void debrisCaught(){
 		spotlight = false;
 	}
 
+	/**
+	 * Set the location of the arrow
+	 * @param DrawableItem a
+	 */
 	public void setArrow(DrawableItem a){
 		arrow = a;
 	}
 	
 	@Override
+	/**
+	 * Paint function for the Tutorial. Only paints one aspect at a time.
+	 */
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		paintFocus(g);
@@ -133,6 +179,10 @@ public class Tutorial extends EstuaryGame implements ActionListener{
 		}
 	}
 	
+	/**
+	 * Paints a message if the wrong bin is chosen.
+	 * @param Graphics g
+	 */
 	public void paintDebris(Graphics g){
 		if(wrongThrow){
 			g.setColor(Color.WHITE);
@@ -141,40 +191,72 @@ public class Tutorial extends EstuaryGame implements ActionListener{
 		}
 	}
 	
+	/**
+	 * Tells the player to place a Gabion.
+	 * @param Graphics g
+	 */
 	public void paintGabion(Graphics g){
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("TimesRoman", Font.BOLD, 18));
 	    g.drawString("Place a gabion.",getScreenX()/3, getScreenY()/2);
 	    paintMouseArrow(g, arrow);
 	}
+	
+	/**
+	 * Tells the player to place a Wall.
+	 * @param Graphics g
+	 */
 	public void paintWall(Graphics g){
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("TimesRoman", Font.BOLD, 18));
 	    g.drawString("Place a seawall.", getScreenX()/3, getScreenY()/2);
 	    paintMouseArrow(g, arrow);
 	}
+	
+	/**
+	 * Tells the player where to look.
+	 * @param Graphics g
+	 */
 	public void paintErosionChoice(Graphics g){
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("TimesRoman", Font.BOLD, 18));
     	g.drawString("Notice how fast the barriers erode. Now you pick!", getScreenX()/4, getScreenY()/2);
 	}
+	
+	/**
+	 * Tells the player about the remove powerup.
+	 * @param Graphics g
+	 */
 	public void paintRemove(Graphics g){
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("TimesRoman", Font.BOLD, 18));
     	g.drawString("Here's a powerup that helps clean up the coast!", getScreenX()/4, getScreenY()/2);
 	}
+	
+	/**
+	 * Tells the player about the rebuild powerup.
+	 * @param Graphics g
+	 */
 	public void paintRebuild(Graphics g){
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("TimesRoman", Font.BOLD, 18));
     	g.drawString("Here's another powerup that helps keep your coast safe!", getScreenX()/4, getScreenY()/2);
 	}
 	
+	/** 
+	 * Tells the player about the health bar
+	 * @param Graphics g
+	 */
 	public void paintHealthTutorial(Graphics g){
     	g.setColor(Color.WHITE);
     	g.setFont(new Font("TimesRoman", Font.BOLD, 18));
     	g.drawString("The health bar tells you how healthy your estuary is", getScreenX()/4, getScreenY()/2);
 	}
 	
+	/**
+	 * Tells the player about the timer
+	 * @param Graphics g
+	 */
 	public void paintTimerTutorial(Graphics g){
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("TimesRoman", Font.BOLD, 18));
@@ -182,6 +264,10 @@ public class Tutorial extends EstuaryGame implements ActionListener{
 	
 	}
 	
+	/**
+	 * Tells the player the tutorial is complete
+	 * @param Graphics g
+	 */
 	public void paintDone(Graphics g){
     	g.setColor(new Color(255, 255, 255, 120));
     	g.fillRect(0, 0, screenX, screenY);
@@ -191,6 +277,10 @@ public class Tutorial extends EstuaryGame implements ActionListener{
     	g.drawString("Ready to play?", 300, 290);
 	}
 	
+	/**
+	 * Prompts the user if they are idle
+	 * @param Graphics g
+	 */
 	public void paintIdle(Graphics g){
     	g.setColor(new Color(255, 255, 255, 120));
     	g.fillRect(0, 0, screenX, screenY);
@@ -203,6 +293,10 @@ public class Tutorial extends EstuaryGame implements ActionListener{
     	g.drawString("Press enter to continue with tutorial", 245, 330);
 	}
 	
+	/**
+	 * Paints the spotlight onto key items
+	 * @param Graphics g
+	 */
     public void paintFocus(Graphics g) {
     	if(spotlightItem == null || !spotlight){
     		return;
@@ -216,11 +310,21 @@ public class Tutorial extends EstuaryGame implements ActionListener{
     	}
     }
     
+    /**
+     * Paints the arrow to the clock
+     * @param Graphics g
+     * @param Item i
+     */
     public void paintClockArrow(Graphics g, Item i) {
     	
     	g.drawImage(tutClockArrow, i.getPosX()+i.getWidth()+25, i.getPosY()+i.getHeight() + 50, this);
     }
     
+    /**
+     * Paints the arrow to the health bar
+     * @param Graphics g
+     * @param Item i
+     */
     public void paintHealthArrow(Graphics g, Item i) {
     	int paintX = i.getPosX() + i.getWidth();
     	int paintY = i.getPosY() - 73;
@@ -228,24 +332,43 @@ public class Tutorial extends EstuaryGame implements ActionListener{
     	g.drawImage(tutHealthArrow, paintX, paintY, this);
     }
     
+    /**
+     * Paints the spotlight given an item
+     * @param Graphics g
+     * @param Item i
+     */
     public void paintSpotlight(Graphics g, Item i) {
     	int paintX = i.getPosX() - 800 + (i.getWidth()/2);
     	int paintY = i.getPosY() - 600 + (i.getHeight()/2);
     	g.drawImage(spotlightImage, paintX, paintY, this);
     }
     
+    /**
+     * Paints the spotlight given coordinates
+     * @param Graphics g
+     * @param x
+     * @param y
+     */
     public void paintSpotlight(Graphics g, int x, int y) {
     	int paintX = x - 800;
     	int paintY = y - 600;
     	g.drawImage(spotlightImage, paintX, paintY, this);
     }
     
+    /**
+     * Paints the mouse arrow
+     * @param Graphics g
+     * @param DrawableItem i 
+     */
 	public void paintMouseArrow(Graphics g, DrawableItem i) {
 		g.drawImage(tutMouseArrow, i.getPosX(), i.getPosY(), this);
 		i.move();
 	}
     
 	@Override
+	/**
+	 * Handles the movement from the tutorial to the game.
+	 */
 	public void actionPerformed(ActionEvent e) {
 		CardLayout c1 = (CardLayout) (EstuaryGame.getCards().getLayout());
 		String cmd = e.getActionCommand();

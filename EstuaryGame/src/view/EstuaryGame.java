@@ -69,8 +69,8 @@ public class EstuaryGame extends JComponent{
 	Image tutMouseArrow;
 	Image spotlightImage;
 
-	int screenX = 800;
-	int screenY = 600;
+	static int screenX = 800;
+	static int screenY = 600;
 
 	int timeElapsed = 0;
 
@@ -129,7 +129,7 @@ public class EstuaryGame extends JComponent{
 
 				JFrame frame = new JFrame("Mainframe");
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				frame.setSize(800, 600);
+				frame.setSize(screenX, screenY);
 				frame.add(cards, BorderLayout.CENTER);
 				frame.pack();
 				frame.setFocusable(true);
