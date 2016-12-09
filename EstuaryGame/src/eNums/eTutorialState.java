@@ -1,26 +1,35 @@
 package eNums;
 
+/**
+ * Documents the state of the tutorial, which proceed in the following order:
+ * Debris, Gabion Erosion, Wall Erosion, Erosion Choice, Powers (Remove), Powers
+ * (Rebuild), Health, Timer, Done, [Idle]
+ * 
+ * @author Lia Dawson
+ */
 public enum eTutorialState {
-	/**
-	 * in tutorial state, there are debris, erosion_gabion, erosion_wall, erosion_choice, powers_remove, rebuild, and health, timer ,done, idle inside
-	 */
-	DEBRIS(0), EROSION_GABION(1), EROSION_WALL(1), EROSION_CHOICE(1), POWERS_REMOVE(2), POWERS_REBUILD(2), HEALTH(3), TIMER(4), DONE(5), IDLE(-1);
-	
+	DEBRIS(0), EROSION_GABION(1), EROSION_WALL(1), EROSION_CHOICE(1), POWERS_REMOVE(2), POWERS_REBUILD(2), HEALTH(
+			3), TIMER(4), DONE(5), IDLE(-1);
+
 	private int state;
+
 	/**
 	 * construct a tutorial state
+	 * 
 	 * @param i
 	 */
-	eTutorialState(int i){
+	eTutorialState(int i) {
 		this.state = i;
 	}
+
 	/**
-	 * illustrates things' next state
+	 * Returns the next tutorial state based on the current state
+	 * 
 	 * @return state
 	 */
-	public eTutorialState nextState(){
+	public eTutorialState nextState() {
 		eTutorialState state;
-		switch (this){
+		switch (this) {
 		case DEBRIS:
 			state = EROSION_GABION;
 			break;
@@ -45,6 +54,6 @@ public enum eTutorialState {
 		default:
 			state = DONE;
 		}
-		return state;	
+		return state;
 	}
 }

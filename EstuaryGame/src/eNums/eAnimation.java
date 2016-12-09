@@ -1,11 +1,10 @@
 package eNums;
 
 /**
- * Mapping out all the different animations and images used.
- * Instead of an int, the String is the file path.
- * Must be mapped here to be loaded into ImageLibrary.
+ * Documents the different animations and images used, and holds their file
+ * path. Must be mapped here to be loaded into ImageLibrary.
  * 
- * @author Ian
+ * @author Ian Heffner
  * @version 1.0
  * @since 11/16/2016
  *

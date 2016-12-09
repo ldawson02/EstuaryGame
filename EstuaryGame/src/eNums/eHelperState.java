@@ -1,21 +1,26 @@
 package eNums;
 
 /**
- * this class is to write the helper's state, the helper can walk,pick up trash, hold, walk off, and void
- * @author megan
+ * Documents the helper's state: Walking, Pickup Up, Holding, Walking Off, or
+ * Void. These values are accessed to determine how to move and how to display
+ * the Helper.
+ * 
+ * @author Lia Dawson
  *
  */
 public enum eHelperState {
-	
+
 	WALKING(0), PICKING_UP(1), HOLDING(2), WALKING_OFF(3), VOID(4);
-	
-	eHelperState(int i){}
+
+	eHelperState(int i) {}
+
 	/**
-	 * get the time limit, if pick up is 1000, hold is 1500, and walk.
+	 * Get the time limit for the Helper State
+	 * 
 	 * @return
 	 */
-	public int getTimeLimit(){
-		switch(this){
+	public int getTimeLimit() {
+		switch (this) {
 		case PICKING_UP:
 			return 1000;
 		case HOLDING:
@@ -25,12 +30,15 @@ public enum eHelperState {
 			return 100000;
 		}
 	}
+
 	/**
-	 * write the helper's next state, if walk, then pick up the trash, the hold it, walk off 
+	 * Return the helper's next state (Walking -> Picking Up -> Holding ->
+	 * Walking Off -> Void)
+	 * 
 	 * @return
 	 */
-	public eHelperState nextState(){
-		switch(this){
+	public eHelperState nextState() {
+		switch (this) {
 		case WALKING:
 			return PICKING_UP;
 		case PICKING_UP:

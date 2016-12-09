@@ -1,14 +1,15 @@
 package eNums;
+
 /**
- * This enum represents the erosion state of a Barrier
- * @author Lia
- *
+ * This enum represents the erosion state of a Barrier. The states a Barrier can
+ * be at are: No Hit or One Hit
+ * 
+ * @author Lia Dawson
  */
 public enum eBarrierState {
-/**
- * eBarrierState can be No Hit or One Hit
- */
+
 	NO_HIT(0), ONE_HIT(1);
-	
-	eBarrierState(int i){}
+
+	eBarrierState(int i) {
+	}
 }

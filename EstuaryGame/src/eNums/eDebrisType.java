@@ -1,26 +1,31 @@
 package eNums;
+
 /**
- * Documents the type of Debris: Trash or Recycling
+ * Documents the type of Debris: Trash or Recycling. This enum also keeps track
+ * which throw direction the trash and recycling bins correspond to. 
+ * 
+ * @author Lia Dawson
  *
  */
 public enum eDebrisType {
-	TRASH(-1), RECYCLING(1);
-	
-	private int type;
-	
+	TRASH(eThrowDirection.RIGHT), RECYCLING(eThrowDirection.LEFT);
+
+	private eThrowDirection binSide;
+
 	/**
-	 * Construct a edebris type
+	 * Construct a Debris type
+	 * 
 	 * @param etype
 	 */
-	eDebrisType(int etype) {
-		type = etype;
+	eDebrisType(eThrowDirection etype) {
+		binSide = etype;
 	}
+
 	/**
-	 * Get the type
-	 * @return type
+	 * Gets the direction that the bin of this Debris type is in
+	 * @return The direction of the bin
 	 */
-	public int getType() {
-		return type;
+	public eThrowDirection getBinSide() {
+		return binSide;
 	}
-	
 }
