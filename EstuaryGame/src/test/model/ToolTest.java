@@ -61,9 +61,10 @@ public class ToolTest {
 		assertEquals(barriers.get(0).getType(),eBarrierType.Gabion);
 		tool1.nextBarrier();
 		assertEquals(barriers.get(0).getType(),eBarrierType.EMPTY);
+		tool1.addTime(1000);
 		assertFalse(tool1.doneBuilding());
 		int i = 0;
-		while(i!=5){
+		while(i!=4){
 			tool1.nextBarrier();
 			i++;
 		}

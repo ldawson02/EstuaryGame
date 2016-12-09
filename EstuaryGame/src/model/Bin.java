@@ -17,8 +17,8 @@ public class Bin extends Item implements Serializable{
 	private Bin(){};
 	
 	/**
-	 * the constructor of bin, set to the default height and width and to eDebrisType t
-	 * @param eDebrisType
+	 * The constructor of bin, set to the default height and width and with debris type
+	 * @param t debris type of bin
 	 */
 	public Bin(eDebrisType t){
 		this.debrisType = t;
@@ -27,7 +27,7 @@ public class Bin extends Item implements Serializable{
 	}
 	
 	/**
-	 * getter for the bin's type
+	 * Getter for the bin's type
 	 * @return debrisType;
 	 */
 	public eDebrisType getDebrisType(){
