@@ -31,7 +31,7 @@ public class Remove extends Powers implements Serializable{
 	public static void power(ActiveItems items){
 		//ArrayList<Debris> debris = items.getAllDebris();
 
-		items.removeAllRestingDebris();
+		//items.removeAllRestingDebris();
 		
 		/**int empty = 0;
 		ArrayList<Debris> dEmpty = new ArrayList<Debris>();

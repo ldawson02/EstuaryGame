@@ -43,7 +43,7 @@ public class RemoveTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		remove1 = new Remove(5,10);
-		remove2 = new Remove(2,4);
+		remove2 = new Remove(300,400);
 		gc = new GameController(new EstuaryGame());
 		remove1.setState(eFloaterState.MOVING);
 		remove2.setState(eFloaterState.MOVING);
@@ -67,16 +67,8 @@ public class RemoveTest {
 	
 	@Test
 	public void testCaughtandInitiated() throws InterruptedException{
-		Thread.sleep(5000);
-		ArrayList<Powers>  powers = gc.getItems().getAllPowers();
 		Collisions collision = new Collisions();
-		Powers p = powers.get(0);
-		for(Powers pow: powers){
-			if(pow.getState() == eFloaterState.MOVING && (pow instanceof Remove)){
-				p = pow;
-				break;
-			}
-		}
+		Remove p = remove2;
 		int p_xpos = p.getPosX();
 		int p_ypos = p.getPosY();
 		gc.getMainPlayer().updatePos(p_xpos, p_ypos);
@@ -95,11 +87,14 @@ public class RemoveTest {
 		
 		
 		Thread.sleep(500);
-		
-		ArrayList<Debris> debris = gc.getItems().getAllDebris();
-		for(Debris d:debris){
-			//assertFalse(d.getState() == eFloaterState.RESTING);
+		ArrayList<Debris> debris = gc.getItems().getRestingDebris();
+		ArrayList<Debris> debris2 = gc.getItems().getAllDebris();
+		System.out.println("DEBRIS SIZE" + debris.size());
+		System.out.println("DEBRIS SIZE2" + debris2.size());
+		for(Debris d: debris2){
+			System.out.println(d.getState());
 		}
+		//assertEquals(debris.size(), 0);
 		
 		
 	}

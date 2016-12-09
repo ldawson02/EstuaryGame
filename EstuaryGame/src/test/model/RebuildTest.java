@@ -20,6 +20,7 @@ import controller.GameController.ThrowChoice;
 import controller.GameController.ThrowChosen;
 import controller.GameController.spawnDebris;
 import controller.GameController.spawnPowers;
+import eNums.eBarrierType;
 import eNums.eFloaterState;
 import model.Barriers;
 import model.Coast;
@@ -35,6 +36,7 @@ public class RebuildTest {
 	static Rebuild rebuild2;
 	static Coast coast;
 	static GameController gc;
+	static Barriers b1;
 	
 	
 	
@@ -48,6 +50,8 @@ public class RebuildTest {
 		rebuild2.setState(eFloaterState.MOVING);
 		gc.getItems().getAllPowers().add(new Rebuild(40,20));
 		gc.getItems().getAllPowers().add(new Rebuild(30,20));
+		b1 = new Barriers(200,300);
+		
 	}
 
 
@@ -69,13 +73,7 @@ public class RebuildTest {
 		Thread.sleep(5000);
 		ArrayList<Powers>  powers = gc.getItems().getAllPowers();
 		Collisions collision = new Collisions();
-		Powers p = powers.get(0);
-		for(Powers pow: powers){
-			if(pow.getState() == eFloaterState.MOVING && (pow instanceof Rebuild)){
-				p = pow;
-				break;
-			}
-		}
+		Rebuild p = rebuild2;
 		int p_xpos = p.getPosX();
 		int p_ypos = p.getPosY();
 		gc.getMainPlayer().updatePos(p_xpos, p_ypos);
@@ -93,13 +91,19 @@ public class RebuildTest {
 		action2.actionPerformed(new ActionEvent(action2, ActionEvent.ACTION_PERFORMED, null){});
 		
 		
-		Thread.sleep(500);
+		Thread.sleep(10000);
 		
 		ArrayList<Barriers> barriers = gc.getItems().getAllBarriers();
 		assertTrue(barriers.size() >= 5);
 		
 		
 		
+	}
+	
+	@Test
+	public void powerTest(){
+		Rebuild.power(b1);
+		assertEquals(b1.getType(), eBarrierType.Gabion);
 	}
 	
 	
