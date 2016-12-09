@@ -55,6 +55,7 @@ public class Tutorial extends EstuaryGame implements ActionListener{
 	public eTutorialState getLastState(){
 		return lastState;
 	}
+	
 	public Tutorial(){
 		super();
 		btn1.setActionCommand("START GAME");
@@ -155,7 +156,7 @@ public class Tutorial extends EstuaryGame implements ActionListener{
 	public void paintErosionChoice(Graphics g){
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("TimesRoman", Font.BOLD, 18));
-    	g.drawString("Notice how fast the barriers erode. Now you pick.", getScreenX()/4, getScreenY()/2);
+    	g.drawString("Notice how fast the barriers erode. Now you pick!", getScreenX()/4, getScreenY()/2);
 	}
 	public void paintRemove(Graphics g){
 		g.setColor(Color.WHITE);

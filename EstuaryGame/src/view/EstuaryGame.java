@@ -55,7 +55,6 @@ public class EstuaryGame extends JComponent{
 
 	static GameController gc;
 	public static MouseController mc;
-	private JPanel mainFrame;
 	private ImageLibrary lib;
 
 	//Constant images
@@ -82,6 +81,11 @@ public class EstuaryGame extends JComponent{
 	static EstuaryGame mainGame;
 	static Tutorial tutorial;
 
+	/**
+	 * The main function opens the game, initializes the CardLayout and each
+	 * panel, and opens the title screen.
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			@Override
@@ -134,25 +138,24 @@ public class EstuaryGame extends JComponent{
 		});
 	}
 
+	/**
+	 * The constructor for EstuaryGame
+	 */
 	public EstuaryGame() {
 		//Initialize a new GameController and connect them
 		this.setDoubleBuffered(true);
-		//gc = new GameController(this);
 		//View items matter
 		initImages();
-
 	}
 
-	public EstuaryGame(JPanel f) {
-		mainFrame = f;
-		//Initialize a new GameController and connect them
-		this.setDoubleBuffered(true);
-		gc = new GameController(this);
-		//View items matter
-		initImages();
-
-	}
-
+	/**
+	 * Binds a specific key to an action in the ActionMap. This function is utilized
+	 * by the GameController.
+	 * 
+	 * @param name
+	 * @param keyStroke
+	 * @param action
+	 */
 	public void bindKeyWith(String name, KeyStroke keyStroke, Action action) {
 		InputMap im = getInputMap(WHEN_IN_FOCUSED_WINDOW);
 		ActionMap am = getActionMap();
@@ -161,6 +164,14 @@ public class EstuaryGame extends JComponent{
 		am.put(name, action);
 	}
 
+	/**
+	 * Unbinds a specific key to an action in the ActionMap. This function is utilized
+	 * by the GameController.
+	 * 
+	 * @param name
+	 * @param keyStroke
+	 * @param action
+	 */
 	public void unbindKeyWith(String name, KeyStroke keyStroke) {
 		InputMap im = getInputMap(WHEN_IN_FOCUSED_WINDOW);
 		ActionMap am = getActionMap();
@@ -169,6 +180,10 @@ public class EstuaryGame extends JComponent{
 		am.remove(name);
 	}
 
+	/**
+	 * Loads in the ImageLibrary and pulls out the images that are always
+	 * used the same way.
+	 */
 	private void initImages() {
 		lib = ImageLibrary.loadLibrary();
 		//Grab the constant ones
@@ -183,6 +198,10 @@ public class EstuaryGame extends JComponent{
 		trashBin = lib.draw(eAnimation.trashBin);
 	}
 
+	/**
+	 * The main paintComponent function for the game. Runs all the individual
+	 * paint methods.
+	 */
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g); 
@@ -190,6 +209,7 @@ public class EstuaryGame extends JComponent{
 		//Paint background
 		paintBackground(g);
 
+		//Paint coast
 		paintCoast(g);
 
 		//Paint barriers
@@ -217,22 +237,29 @@ public class EstuaryGame extends JComponent{
 		//Paint health bar
 		paintHealthBar(g);
 
-
 		//Paint ScreenTimer
 		if (!gameFinished)
 			paintScreenTimer(g);
 
 		paintScore(g);
 
-		timeElapsed = gc.getTheBigTimer();
-		g.drawString(Integer.toString(timeElapsed), 40, 40);
-
+		//timeElapsed = gc.getTheBigTimer();
+		//g.drawString(Integer.toString(timeElapsed), 40, 40);
 	}
 
+	/**
+	 * Paints the background of the game
+	 * @param Graphics g
+	 */
 	private void paintBackground(Graphics g) {
 		g.drawImage(bg, 0, 0, this);
 	}
 
+	/**
+	 * Paints the timer on the screen according to how much time
+	 * has elapsed in game.
+	 * @param Graphics g
+	 */
 	private void paintScreenTimer(Graphics g) {
 		//Getting all the variables
 		ScreenTimer sc = gc.getItems().getScreenTimer();
@@ -266,6 +293,11 @@ public class EstuaryGame extends JComponent{
 		}
 	}
 
+	/**
+	 * Paints the coast at different levels of erosion to keep the
+	 * images together smoothly.
+	 * @param Graphics g
+	 */
 	private void paintCoast(Graphics g) {
 		Coast prevCoast = null;
 		ArrayList<Coast> coasts = gc.getItems().getCoast();
@@ -294,7 +326,6 @@ public class EstuaryGame extends JComponent{
 			g.drawImage(coast, c.getPosX() + c.getWidth(), c.getPosY(), -c.getWidth(), c.getHeight(), this);
 		}
 
-
 		//right coast
 		for (int i = 5; i < 10; i++) {
 			Image coast;
@@ -311,8 +342,6 @@ public class EstuaryGame extends JComponent{
 				coast = lib.drawCoast(c.getState().getHits(), prevCoastState);
 				prevCoast = c;
 				break;
-
-
 			case 10:
 			default:
 				prevCoastState = prevCoast.getState().getHits();
@@ -325,6 +354,10 @@ public class EstuaryGame extends JComponent{
 		}
 	}
 
+	/**
+	 * Paints the barriers onto the coast.
+	 * @param Graphics g
+	 */
 	private void paintBarriers(Graphics g) {
 		ArrayList<Barriers> barriers = gc.getItems().getAllBarriers();
 		for (Barriers b : barriers) {
@@ -341,17 +374,24 @@ public class EstuaryGame extends JComponent{
 		}
 	}
 
+	/**
+	 * Handles the painting of a single barrier
+	 * @param Graphics g
+	 * @param Barriers b
+	 */
 	private void paintOneBarrier(Graphics g, Barriers b) {
 		if (b.getType() == eBarrierType.EMPTY) {
 			g.setColor(Color.BLACK);
 			g.drawRect(b.getPosX(), b.getPosY(), b.getWidth(), b.getHeight());
-
 			return;
 		}
-
 		g.drawImage(lib.draw(b), b.getPosX(), b.getPosY(), this);
 	}
 
+	/**
+	 * Paints the debris items in the correct state
+	 * @param Graphics g
+	 */
 	private void paintDebris(Graphics g) {
 		ArrayList<Debris> debris = gc.getItems().getAllDebris();
 		for (Debris d : debris) {
@@ -365,6 +405,10 @@ public class EstuaryGame extends JComponent{
 		}
 	}
 
+	/**
+	 * Paints the Helper item for the Remove powerup
+	 * @param Graphics g
+	 */
 	private void paintHelper(Graphics g) {
 		if (gc.getItems().getRemoveHelper() != null) {
 			Helper h = gc.getItems().getRemoveHelper();
@@ -377,15 +421,22 @@ public class EstuaryGame extends JComponent{
 		}
 	}
 	
+	/**
+	 * Paints the hammers for the Rebuild powerup
+	 * @param Graphics g
+	 */
 	private void paintTool(Graphics g) {
 		if (gc.getItems().getRebuildTool() != null) {
 			Tool t = gc.getItems().getRebuildTool();
 			int toolX = t.getPosX() - (t.getWidth()/2) + 4 + (Barriers.defaultWidth/2);
-			g.drawImage(lib.draw(eAnimation.hammer), toolX, t.getPosY() - 10, this);
-			
+			g.drawImage(lib.draw(eAnimation.hammer), toolX, t.getPosY() - 10, this);	
 		}
 	}
 
+	/**
+	 * Paints the storm object
+	 * @param Graphics g
+	 */
 	private void paintStorm(Graphics g) {
 		if (gc.getItems().getStormv() != null) {
 			StormVisual sv = gc.getItems().getStormv();
@@ -398,6 +449,10 @@ public class EstuaryGame extends JComponent{
 		}
 	}
 	
+	/**
+	 * Paints the Powers items floating in the water
+	 * @param Graphics g
+	 */
 	private void paintPowers(Graphics g) {
 		ArrayList<Powers> powers = gc.getItems().getAllPowers();
 		for (Powers p : powers) {
@@ -407,6 +462,12 @@ public class EstuaryGame extends JComponent{
 		}
 	}
 
+	/**
+	 * If a Debris item is lifted, paints the arrow between that item and
+	 * the chosen Bin.
+	 * @param Graphics g
+	 * @param Debris d
+	 */
 	private void paintArrow(Graphics g, Debris d){
 		g.setColor(Color.WHITE);
 		int x1 = d.getPosX()+d.getWidth()/2;
@@ -421,6 +482,10 @@ public class EstuaryGame extends JComponent{
 		g.drawLine(x1, y1, x1-deltax, y1+deltay);
 	}
 
+	/**
+	 * Paints the bins on the coast
+	 * @param Graphics g
+	 */
 	private void paintBins(Graphics g){
 		Bin recycle = gc.getItems().getTrashBin();
 		Bin trash = gc.getItems().getRecycleBin();
@@ -431,6 +496,10 @@ public class EstuaryGame extends JComponent{
 
 	}
 
+	/** 
+	 * Paints the health bar on the screen according to the currents health
+	 * @param Graphics g
+	 */
 	private void paintHealthBar(Graphics g) {
 		HealthBar hb = gc.getItems().getHealthBar();
 		if (hb == null) {
@@ -464,6 +533,10 @@ public class EstuaryGame extends JComponent{
 		}
 	}
 
+	/**
+	 * Paints the player on the screen in the correct state
+	 * @param Graphics g
+	 */
 	private void paintPlayer(Graphics g) {
 		Player p = gc.getItems().getMainPlayer();
 		//System.out.println(gc.getItems().getMainPlayer());
@@ -474,11 +547,20 @@ public class EstuaryGame extends JComponent{
 		g.drawImage(lib.draw(p), p.getPosX(), p.getPosY(), this);
 	}
 
+	/**
+	 * Paints the score
+	 * @param Graphics g
+	 */
 	private void paintScore(Graphics g) {
+		g.setColor(Color.WHITE);
 		g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-		g.drawString("Score: " + Integer.toString(ScoreController.getScore()), 150, 40);
+		g.drawString("Score: " + Integer.toString(ScoreController.getScore()), 20, 40);
 	}
-
+	
+	/**
+	 * Paints the Game Over graphic if the game has ended
+	 * @param Graphics g
+	 */
 	private void paintGameOver(Graphics g) {
 		g.setColor(new Color(255, 255, 255, 120));
 		g.fillRect(0, 0, screenX, screenY);
@@ -490,9 +572,9 @@ public class EstuaryGame extends JComponent{
 		g.drawString("Press Enter to See Score...", 275, 370);
 	}
 
-
-	public void paintFocus(Graphics g){}
-
+	/**
+	 * Places the rest of the game's items in resting states when the game ends
+	 */
 	private void endGameMotion() {
 		//Stop player motion
 		gc.getItems().getPlayer().setState(ePlayerState.Lifting);
@@ -510,22 +592,41 @@ public class EstuaryGame extends JComponent{
 		unbindKeyWith("x.right", KeyStroke.getKeyStroke("RIGHT"));
 	}
 	
-
+	/**
+	 * Get screenX
+	 * @return
+	 */
 	public int getScreenX() {
 		return screenX;
 	}
 
+	/**
+	 * getScreenY
+	 * @return
+	 */
 	public int getScreenY() {
 		return screenY;
 	}
 
+	/**
+	 * Get the cards from the card layout
+	 * @return
+	 */
 	public static JPanel getCards(){
 		return cards;
 	}
 
+	/**
+	 * Set the mainGame
+	 */
 	public static void setMainGame(){
 		mainGame = new EstuaryGame();
 	}
+	
+	/**
+	 * Get the mainGame
+	 * @return
+	 */
 	public static EstuaryGame getMainGame(){
 		return mainGame;
 	}

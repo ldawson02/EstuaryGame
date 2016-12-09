@@ -46,12 +46,12 @@ public class TitleScreen extends JPanel implements ActionListener{
     	this.setLayout(null);
     	btn1.setActionCommand("START");
     	btn1.addActionListener(this);
-    	btn1.setBounds(new Rectangle(310,315,200,50));
+    	btn1.setBounds(new Rectangle(310,375,200,50));
     	this.add(btn1);
     	
     	btn2.setActionCommand("TUTORIAL");
     	btn2.addActionListener(this);
-    	btn2.setBounds(new Rectangle(310,375,200,50));
+    	btn2.setBounds(new Rectangle(310,315,200,50));
     	this.add(btn2);
     	
     	this.setBackground(Color.BLACK);
