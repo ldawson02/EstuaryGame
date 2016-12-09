@@ -1,35 +1,46 @@
 package eNums;
 
+/**
+ * Documents the difficulty levels of the game, of which there are 5
+ * increasingly difficult levels: Very Easy, Easy, Medium, Hard, and Impossible.
+ * 
+ * @author Rachel Muzzelo
+ *
+ */
 public enum eDifficulty {
-	/**
-	 * this class is for the difficulty thing, there are five states that shows different difficulty level
-	 * @megan
-	 */
+
 	VERYEASY(0), EASY(1), MEDIUM(2), HARD(3), IMPOSSIBLE(4);
-	
+
 	private int difficulty;
-	
+
 	/**
-	 * construct a difficulty
+	 * Construct a difficulty
+	 * 
 	 * @param val
 	 */
-	eDifficulty(int val){
+	eDifficulty(int val) {
 		difficulty = val;
 	}
+
 	/**
-	 * get the difficulty
+	 * Get the difficulty
+	 * 
 	 * @return
 	 */
-	public int getDifficulty(){
+	public int getDifficulty() {
 		return difficulty;
 	}
+
 	/**
-	 * get the next difficulty, very easy then easy then medium then hard then impossible.
-	 * @return
+	 * Get the next difficulty level (Very Easy -> Easy -> Medium -> Hard ->
+	 * Impossible). Used to move up a difficulty level when the game is too
+	 * easy.
+	 * 
+	 * @return the next difficult level
 	 */
-	public eDifficulty getNextDifficulty(){
+	public eDifficulty getNextDifficulty() {
 		eDifficulty diff;
-		switch(this){
+		switch (this) {
 		case VERYEASY:
 			diff = EASY;
 			break;
@@ -50,13 +61,16 @@ public enum eDifficulty {
 		}
 		return diff;
 	}
+
 	/**
-	 * get the previous difficulty, go back to the last level
-	 * @return difficulty
+	 * Get the previous difficulty (Impossible -> Hard -> Medium -> East -> Very
+	 * Easy). Used to move down a difficulty level when the game is too hard.
+	 * 
+	 * @return the previous difficulty
 	 */
-	public eDifficulty getPreviousDifficulty(){
+	public eDifficulty getPreviousDifficulty() {
 		eDifficulty difficulty;
-		switch(this){
+		switch (this) {
 		case VERYEASY:
 			difficulty = VERYEASY;
 			break;
@@ -77,6 +91,5 @@ public enum eDifficulty {
 		}
 		return difficulty;
 	}
-
 
 }

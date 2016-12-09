@@ -66,18 +66,13 @@ public class ImageLibrary {
 		
 		lib.loadCoastLibrary();
 		lib.fixFrameDelays();
-		
-		System.out.println("All loaded.");
-		
+				
 		lib.initScaleLibrary();
-		
-		System.out.println("All scaled.");
-		
+				
 		return lib;
 	}
 	
 	private void loadCoastLibrary() {
-		System.out.println("Loading: erosions files");
 		String srcpath = "resources" + File.separator + "erosion" + File.separator;
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
@@ -399,7 +394,6 @@ public class ImageLibrary {
 			return coastLibrary[thisState][leftState];
 		}
 		catch (IndexOutOfBoundsException e) {
-			System.out.println("Coast state not found");
 			e.printStackTrace();
 		}
 		return null;

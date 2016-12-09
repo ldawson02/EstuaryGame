@@ -1,8 +1,8 @@
 package eNums;
 
 /**
- * this class is to write the player state, there are three states for player, idle, moving, and lifting
- * @author megan
+ * Documents the player's state: Idle, Moving, or Lifting
+ * @author Ian Heffner
  *
  */
 public enum ePlayerState {
@@ -12,14 +12,14 @@ public enum ePlayerState {
 	
 	private int state;
 	/**
-	 * construct a player state
+	 * Construct a player state
 	 * @param val
 	 */
 	ePlayerState(int val) {
 		state = val;
 	}
 	/**
-	 * get the state val
+	 * Get the state
 	 * @return state
 	 */
 	public int getStateVal() {

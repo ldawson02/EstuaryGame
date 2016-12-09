@@ -123,7 +123,7 @@ public class Debris extends Floater implements Serializable {
 	 */
 	public boolean getCorrectBin() {
 		
-		if (this.throwDir.getDirection() == this.type.getType()) {
+		if (this.throwDir == this.type.getBinSide()) {
 			return true;
 		}
 		else {

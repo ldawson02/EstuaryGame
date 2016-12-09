@@ -1,25 +1,24 @@
 package eNums;
 
 /**
- * this class write for the screen timer state, there are three states listed 
+ * Documents the state of the Screen Timer: On, Off, or Frozen. This state is
+ * used to determine how to add time to the timer.
+ * 
+ * @author Ian Heffner
  *
  */
 public enum eScreenTimerState {
 	ON(0), OFF(0), FROZEN(0);
-	
+
 	private int state;
+
 	/**
-	 * construct a screen timer state
+	 * Construct a screen timer state
+	 * 
 	 * @param estate
 	 */
 	eScreenTimerState(int estate) {
 		state = estate;
 	}
-	/**
-	 * get the state
-	 * @return state
-	 */
-	public int getState() {
-		return state;
-	}
+
 }

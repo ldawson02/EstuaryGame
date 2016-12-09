@@ -1,41 +1,29 @@
 package eNums;
 
 /**
- * the barrier has gabion, wall or empty.
+ * Documents the type of Barrier: Gabion, Wall, or Empty. This enum also holds
+ * the decay value of each respective barrier type.
+ * 
+ * @author Lia Dawson
  *
  */
 public enum eBarrierType {
 
-	Gabion(0), Wall(1), EMPTY(-1);
-	
-	private int type;
-	
-	/**
-	 * constract a ebarrier type
-	 */
+	Gabion(26000), Wall(13000), EMPTY(1000000);
+
+	private int decay;
+
 	eBarrierType(int val) {
-		this.type = val;
+		this.decay = val;
 	}
+
 	/**
-	 * get the barrier type
-	 * @return type
-	 */
-	public int getType() {
-		return type;
-	}
-	/**
-	 * get the decay for barrier
+	 * Get the decay for barrier type
+	 * 
 	 * @return decay speed
 	 */
-	public int getDecay(){
-		switch(this){
-		case Gabion:
-			return 26000;
-		case Wall:
-			return 13000;
-		default:
-			return 1000000;
-		}
+	public int getDecay() {
+		return decay;
 	}
-	
+
 }

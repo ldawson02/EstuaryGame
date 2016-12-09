@@ -1,52 +1,57 @@
 package eNums;
 
 /**
- * throw has two direction, left or right
+ * Documents the direction that the player is throwing Debris: Left or Right.
+ * This enum also offers the functionality of returning the opposite direction
+ * enum.
+ * 
+ * @author Lia Dawson
  *
  */
 public enum eThrowDirection {
 	LEFT(1), RIGHT(-1);
-	
+
 	private int direction;
-	
-	/**
-	 * construct a throw direction
-	 * @param edir
-	 */
+
 	eThrowDirection(int edir) {
 		direction = edir;
 	}
+
 	/**
-	 * get the direction
+	 * Get the direction
+	 * 
 	 * @return direction
 	 */
 	public int getDirection() {
 		return direction;
 	}
+
 	/**
-	 * get the throw direction, if direction equals to negative 1, goes to left, else goes to right
+	 * get the throw direction, if direction equals to negative 1, goes to left,
+	 * else goes to right
+	 * 
 	 * @param dir
 	 * @return
 	 */
-	public static eThrowDirection getDir(int dir){
+	public static eThrowDirection getDir(int dir) {
 
-		if(dir==-1){
+		if (dir == -1) {
 			return LEFT;
-		}
-		else {
+		} else {
 			return RIGHT;
 		}
 
 	}
+
 	/**
-	 * the oppsite direction of the throw direction
-	 * @return
+	 * Get the opposite direction of the throw direction
+	 * 
+	 * @return the opposite direction
 	 */
-	public eThrowDirection opposite(){
-		if(this.direction==-1){
+	public eThrowDirection opposite() {
+		if (this.direction == -1) {
 			return RIGHT;
-		}
-		else{
+		} else {
 			return LEFT;
 		}
 	}
