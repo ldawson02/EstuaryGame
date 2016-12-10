@@ -94,7 +94,7 @@ public class GameController implements Serializable {
 	/**
 	 * Construct a game controller that is connected to a view (EstuaryGame).
 	 * This constructor automatically calls the setup function to set up the
-	 * game for play.
+	 * game for play. The game begins playing when this class is called
 	 * 
 	 * @param EstuaryGame
 	 *            mainGame
@@ -1216,7 +1216,7 @@ public class GameController implements Serializable {
 
 	/**
 	 * The action class for moving horizontally. This class is bound with A and
-	 * D, as well as left and right to allow for multifunctional use.
+	 * D, as well as left and right to allow for multifunctional game play.
 	 * 
 	 * @author Lia Dawson
 	 *
@@ -1228,6 +1228,7 @@ public class GameController implements Serializable {
 
 		/**
 		 * Create the action class, set the move amount
+		 * 
 		 * @param jump
 		 */
 		public HAction(int jump) {
@@ -1236,6 +1237,7 @@ public class GameController implements Serializable {
 
 		/**
 		 * Update the amount moved by one action
+		 * 
 		 * @param jump
 		 */
 		public void updateSpeed(int jump) {
@@ -1261,8 +1263,8 @@ public class GameController implements Serializable {
 	}
 
 	/**
-	 * 
-	 * @author Lia
+	 * The action class for moving vertically. This class is bound with W and S,
+	 * as well as up and down to allow for multifunctional game play.
 	 *
 	 */
 	public class VAction extends AbstractAction {
@@ -1270,15 +1272,28 @@ public class GameController implements Serializable {
 		// the amount the player moves when you press the key
 		private int moveSize;
 
+		/**
+		 * Sets up class with the move size
+		 * 
+		 * @param jump
+		 */
 		public VAction(int jump) {
 			this.moveSize = jump;
 		}
 
+		/**
+		 * change the move size
+		 * 
+		 * @param jump
+		 */
 		public void updateSpeed(int jump) {
 			this.moveSize = jump;
 		}
 
 		@Override
+		/**
+		 * Move the player, but make sure they don't move off the screen
+		 */
 		public void actionPerformed(ActionEvent e) {
 			int next = getMainPlayer().getPosY() + moveSize;
 			int edge = dimY - getMainPlayer().getHeight();
@@ -1294,7 +1309,8 @@ public class GameController implements Serializable {
 	}
 
 	/**
-	 * This class
+	 * This key binds with the command-q key combination to allow for exit of
+	 * the game
 	 *
 	 */
 	public class quitAction extends AbstractAction {
@@ -1313,25 +1329,32 @@ public class GameController implements Serializable {
 		private eThrowDirection dir;
 		private Debris caughtDebris;
 
+		/**
+		 * Set up the left and right keys with the corresponding throw direction
+		 * enum
+		 * 
+		 * @param dir
+		 * @param d
+		 */
 		public ThrowChoice(eThrowDirection dir, Debris d) {
 			this.dir = dir;
 			this.caughtDebris = d;
 		}
 
 		@Override
+		/**
+		 * Change the direction of the direction the debris is being projected
+		 * to when pressing a key
+		 */
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("Change throw dir" + dir.name());
 			caughtDebris.setThrowDirection(dir);
 		}
 
 	}
 
 	/**
-	 * <<<<<<< HEAD Action to be bound with the enter key when a piece of Debris
-	 * is caught. Pressing enter releases the Debris ======= Action to be bound
-	 * with the space key when a piece of Debris is caught. Pressing space
-	 * releases the Debris >>>>>>> branch 'master' of
-	 * https://github.com/ldawson02/EstuaryGame.git
+	 * Action to be bound with the space key when a piece of Debris is caught.
+	 * Pressing space releases the Debris
 	 *
 	 */
 	public class ThrowChosen extends AbstractAction {
@@ -1343,6 +1366,10 @@ public class GameController implements Serializable {
 		}
 
 		@Override
+		/**
+		 * Throw the debris when action performed, reset the player's state and
+		 * set the debris state
+		 */
 		public void actionPerformed(ActionEvent e) {
 			caughtDebris.setState(eFloaterState.THROWING);
 			items.getPlayer().setState(ePlayerState.Idle);
@@ -1351,17 +1378,27 @@ public class GameController implements Serializable {
 
 	}
 
+	/**
+	 * Action class that binds with the space key. The power that was caught is
+	 * initiated when the action occurs.
+	 *
+	 */
 	public class PowerInitiate extends AbstractAction {
 
 		private Powers caughtPower;
 
+		/**
+		 * Input the power that was caught to set up the action
+		 * 
+		 * @param p
+		 */
 		public PowerInitiate(Powers p) {
 			this.caughtPower = p;
 		}
 
 		@Override
 		/**
-		 * perform the power up initial action
+		 * Activate the power up and reset the player's state
 		 */
 		public void actionPerformed(ActionEvent e) {
 			caughtPower.setState(eFloaterState.INITIATED);
@@ -1372,8 +1409,9 @@ public class GameController implements Serializable {
 	}
 
 	/**
-	 * goes through list of barriers and changes the one with the matching
-	 * coords to type t
+	 * Goes through list of barriers and changes the one with the matching
+	 * coords to type t. This is used to set the barrier type of the empty
+	 * barrier that a new barrier is being dragged into.
 	 * 
 	 * @param barr
 	 * @param t
@@ -1390,8 +1428,8 @@ public class GameController implements Serializable {
 	}
 
 	/**
-	 * Returns whether a Barrier barr has collided with any other Barrier on the
-	 * screen
+	 * Returns the Barrier a Barrier barr has collided with any other Barrier on
+	 * the screen. If there is no collision, it returns null.
 	 * 
 	 * @param barr
 	 * @return
@@ -1408,7 +1446,7 @@ public class GameController implements Serializable {
 	}
 
 	/**
-	 * get the main player
+	 * Get the main player
 	 * 
 	 * @return
 	 */
@@ -1417,7 +1455,7 @@ public class GameController implements Serializable {
 	}
 
 	/**
-	 * set the main player
+	 * Set the main player
 	 * 
 	 * @param mainPlayer
 	 */
@@ -1426,7 +1464,7 @@ public class GameController implements Serializable {
 	}
 
 	/**
-	 * set the difficulty
+	 * Set the difficulty
 	 * 
 	 * @param diff
 	 */
@@ -1435,10 +1473,9 @@ public class GameController implements Serializable {
 	}
 
 	/**
-	 * when end the game, then end screen will show up
+	 * Action for ending the game, which involves setting the screen to the next
+	 * card layout
 	 * 
-	 * @author Pu
-	 *
 	 */
 	public class endGameAction extends AbstractAction {
 
@@ -1450,9 +1487,18 @@ public class GameController implements Serializable {
 
 	}
 
+	/**
+	 * Action that binds with the '1' key, and serializes the game so that it
+	 * can be rewritten.
+	 * 
+	 * @author Ian Heffner
+	 */
 	public class SerializeAction extends AbstractAction {
 
 		@Override
+		/**
+		 * Serialize on action
+		 */
 		public void actionPerformed(ActionEvent e) {
 			// Serialize to file
 			try {
@@ -1488,7 +1534,13 @@ public class GameController implements Serializable {
 
 	}
 
-	// TODO
+	/**
+	 * Action that binds with the '2' key, reads the serialized file and returns
+	 * to that state.
+	 * 
+	 * @author Ian Heffner
+	 *
+	 */
 	public class ReadSerializeAction extends AbstractAction {
 
 		@Override
@@ -1529,6 +1581,9 @@ public class GameController implements Serializable {
 		}
 	}
 
+	/**
+	 * Action that binds to the '3' key, and deletes the .ser file
+	 */
 	public class CleanUpSerializeAction extends AbstractAction {
 
 		@Override
