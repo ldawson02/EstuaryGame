@@ -17,13 +17,17 @@ Run EstuaryGame.java
 Usage:
 
 Key Controls
-A - move right 
-W - move up
-S - move down
-D - move left
-Use mouse to click and drag barriers
-SpaceBar - throw debris
-A,W - choose throw direction
+  A - move right 
+  W - move up
+  S - move down
+  D - move left
+  Use mouse to click and drag barriers
+  SpaceBar - throw debris
+  A,W - choose throw direction
 
-Ctrl-q quit
+  Ctrl-q quit
+Saving and Loading File (Key Controlled)
+  Save - 1
+  Load - 2
+  Delete - 3
 
