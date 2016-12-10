@@ -189,11 +189,7 @@ public class DebrisTest {
 		spawnDebris action3 = gc.new spawnDebris();
 		action3.actionPerformed(new ActionEvent(action3, ActionEvent.ACTION_PERFORMED, null){});
 		Thread.sleep(2000);
-		assertEquals(d.getState(), eFloaterState.RESTING);
-		//Resting on a coast
-		assertTrue(d.getPosY()>300);
-		assertTrue(d.getPosX()<200 || d.getPosX()>600);
-		
+		assertEquals(d.getState(), eFloaterState.HITBIN);	
 		
 	}
 	
@@ -221,12 +217,7 @@ public class DebrisTest {
 		spawnDebris action3 = gc.new spawnDebris();
 		action3.actionPerformed(new ActionEvent(action3, ActionEvent.ACTION_PERFORMED, null){});
 		Thread.sleep(2000);
-		assertEquals(d.getState(), eFloaterState.RESTING);
-		//Resting on a coast
-		assertTrue(d.getPosY()>300);
-		assertTrue(d.getPosX()<200 || d.getPosX()>600);
-			
-		
+		assertEquals(d.getState(), eFloaterState.HITBIN);
 		
 	}
 	
