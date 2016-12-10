@@ -19,16 +19,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="model.Friend" project="EstuaryGame_TEST" 
-    file="/EstuaryGame_TEST/src/model/Friend.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="135" width="113" x="4275" y="4290"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="4" language="java" name="model.Debris" project="EstuaryGame_TEST" 
+  <class id="3" language="java" name="model.Debris" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/model/Debris.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="387" width="226" x="4074" y="4879"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -37,7 +28,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="controller.GameController.ThrowChoice" project="EstuaryGame_TEST" 
+  <class id="4" language="java" name="controller.GameController.ThrowChoice" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/controller/GameController.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="117" width="213" x="4067" y="2055"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -46,7 +37,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="controller.TutorialController.erosion" project="EstuaryGame_TEST" 
+  <class id="5" language="java" name="controller.TutorialController.erosion" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/controller/TutorialController.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="243" width="194" x="3332" y="3521"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -55,7 +46,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="model.Powers" project="EstuaryGame_TEST" 
+  <class id="6" language="java" name="model.Powers" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/model/Powers.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="99" width="97" x="2746" y="4879"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -64,7 +55,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="8" language="java" name="controller.GameController.CleanUpSerializeAction" project="EstuaryGame_TEST" 
+  <class id="7" language="java" name="controller.GameController.CleanUpSerializeAction" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/controller/GameController.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="99" width="194" x="700" y="2055"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -73,7 +64,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="9" language="java" name="view.ImageSequence" project="EstuaryGame_TEST" 
+  <class id="8" language="java" name="view.ImageSequence" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/view/ImageSequence.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="477" width="195" x="-146" y="1150"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -82,7 +73,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="10" language="java" name="controller.ScoreController" project="EstuaryGame_TEST" 
+  <class id="9" language="java" name="controller.ScoreController" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/controller/ScoreController.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="351" width="138" x="322" y="-218"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -91,7 +82,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="11" language="java" name="model.Barriers" project="EstuaryGame_TEST" 
+  <class id="10" language="java" name="model.Barriers" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/model/Barriers.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="567" width="213" x="2581" y="5553"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -100,7 +91,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="12" language="java" name="controller.GameController.ReadSerializeAction" project="EstuaryGame_TEST" 
+  <class id="11" language="java" name="controller.GameController.ReadSerializeAction" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/controller/GameController.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="99" width="194" x="934" y="2055"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -109,7 +100,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="13" language="java" name="controller.GameController.spawnPowers" project="EstuaryGame_TEST" 
+  <class id="12" language="java" name="controller.GameController.spawnPowers" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/controller/GameController.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="405" width="194" x="3568" y="2055"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -118,7 +109,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="14" language="java" name="controller.GameController.spawnDebris" project="EstuaryGame_TEST" 
+  <class id="13" language="java" name="controller.GameController.spawnDebris" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/controller/GameController.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="387" width="222" x="3306" y="2055"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -127,7 +118,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="15" language="java" name="controller.GameController.walkController" project="EstuaryGame_TEST" 
+  <class id="14" language="java" name="controller.GameController.walkController" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/controller/GameController.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="117" width="194" x="1168" y="2055"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -136,7 +127,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="16" language="java" name="view.ImageLibrary" project="EstuaryGame_TEST" 
+  <class id="15" language="java" name="view.ImageLibrary" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/view/ImageLibrary.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="369" width="276" x="-146" y="705"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -145,7 +136,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="17" language="java" name="controller.MovementController" project="EstuaryGame_TEST" 
+  <class id="16" language="java" name="controller.MovementController" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/controller/MovementController.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="225" width="163" x="968" y="-218"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -154,7 +145,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="18" language="java" name="controller.TutorialController.spawnPowers" project="EstuaryGame_TEST" 
+  <class id="17" language="java" name="controller.TutorialController.spawnPowers" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/controller/TutorialController.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="207" width="194" x="3587" y="2716"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -163,7 +154,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="19" language="java" name="model.Player" project="EstuaryGame_TEST" 
+  <class id="18" language="java" name="model.Player" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/model/Player.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="243" width="158" x="2383" y="4290"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -172,7 +163,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="20" language="java" name="view.EndScreen" project="EstuaryGame_TEST" 
+  <class id="19" language="java" name="view.EndScreen" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/view/EndScreen.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="207" width="195" x="170" y="705"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -181,7 +172,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="21" language="java" name="controller.GameController.VAction" project="EstuaryGame_TEST" 
+  <class id="20" language="java" name="controller.GameController.VAction" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/controller/GameController.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="135" width="194" x="1402" y="2055"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -190,7 +181,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="22" language="java" name="controller.Collisions" project="EstuaryGame_TEST" 
+  <class id="21" language="java" name="controller.Collisions" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/controller/Collisions.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="153" width="184" x="2572" y="2055"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -199,7 +190,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="23" language="java" name="controller.GameController.ThrowChosen" project="EstuaryGame_TEST" 
+  <class id="22" language="java" name="controller.GameController.ThrowChosen" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/controller/GameController.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="99" width="194" x="4320" y="2055"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -208,7 +199,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="24" language="java" name="model.Storm" project="EstuaryGame_TEST" 
+  <class id="23" language="java" name="model.Storm" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/model/Storm.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="189" width="243" x="1640" y="-218"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -217,7 +208,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="25" language="java" name="view.Tutorial" project="EstuaryGame_TEST" 
+  <class id="24" language="java" name="view.Tutorial" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/view/Tutorial.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="765" width="257" x="4535" y="2716"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -226,7 +217,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="26" language="java" name="controller.GameController.endGameAction" project="EstuaryGame_TEST" 
+  <class id="25" language="java" name="controller.GameController.endGameAction" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/controller/GameController.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="99" width="194" x="1636" y="2055"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -235,7 +226,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="27" language="java" name="controller.ActiveItems" project="EstuaryGame_TEST" 
+  <class id="26" language="java" name="controller.ActiveItems" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/controller/ActiveItems.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="729" width="207" x="2946" y="3521"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -244,7 +235,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="28" language="java" name="controller.TutorialController.unpause" project="EstuaryGame_TEST" 
+  <class id="27" language="java" name="controller.TutorialController.unpause" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/controller/TutorialController.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="99" width="194" x="3863" y="2716"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -253,7 +244,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="29" language="java" name="controller.TutorialController" project="EstuaryGame_TEST" 
+  <class id="28" language="java" name="controller.TutorialController" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/controller/TutorialController.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="621" width="183" x="3802" y="2055"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -262,7 +253,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="30" language="java" name="controller.TutorialController.mainTimer" project="EstuaryGame_TEST" 
+  <class id="29" language="java" name="controller.TutorialController.mainTimer" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/controller/TutorialController.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="207" width="194" x="3823" y="3521"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -271,7 +262,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="31" language="java" name="controller.GameController.barrierErosion" project="EstuaryGame_TEST" 
+  <class id="30" language="java" name="controller.GameController.barrierErosion" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/controller/GameController.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="189" width="194" x="2338" y="2055"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -280,7 +271,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="32" language="java" name="model.DrawableItem" project="EstuaryGame_TEST" 
+  <class id="31" language="java" name="model.DrawableItem" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/model/DrawableItem.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="279" width="184" x="4535" y="4290"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -289,7 +280,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="33" language="java" name="model.Rebuild" project="EstuaryGame_TEST" 
+  <class id="32" language="java" name="model.Rebuild" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/model/Rebuild.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="207" width="278" x="2733" y="5306"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -298,7 +289,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="34" language="java" name="model.ScreenTimer" project="EstuaryGame_TEST" 
+  <class id="33" language="java" name="model.ScreenTimer" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/model/ScreenTimer.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="531" width="189" x="3103" y="4290"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -307,7 +298,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="35" language="java" name="controller.GameController.mainTimer" project="EstuaryGame_TEST" 
+  <class id="34" language="java" name="controller.GameController.mainTimer" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/controller/GameController.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="441" width="194" x="4097" y="2716"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -316,7 +307,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="36" language="java" name="controller.GameController.quitAction" project="EstuaryGame_TEST" 
+  <class id="35" language="java" name="controller.GameController.quitAction" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/controller/GameController.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="99" width="194" x="1870" y="2055"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -325,7 +316,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="37" language="java" name="model.Floater" project="EstuaryGame_TEST" 
+  <class id="36" language="java" name="model.Floater" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/model/Floater.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="315" width="161" x="4074" y="4290"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -334,7 +325,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="38" language="java" name="model.Item" project="EstuaryGame_TEST" 
+  <class id="37" language="java" name="model.Item" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/model/Item.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="333" width="133" x="4074" y="3521"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -343,7 +334,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="39" language="java" name="model.Tool" project="EstuaryGame_TEST" 
+  <class id="38" language="java" name="model.Tool" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/model/Tool.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="297" width="199" x="2602" y="4290"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -352,7 +343,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="40" language="java" name="controller.GameController.PowerInitiate" project="EstuaryGame_TEST" 
+  <class id="39" language="java" name="controller.GameController.PowerInitiate" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/controller/GameController.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="99" width="194" x="2817" y="2055"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -361,7 +352,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="41" language="java" name="controller.GameController.SerializeAction" project="EstuaryGame_TEST" 
+  <class id="40" language="java" name="controller.GameController.SerializeAction" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/controller/GameController.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="99" width="194" x="2104" y="2055"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -370,7 +361,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="42" language="java" name="controller.GameController" project="EstuaryGame_TEST" 
+  <class id="41" language="java" name="controller.GameController" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/controller/GameController.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="855" width="232" x="3032" y="1150"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -379,7 +370,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="43" language="java" name="view.TitleScreen" project="EstuaryGame_TEST" 
+  <class id="42" language="java" name="view.TitleScreen" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/view/TitleScreen.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="315" width="212" x="3794" y="705"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -388,7 +379,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="44" language="java" name="model.Remove" project="EstuaryGame_TEST" 
+  <class id="43" language="java" name="model.Remove" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/model/Remove.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="153" width="145" x="3844" y="5306"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -397,7 +388,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="45" language="java" name="view.ResourceException" project="EstuaryGame_TEST" 
+  <class id="44" language="java" name="view.ResourceException" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/view/ResourceException.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="99" width="149" x="2393" y="-218"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -406,7 +397,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="46" language="java" name="model.Helper" project="EstuaryGame_TEST" 
+  <class id="45" language="java" name="model.Helper" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/model/Helper.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="423" width="190" x="3844" y="4290"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -415,7 +406,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="47" language="java" name="model.HealthBar" project="EstuaryGame_TEST" 
+  <class id="46" language="java" name="model.HealthBar" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/model/HealthBar.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="333" width="113" x="3670" y="4290"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -424,7 +415,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="48" language="java" name="controller.GameController.coastErosion" project="EstuaryGame_TEST" 
+  <class id="47" language="java" name="controller.GameController.coastErosion" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/controller/GameController.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="189" width="194" x="3072" y="2055"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -433,7 +424,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="49" language="java" name="model.StormVisual" project="EstuaryGame_TEST" 
+  <class id="48" language="java" name="model.StormVisual" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/model/StormVisual.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="171" width="117" x="2946" y="4290"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -442,7 +433,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="50" language="java" name="controller.MouseController" project="EstuaryGame_TEST" 
+  <class id="49" language="java" name="controller.MouseController" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/controller/MouseController.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="405" width="199" x="405" y="705"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -451,7 +442,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="51" language="java" name="controller.TutorialController.spawnDebris" project="EstuaryGame_TEST" 
+  <class id="50" language="java" name="controller.TutorialController.spawnDebris" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/controller/TutorialController.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="171" width="222" x="3304" y="2716"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -460,7 +451,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="52" language="java" name="model.Coast" project="EstuaryGame_TEST" 
+  <class id="51" language="java" name="model.Coast" project="EstuaryGame_TEST" 
     file="/EstuaryGame_TEST/src/model/Coast.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="549" width="298" x="3332" y="4290"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -469,7 +460,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="53" language="java" name="model.Bin" project="EstuaryGame_TEST" file="/EstuaryGame_TEST/src/model/Bin.java" 
+  <class id="52" language="java" name="model.Bin" project="EstuaryGame_TEST" file="/EstuaryGame_TEST/src/model/Bin.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="171" width="166" x="4029" y="5306"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -478,27 +469,27 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <generalization id="54">    
-    <end type="SOURCE" refId="33"/>    
-    <end type="TARGET" refId="7"/>  
+  <generalization id="53">    
+    <end type="SOURCE" refId="32"/>    
+    <end type="TARGET" refId="6"/>  
   </generalization>  
-  <association id="55">    
+  <association id="54">    
     <bendpoint x="2674" y="2716"/>    
     <bendpoint x="2674" y="3521"/>    
     <bendpoint x="2571" y="4290"/>    
-    <end type="SOURCE" refId="40" navigable="false">      
-      <attribute id="56" name="caughtPower"/>      
-      <multiplicity id="57" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="39" navigable="false">      
+      <attribute id="55" name="caughtPower"/>      
+      <multiplicity id="56" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="7" navigable="true"/>    
+    <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <nesting id="58">    
+  <nesting id="57">    
     <bendpoint x="4036" y="2055"/>    
-    <end type="SOURCE" refId="42"/>    
-    <end type="TARGET" refId="35"/>  
+    <end type="SOURCE" refId="41"/>    
+    <end type="TARGET" refId="34"/>  
   </nesting>  
-  <association id="59">    
+  <association id="58">    
     <bendpoint x="414" y="1150"/>    
     <bendpoint x="414" y="2055"/>    
     <bendpoint x="414" y="2716"/>    
@@ -506,71 +497,71 @@
     <bendpoint x="414" y="4290"/>    
     <bendpoint x="414" y="4879"/>    
     <bendpoint x="414" y="5306"/>    
-    <end type="SOURCE" refId="50" navigable="false">      
-      <attribute id="60" name="gabionsSpawnR"/>      
-      <multiplicity id="61" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="49" navigable="false">      
+      <attribute id="59" name="gabionsSpawnR"/>      
+      <multiplicity id="60" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
+    <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="62">    
-    <end type="SOURCE" refId="19"/>    
-    <end type="TARGET" refId="38"/>  
+  <generalization id="61">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="37"/>  
   </generalization>  
-  <association id="63">    
-    <end type="SOURCE" refId="25" navigable="false">      
-      <attribute id="64" name="tc"/>      
-      <multiplicity id="65" minimum="0" maximum="1"/>    
+  <association id="62">    
+    <end type="SOURCE" refId="24" navigable="false">      
+      <attribute id="63" name="tc"/>      
+      <multiplicity id="64" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="29" navigable="true"/>    
+    <end type="TARGET" refId="28" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
+  <generalization id="65">    
+    <end type="SOURCE" refId="46"/>    
+    <end type="TARGET" refId="37"/>  
+  </generalization>  
   <generalization id="66">    
-    <end type="SOURCE" refId="47"/>    
-    <end type="TARGET" refId="38"/>  
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="34"/>  
   </generalization>  
   <generalization id="67">    
-    <end type="SOURCE" refId="30"/>    
-    <end type="TARGET" refId="35"/>  
-  </generalization>  
-  <generalization id="68">    
     <bendpoint x="4460" y="5306"/>    
     <bendpoint x="4460" y="4879"/>    
     <bendpoint x="4460" y="4290"/>    
-    <end type="SOURCE" refId="11"/>    
-    <end type="TARGET" refId="38"/>  
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="37"/>  
   </generalization>  
-  <nesting id="69">    
-    <end type="SOURCE" refId="42"/>    
-    <end type="TARGET" refId="36"/>  
+  <nesting id="68">    
+    <end type="SOURCE" refId="41"/>    
+    <end type="TARGET" refId="35"/>  
   </nesting>  
-  <generalization id="70">    
-    <end type="SOURCE" refId="49"/>    
-    <end type="TARGET" refId="38"/>  
+  <generalization id="69">    
+    <end type="SOURCE" refId="48"/>    
+    <end type="TARGET" refId="37"/>  
   </generalization>  
-  <association id="71">    
+  <association id="70">    
     <bendpoint x="3047" y="2716"/>    
     <bendpoint x="2915" y="3521"/>    
-    <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="72" name="rebuildTool"/>      
-      <multiplicity id="73" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="71" name="rebuildTool"/>      
+      <multiplicity id="72" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="39" navigable="true"/>    
+    <end type="TARGET" refId="38" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <nesting id="74">    
-    <end type="SOURCE" refId="42"/>    
-    <end type="TARGET" refId="5"/>  
+  <nesting id="73">    
+    <end type="SOURCE" refId="41"/>    
+    <end type="TARGET" refId="4"/>  
   </nesting>  
-  <association id="75">    
+  <association id="74">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="76" name="lib"/>      
-      <multiplicity id="77" minimum="0" maximum="1"/>    
+      <attribute id="75" name="lib"/>      
+      <multiplicity id="76" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="16" navigable="true"/>    
+    <end type="TARGET" refId="15" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="78">    
+  <association id="77">    
     <bendpoint x="435" y="1150"/>    
     <bendpoint x="435" y="2055"/>    
     <bendpoint x="435" y="2716"/>    
@@ -578,73 +569,69 @@
     <bendpoint x="435" y="4290"/>    
     <bendpoint x="435" y="4879"/>    
     <bendpoint x="435" y="5306"/>    
-    <end type="SOURCE" refId="50" navigable="false">      
-      <attribute id="79" name="dropSpot"/>      
-      <multiplicity id="80" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="49" navigable="false">      
+      <attribute id="78" name="dropSpot"/>      
+      <multiplicity id="79" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
+    <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="81">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="38"/>  
-  </generalization>  
-  <nesting id="82">    
-    <end type="SOURCE" refId="42"/>    
-    <end type="TARGET" refId="12"/>  
+  <nesting id="80">    
+    <end type="SOURCE" refId="41"/>    
+    <end type="TARGET" refId="11"/>  
   </nesting>  
-  <association id="83">    
-    <end type="SOURCE" refId="42" navigable="false">      
-      <attribute id="84" name="powerMover"/>      
-      <multiplicity id="85" minimum="0" maximum="1"/>    
+  <association id="81">    
+    <end type="SOURCE" refId="41" navigable="false">      
+      <attribute id="82" name="powerMover"/>      
+      <multiplicity id="83" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="13" navigable="true"/>    
+    <end type="TARGET" refId="12" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="86">    
+  <association id="84">    
     <bendpoint x="2873" y="4290"/>    
     <bendpoint x="2873" y="4879"/>    
-    <end type="SOURCE" refId="27" navigable="false">      
-      <attribute id="87" name="TrashBin"/>      
-      <multiplicity id="88" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="53" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="89">    
-    <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="90" name="erodingCoast"/>      
-      <multiplicity id="91" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="85" name="TrashBin"/>      
+      <multiplicity id="86" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="52" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <nesting id="92">    
-    <end type="SOURCE" refId="42"/>    
-    <end type="TARGET" refId="40"/>  
+  <association id="87">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="88" name="erodingCoast"/>      
+      <multiplicity id="89" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="51" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="90">    
+    <end type="SOURCE" refId="41"/>    
+    <end type="TARGET" refId="39"/>  
   </nesting>  
-  <association id="93">    
+  <association id="91">    
     <bendpoint x="2852" y="4290"/>    
-    <end type="SOURCE" refId="27" navigable="false">      
-      <attribute id="94" name="powerups"/>      
-      <multiplicity id="95" minimum="0" maximum="2147483647"/>    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="92" name="powerups"/>      
+      <multiplicity id="93" minimum="0" maximum="2147483647"/>    
     </end>    
-    <end type="TARGET" refId="7" navigable="true"/>    
+    <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <nesting id="96">    
-    <end type="SOURCE" refId="42"/>    
-    <end type="TARGET" refId="48"/>  
+  <nesting id="94">    
+    <end type="SOURCE" refId="41"/>    
+    <end type="TARGET" refId="47"/>  
   </nesting>  
-  <association id="97">    
-    <end type="SOURCE" refId="27" navigable="false">      
-      <attribute id="98" name="rebuildTool"/>      
-      <multiplicity id="99" minimum="0" maximum="1"/>    
+  <association id="95">    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="96" name="rebuildTool"/>      
+      <multiplicity id="97" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="39" navigable="true"/>    
+    <end type="TARGET" refId="38" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="100">    
+  <association id="98">    
     <bendpoint x="372" y="1150"/>    
     <bendpoint x="372" y="2055"/>    
     <bendpoint x="372" y="2716"/>    
@@ -652,56 +639,56 @@
     <bendpoint x="372" y="4290"/>    
     <bendpoint x="372" y="4879"/>    
     <bendpoint x="372" y="5306"/>    
-    <end type="SOURCE" refId="50" navigable="false">      
-      <attribute id="101" name="dragged"/>      
-      <multiplicity id="102" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="49" navigable="false">      
+      <attribute id="99" name="dragged"/>      
+      <multiplicity id="100" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
+    <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="103">    
-    <end type="SOURCE" refId="29" navigable="false">      
-      <attribute id="104" name="tutorialPaintTimer"/>      
-      <multiplicity id="105" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="35" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="106">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="107" name="mc"/>      
-      <multiplicity id="108" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="50" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <nesting id="109">    
-    <end type="SOURCE" refId="42"/>    
-    <end type="TARGET" refId="15"/>  
-  </nesting>  
-  <generalization id="110">    
-    <end type="SOURCE" refId="18"/>    
-    <end type="TARGET" refId="13"/>  
-  </generalization>  
-  <association id="111">    
-    <end type="SOURCE" refId="27" navigable="false">      
-      <attribute id="112" name="screenTimer"/>      
-      <multiplicity id="113" minimum="0" maximum="1"/>    
+  <association id="101">    
+    <end type="SOURCE" refId="28" navigable="false">      
+      <attribute id="102" name="tutorialPaintTimer"/>      
+      <multiplicity id="103" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="34" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="114">    
-    <bendpoint x="3556" y="2716"/>    
-    <bendpoint x="3556" y="3521"/>    
-    <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="115" name="removeHelper"/>      
-      <multiplicity id="116" minimum="0" maximum="1"/>    
+  <association id="104">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="105" name="mc"/>      
+      <multiplicity id="106" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="46" navigable="true"/>    
+    <end type="TARGET" refId="49" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="117">    
+  <nesting id="107">    
+    <end type="SOURCE" refId="41"/>    
+    <end type="TARGET" refId="14"/>  
+  </nesting>  
+  <generalization id="108">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="12"/>  
+  </generalization>  
+  <association id="109">    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="110" name="screenTimer"/>      
+      <multiplicity id="111" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="33" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="112">    
+    <bendpoint x="3556" y="2716"/>    
+    <bendpoint x="3556" y="3521"/>    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="113" name="removeHelper"/>      
+      <multiplicity id="114" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="45" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="115">    
     <bendpoint x="393" y="1150"/>    
     <bendpoint x="393" y="2055"/>    
     <bendpoint x="393" y="2716"/>    
@@ -709,423 +696,423 @@
     <bendpoint x="393" y="4290"/>    
     <bendpoint x="393" y="4879"/>    
     <bendpoint x="393" y="5306"/>    
-    <end type="SOURCE" refId="50" navigable="false">      
-      <attribute id="118" name="wallSpawnR"/>      
-      <multiplicity id="119" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="49" navigable="false">      
+      <attribute id="116" name="wallSpawnR"/>      
+      <multiplicity id="117" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
+    <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="120">    
+  <association id="118">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="121" name="titleScreen"/>      
-      <multiplicity id="122" minimum="0" maximum="1"/>    
+      <attribute id="119" name="titleScreen"/>      
+      <multiplicity id="120" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="43" navigable="true"/>    
+    <end type="TARGET" refId="42" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="123">    
-    <end type="SOURCE" refId="51"/>    
-    <end type="TARGET" refId="14"/>  
+  <generalization id="121">    
+    <end type="SOURCE" refId="50"/>    
+    <end type="TARGET" refId="13"/>  
   </generalization>  
-  <association id="124">    
+  <association id="122">    
     <bendpoint x="4439" y="2716"/>    
     <bendpoint x="4439" y="3521"/>    
     <bendpoint x="4439" y="4290"/>    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="125" name="caughtDebris"/>      
-      <multiplicity id="126" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="123" name="caughtDebris"/>      
+      <multiplicity id="124" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
+    <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="127">    
+  <association id="125">    
     <bendpoint x="3041" y="2055"/>    
     <bendpoint x="3026" y="2716"/>    
-    <end type="SOURCE" refId="42" navigable="false">      
-      <attribute id="128" name="items"/>      
-      <multiplicity id="129" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="41" navigable="false">      
+      <attribute id="126" name="items"/>      
+      <multiplicity id="127" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="27" navigable="true"/>    
+    <end type="TARGET" refId="26" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="130">    
+  <association id="128">    
     <bendpoint x="3813" y="4290"/>    
     <bendpoint x="3813" y="4879"/>    
     <bendpoint x="3813" y="5306"/>    
-    <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="131" name="erodingBarrier"/>      
-      <multiplicity id="132" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="129" name="erodingBarrier"/>      
+      <multiplicity id="130" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
+    <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <nesting id="133">    
-    <end type="SOURCE" refId="29"/>    
-    <end type="TARGET" refId="18"/>  
+  <nesting id="131">    
+    <end type="SOURCE" refId="28"/>    
+    <end type="TARGET" refId="17"/>  
   </nesting>  
-  <association id="134">    
-    <end type="SOURCE" refId="46" navigable="false">      
-      <attribute id="135" name="toLift"/>      
-      <multiplicity id="136" minimum="0" maximum="1"/>    
+  <association id="132">    
+    <end type="SOURCE" refId="45" navigable="false">      
+      <attribute id="133" name="toLift"/>      
+      <multiplicity id="134" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
+    <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <nesting id="137">    
-    <end type="SOURCE" refId="42"/>    
-    <end type="TARGET" refId="23"/>  
+  <nesting id="135">    
+    <end type="SOURCE" refId="41"/>    
+    <end type="TARGET" refId="22"/>  
   </nesting>  
-  <association id="138">    
-    <end type="SOURCE" refId="42" navigable="false">      
-      <attribute id="139" name="thisGame"/>      
-      <multiplicity id="140" minimum="0" maximum="1"/>    
+  <association id="136">    
+    <end type="SOURCE" refId="41" navigable="false">      
+      <attribute id="137" name="thisGame"/>      
+      <multiplicity id="138" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="42" navigable="true"/>    
+    <end type="TARGET" refId="41" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="141">    
+  <association id="139">    
     <bendpoint x="3083" y="4879"/>    
     <bendpoint x="3083" y="5306"/>    
-    <end type="SOURCE" refId="52" navigable="false">      
-      <attribute id="142" name="barrier"/>      
-      <multiplicity id="143" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="51" navigable="false">      
+      <attribute id="140" name="barrier"/>      
+      <multiplicity id="141" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
+    <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="144">    
+  <association id="142">    
     <bendpoint x="4544" y="1150"/>    
     <bendpoint x="4544" y="2055"/>    
-    <end type="SOURCE" refId="43" navigable="false">      
-      <attribute id="145" name="tutorial"/>      
-      <multiplicity id="146" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="42" navigable="false">      
+      <attribute id="143" name="tutorial"/>      
+      <multiplicity id="144" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="25" navigable="true"/>    
+    <end type="TARGET" refId="24" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <nesting id="147">    
-    <end type="SOURCE" refId="42"/>    
-    <end type="TARGET" refId="8"/>  
+  <nesting id="145">    
+    <end type="SOURCE" refId="41"/>    
+    <end type="TARGET" refId="7"/>  
   </nesting>  
-  <association id="148">    
-    <end type="SOURCE" refId="25" navigable="false">      
-      <attribute id="149" name="spotlightItem"/>      
-      <multiplicity id="150" minimum="0" maximum="1"/>    
+  <association id="146">    
+    <end type="SOURCE" refId="24" navigable="false">      
+      <attribute id="147" name="spotlightItem"/>      
+      <multiplicity id="148" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="38" navigable="true"/>    
+    <end type="TARGET" refId="37" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="151">    
-    <end type="SOURCE" refId="16" navigable="false">      
-      <attribute id="152" name="library"/>      
-      <multiplicity id="153" minimum="0" maximum="2147483647"/>    
+  <association id="149">    
+    <end type="SOURCE" refId="15" navigable="false">      
+      <attribute id="150" name="library"/>      
+      <multiplicity id="151" minimum="0" maximum="2147483647"/>    
     </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
+    <end type="TARGET" refId="8" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="154">    
+  <association id="152">    
     <bendpoint x="2831" y="4290"/>    
     <bendpoint x="2767" y="4879"/>    
     <bendpoint x="2702" y="5306"/>    
-    <end type="SOURCE" refId="27" navigable="false">      
-      <attribute id="155" name="barriers"/>      
-      <multiplicity id="156" minimum="0" maximum="2147483647"/>    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="153" name="barriers"/>      
+      <multiplicity id="154" minimum="0" maximum="2147483647"/>    
     </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
+    <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="157">    
-    <end type="SOURCE" refId="29" navigable="false">      
-      <attribute id="158" name="t"/>      
-      <multiplicity id="159" minimum="0" maximum="1"/>    
+  <association id="155">    
+    <end type="SOURCE" refId="28" navigable="false">      
+      <attribute id="156" name="t"/>      
+      <multiplicity id="157" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="25" navigable="true"/>    
+    <end type="TARGET" refId="24" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="160">    
+  <association id="158">    
     <bendpoint x="2915" y="4290"/>    
-    <end type="SOURCE" refId="27" navigable="false">      
-      <attribute id="161" name="debris"/>      
-      <multiplicity id="162" minimum="0" maximum="2147483647"/>    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="159" name="debris"/>      
+      <multiplicity id="160" minimum="0" maximum="2147483647"/>    
     </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
+    <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="163">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="164" name="LR"/>      
-      <multiplicity id="165" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="53" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="166">    
-    <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="37"/>  
-  </generalization>  
-  <association id="167">    
-    <bendpoint x="3041" y="4879"/>    
-    <bendpoint x="3041" y="5306"/>    
-    <end type="SOURCE" refId="52" navigable="false">      
-      <attribute id="168" name="barriers"/>      
-      <multiplicity id="169" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="170">    
-    <bendpoint x="2786" y="2055"/>    
-    <bendpoint x="2653" y="2716"/>    
-    <bendpoint x="2653" y="3521"/>    
-    <end type="SOURCE" refId="42" navigable="false">      
-      <attribute id="171" name="mainPlayer"/>      
-      <multiplicity id="172" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="19" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="173">    
-    <end type="SOURCE" refId="43" navigable="false">      
-      <attribute id="174" name="game"/>      
-      <multiplicity id="175" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <nesting id="176">    
-    <end type="SOURCE" refId="42"/>    
-    <end type="TARGET" refId="41"/>  
-  </nesting>  
-  <association id="177">    
-    <end type="SOURCE" refId="27" navigable="false">      
-      <attribute id="178" name="stormv"/>      
-      <multiplicity id="179" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="49" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="180">    
-    <bendpoint x="4544" y="3521"/>    
-    <end type="SOURCE" refId="25" navigable="false">      
-      <attribute id="181" name="arrow"/>      
-      <multiplicity id="182" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="32" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="183">    
-    <end type="SOURCE" refId="52"/>    
-    <end type="TARGET" refId="38"/>  
-  </generalization>  
-  <association id="184">    
-    <bendpoint x="3853" y="4879"/>    
-    <end type="SOURCE" refId="46" navigable="false">      
-      <attribute id="185" name="removeInstance"/>      
-      <multiplicity id="186" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="44" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="187">    
-    <bendpoint x="4565" y="705"/>    
-    <bendpoint x="4565" y="1150"/>    
-    <bendpoint x="4565" y="2055"/>    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="188" name="tutorial"/>      
-      <multiplicity id="189" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="25" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <nesting id="190">    
-    <end type="SOURCE" refId="42"/>    
-    <end type="TARGET" refId="21"/>  
-  </nesting>  
-  <nesting id="191">    
-    <end type="SOURCE" refId="42"/>    
-    <end type="TARGET" refId="14"/>  
-  </nesting>  
-  <association id="192">    
-    <end type="SOURCE" refId="27" navigable="false">      
-      <attribute id="193" name="mainPlayer"/>      
-      <multiplicity id="194" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="19" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <nesting id="195">    
-    <bendpoint x="3832" y="2716"/>    
-    <end type="SOURCE" refId="29"/>    
-    <end type="TARGET" refId="30"/>  
-  </nesting>  
-  <nesting id="196">    
-    <end type="SOURCE" refId="42"/>    
-    <end type="TARGET" refId="13"/>  
-  </nesting>  
-  <generalization id="197">    
-    <end type="SOURCE" refId="32"/>    
-    <end type="TARGET" refId="38"/>  
-  </generalization>  
-  <nesting id="198">    
-    <end type="SOURCE" refId="42"/>    
-    <end type="TARGET" refId="2"/>  
-  </nesting>  
-  <association id="199">    
-    <bendpoint x="3062" y="705"/>    
-    <end type="SOURCE" refId="42" navigable="false">      
-      <attribute id="200" name="mainGame"/>      
-      <multiplicity id="201" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="202">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="37"/>  
-  </generalization>  
-  <association id="203">    
-    <end type="SOURCE" refId="42" navigable="false">      
-      <attribute id="204" name="debrisMover"/>      
-      <multiplicity id="205" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="14" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="206">    
-    <end type="SOURCE" refId="29" navigable="false">      
-      <attribute id="207" name="unpauseAction"/>      
-      <multiplicity id="208" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="28" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <nesting id="209">    
-    <end type="SOURCE" refId="42"/>    
-    <end type="TARGET" refId="26"/>  
-  </nesting>  
-  <association id="210">    
-    <bendpoint x="2894" y="4290"/>    
-    <bendpoint x="3062" y="4879"/>    
-    <end type="SOURCE" refId="27" navigable="false">      
-      <attribute id="211" name="RecycleBin"/>      
-      <multiplicity id="212" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="53" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="213">    
-    <end type="SOURCE" refId="50" navigable="false">      
-      <attribute id="214" name="gc"/>      
-      <multiplicity id="215" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="42" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <nesting id="216">    
-    <end type="SOURCE" refId="29"/>    
-    <end type="TARGET" refId="28"/>  
-  </nesting>  
-  <association id="217">    
-    <bendpoint x="2590" y="4879"/>    
-    <bendpoint x="2590" y="5306"/>    
-    <end type="SOURCE" refId="39" navigable="false">      
-      <attribute id="218" name="currBarrier"/>      
-      <multiplicity id="219" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="220">    
-    <bendpoint x="4586" y="2055"/>    
-    <bendpoint x="4586" y="1150"/>    
-    <bendpoint x="4586" y="705"/>    
-    <end type="SOURCE" refId="25"/>    
-    <end type="TARGET" refId="1"/>  
-  </generalization>  
-  <association id="221">    
-    <end type="SOURCE" refId="42" navigable="false">      
-      <attribute id="222" name="collision"/>      
-      <multiplicity id="223" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="22" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="224">    
-    <end type="SOURCE" refId="29"/>    
-    <end type="TARGET" refId="42"/>  
-  </generalization>  
-  <generalization id="225">    
-    <end type="SOURCE" refId="34"/>    
-    <end type="TARGET" refId="38"/>  
-  </generalization>  
-  <generalization id="226">    
-    <end type="SOURCE" refId="44"/>    
-    <end type="TARGET" refId="7"/>  
-  </generalization>  
-  <association id="227">    
-    <bendpoint x="2611" y="4879"/>    
-    <bendpoint x="2611" y="5306"/>    
-    <end type="SOURCE" refId="39" navigable="false">      
-      <attribute id="228" name="barriersToBuild"/>      
-      <multiplicity id="229" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <nesting id="230">    
-    <end type="SOURCE" refId="29"/>    
-    <end type="TARGET" refId="51"/>  
-  </nesting>  
-  <association id="231">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="232" name="endScreen"/>      
-      <multiplicity id="233" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="20" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="234">    
-    <bendpoint x="4481" y="2716"/>    
-    <bendpoint x="4481" y="3521"/>    
-    <bendpoint x="4481" y="4290"/>    
-    <end type="SOURCE" refId="23" navigable="false">      
-      <attribute id="235" name="caughtDebris"/>      
-      <multiplicity id="236" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="237">    
-    <end type="SOURCE" refId="33" navigable="false">      
-      <attribute id="238" name="toRebuild"/>      
-      <multiplicity id="239" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <nesting id="240">    
-    <bendpoint x="3811" y="2716"/>    
-    <end type="SOURCE" refId="29"/>    
-    <end type="TARGET" refId="6"/>  
-  </nesting>  
-  <association id="241">    
-    <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="242" name="protectedCoast"/>      
-      <multiplicity id="243" minimum="0" maximum="1"/>    
+  <association id="161">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="162" name="LR"/>      
+      <multiplicity id="163" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="52" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="244">    
-    <end type="SOURCE" refId="27" navigable="false">      
-      <attribute id="245" name="hBar"/>      
-      <multiplicity id="246" minimum="0" maximum="1"/>    
+  <generalization id="164">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="36"/>  
+  </generalization>  
+  <association id="165">    
+    <bendpoint x="3041" y="4879"/>    
+    <bendpoint x="3041" y="5306"/>    
+    <end type="SOURCE" refId="51" navigable="false">      
+      <attribute id="166" name="barriers"/>      
+      <multiplicity id="167" minimum="0" maximum="2147483647"/>    
     </end>    
-    <end type="TARGET" refId="47" navigable="true"/>    
+    <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="247">    
+  <association id="168">    
+    <bendpoint x="2786" y="2055"/>    
+    <bendpoint x="2653" y="2716"/>    
+    <bendpoint x="2653" y="3521"/>    
+    <end type="SOURCE" refId="41" navigable="false">      
+      <attribute id="169" name="mainPlayer"/>      
+      <multiplicity id="170" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="18" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="171">    
+    <end type="SOURCE" refId="42" navigable="false">      
+      <attribute id="172" name="game"/>      
+      <multiplicity id="173" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="174">    
+    <end type="SOURCE" refId="41"/>    
+    <end type="TARGET" refId="40"/>  
+  </nesting>  
+  <association id="175">    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="176" name="stormv"/>      
+      <multiplicity id="177" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="48" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="178">    
+    <bendpoint x="4544" y="3521"/>    
+    <end type="SOURCE" refId="24" navigable="false">      
+      <attribute id="179" name="arrow"/>      
+      <multiplicity id="180" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="31" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="181">    
+    <end type="SOURCE" refId="51"/>    
+    <end type="TARGET" refId="37"/>  
+  </generalization>  
+  <association id="182">    
+    <bendpoint x="3853" y="4879"/>    
+    <end type="SOURCE" refId="45" navigable="false">      
+      <attribute id="183" name="removeInstance"/>      
+      <multiplicity id="184" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="43" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="185">    
+    <bendpoint x="4565" y="705"/>    
+    <bendpoint x="4565" y="1150"/>    
+    <bendpoint x="4565" y="2055"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="186" name="tutorial"/>      
+      <multiplicity id="187" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="24" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="188">    
+    <end type="SOURCE" refId="41"/>    
+    <end type="TARGET" refId="20"/>  
+  </nesting>  
+  <nesting id="189">    
+    <end type="SOURCE" refId="41"/>    
+    <end type="TARGET" refId="13"/>  
+  </nesting>  
+  <association id="190">    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="191" name="mainPlayer"/>      
+      <multiplicity id="192" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="18" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="193">    
+    <bendpoint x="3832" y="2716"/>    
+    <end type="SOURCE" refId="28"/>    
+    <end type="TARGET" refId="29"/>  
+  </nesting>  
+  <nesting id="194">    
+    <end type="SOURCE" refId="41"/>    
+    <end type="TARGET" refId="12"/>  
+  </nesting>  
+  <generalization id="195">    
+    <end type="SOURCE" refId="31"/>    
+    <end type="TARGET" refId="37"/>  
+  </generalization>  
+  <nesting id="196">    
+    <end type="SOURCE" refId="41"/>    
+    <end type="TARGET" refId="2"/>  
+  </nesting>  
+  <association id="197">    
+    <bendpoint x="3062" y="705"/>    
+    <end type="SOURCE" refId="41" navigable="false">      
+      <attribute id="198" name="mainGame"/>      
+      <multiplicity id="199" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="200">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="36"/>  
+  </generalization>  
+  <association id="201">    
+    <end type="SOURCE" refId="41" navigable="false">      
+      <attribute id="202" name="debrisMover"/>      
+      <multiplicity id="203" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="204">    
+    <end type="SOURCE" refId="28" navigable="false">      
+      <attribute id="205" name="unpauseAction"/>      
+      <multiplicity id="206" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="207">    
+    <end type="SOURCE" refId="41"/>    
+    <end type="TARGET" refId="25"/>  
+  </nesting>  
+  <association id="208">    
+    <bendpoint x="2894" y="4290"/>    
+    <bendpoint x="3062" y="4879"/>    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="209" name="RecycleBin"/>      
+      <multiplicity id="210" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="52" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="211">    
+    <end type="SOURCE" refId="49" navigable="false">      
+      <attribute id="212" name="gc"/>      
+      <multiplicity id="213" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="41" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="214">    
+    <end type="SOURCE" refId="28"/>    
+    <end type="TARGET" refId="27"/>  
+  </nesting>  
+  <association id="215">    
+    <bendpoint x="2590" y="4879"/>    
+    <bendpoint x="2590" y="5306"/>    
+    <end type="SOURCE" refId="38" navigable="false">      
+      <attribute id="216" name="currBarrier"/>      
+      <multiplicity id="217" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="218">    
+    <bendpoint x="4586" y="2055"/>    
+    <bendpoint x="4586" y="1150"/>    
+    <bendpoint x="4586" y="705"/>    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="1"/>  
+  </generalization>  
+  <association id="219">    
+    <end type="SOURCE" refId="41" navigable="false">      
+      <attribute id="220" name="collision"/>      
+      <multiplicity id="221" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="21" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="222">    
+    <end type="SOURCE" refId="28"/>    
+    <end type="TARGET" refId="41"/>  
+  </generalization>  
+  <generalization id="223">    
+    <end type="SOURCE" refId="33"/>    
+    <end type="TARGET" refId="37"/>  
+  </generalization>  
+  <generalization id="224">    
+    <end type="SOURCE" refId="43"/>    
+    <end type="TARGET" refId="6"/>  
+  </generalization>  
+  <association id="225">    
+    <bendpoint x="2611" y="4879"/>    
+    <bendpoint x="2611" y="5306"/>    
+    <end type="SOURCE" refId="38" navigable="false">      
+      <attribute id="226" name="barriersToBuild"/>      
+      <multiplicity id="227" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="228">    
+    <end type="SOURCE" refId="28"/>    
+    <end type="TARGET" refId="50"/>  
+  </nesting>  
+  <association id="229">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="230" name="endScreen"/>      
+      <multiplicity id="231" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="232">    
+    <bendpoint x="4481" y="2716"/>    
+    <bendpoint x="4481" y="3521"/>    
+    <bendpoint x="4481" y="4290"/>    
+    <end type="SOURCE" refId="22" navigable="false">      
+      <attribute id="233" name="caughtDebris"/>      
+      <multiplicity id="234" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="235">    
+    <end type="SOURCE" refId="32" navigable="false">      
+      <attribute id="236" name="toRebuild"/>      
+      <multiplicity id="237" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="238">    
+    <bendpoint x="3811" y="2716"/>    
+    <end type="SOURCE" refId="28"/>    
+    <end type="TARGET" refId="5"/>  
+  </nesting>  
+  <association id="239">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="240" name="protectedCoast"/>      
+      <multiplicity id="241" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="51" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="242">    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="243" name="hBar"/>      
+      <multiplicity id="244" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="46" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="245">    
     <bendpoint x="330" y="1150"/>    
     <bendpoint x="330" y="2055"/>    
     <bendpoint x="330" y="2716"/>    
@@ -1133,66 +1120,66 @@
     <bendpoint x="330" y="4290"/>    
     <bendpoint x="330" y="4879"/>    
     <bendpoint x="330" y="5306"/>    
-    <end type="SOURCE" refId="50" navigable="false">      
-      <attribute id="248" name="wallSpawnL"/>      
-      <multiplicity id="249" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="49" navigable="false">      
+      <attribute id="246" name="wallSpawnL"/>      
+      <multiplicity id="247" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
+    <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="250">    
-    <end type="SOURCE" refId="37"/>    
-    <end type="TARGET" refId="38"/>  
+  <generalization id="248">    
+    <end type="SOURCE" refId="36"/>    
+    <end type="TARGET" refId="37"/>  
   </generalization>  
-  <generalization id="251">    
+  <generalization id="249">    
     <bendpoint x="4418" y="4879"/>    
     <bendpoint x="4418" y="4290"/>    
-    <end type="SOURCE" refId="53"/>    
-    <end type="TARGET" refId="38"/>  
+    <end type="SOURCE" refId="52"/>    
+    <end type="TARGET" refId="37"/>  
   </generalization>  
-  <association id="252">    
+  <association id="250">    
     <bendpoint x="3041" y="705"/>    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="253" name="gc"/>      
-      <multiplicity id="254" minimum="0" maximum="1"/>    
+      <attribute id="251" name="gc"/>      
+      <multiplicity id="252" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="42" navigable="true"/>    
+    <end type="TARGET" refId="41" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="255">    
-    <end type="SOURCE" refId="27" navigable="false">      
-      <attribute id="256" name="removeHelper"/>      
-      <multiplicity id="257" minimum="0" maximum="1"/>    
+  <association id="253">    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="254" name="removeHelper"/>      
+      <multiplicity id="255" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="46" navigable="true"/>    
+    <end type="TARGET" refId="45" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="258">    
-    <end type="SOURCE" refId="46"/>    
-    <end type="TARGET" refId="38"/>  
+  <generalization id="256">    
+    <end type="SOURCE" refId="45"/>    
+    <end type="TARGET" refId="37"/>  
   </generalization>  
-  <association id="259">    
-    <end type="SOURCE" refId="27" navigable="false">      
-      <attribute id="260" name="coast"/>      
-      <multiplicity id="261" minimum="0" maximum="2147483647"/>    
+  <association id="257">    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="258" name="coast"/>      
+      <multiplicity id="259" minimum="0" maximum="2147483647"/>    
     </end>    
-    <end type="TARGET" refId="52" navigable="true"/>    
+    <end type="TARGET" refId="51" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="262">    
+  <association id="260">    
     <bendpoint x="4015" y="2055"/>    
-    <end type="SOURCE" refId="42" navigable="false">      
-      <attribute id="263" name="paintTimer"/>      
-      <multiplicity id="264" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="41" navigable="false">      
+      <attribute id="261" name="paintTimer"/>      
+      <multiplicity id="262" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="35" navigable="true"/>    
+    <end type="TARGET" refId="34" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="265">    
-    <end type="SOURCE" refId="39"/>    
-    <end type="TARGET" refId="38"/>  
+  <generalization id="263">    
+    <end type="SOURCE" refId="38"/>    
+    <end type="TARGET" refId="37"/>  
   </generalization>  
-  <association id="266">    
+  <association id="264">    
     <bendpoint x="351" y="1150"/>    
     <bendpoint x="351" y="2055"/>    
     <bendpoint x="351" y="2716"/>    
@@ -1200,57 +1187,57 @@
     <bendpoint x="351" y="4290"/>    
     <bendpoint x="351" y="4879"/>    
     <bendpoint x="351" y="5306"/>    
-    <end type="SOURCE" refId="50" navigable="false">      
-      <attribute id="267" name="gabionsSpawnL"/>      
-      <multiplicity id="268" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="49" navigable="false">      
+      <attribute id="265" name="gabionsSpawnL"/>      
+      <multiplicity id="266" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
+    <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="269">    
+  <association id="267">    
     <bendpoint x="2467" y="2716"/>    
     <bendpoint x="2467" y="3521"/>    
     <bendpoint x="2467" y="4290"/>    
     <bendpoint x="2467" y="4879"/>    
     <bendpoint x="2467" y="5306"/>    
-    <end type="SOURCE" refId="31" navigable="false">      
-      <attribute id="270" name="barrier"/>      
-      <multiplicity id="271" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="268" name="barrier"/>      
+      <multiplicity id="269" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
+    <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="272">    
+  <association id="270">    
     <bendpoint x="3211" y="2716"/>    
     <bendpoint x="3211" y="3521"/>    
-    <end type="SOURCE" refId="48" navigable="false">      
-      <attribute id="273" name="coast"/>      
-      <multiplicity id="274" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="47" navigable="false">      
+      <attribute id="271" name="coast"/>      
+      <multiplicity id="272" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="52" navigable="true"/>    
+    <end type="TARGET" refId="51" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="275">    
+  <association id="273">    
     <bendpoint x="2488" y="2716"/>    
     <bendpoint x="2488" y="3521"/>    
-    <end type="SOURCE" refId="22" navigable="false">      
-      <attribute id="276" name="mainPlayer"/>      
-      <multiplicity id="277" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="21" navigable="false">      
+      <attribute id="274" name="mainPlayer"/>      
+      <multiplicity id="275" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="19" navigable="true"/>    
+    <end type="TARGET" refId="18" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="278">    
+  <association id="276">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="279" name="mainGame"/>      
-      <multiplicity id="280" minimum="0" maximum="1"/>    
+      <attribute id="277" name="mainGame"/>      
+      <multiplicity id="278" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <nesting id="281">    
-    <end type="SOURCE" refId="42"/>    
-    <end type="TARGET" refId="31"/>  
+  <nesting id="279">    
+    <end type="SOURCE" refId="41"/>    
+    <end type="TARGET" refId="30"/>  
   </nesting>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
