@@ -375,7 +375,6 @@ public class Tutorial extends EstuaryGame implements ActionListener{
 		if(cmd.equals("START GAME")){
 			tc.gameOver();
 			c1.show(EstuaryGame.getCards(), "MainGame");
-			//EstuaryGame.mainGame = new EstuaryGame();
 			EstuaryGame.gc = new GameController(EstuaryGame.mainGame);
 			EstuaryGame.mc = new MouseController();
 			EstuaryGame.mc.setGC(EstuaryGame.gc);
