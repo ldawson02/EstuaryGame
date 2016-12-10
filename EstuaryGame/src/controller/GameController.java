@@ -166,6 +166,10 @@ public class GameController implements Serializable {
 		mainGame.bindKeyWith("right", KeyStroke.getKeyStroke("D"), new HAction(1 * getMainPlayer().getSpeed()));
 		mainGame.bindKeyWith("up", KeyStroke.getKeyStroke("W"), new VAction(-1 * getMainPlayer().getSpeed()));
 		mainGame.bindKeyWith("down", KeyStroke.getKeyStroke("S"), new VAction(1 * getMainPlayer().getSpeed()));
+		mainGame.bindKeyWith("left", KeyStroke.getKeyStroke("LEFT"), new HAction(-1 * getMainPlayer().getSpeed()));
+		mainGame.bindKeyWith("right", KeyStroke.getKeyStroke("RIGHT"), new HAction(1 * getMainPlayer().getSpeed()));
+		mainGame.bindKeyWith("up", KeyStroke.getKeyStroke("UP"), new VAction(-1 * getMainPlayer().getSpeed()));
+		mainGame.bindKeyWith("down", KeyStroke.getKeyStroke("DOWN"), new VAction(1 * getMainPlayer().getSpeed()));
 		mainGame.bindKeyWith("quit", KeyStroke.getKeyStroke(KeyEvent.VK_Q, KeyEvent.CTRL_DOWN_MASK), new quitAction());
 	}
 
@@ -373,11 +377,15 @@ public class GameController implements Serializable {
 		// Change the function of the keys
 		mainGame.bindKeyWith("leftArrow", KeyStroke.getKeyStroke("A"), new ThrowChoice(eThrowDirection.LEFT, d));
 		mainGame.bindKeyWith("rightArrow", KeyStroke.getKeyStroke("D"), new ThrowChoice(eThrowDirection.RIGHT, d));
+		mainGame.bindKeyWith("leftArrow", KeyStroke.getKeyStroke("LEFT"), new ThrowChoice(eThrowDirection.LEFT, d));
+		mainGame.bindKeyWith("rightArrow", KeyStroke.getKeyStroke("RIGHT"), new ThrowChoice(eThrowDirection.RIGHT, d));
 		mainGame.bindKeyWith("throwDebris", KeyStroke.getKeyStroke("SPACE"), new ThrowChosen(d));
 
 		// Don't let the player move!
 		mainGame.unbindKeyWith("x.up", KeyStroke.getKeyStroke("W"));
 		mainGame.unbindKeyWith("x.down", KeyStroke.getKeyStroke("S"));
+		mainGame.unbindKeyWith("x.up", KeyStroke.getKeyStroke("UP"));
+		mainGame.unbindKeyWith("x.down", KeyStroke.getKeyStroke("DOWN"));
 
 	}
 
@@ -404,6 +412,10 @@ public class GameController implements Serializable {
 		mainGame.unbindKeyWith("down", KeyStroke.getKeyStroke("S"));
 		mainGame.unbindKeyWith("left", KeyStroke.getKeyStroke("A"));
 		mainGame.unbindKeyWith("right", KeyStroke.getKeyStroke("D"));
+		mainGame.unbindKeyWith("up", KeyStroke.getKeyStroke("UP"));
+		mainGame.unbindKeyWith("down", KeyStroke.getKeyStroke("DOWN"));
+		mainGame.unbindKeyWith("left", KeyStroke.getKeyStroke("LEFT"));
+		mainGame.unbindKeyWith("right", KeyStroke.getKeyStroke("RIGHT"));
 	}
 
 	/**
@@ -623,15 +635,12 @@ public class GameController implements Serializable {
 
 			// Update the healthbar if it hit on this round
 			if (d.getState() == eFloaterState.HITBIN) {
-				System.out.print("\nBin hit this round and");
 				if (d.getCorrectBin()) {
-					System.out.print(" bin was correct.\n");
 					d.setState(eFloaterState.RESTING);
 					toDelete.add(d);
 					items.getHealthBar().update(eHealthChanges.CorrectBin.getDelta());
 					ScoreController.scoreBin();
 				} else {
-					System.out.print(" bin was incorrect.\n");
 					MovementController.wrongBinMove(d);
 					if (d.getState() == eFloaterState.RESTING) {
 						items.getHealthBar().update(eHealthChanges.IncorrectBin.getDelta());
@@ -665,13 +674,10 @@ public class GameController implements Serializable {
 					move(d);
 					// If the debris hit the coast this round, decrement health
 					if (d.getState() == eFloaterState.RESTING) {
-						System.out.println("Debris hit coast");
 						items.getHealthBar().update(eHealthChanges.DebrisHitCoast.getDelta());
 					}
 				} else if (d.getState() == eFloaterState.THROWING || d.getState() == eFloaterState.HITBIN) {
 					throwing(d, toDelete);
-					System.out.println("called throwing method, current state of throw is: " + d.getState());
-					System.out.println("called throwing method, current state of throw is: " + d.getType());
 				} else if (d.getState() == eFloaterState.RESTING) {
 					checkCatchDebris(d);
 				}
@@ -994,7 +1000,8 @@ public class GameController implements Serializable {
 		}
 
 		/**
-		 * Moves the remove helper and calls its addTime method, which controls the logic of its power up action. 
+		 * Moves the remove helper and calls its addTime method, which controls
+		 * the logic of its power up action.
 		 */
 		public void removeAction() {
 			MovementController.walkMove(removeHelper);
@@ -1009,6 +1016,10 @@ public class GameController implements Serializable {
 		}
 
 		@Override
+		/**
+		 * Perform the movement for all powers in game, and handle if the power
+		 * is caught
+		 */
 		public void actionPerformed(ActionEvent e) {
 
 			for (Powers p : items.getAllPowers()) {
@@ -1076,15 +1087,14 @@ public class GameController implements Serializable {
 
 	}
 
-	public class walkController implements ActionListener, Serializable {
-		private int timePassed = 0;
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-
-		}
-	}
-
+	/**
+	 * The class that controls the logic of coast erosion. An instance of this
+	 * class and a corresponding timer is made for each coast piece and plays
+	 * throughout the entirety of the game.
+	 * 
+	 * @author Lia Dawson
+	 *
+	 */
 	public class coastErosion implements ActionListener, Serializable {
 		private Coast coast;
 		public int timePassed;
@@ -1104,7 +1114,7 @@ public class GameController implements Serializable {
 		}
 
 		/**
-		 * calculate the erosion of the cast
+		 * Calculate the erosion rate of the cast
 		 * 
 		 * @param coast
 		 */
@@ -1117,7 +1127,7 @@ public class GameController implements Serializable {
 
 		@Override
 		/**
-		 * the coast begin to erode
+		 * Calculate whether erosion should occur
 		 */
 		public void actionPerformed(ActionEvent e) {
 			if (coast.isProtected()) {
@@ -1139,6 +1149,14 @@ public class GameController implements Serializable {
 		}
 	}
 
+	/**
+	 * Controls the logic of barrier erosion. This class is implemented as a
+	 * timer. There is an instance of this class and its corresponding timer for
+	 * each barrier, and they run throughout the entirety of the game.
+	 * 
+	 * @author Lia Dawson
+	 *
+	 */
 	public class barrierErosion implements ActionListener, Serializable {
 		private Barriers barrier;
 		public int timePassed = 0;
@@ -1147,7 +1165,7 @@ public class GameController implements Serializable {
 		final public int rTime = 4000;
 
 		/**
-		 * construct a barrier erosion
+		 * Construct a barrier erosion
 		 * 
 		 * @param b
 		 */
@@ -1157,7 +1175,7 @@ public class GameController implements Serializable {
 		}
 
 		/**
-		 * new erosion time for the barrier
+		 * Calculate a new erosion time
 		 */
 		public void newTime() {
 			Random r = new Random();
@@ -1168,8 +1186,8 @@ public class GameController implements Serializable {
 		}
 
 		/**
-		 * when the barrier is empty, then do nothing, else it begin to erode as
-		 * it has a new time and calculate when it can be erode
+		 * Determine if barrier erosion should occur, and call the corresponding
+		 * methods
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -1196,21 +1214,38 @@ public class GameController implements Serializable {
 
 	}
 
-	// TODO
+	/**
+	 * The action class for moving horizontally. This class is bound with A and
+	 * D, as well as left and right to allow for multifunctional use.
+	 * 
+	 * @author Lia Dawson
+	 *
+	 */
 	public class HAction extends AbstractAction {
 
 		// the amount the player moves when you press the key
 		private int moveSize;
 
+		/**
+		 * Create the action class, set the move amount
+		 * @param jump
+		 */
 		public HAction(int jump) {
 			this.moveSize = jump;
 		}
 
+		/**
+		 * Update the amount moved by one action
+		 * @param jump
+		 */
 		public void updateSpeed(int jump) {
 			this.moveSize = jump;
 		}
 
 		@Override
+		/**
+		 * Action performed - move the player, unless they're off the screen
+		 */
 		public void actionPerformed(ActionEvent e) {
 			int next = getMainPlayer().getPosX() + moveSize;
 			int edge = dimX - getMainPlayer().getWidth();
@@ -1225,7 +1260,11 @@ public class GameController implements Serializable {
 
 	}
 
-	// TODO
+	/**
+	 * 
+	 * @author Lia
+	 *
+	 */
 	public class VAction extends AbstractAction {
 
 		// the amount the player moves when you press the key
@@ -1255,7 +1294,7 @@ public class GameController implements Serializable {
 	}
 
 	/**
-	 * quit
+	 * This class
 	 *
 	 */
 	public class quitAction extends AbstractAction {
